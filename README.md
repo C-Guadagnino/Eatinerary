@@ -46,3 +46,4 @@ The people that we expect to use this range from 16yrs+, who are interested in b
     * Advertising, way to increase traffic flow to restaurant
     * Restaurant owner can click on it
 * Light/Dark mode
+* Mobile responsive
