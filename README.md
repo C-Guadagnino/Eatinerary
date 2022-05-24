@@ -61,3 +61,4 @@ The people that we expect to use this are:
 * Payment system (Stripe API?)
     * Integrate some sort of payment system on the app so restaurant owner can independently click, choose and pay for ad slots (refer to second bullet point in "Link Calendar" section above). This is a way for the restaurant owners to increase exposure and traffic flow to restaurant
 * Light/Dark mode
+* Mobile responsive
