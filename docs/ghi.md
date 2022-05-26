@@ -27,7 +27,7 @@
 - Description:
     - The top has a search bar can filter restaurants by name/cuisine, and location (zip/city)
     - The lower left pane shows a list of restaurants matching the search parameters, with the restaurants with paid promotions for the current time slot showing up at the top.
-    - The lower right pane shows the map view with pins of filtered restaurants showing up on the lower left pane.
+    - The right pane shows the map view with pins of filtered restaurants showing up on the lower left pane. ("Owners who have paid for promotion" should read "Restaurants who have paid for promotion" -- and is ONLY a placeholder indicating that restaurants with paid promotion slots will show up at the top)
 
 ![004_All_RestaurantListView-BeforeLogin](wireframes/004_All_RestaurantListView-BeforeLogin.png)
 
