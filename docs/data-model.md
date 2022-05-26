@@ -27,6 +27,7 @@
 ## Restaurant
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
+| owner           | For.Key | no     | no       |
 | restaurant_name | str     | no     | no       |
 | email           | str     | yes    | yes      |
 | phone           | int     | yes    | yes      |
@@ -117,6 +118,14 @@ OR
 | restaurant      | For.Key | no     | no       |
 
 (skewered OR foodie+restaurant???)
+
+
+## Ad_slot (for each continuous time slot)
+| Name            | Type    | Unique | Optional |
+|-----------------|---------|--------|----------|
+| restaurant      | For.Key | no     | no       |
+| startdatetime   | DateTime| no     | no       |
+| enddatetime     | DateTime| no     | no       |
 
 
 ## Payment
