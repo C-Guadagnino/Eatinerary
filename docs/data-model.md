@@ -35,8 +35,28 @@
 | availability    | For.Key | no     | no       |
 | picture_url     | str     | no     | no       |
 | website         | url     | no     | yes      |
+| yelp_id         | str     | no     | no       |
 | href            | url     | no     | yes      |
-| review_count    | str     | yes    | yes      |
+| review_count    | int     | yes    | yes      |
+| average_rating  | int     | yes    | yes      |
+| price           | str     | yes    | yes      |
+| categories      |ManyToMany? not sure about how to model restaurant categories. ManyToMany Field, since 1 restaurant can have many restaurant categories, and 1 category can have many restaurants?| yes  | yes      |
+| mon_open_hours  | For.Key | yes    | yes      |
+| tue_open_hours  | For.Key | yes    | yes      |
+| wed_open_hours  | For.Key | yes    | yes      |
+| thu_open_hours  | For.Key | yes    | yes      |
+| fri_open_hours  | For.Key | yes    | yes      |
+| sat_open_hours  | For.Key | yes    | yes      |
+| sun_open_hours  | For.Key | yes    | yes      |
+
+
+## Restaurant_categories???
+https://www.yelp.com/developers/documentation/v3/get_started
+
+| Name            | Type    | Unique | Optional |
+|-----------------|---------|--------|----------|
+| alias           | str     | no     | no       |
+| title           | str     | no     | no       |
 
 ## Restaurant_location
 | Name            | Type    | Unique | Optional |
@@ -48,6 +68,13 @@
 | state           | str     | no     | no       |
 | zip             | int     | no     | no       |
 | country         | str     | no     | no       |
+
+## Restaurant_open_hours
+| Name            | Type    | Unique | Optional |
+|-----------------|---------|--------|----------|
+| start           | str?int?| no     | no       |
+| end             | str?int?| no     | no       |
+| day (mon-fri)   | int(0-7)| no     | no       |
 
 
 ## Skewered
@@ -74,7 +101,7 @@
 | rating          | int     | no     | no       |
 | created_DateTime| date    | no     | no       |
 | description     | str     | no     | no       |
-| picture1        |media/url? should we require picture_url, or allow Foodie to upload image directly? (TBD)| no    | yes      |
+| picture1        |media/url? should we require picture_url, or allow Foodie to upload image directly? (Need to look into this)| no    | yes      |
 | picture2        |media/url?| no    | yes      |
 | picture3        |media/url?| no    | yes      |
 | picture4        |media/url?| no    | yes      |
