@@ -1,5 +1,12 @@
 # App name: Restaurant Repo
 
+## Design
+
+* [API design](docs/apis.md)
+* [Data model](docs/data-model.md)
+* [GHI](docs/ghi.md)
+* [Integrations](docs/integrations.md)
+
 ## Team name: The Cuisine Coders
 
 ## List of team members:
@@ -7,6 +14,7 @@
 * Cameron Guadagnino
 * Brandon Dix
 * David Quinlan
+
 
 ## Summary:
 * Detailed collection of restaurants that have garnered interest
