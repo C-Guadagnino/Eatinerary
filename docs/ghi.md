@@ -1,5 +1,8 @@
 # Graphical Human Interface
 
+Note to staff:
+- In the interest of time, the CuisineCoders team decided to use screenshots of existing pages + added modifications to represent some of our app's pages just for this submission. We will eventually create our own drawings.
+
 ## Home page before Login
 - Page visibility: All (Non-logged in, and Logged in users)
 - Description: This is the main page that people will see when they get to the Web site.
@@ -16,7 +19,7 @@
 
 ## Sign Up page
 - Page visibility: All (Non-logged in, and Logged in users)
-- Description: There will be 2 separate log-in pages based on user type:
+- Description: There will be 2 separate sign-up pages based on user type:
   1. Foodie sign-up page
   2. Restaurant Owner sign-up page
 
