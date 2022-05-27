@@ -30,10 +30,9 @@
 | owner           | For.Key | no     | no       |
 | restaurant_name | str     | no     | no       |
 | email           | str     | yes    | yes      |
-| phone           | int     | yes    | yes      |
+| phone           | str     | yes    | yes      |
 | location        | For.Key | no     | no       |
 | google_calendar | url?    | yes    | no       |
-| availability    | For.Key | no     | no       |
 | picture_url     | str     | no     | no       |
 | website         | url     | no     | yes      |
 | yelp_id         | str     | no     | no       |
@@ -84,7 +83,9 @@ https://www.yelp.com/developers/documentation/v3/get_started
 | restaurant      | For.Key | yes    | no       |
 | foodie          | For.Key | yes    | yes      |
 | created_DateTime| date    | no     | no       |
+| updated_DateTime| date    | no     | no       |
 | has_visited     | bool    | no     | no       |
+| is_active       | bool    | no     | no       |
 
 ## Reservation
 | Name            | Type    | Unique | Optional |
