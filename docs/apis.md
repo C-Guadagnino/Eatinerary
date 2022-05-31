@@ -4,29 +4,29 @@
 ## Create home page
 * **Method**: `GET`
 * **Path**: /
+* returns home page of the app. Maybe this is not an API endpoint, but just a web/GHI endpoint?
 
-## Create login
+## Login
 * **Method**: `POST`
 * **Path**: /login/foodie
 * **Path**: /login/owner
-
-## Login redirect after signup
-* **Method**: `POST`
-* **Path**: / login/redirect —> after user signs up, it redirects them to now log in (optional)
+* Logs in the foodie in the /login/foodie endpoint, and logs in the owner in the /login/owner endpoint. Maybe these are not API endpoints, but just web/GHI endpoints?
 
 ## Logout
 * **Method**: `GET`
 * **Path**: /logout
+* Logs the user out of their account. Maybe this is not an API endpoint, but just a web/GHI endpoint?
 
 ## Signup
 * **Method**: `POST`
 * **Path**: /signup/foodie
 * **Path**: /signup/owner
+* Signs up foodie/owner by creating an instance of foodie/owner
 
 
 ## Foodie Endpoints
 
-## Gets a list of restaurants the foodie has skewered
+## Get a list of restaurants the foodie has skewered
 * **Method**: `GET`
 * **Path**: /mySkewered
 
@@ -50,7 +50,7 @@ Output:
 }
 ```
 
-## Details for specific restaurant that user skewered
+## GET the details for a specific restaurant that user skewered
 * **Method**: `GET`
 * **Path**: /mySkewered/spotID/
 
@@ -67,7 +67,7 @@ Output:
 		}
 ```
 
-## Adds restaurant to Foodie's list
+## Add a restaurant to Foodie's Skewered list
 * **Method**: `POST`
 * **Path**: /addToSkewer
 
@@ -91,7 +91,7 @@ Output:
 }
 ```
 
-## Deletes restaurant from foodie's list
+## Remove restaurant from foodie's Skewered list
 * **Method**: `DELETE`
 * **Path**: /mySkewer/spotID/
 * Will not delete the restaurant instance from the list, but instead, will update the "is_active" field from true to false
@@ -111,7 +111,7 @@ Output:
 }
 ```
 
-## Update details of skewered restaurant, adds notes, etc.
+## Update details of a specific skewered restaurant, (STRETCH GOAL: adds notes, etc.)
 * **Method**: `PUT`
 * **Path**: /mySkewer/spotID/
 * "has_visited" field gets updated from false to true when the Foodie indicates they have visited the restaurant through GHI
