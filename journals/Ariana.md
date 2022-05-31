@@ -9,6 +9,16 @@ In the journals, every day that you work on the project, you must make an entry 
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
+## May 30, 2022
+Today, I worked on:
+* Updating the data-models.md and apis.md
+
+I cleaned up some of the models based on our group discussion from last week. Also updated apis.md to include more details as well as thinking a little more critically on whether a certain path is an API endpoint vs. GHI endpoint.
+
+I realized I have a hard time differentiating API endpoint vs GHI endpoint for the login/sign up pages mainly because the implementation of login/signup isn't too clear to me. The distinction between API endpoint and GHI endpoint for NON-login/signup pages is pretty clear to me at this point.
+
+Cleaning up some models to be one-to-many (while removing redundancy with nullable fields in other models) was enlightening! Also, being able to identify the need/use case for one-to-many relationships, many-to-many relationships is becoming easier and clearer.
+
 
 ## May 27, 2022
 
