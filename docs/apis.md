@@ -1,35 +1,33 @@
 # APIs
 
-Notes to staff:
-- The Cuisine Coders team is aware the format of this file is not as requested. Will ensure the format is as requested by next due date.
 
 ## Create home page
 * **Method**: `GET`
 * **Path**: /
 
 ## Create login
-* **Method**: `POST`       
-* **Path**: /login/foodie             
+* **Method**: `POST`
+* **Path**: /login/foodie
 * **Path**: /login/owner
 
 ## Login redirect after signup
-* **Method**: `POST`   
+* **Method**: `POST`
 * **Path**: / login/redirect —> after user signs up, it redirects them to now log in (optional)
 
-## Logout 
-* **Method**: `GET`           
+## Logout
+* **Method**: `GET`
 * **Path**: /logout
 
-## Signup 
-* **Method**: `POST`        
-* **Path**: /signup/foodie         
+## Signup
+* **Method**: `POST`
+* **Path**: /signup/foodie
 * **Path**: /signup/owner
 
 
 ## Foodie Endpoints
 
 ## Gets a list of restaurants the foodie has skewered
-* **Method**: `GET`          
+* **Method**: `GET`
 * **Path**: /mySkewered
 
 Output:
@@ -38,12 +36,12 @@ Output:
 	"skewered": [
 		{
 			"id": int,
-			"created_datetime": {datetime object},
-			"updated_datetime": {datetime object},
+			"created_datetime": string representing datetime object,
+			"updated_datetime": string representing datetime object,
 			"restaurant": {restaurant object} (nested object),
-			"foodie": {foodie object},
-			"has_visited": bool, default = false,
-			"is_active": bool, default = true
+			"foodie": {foodie object} (nested object),
+			"has_visited": bool,
+			"is_active": bool
 		},
 		{
 			restaurant 2 info, etc.
@@ -53,32 +51,31 @@ Output:
 ```
 
 ## Details for specific restaurant that user skewered
-* **Method**: `GET`          
-* **Path**: /mySkewered/spotID/   
+* **Method**: `GET`
+* **Path**: /mySkewered/spotID/
 
 Output:
-```json 
+```json
 		{
 			"id": int,
-			"created_datetime": {datetime object},
-			"updated_datetime": {datetime object},
+			"created_datetime": string representing datetime object,
+			"updated_datetime": string representing datetime object,
 			"restaurant": {restaurant object} (nested object),
-			"foodie": {foodie object},
-			"has_visited": bool, default = false,
-			"is_active": bool, default = true
+			"foodie": {foodie object} (nested object),
+			"has_visited": bool,
+			"is_active": bool
 		}
 ```
 
 ## Adds restaurant to Foodie's list
-* **Method**: `POST`        
+* **Method**: `POST`
 * **Path**: /addToSkewer
 
 Input:
-```json 
+```json
 {
 	"restaurant": string,
 	"foodie": string
-
 }
 ```
 
@@ -89,20 +86,21 @@ Output:
 	"created_datetime": {datetime object},
 	"restaurant": {restaurant object},
 	"foodie": {foodie object},
-	"has_visited": bool, default = false,
-	"is_active": bool, default = true
+	"has_visited": bool (default = false),
+	"is_active": bool (default = true)
 }
 ```
 
 ## Deletes restaurant from foodie's list
-* **Method**: `DELETE`    
+* **Method**: `DELETE`
 * **Path**: /mySkewer/spotID/
+* Will not delete the restaurant instance from the list, but instead, will update the "is_active" field from true to false
 
 Input:
-```json 
+```json
 {
 	"id": int (required),
-	"is_active": bool, false
+	"is_active": bool (will update from true to false)
 }
 ```
 
@@ -113,16 +111,16 @@ Output:
 }
 ```
 
-## Update details of skewered restaurant, adds notes, etc. 
-* **Method**: `PUT`   
-* **Path**: /mySkewer/spotID/         
-"has_visited" field gets updated from false to true when the Foodie indicates they have visited the restaurant
+## Update details of skewered restaurant, adds notes, etc.
+* **Method**: `PUT`
+* **Path**: /mySkewer/spotID/
+* "has_visited" field gets updated from false to true when the Foodie indicates they have visited the restaurant through GHI
 
 Input:
-```json 
+```json
 {
 	"id": int (required),
-	"has_visited": bool, true 
+	"has_visited": bool (true)
 }
 ```
 
@@ -130,19 +128,19 @@ Output:
 ```json
 {
 	"id": int,
-	"created_datetime": {datetime object},
-	"updated_datetime": {datetime object},
-	"restaurant": {restaurant object},
-	"foodie": {foodie object},
-	"has_visited": bool, default = false,
-	"is_active": bool, default = true
+	"created_datetime": string representing datetime object,
+	"updated_datetime": string representing datetime object,
+	"restaurant": {restaurant object} (nested object),
+	"foodie": {foodie object} (nested object),
+	"has_visited": bool (will have been updated to true),
+	"is_active": bool,
 }
 ```
 
 ## Restaurant endpoints
 
-## Get a list of restaurants from Yelp API 
-* **Method**: `GET`     
+## Get a list of restaurants from Yelp API
+* **Method**: `GET`
 * **Path**: /restaurants/
 
 
@@ -155,8 +153,8 @@ Output:
 			"restaurant_name": string,
 			"email": string,
 			"phone": str,
-			"location": ???, 
-			"google_calendar": url, 
+			"location": ???,
+			"google_calendar": url,
 			"picture_url": str,
 			"website": url,
 			"yelp_id": str,
@@ -164,8 +162,8 @@ Output:
 			"review_count": int,
 			"average_rating": int,
 			"price": str,
-			"categories": {categories object},
-			"hours": ???
+			"categories": {categories object} (nested object),
+			"hours": ??? (ideally nested object with each day's hours)
 		},
 		{
 			restaurant 2 info, etc.
@@ -174,9 +172,9 @@ Output:
 }
 ```
 
-## Get details of a specific restaurant 
-* **Method**: `GET`   
-* **Path**: /restaurants/id 
+## Get details of a specific restaurant
+* **Method**: `GET`
+* **Path**: /restaurants/id
 
 Output:
 ```json
@@ -185,8 +183,8 @@ Output:
 			"restaurant_name": string,
 			"email": string,
 			"phone": str,
-			"location": ???, 
-			"google_calendar": url, 
+			"location": ???,
+			"google_calendar": url,
 			"picture_url": str,
 			"website": url,
 			"yelp_id": str,
@@ -194,13 +192,13 @@ Output:
 			"review_count": int,
 			"average_rating": int,
 			"price": str,
-			"categories": {categories object},
-			"hours": ???
+			"categories": {categories object} (nested object),
+			"hours": ??? (ideally nested object with each day's hours)
 		}
 ```
 
-## Get a list of restaurants depending on the search_query 
-* **Method**: `GET`     
+## Get a list of restaurants depending on the search_query
+* **Method**: `GET`
 * **Path**: /restaurants/search_query
 * **Example path**: /restaurants/bbq/ —> lists all restaurants that have bbq
 
@@ -213,8 +211,8 @@ Output:
 			"restaurant_name": string,
 			"email": string,
 			"phone": str,
-			"location": ???, 
-			"google_calendar": url, 
+			"location": ???,
+			"google_calendar": url,
 			"picture_url": str,
 			"website": url,
 			"yelp_id": str,
@@ -222,8 +220,8 @@ Output:
 			"review_count": int,
 			"average_rating": int,
 			"price": str,
-			"categories": {categories object},
-			"hours": ???
+			"categories": {categories object} (nested object),
+			"hours": ??? (ideally nested object with each day's hours)
 		},
 		{
 			restaurant 2 info, etc.
@@ -235,38 +233,38 @@ Output:
 ## Google Maps endpoints
 
 ## Get ETA from current location to restaurant destination
-* **Method**: `GET`    
+* **Method**: `GET`
 * **Path**: /ETA
 
 Input:
 ```json
 {
-	"foodie_location": coordinates(whatever Google Maps API returns), 
+	"foodie_location": coordinates (whatever Google Maps API requires as input),
 	"restaurant_id": int
 }
 ```
 Output:
 ```json
 {
-	"ETA": {time duration object}
+	"ETA": string representing time duration (may be slightly different depending on what the Google Maps API returns)
 }
 ```
 
 ## Get directions from current location to restaurant destination
-* **Method**: `GET`    
+* **Method**: `GET`
 * **Path**: /navigation
 
 Input:
 ```json
 {
-	"foodie_location": coordinates(whatever Google Maps API returns), 
+	"foodie_location": coordinates (whatever Google Maps API requires as input),
 	"restaurant_id": int
 }
 
 Output:
 ```json
 {
-	"directions": Google Maps link
+	"directions": Google Maps link (may be slightly different depending on what the Google Maps API returns)
 }
 ```
 
@@ -275,38 +273,38 @@ Output:
 ## Google Calendar
 
 <!-- ## Owner gets a list of calendar dates
-* **Method**: `GET`    
+* **Method**: `GET`
 * **Path**: calendar/dates -->
 
 ## Owner creates a promotion for restaurant
-* **Method**: `POST`   
+* **Method**: `POST`
 * **Path**: /advertisements
 
 Input:
 ```json
 {
 	"restaurant_id": int,
-	"startdatetime": datetime,
-	"enddatetime": enddatetime
+	"startdatetime": datetime obj/str(?) representing start date and time,
+	"enddatetime": datetime obj/str(?) representing end date and time
 }
 
 Output:
 ```json
 {
 	"promotion_id": int,
-	"message": "You successfully made a promotion!" 
+	"message": "You have successfully reserved an advertisement slot!"
 }
 ```
 
 Output:
 ```json
 {
-	"message": "Payment for promotion failed" 
+	"message": "Payment for promotion failed"
 }
 ```
 
 ## Owner lists promotions that they currently have going
-* **Method**: `GET`   
+* **Method**: `GET`
 * **Path**: /advertisements
 
 Output:
@@ -315,8 +313,8 @@ Output:
 	"promotions": [
 		{
 			"restaurant_id": int,
-			"startdatetime": datetime,
-			"enddatetime": enddatetime
+			"startdatetime": string representing start date & time,
+			"enddatetime": string representing end date & time
 		},
 		{
 			promotion 2 info, etc..
@@ -326,31 +324,31 @@ Output:
 ```
 
 
-## Owner updates a promotion
-* **Method**: `PUT`   
+## Owner updates a promotion (STRETCH GOAL)
+* **Method**: `PUT`
 * **Path**: /advertisements/promotion_id/
 
 Input:
 ```json
 {
 		"promotion_id": int,
-		"startdatetime": datetime,
-		"enddatetime": enddatetime,
-		"start_extension": datetime (stretch goal),
-		"end_extension": datetime (stretch goal)
+		"startdatetime": start datetime,
+		"enddatetime": end datetime,
+		"start_extension": time duration (to extend startdatetime),
+		"end_extension": time duration (to extend enddatetime)
 }
 
 Output:
 ```json
 {
 		"promotion_id": int,
-		"startdatetime": datetime,
-		"enddatetime": enddatetime
+		"startdatetime": datetime obj/str(?),
+		"enddatetime": datetime obj/str(?)
 }
 ```
 
 ## Owner gets details for a promotion
-* **Method**: `GET`   
+* **Method**: `GET`
 * **Path**: /advertisements/promotion_id/
 
 Input:
@@ -363,8 +361,8 @@ Output:
 ```json
 {
 	"promotion_id": int,
-	"startdatetime": datetime,
-	"enddatetime": enddatetime
+	"startdatetime": datetime obj/str(?),
+	"enddatetime": datetime obj/str(?)
 }
 ```
 
@@ -372,16 +370,16 @@ Output:
 * **Method**: `POST`
 * **Path**: /specialDates
 
-Input:
+Input (TBD -- will depend on what Google Calendar API takes as input):
 ```json
 {
 
 }
 
-Output:
+Output (TBD -- will depend on what Google Calendar API returns as output):
 ```json
 {
-	
+
 }
 ```
 
@@ -389,16 +387,16 @@ Output:
 * **Method**: `GET`
 * **Path**: /specialDates
 
-Input:
+Input (TBD -- will depend on what the Google Calendar API takes as input):
 ```json
 {
 
 }
 
-Output:
+Output (TBD -- will depend on what the Google Calendar API returns as output):
 ```json
 {
-	
+
 }
 ```
 
@@ -406,16 +404,16 @@ Output:
 * **Method**: `GET`
 * **Path**: /specialDates/id/
 
-Input:
+Input (TBD -- will depend on what the Google Calendar API takes as input):
 ```json
 {
 
 }
 
-Output:
+Output (TBD -- will depend on what the Google Calendar API returns as output):
 ```json
 {
-	
+
 }
 ```
 
@@ -423,16 +421,16 @@ Output:
 * **Method**: `PUT`
 * **Path**: /specialDates/id/
 
-Input:
+Input (TBD -- will depend on what the Google Calendar API takes as input):
 ```json
 {
 
 }
 
-Output:
+Output (TBD -- will depend on what the Google Calendar API returns as output):
 ```json
 {
-	
+
 }
 ```
 
@@ -440,16 +438,16 @@ Output:
 * **Method**: `DELETE`
 * **Path**: /specialDates/id/
 
-Input:
+Input (TBD -- will depend on what the Google Calendar API takes as input):
 ```json
 {
 
 }
 
-Output:
+Output (TBD -- will depend on what the Google Calendar API returns as output):
 ```json
 {
-	
+
 }
 ```
 
