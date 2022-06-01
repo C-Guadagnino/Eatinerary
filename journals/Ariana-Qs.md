@@ -14,4 +14,4 @@
 
 4)
 * Q: For ubiquitous language: should we decide on "promotion slot" or "ad slot" or something else? Need to decide on something and make it consistent throughout models and APIs
-* A:
+* A: Cuisine Coders decided on "Ad slot"
