@@ -9,6 +9,16 @@ In the journals, every day that you work on the project, you must make an entry 
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
+## May 31, 2022
+Today,I worked on:
+* Updating the data-model.md, identifying the bounded contexts and microservices of the project at a high level
+
+Brandon, Cameron, David and I worked as a group to identify the bounded contexts before jumping into writing implementation code.
+
+I struggled to identify the relationship between Skewered_restaurant and Restaurant_VO models, as there was some confusion.
+
+We finally got confirmation from Chris that the relationship should indeed be many-to-one (from Skewered_restaurant to Restaurant_VO)
+
 ## May 30, 2022
 Today, I worked on:
 * Updating the data-models.md and apis.md
