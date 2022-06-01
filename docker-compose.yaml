@@ -1,0 +1,81 @@
+volumes:
+  # [name of DB here]:
+  #   external: true (this value determines if it can be accessed 'externally')
+  # I assume we will need a DB for each of the API groupings of information i.e Maps, resturants, as well as the Application-data
+  # I can think of 3 db's maps-data / resturant-data / app-data
+services:
+  react: # we need this for all of our react components 
+    image: node:lts-bullseye
+    command: /bin/bash run.sh
+    working_dir: /app
+    volumes:
+      - ./ghi/app:/app
+    ports:
+      - "3000:3000"
+    environment:
+      HOST_OS: ${OS}
+      NODE_ENV: development
+      HOST: "0.0.0.0"
+  database: 
+    image: postgres:14.2-bullseye
+    volumes:
+  # we will change path to [name of DB]:/var/lib/postgresql/data  in volumes
+      - beta-data:/var/lib/postgresql/data
+  # I think we leave this the same
+      - ./db:/docker-entrypoint-initdb.d
+    environment:
+  # Here we have to change our Multiple Databases to the microservices we are going to use.
+      - POSTGRES_MULTIPLE_DATABASES=inventory,sales,service
+      - POSTGRES_PASSWORD=test-databases
+    ports:
+      - 15432:5432
+
+  # From here we have to make our API's and Pollers in the YAML which we have created already.
+  # The examples are for project-beta, however we need to adopt for us.
+  # I left one example, however we need to this for every API and Endpoint.
+
+  inventory-api:
+    build:
+      context: ./inventory/api
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - "8100:8000"
+    volumes:
+      - ./inventory/api:/app
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: postgres://inventory:password@database:5432/inventory
+      WAIT_HOSTS: database:5432
+      WAIT_TIMEOUT: 240
+
+  # This is the example for how we would write an API/Poller combo
+  service-api:
+    build:
+      context: ./service/api
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - "8080:8000"
+    volumes:
+      - ./service/api:/app
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: postgres://service:password@database:5432/service
+      WAIT_HOSTS: database:5432
+      WAIT_TIMEOUT: 240
+  service-poller:
+    build:
+      context: ./service/poll
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./service/poll:/app
+      - ./service/api/service_project:/app/service_project
+      - ./service/api/service_rest:/app/service_rest
+    depends_on:
+      - database
+      - service-api
+    environment:
+      DATABASE_URL: postgres://service:password@database:5432/service
+      WAIT_HOSTS: database:5432,service-api:8000
+      WAIT_TIMEOUT: 240

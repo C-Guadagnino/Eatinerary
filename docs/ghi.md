@@ -1,6 +1,6 @@
 # Graphical Human Interface
 
-Note to staff:
+Note to staff:              
 - In the interest of time, the CuisineCoders team decided to use screenshots of existing pages + added modifications to represent some of our app's pages just for this submission. We will eventually create our own drawings.
 
 ## Home page before Login
