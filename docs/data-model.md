@@ -1,6 +1,6 @@
 # Data models
 
-![Eatinerary_BoundedContexts_220531v3](Eatinerary_BoundedContexts_220531v3.png)
+![Eatinerary_BoundedContexts_220531v4](Eatinerary_BoundedContexts_220531v4.png)
 
 ## User (Django's built-in user model) ???
 | Name            | Type    | Unique | Optional |
