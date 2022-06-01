@@ -40,7 +40,7 @@
 | google_calendar | url?    | yes    | no       |
 |restaurant_pic???| For.Key | no     | no       |
 | website         | url     | no     | yes      |
-| yelp_id         | str     | no     | no       |
+| yelp_id         | str     | yes    | yes      |
 | href            | url     | no     | yes      |
 | review_count    | int     | yes    | yes      |
 | average_rating  | int     | yes    | yes      |
@@ -110,7 +110,7 @@ https://www.yelp.com/developers/documentation/v3/get_started
 | image           | For.Key | no     | yes      |
 
 
-## Image VO (one-to-many relationship between review and picture)
+## Image VO (one-to-many relationship between review and image VO)
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
 | image_url       | media/url? should we require picture_url, or allow Foodie to upload image directly? (Need to look into this, and implications of user experience vs resources taken up for loading app when existing number of images in app increase dramatically)     | yes    | no       |
