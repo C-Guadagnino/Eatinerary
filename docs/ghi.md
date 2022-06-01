@@ -120,7 +120,7 @@ Note to staff:
 
 ![011_Foodie_Reservations](wireframes/011_Foodie_Reservations.png)
 
-## Restaurant Owner - Promotion slot sign up/payment page
+## Restaurant Owner - Ad slot sign up/payment page
 - Page visibility: Restaurant Owners
 - Description: This is the page where a restaurant owner can sign up and pay for time slots to promote restaurant (this means that for the time slot the owner paid for, the specific restaurant will show up at the top on the "Restaurants List/Search" page)
     - Currently in bottom left pane in drawing (but will be moved to top left pane) shows a list of restaurants that this restaurant owner owns. The restaurant owner can select a restaurant (if more than one) and the calendar will update with the location-specific availability.

@@ -276,7 +276,7 @@ Output:
 * **Method**: `GET`
 * **Path**: calendar/dates -->
 
-## Owner creates a promotion for restaurant
+## Owner creates an ad_slot for restaurant
 * **Method**: `POST`
 * **Path**: /advertisements
 
@@ -291,7 +291,7 @@ Input:
 Output:
 ```json
 {
-	"promotion_id": int,
+	"ad_slot_id": int,
 	"message": "You have successfully reserved an advertisement slot!"
 }
 ```
@@ -299,39 +299,39 @@ Output:
 Output:
 ```json
 {
-	"message": "Payment for promotion failed"
+	"message": "Payment for ad_slot failed"
 }
 ```
 
-## Owner lists promotions that they currently have going
+## Owner lists ad slots that they currently have going
 * **Method**: `GET`
 * **Path**: /advertisements
 
 Output:
 ```json
 {
-	"promotions": [
+	"ad_slots": [
 		{
 			"restaurant_id": int,
 			"startdatetime": string representing start date & time,
 			"enddatetime": string representing end date & time
 		},
 		{
-			promotion 2 info, etc..
+			ad_slot 2 info, etc..
 		}
 	]
 }
 ```
 
 
-## Owner updates a promotion (STRETCH GOAL)
+## Owner updates an ad_slot (STRETCH GOAL)
 * **Method**: `PUT`
-* **Path**: /advertisements/promotion_id/
+* **Path**: /advertisements/ad_slot_id/
 
 Input:
 ```json
 {
-		"promotion_id": int,
+		"ad_slot_id": int,
 		"startdatetime": start datetime,
 		"enddatetime": end datetime,
 		"start_extension": time duration (to extend startdatetime),
@@ -341,26 +341,26 @@ Input:
 Output:
 ```json
 {
-		"promotion_id": int,
+		"ad_slot_id": int,
 		"startdatetime": datetime obj/str(?),
 		"enddatetime": datetime obj/str(?)
 }
 ```
 
-## Owner gets details for a promotion
+## Owner gets details for an ad_slot
 * **Method**: `GET`
-* **Path**: /advertisements/promotion_id/
+* **Path**: /advertisements/ad_slot_id/
 
 Input:
 ```json
 {
-	"promotion_id": int,
+	"ad_slot_id": int,
 }
 
 Output:
 ```json
 {
-	"promotion_id": int,
+	"ad_slot_id": int,
 	"startdatetime": datetime obj/str(?),
 	"enddatetime": datetime obj/str(?)
 }
