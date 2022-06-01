@@ -1,7 +1,13 @@
 volumes:
+  eatinerary-data:
+    external: true
+  eatinerary-maps-data:
+    external: true
+  eatinerary-yelp-data:
+    external: true
   # [name of DB here]:
   #   external: true (this value determines if it can be accessed 'externally')
-  # I assume we will need a DB for each of the API groupings of information i.e Maps, resturants, as well as the Application-data
+  # I assume we will need a DB for each of the API groupings of information i.e Maps, eateries, as well as the Application-data
   # I can think of 3 db's maps-data / resturant-data / app-data
 services:
   react: # we need this for all of our react components 
@@ -20,12 +26,12 @@ services:
     image: postgres:14.2-bullseye
     volumes:
   # we will change path to [name of DB]:/var/lib/postgresql/data  in volumes
-      - beta-data:/var/lib/postgresql/data
+      - eatinerary-data:/var/lib/postgresql/data
   # I think we leave this the same
       - ./db:/docker-entrypoint-initdb.d
     environment:
   # Here we have to change our Multiple Databases to the microservices we are going to use.
-      - POSTGRES_MULTIPLE_DATABASES=inventory,sales,service
+      - POSTGRES_MULTIPLE_DATABASES=foodies,eateries,owners,users
       - POSTGRES_PASSWORD=test-databases
     ports:
       - 15432:5432
@@ -34,48 +40,111 @@ services:
   # The examples are for project-beta, however we need to adopt for us.
   # I left one example, however we need to this for every API and Endpoint.
 
-  inventory-api:
+  foodies-api:
     build:
-      context: ./inventory/api
+      context: ./foodies/api
       dockerfile: ./Dockerfile.dev
     ports:
       - "8100:8000"
     volumes:
-      - ./inventory/api:/app
+      - ./foodies/api:/app
     depends_on:
       - database
     environment:
-      DATABASE_URL: postgres://inventory:password@database:5432/inventory
+      DATABASE_URL: postgres://foodies:password@database:5432/foodies
+      WAIT_HOSTS: database:5432
+      WAIT_TIMEOUT: 240
+      
+
+  foodies-poller:
+    build:
+      context: ./foodies/api
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./foodies/poll:/app
+      - ./foodies/api/foodies_project:/app/foodies_project
+      - ./foodies/api/foodies_rest:/app/foodies_rest
+    depends_on:
+      - database
+      - foodies-api
+    environment:
+      DATABASE_URL: postgres://foodies:password@database:5432/foodies
+      WAIT_HOSTS: database:5432,foodies-api:8000
+      WAIT_TIMEOUT: 240
+
+  eateries-api:
+    build:
+      context: ./eateries/api
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - "8090:8000"
+    volumes:
+      - ./eateries/api:/app
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: postgres://eateries:password@database:5432/eateries
       WAIT_HOSTS: database:5432
       WAIT_TIMEOUT: 240
 
-  # This is the example for how we would write an API/Poller combo
-  service-api:
+  eateries-poller:
     build:
-      context: ./service/api
+      context: ./eateries/api
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./eateries/poll:/app
+      - ./eateries/api/eateries_project:/app/eateries_project
+      - ./eateries/api/eateries_rest:/app/eateries_rest
+    depends_on:
+      - database
+      - eateries-api
+    environment:
+      DATABASE_URL: postgres://eateries:password@database:5432/eateries
+      WAIT_HOSTS: database:5432,eateries-api:8000
+      WAIT_TIMEOUT: 240
+    
+  owners-api:
+    build:
+      context: ./owners/api
       dockerfile: ./Dockerfile.dev
     ports:
       - "8080:8000"
     volumes:
-      - ./service/api:/app
+      - ./owners/api:/app
     depends_on:
       - database
     environment:
-      DATABASE_URL: postgres://service:password@database:5432/service
+      DATABASE_URL: postgres://owners:password@database:5432/owners
       WAIT_HOSTS: database:5432
       WAIT_TIMEOUT: 240
-  service-poller:
+
+  owners-poller:
     build:
-      context: ./service/poll
+      context: ./owners/api
       dockerfile: ./Dockerfile.dev
     volumes:
-      - ./service/poll:/app
-      - ./service/api/service_project:/app/service_project
-      - ./service/api/service_rest:/app/service_rest
+      - ./owners/poll:/app
+      - ./owners/api/owners_project:/app/owners_project
+      - ./owners/api/owners_rest:/app/owners_rest
     depends_on:
       - database
-      - service-api
+      - owners-api
     environment:
-      DATABASE_URL: postgres://service:password@database:5432/service
-      WAIT_HOSTS: database:5432,service-api:8000
+      DATABASE_URL: postgres://owners:password@database:5432/owners
+      WAIT_HOSTS: database:5432,owners-api:8000
+      WAIT_TIMEOUT: 240
+
+  users-api:
+    build:
+      context: ./users/api
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - "8070:8000"
+    volumes:
+      - ./users/api:/app
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: postgres://users:password@database:5432/users
+      WAIT_HOSTS: database:5432
       WAIT_TIMEOUT: 240
