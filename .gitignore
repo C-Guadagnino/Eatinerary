@@ -165,6 +165,7 @@ cython_debug/
 
 # dependencies
 /node_modules
+ghi/app/node_modules
 /.pnp
 .pnp.js
 
