@@ -54,7 +54,7 @@ services:
       DATABASE_URL: postgres://foodies:password@database:5432/foodies
       WAIT_HOSTS: database:5432
       WAIT_TIMEOUT: 240
-      
+
 
   foodies-poller:
     build:
