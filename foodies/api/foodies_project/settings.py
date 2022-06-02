@@ -29,6 +29,7 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
+    'foodies_rest.apps.FoodiesRestConfig',
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
