@@ -26,7 +26,7 @@
 
 ## Foodie Endpoints
 
-## Get a list of restaurants the foodie has skewered
+## Get a list of eateries the foodie has skewered
 * **Method**: `GET`
 * **Path**: /mySkewered
 
@@ -38,19 +38,19 @@ Output:
 			"id": int,
 			"created_datetime": string representing datetime object,
 			"updated_datetime": string representing datetime object,
-			"restaurant": {restaurant object} (nested object),
+			"eatery": {eatery object} (nested object),
 			"foodie": {foodie object} (nested object),
 			"has_visited": bool,
 			"is_active": bool
 		},
 		{
-			restaurant 2 info, etc.
+			eatery 2 info, etc.
 		}
 	]
 }
 ```
 
-## GET the details for a specific restaurant that user skewered
+## GET the details for a specific eatery that user skewered
 * **Method**: `GET`
 * **Path**: /mySkewered/spotID/
 
@@ -60,21 +60,21 @@ Output:
 			"id": int,
 			"created_datetime": string representing datetime object,
 			"updated_datetime": string representing datetime object,
-			"restaurant": {restaurant object} (nested object),
+			"eatery": {eatery object} (nested object),
 			"foodie": {foodie object} (nested object),
 			"has_visited": bool,
 			"is_active": bool
 		}
 ```
 
-## Add a restaurant to Foodie's Skewered list
+## Add a eatery to Foodie's Skewered list
 * **Method**: `POST`
 * **Path**: /addToSkewer
 
 Input:
 ```json
 {
-	"restaurant": string,
+	"eatery": string,
 	"foodie": string
 }
 ```
@@ -84,17 +84,17 @@ Output:
 {
 	"id": int,
 	"created_datetime": {datetime object},
-	"restaurant": {restaurant object},
+	"eatery": {eatery object},
 	"foodie": {foodie object},
 	"has_visited": bool (default = false),
 	"is_active": bool (default = true)
 }
 ```
 
-## Remove restaurant from foodie's Skewered list
+## Remove eatery from foodie's Skewered list
 * **Method**: `DELETE`
 * **Path**: /mySkewer/spotID/
-* Will not delete the restaurant instance from the list, but instead, will update the "is_active" field from true to false
+* Will not delete the eatery instance from the list, but instead, will update the "is_active" field from true to false
 
 Input:
 ```json
@@ -107,14 +107,14 @@ Input:
 Output:
 ```json
 {
-	"message": "Restaurant has been unskewered"
+	"message": "Eatery has been unskewered"
 }
 ```
 
-## Update details of a specific skewered restaurant, (STRETCH GOAL: adds notes, etc.)
+## Update details of a specific skewered eatery, (STRETCH GOAL: adds notes, etc.)
 * **Method**: `PUT`
 * **Path**: /mySkewer/spotID/
-* "has_visited" field gets updated from false to true when the Foodie indicates they have visited the restaurant through GHI
+* "has_visited" field gets updated from false to true when the Foodie indicates they have visited the eatery through GHI
 
 Input:
 ```json
@@ -130,27 +130,27 @@ Output:
 	"id": int,
 	"created_datetime": string representing datetime object,
 	"updated_datetime": string representing datetime object,
-	"restaurant": {restaurant object} (nested object),
+	"eatery": {eatery object} (nested object),
 	"foodie": {foodie object} (nested object),
 	"has_visited": bool (will have been updated to true),
 	"is_active": bool,
 }
 ```
 
-## Restaurant endpoints
+## Eatery endpoints
 
-## Get a list of restaurants from Yelp API
+## Get a list of eateries from Yelp API
 * **Method**: `GET`
-* **Path**: /restaurants/
+* **Path**: /eateries/
 
 
 Output:
 ```json
 {
-	"restaurants": [
+	"eateries": [
 		{
 			"owner": string,
-			"restaurant_name": string,
+			"eatery_name": string,
 			"email": string,
 			"phone": str,
 			"location": ???,
@@ -166,21 +166,21 @@ Output:
 			"hours": ??? (ideally nested object with each day's hours)
 		},
 		{
-			restaurant 2 info, etc.
+			eatery 2 info, etc.
 		}
 	]
 }
 ```
 
-## Get details of a specific restaurant
+## Get details of a specific eatery
 * **Method**: `GET`
-* **Path**: /restaurants/id
+* **Path**: /eateries/id
 
 Output:
 ```json
 		{
 			"owner": string,
-			"restaurant_name": string,
+			"eatery_name": string,
 			"email": string,
 			"phone": str,
 			"location": ???,
@@ -197,18 +197,18 @@ Output:
 		}
 ```
 
-## Get a list of restaurants depending on the search_query
+## Get a list of eateries depending on the search_query
 * **Method**: `GET`
-* **Path**: /restaurants/search_query
-* **Example path**: /restaurants/bbq/ —> lists all restaurants that have bbq
+* **Path**: /eateries/search_query
+* **Example path**: /eateries/bbq/ —> lists all eateries that have bbq
 
 Output:
 ```json
 {
-	"restaurants": [
+	"eateries": [
 		{
 			"owner": string,
-			"restaurant_name": string,
+			"eatery_name": string,
 			"email": string,
 			"phone": str,
 			"location": ???,
@@ -224,7 +224,7 @@ Output:
 			"hours": ??? (ideally nested object with each day's hours)
 		},
 		{
-			restaurant 2 info, etc.
+			eatery 2 info, etc.
 		}
 	]
 }
@@ -232,7 +232,7 @@ Output:
 
 ## Google Maps endpoints
 
-## Get ETA from current location to restaurant destination
+## Get ETA from current location to eatery destination
 * **Method**: `GET`
 * **Path**: /ETA
 
@@ -240,7 +240,7 @@ Input:
 ```json
 {
 	"foodie_location": coordinates (whatever Google Maps API requires as input),
-	"restaurant_id": int
+	"eatery_id": int
 }
 ```
 Output:
@@ -250,7 +250,7 @@ Output:
 }
 ```
 
-## Get directions from current location to restaurant destination
+## Get directions from current location to eatery destination
 * **Method**: `GET`
 * **Path**: /navigation
 
@@ -258,7 +258,7 @@ Input:
 ```json
 {
 	"foodie_location": coordinates (whatever Google Maps API requires as input),
-	"restaurant_id": int
+	"eatery_id": int
 }
 
 Output:
@@ -276,14 +276,14 @@ Output:
 * **Method**: `GET`
 * **Path**: calendar/dates -->
 
-## Owner creates an ad_slot for restaurant
+## Owner creates an ad_slot for eatery
 * **Method**: `POST`
 * **Path**: /advertisements
 
 Input:
 ```json
 {
-	"restaurant_id": int,
+	"eatery_id": int,
 	"startdatetime": datetime obj/str(?) representing start date and time,
 	"enddatetime": datetime obj/str(?) representing end date and time
 }
@@ -312,7 +312,7 @@ Output:
 {
 	"ad_slots": [
 		{
-			"restaurant_id": int,
+			"eatery_id": int,
 			"startdatetime": string representing start date & time,
 			"enddatetime": string representing end date & time
 		},
