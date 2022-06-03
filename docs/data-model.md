@@ -37,8 +37,6 @@
 | email           | str     | yes    | yes      |
 | phone           | str     | yes    | yes      |
 | location        | OneToOne| no     | no       |
-| google_calendar | url?    | yes    | no       |
-| eatery_pic???   | For.Key | no     | no       |
 | website         | url     | no     | yes      |
 | yelp_id         | str     | yes    | yes      |
 | href            | url     | no     | yes      |
@@ -48,10 +46,11 @@
 | tag             |Many2Many| no     | no       |
 | categories      |Many2Many? not sure about how to model eatery categories. ManyToMany Field, since 1 eatery can have many eatery categories, and 1 category can have many Eateries?| yes  | yes      |
 
-## Eatery_Pic VO (one-to-many relationship between eatery and picture) (do we need this model to be separate from Image VO model OR can the Image VO model be used for both having Foreign keys in the Review AND Eatery models) ???
+## Eatery_Image (one-to-many relationship between eatery and picture) (do we need this model to be separate from Image VO model OR can the Image VO model be used for both having Foreign keys in the Review AND Eatery models) ???
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
-| image_url       | media/url? should we require picture_url, or allow Foodie to upload image directly? (Need to look into this, and implications of user experience vs resources taken up for loading app when existing number of images in app increase dramatically)     | yes    | no       |
+| eatery          | For.Key | no     | no       |
+| image_url       | media/url? should we require image_url, or allow Foodie to upload image directly? (Need to look into this, and implications of user experience vs resources taken up for loading app when existing number of images in app increase dramatically)     | yes    | no       |
 
 ## Eatery_categories???
 https://www.yelp.com/developers/documentation/v3/get_started
@@ -94,6 +93,7 @@ https://www.yelp.com/developers/documentation/v3/get_started
 
 ## Tag VO (many-to-many relationship between Tag and Eatery. #datenight #brunch, etc. Tags are created by foodies and are visible and searchable by the entire app user-base, so any user can search for #datenight #brospot.
 * //Discussed// Discuss with Cuisine Coders whether we want the tags to be related to Eateries instead of Skewered Eateries, and for the tags to be visible by everyone instead of just by the foodie that created them. That way the whole RestaurantRepo community can benefit from the tags other people add to Eateries, and can even search/filter by those tags.)
+
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
 | tag             | str     | yes    | no       |
@@ -110,9 +110,10 @@ https://www.yelp.com/developers/documentation/v3/get_started
 | image           | For.Key | no     | yes      |
 
 
-## Image VO (one-to-many relationship between review and image VO)
+## Review_Image (one-to-many relationship between review and image)
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
+| review          | For.Key | no     | yes      |
 | image_url       | media/url? should we require picture_url, or allow Foodie to upload image directly? (Need to look into this, and implications of user experience vs resources taken up for loading app when existing number of images in app increase dramatically)     | yes    | no       |
 
 

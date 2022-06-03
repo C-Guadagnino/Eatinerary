@@ -2,9 +2,55 @@ from django.db import models
 
 # Create your models here.
 
-# OwnerVO
 
-# EateryVO
+# class OwnerVO(models.Model):
+#     username = models.CharField(max_length=200)
+#     first_name = models.CharField(max_length=200)
+#     last_name = models.CharField(max_length=200)
+#     email = models.CharField(max_length=200)
+#     phone = models.CharField(max_length=20)
+
+
+class EateryVO(models.Model):
+    import_href = models.CharField(max_length=200)
+    # design choice decision to discuss with CuisineCoders:
+    # our app will only display eateries that are claimed by an owner.
+    # there cannot be an eatery that is unclaimed by an owner.
+    # JK!!!! we decided that our app will display eateries from yelp even BEFORE an owner claims them
+    owner = models.ForeignKey(
+        "OwnerVO",
+        related_name="eateries",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    eatery_name = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    phone = models.CharField(max_length=200)
+    location = models.OneToOneField(
+        "EateryLocation", related_name="eatery", on_delete=models.CASCADE
+    )
+    website = models.URLField(max_length=200)
+    yelp_id = models.CharField(max_length=200)
+    # what was href for???
+    href = models.URLField(max_length=200)
+    review_count = models.PositiveSmallIntegerField()
+    average_rating = models.FloatField()
+    # "$$"
+    price = models.CharField(max_length=4)
+    # should this go in the EateryVO model or
+    # tag = models.ManyToManyField("TagVO")
+    categories = models.ManyToManyField("EateryCategory", related_name="categories")
+
+
+# Do we need to bring over the Tag model as TagVO in this microservice?
+# this should become more clear once we're building the React app
+# class TagVO(models.Model):
+#     import_href = models.CharField(max_length=200)
+#     # ???
+#     eatery_id = models.PositiveSmallIntegerField()
+#     # more details in ManyToManyField
+#     tag = models.CharField(max_length=200, unique=True)
 
 
 class EateryCategory(models.Model):
@@ -110,7 +156,8 @@ WEEKDAYS = [
 
 
 class EateryOpenHours(models.Model):
-    # eatery = models.ForeignKey("EateryVO")
+    # placeholder until we have a working EateryVO model
+    # eatery = models.ForeignKey("EateryVO", related_name="openhours", on_delete=models.CASCADE)
     weekday = models.PositiveSmallIntegerField(choices=WEEKDAYS)
     start_time = models.TimeField()
     end_time = models.TimeField()
@@ -137,8 +184,13 @@ class EateryOpenHours(models.Model):
         )
 
 
+class EateryImage(models.Model):
+    image_url = models.TextField()
+    # eatery = models.ForeignKey("EateryVO", related_name="images", on_delete=models.CASCADE)
+
+
 class EateryAdSlot(models.Model):
-    # eatery = models.ForeignKey("EateryVO")
+    # eatery = models.ForeignKey("EateryVO", related_name="adslots", on_delete=models.CASCADE)
     start_datetime = models.DateTimeField()
     end_datetime = models.DateTimeField()
 
