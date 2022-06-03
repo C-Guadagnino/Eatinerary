@@ -7,6 +7,17 @@
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
+## June 02, 2022
+Today, I worked on:
+* We split up into pairs today, Ariana and myself have started the models implementation for the Owners service.
+
+Ariana and myself worked on creating the models for the owners microservice. We are waiting to create the EateryVO and OwnerVO for obvious reasons of the Respective microservices are not built yet containing the Entities of those VOs.
+
+We had some fun digging around with how to handle the hours of operations set-up. We decided to create a list of unique values tied to the weekdays, use that with the "choices=" argument in the PositveSmallInterger field, then used the Meta class to order that field by a "start_time" field and then we constrained it to be uniquely together based on start and end time fields. We Also had merge issues because we forgot to add the pycache to the gitignore file. 
+
+We had an ah-ha moment by finding the solution I described above. This was an issue we worked through and eventually we were able to identify in the admin panel tht we were getting back the information and formatting we were looking for. Chris gave us the command " find . -name "*.pyc" -exec git rm -f "{}" "
+
+
 ## June 01, 2022
 Today, I worked on:
 * Creating the YML file with my team and creating the virtual environment for the project
