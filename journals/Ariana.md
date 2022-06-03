@@ -9,6 +9,15 @@ In the journals, every day that you work on the project, you must make an entry 
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
+## Jun 2, 2022
+* Today I worked on the models in the Owners microservice.
+
+* Brandon and I pair-programmed as we wrote the models for the Owners microservice, setting up the admin, and testing the models in the Django admin.
+
+* When we were done and wanted to push the changes to the remote repository, we ran into a gitignore issue with .pyc files. Because we had the .gitignore file always given to us ready to use, we forgot to keep it in mind, so all the .pyc files were included in the git add and git commit commands. (To be continued on next bullet).
+
+* We eventually learned that the .gitignore file should be at the root directory and should contain the directories and files for git to ignore. I learned that it doesn't matter if the .gitignore file contains a lot of files and directories that don't even exist in the project. It also doesn't matter if the same directory/file is written more than once. The worry should be a directory/file NOT having been explicitly specified in the .gitignore file, which results in unwanted directories/files being pushed to the remote repository. But "extra" stuff being specified in the .gitignore file is NOT a concern.
+
 ## Jun 1, 2022
 * Today I worked on putting together the docker-compose.yaml file.
 
