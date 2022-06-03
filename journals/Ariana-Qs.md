@@ -2,7 +2,7 @@
 
 1)
 * Q: Can we change our App name to "Eatinerary"? If so, would we be able to leave the repo/project name intact as "Restaurant-repo", or do we need to make all those changes? Best practice?
-* A:
+* A: Per Curtis, not hard at all! Just need a few easy steps on Gitlab. He recommended we do it once we finish the project.
 
 2)
 * Q: Do we need API endpoints to support the signup/login pages? We have used the Django built-in signup/login functionalities in past projects, and these did not need API endpoints (since Django handled them directly).
