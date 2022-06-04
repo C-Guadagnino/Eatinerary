@@ -9,6 +9,19 @@ In the journals, every day that you work on the project, you must make an entry 
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
+## Jun 3, 2022
+* Today I worked on:
+    * Updating the models in the Owners microservice(MS) - with Brandon
+    * Writing the models in the Eateries MS - with Brandon
+    * Re-structuring our Bounded Contexts (moving models from Owners MS to Eateries MS)
+    * Brainstorming and writing the models in the Users MS - with Brandon
+    * Brainstorming how we should populate our Eateries database from the YELP API - with Brandon and David
+    * Sending requests to the Yelp API and successfully getting a response back - All
+
+* When 2 models have a ManyToMany relationship, Brandon and I hard time deciding which should be the model that contains the other as an attribute.
+
+* Brandon, David and I had an ah-ha! moment when Curtis explained to us how we can go about populating our Eateries database from the YELP API -- don't need to grab the entire Yelp database and store it in our database -- we're not YELP!
+
 ## Jun 2, 2022
 * Today I worked on the models in the Owners microservice.
 
