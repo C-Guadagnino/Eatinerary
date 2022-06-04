@@ -1,6 +1,6 @@
 # Data models
 
-![Eatinerary_BoundedContexts_220601](Eatinerary_BoundedContexts_220601.png)
+![Eatinerary_BoundedContexts_220603](Eatinerary_BoundedContexts_220603.png)
 
 ## User (Django's built-in user model) ???
 | Name            | Type    | Unique | Optional |
@@ -35,9 +35,9 @@
 | owner           | For.Key | no     | no       |
 | eatery_name     | str     | no     | no       |
 | email           | str     | yes    | yes      |
-| phone           | str     | yes    | yes      |
+| phone           | str     | no (some owners may use same cell num for multiple eateries they own?)     | yes      |
 | location        | OneToOne| no     | no       |
-| website         | url     | no     | yes      |
+| website         | url     | no (multiple locations may have same website)    | yes      |
 | yelp_id         | str     | yes    | yes      |
 | href            | url     | no     | yes      |
 | review_count    | int     | yes    | yes      |
