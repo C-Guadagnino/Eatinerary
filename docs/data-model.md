@@ -1,8 +1,8 @@
 # Data models
 
-![Eatinerary_BoundedContexts_220603](Eatinerary_BoundedContexts_220603.png)
+![Eatinerary_BoundedContexts_220603v2](Eatinerary_BoundedContexts_220603v2.png)
 
-## User (Django's built-in user model) ???
+## User (Custom User model based on Django's built-in user model?) ???
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
 | ???             | ???     | ???    | ???      |
@@ -44,9 +44,9 @@
 | average_rating  | int     | yes    | yes      |
 | price           | str     | yes    | yes      |
 | tag             |Many2Many| no     | no       |
-| categories      |Many2Many? not sure about how to model eatery categories. ManyToMany Field, since 1 eatery can have many eatery categories, and 1 category can have many Eateries?| yes  | yes      |
+| categories      |Many2Many| yes    | yes      |
 
-## Eatery_Image (one-to-many relationship between eatery and picture) (do we need this model to be separate from Image VO model OR can the Image VO model be used for both having Foreign keys in the Review AND Eatery models) ???
+## Eatery_Image (one-to-many relationship between Eatery and EateryImage) (do we need this model to be separate from Image VO model OR can the Image VO model be used for both having Foreign keys in the Review AND Eatery models) ???
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
 | eatery          | For.Key | no     | no       |
@@ -91,7 +91,7 @@ https://www.yelp.com/developers/documentation/v3/get_started
 | is_active       | bool    | no     | no       |
 | notes           | str/ textfield   | no     | no       |
 
-## Tag VO (many-to-many relationship between Tag and Eatery. #datenight #brunch, etc. Tags are created by foodies and are visible and searchable by the entire app user-base, so any user can search for #datenight #brospot.
+## Tag (many-to-many relationship between Tag and Eatery. #datenight #brunch, etc. Tags are created by foodies and are visible and searchable by the entire app user-base, so any user can search for #datenight #brospot.
 * //Discussed// Discuss with Cuisine Coders whether we want the tags to be related to Eateries instead of Skewered Eateries, and for the tags to be visible by everyone instead of just by the foodie that created them. That way the whole RestaurantRepo community can benefit from the tags other people add to Eateries, and can even search/filter by those tags.)
 
 | Name            | Type    | Unique | Optional |

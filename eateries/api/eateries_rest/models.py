@@ -21,6 +21,16 @@ class Eatery(models.Model):
     # tag = models.ManyToManyField("Tag")
     categories = models.ManyToManyField("EateryCategory", related_name="categories")
 
+# class YelpSearchTerm(models.Model):
+#     term = models.CharField(max_length=50)
+
+# #business data
+# class YelpResult(models.Model):
+#     term = models.ForeignKey(
+#         YelpSearchTerm,
+#         on_delete=models.CASCADE,
+#         related_name="results"
+#     )
 
 class Tag(models.Model):
     tag_name = models.CharField(max_length=40)

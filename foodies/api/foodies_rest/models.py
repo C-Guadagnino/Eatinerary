@@ -8,25 +8,10 @@ class Foodie(models.Model):
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=254, unique=True)
     phone = models.CharField(max_length=13, unique=True)
-    google_calendar = models.URLField(null=True) #needs review
+    google_calendar = models.URLField(null=True)  # needs review
 
     def __str__(self):
         return self.username
-
-
-# class YelpSearchTerm(models.Model):
-#     term = models.CharField(max_length=50)
-
-# #business data 
-# class YelpResult(models.Model):
-#     term = models.ForeignKey(
-#         YelpSearchTerm,
-#         on_delete=models.CASCADE,
-#         related_name="results"
-#     )
-
-
-
 
 
 # class SkeweredEatery(models.Model):
@@ -39,7 +24,7 @@ class Foodie(models.Model):
 #         Foodie,
 #         related_name="foodie",
 #         on_delete=models.CASCADE,
-#         blank=True #needs review! 
+#         blank=True #needs review!
 #     )
 #     created_DateTime = models.DateTimeField(auto_now_add=True)
 #     updated_DateTime = models.DateTimeField(auto_now=True)
@@ -48,7 +33,7 @@ class Foodie(models.Model):
 #     notes = models.TextField()
 
 #     def __str__(self):
-#         return self.foodie + " " + self.notes # + self.eatery  
+#         return self.foodie + " " + self.notes # + self.eatery
 
 
 # class ImageVO(models.Model):
@@ -81,9 +66,3 @@ class Foodie(models.Model):
 #     def __str__(self):
 #         restaurant = str(self.skewered_restaurant)
 #         return self.title + " for " + restaurant
-
-
-
-
-
-
