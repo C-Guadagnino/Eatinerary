@@ -15,3 +15,7 @@
 4)
 * Q: For ubiquitous language: should we decide on "promotion slot" or "ad slot" or something else? Need to decide on something and make it consistent throughout models and APIs
 * A: Cuisine Coders decided on "Ad slot"
+
+5)
+* Q: How should "location" be defined -- for example, for when foodies search for eateries in a location, or owners book an ad_slot for their eatery?
+* A: Per Curtis, it can be a city name for when foodies search for eateries for a location ("philadelphia"), and it can be a zip code for ad_slots! Just start with one, and we can always update later.
