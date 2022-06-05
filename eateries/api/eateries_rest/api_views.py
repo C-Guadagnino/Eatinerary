@@ -43,6 +43,11 @@ def api_get_eatery_data(request):
             {"eateries": eateries},
             encoder=EateryEncoder
         )
+    #TypeError: Object of type ManyRelatedManager is not JSON serializable
+    #Need to fix error when trying to POST with manytomany field relationship
+    #Will come back tomorrow and work on this issue
+
+
     # else:
     #     try:
     #         content = json.loads(request.body)

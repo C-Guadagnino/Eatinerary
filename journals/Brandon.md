@@ -7,6 +7,26 @@
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
+## June 04, 2022
+Today, I worked on:
+* I worked on Testing the Models, Views, and Poller service
+
+I tested Owner and Eateries Models through the admin panel, I got the Owner and Entity GET requests to go through insomnia, I got the poller service working and container running. 
+
+I had trouble getting the POST request working through insonia, manytomany manager wasnt serializable, need to dive into how to fix this issue.
+
+No AH-HA's today
+
+## June 03, 2022
+Today, I worked on:
+* We split up into pairs today, Ariana and myself have started the models implementation for the Owners service.
+
+As a team we got two different yelp api requests to come through with the parameters and output we were looking for.
+
+We were able to use the Yelp documentation to guide the acls file design. Ariana, David and I spoke about the change of the eateries microservice handling all the eatery sub models, although now we realize that was logical in the first place.
+
+Our ah-ha moment today was getting the yelp request to go through and talking to curtis on our new method to collect yelp data through user requests, also using a bot to make get requests to users to populate our database.
+
 ## June 02, 2022
 Today, I worked on:
 * We split up into pairs today, Ariana and myself have started the models implementation for the Owners service.
