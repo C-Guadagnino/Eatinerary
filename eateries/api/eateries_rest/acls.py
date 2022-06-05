@@ -1,6 +1,6 @@
 import json
 import requests
-from ....foodies.api.foodies_rest.keys import YELP_API_KEY
+from .keys import YELP_API_KEY
 
 # print("yelp key": YELP_API_KEY)
 # businesses/search?categories=restaurant?location= + variable_here

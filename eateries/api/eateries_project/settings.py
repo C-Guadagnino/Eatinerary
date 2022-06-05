@@ -50,10 +50,12 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = ["localhost",
+"eateries-api"]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000/",
+    "http://localhost:3000/"
+    
 ]
 
 CORS_ALLOWED_ORIGINS = [
