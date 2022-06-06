@@ -13,6 +13,12 @@ function App() {
   const [error, setError] = useState(null);
 
   return (
+    // <BrowserRouter>
+    //   <Nav token={token} />
+    //   <Routes>
+    //     <Route path="" element={<Login token={token} login={login} />} />
+    //   </Routes>
+    // </BrowserRouter>
     <div>
       { error ? <div dangerouslySetInnerHTML={{__html: error}} /> : null }
       { token
