@@ -26,7 +26,7 @@ def get_restaurants():
 
 # businesses/search?categories=restaurant?location= + variable_here
 # Query the search API by a search term and location
-def get_eateries(location, categories):
+def get_eateries_from_yelp(location, categories):
     # url = "https://api.yelp.com/v3/businesses/search?categories=" + categories + "&location=" + location
     url = "https://api.yelp.com/v3/businesses/search"
     headers = {

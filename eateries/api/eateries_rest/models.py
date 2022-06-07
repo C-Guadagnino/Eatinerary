@@ -23,7 +23,8 @@ class Eatery(models.Model):
     categories = models.ManyToManyField("EateryCategory", related_name="categories")
 
     def get_api_url(self):
-        return reverse("api_get_eatery", kwargs={"pk": self.pk})
+        return reverse("api_eatery", kwargs={"pk": self.pk})
+
 
 # class YelpSearchTerm(models.Model):
 #     term = models.CharField(max_length=50)
@@ -35,6 +36,7 @@ class Eatery(models.Model):
 #         on_delete=models.CASCADE,
 #         related_name="results"
 #     )
+
 
 class Tag(models.Model):
     tag_name = models.CharField(max_length=40)
@@ -125,7 +127,18 @@ class EateryLocation(models.Model):
     country = models.CharField(max_length=200, default="USA")
 
     def get_api_url(self):
-        return reverse("api_get_eatery", kwargs={"pk": self.pk})
+        return reverse("api_location", kwargs={"pk": self.pk})
+
+    class Meta:
+        unique_together = (
+            "address1",
+            "address2",
+            "address3",
+            "city",
+            "state",
+            "zip",
+            "country",
+        )
 
     def __str__(self):
         return (
