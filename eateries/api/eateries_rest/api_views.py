@@ -5,8 +5,8 @@ from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.db import IntegrityError
-from .models import EateryCategory, EateryLocation, Eatery, Tag
-from .encoders import EateryEncoder, EateryLocationEncoder, EateryCategoryEncoder, TagEncoder
+from .models import EateryCategory, EateryImage, EateryLocation, Eatery, Tag, EateryOpenHours, EateryImage
+from .encoders import EateryEncoder, EateryLocationEncoder, EateryCategoryEncoder, TagEncoder, OpenHoursEncoder
 from .acls import get_eateries_from_yelp
 
 # @require_http_methods(["GET"])
@@ -34,6 +34,7 @@ def api_get_yelp(request):
     if request.method == "GET":
         restaurants = get_eateries_from_yelp("los angeles", "tacos")
         return JsonResponse({"restaurants": restaurants})
+
 
 #For some reason the POST method creates an instance of Eatery even though the request returns a 400 error.
 @require_http_methods(["GET", "POST"])
@@ -79,12 +80,15 @@ def api_eateries(request):
         #     return response
 
 
+
 @require_http_methods(["GET"])
 def api_eatery(request, pk):
     if request.method == "GET":
         eatery = Eatery.objects.get(pk=pk)
         print("EATERY IS:", eatery)
         return JsonResponse(eatery, encoder=EateryEncoder, safe=False)
+
+
 
 
 @require_http_methods(["GET", "POST"])
@@ -106,6 +110,9 @@ def api_locations(request):
             return response
 
 
+
+
+
 @require_http_methods(["GET"])
 def api_location(request, pk):
     if request.method == "GET":
@@ -114,11 +121,18 @@ def api_location(request, pk):
         return JsonResponse(location, encoder=EateryLocationEncoder, safe=False)
 
 
+
+
+
 @require_http_methods(["GET"])
 def api_category(request, pk):
     if request.method == "GET":
         category = EateryCategory.objects.get(pk=pk)
         return JsonResponse(category, encoder=EateryCategoryEncoder, safe=False)
+
+
+
+
 
 @require_http_methods(["GET", "POST"])
 def api_categories(request):
@@ -137,6 +151,8 @@ def api_categories(request):
             response.status_code = 400
             return response
 
+
+
 @require_http_methods(["GET", "POST"])
 def api_tags(request):
     if request.method == "GET":
@@ -153,3 +169,60 @@ def api_tags(request):
             )
             response.status_code = 400
             return response
+
+
+
+@require_http_methods(["GET", "POST"])
+def api_open_hours_plural(request):
+    if request.method == "GET":
+        open_hours_all = EateryOpenHours.objects.all()
+        return JsonResponse({"open_hours": open_hours_all}, encoder=OpenHoursEncoder)
+    else:
+        try:
+            content = json.loads(request.body)
+            eatery_id = content["eatery"]
+            eatery = Eatery.objects.get(pk=eatery_id)
+            content["eatery"] = eatery
+            print("THIS IS EATERY!!!", eatery)
+            open_hours_one = EateryOpenHours.objects.create(**content)
+            return JsonResponse(open_hours_one, encoder=OpenHoursEncoder, safe=False)
+        except IntegrityError:
+            response = JsonResponse(
+                {"message": "Could not create open hours"}
+            )
+            response.status_code = 400
+            return response
+
+@require_http_methods(["GET"])
+def api_open_hours_singular(request, pk):
+    if request.method == "GET":
+        open_hours_singular = EateryOpenHours.objects.get(pk=pk)
+        return JsonResponse(open_hours_singular, encoder=OpenHoursEncoder, safe=False)
+
+
+# @require_http_methods(["GET", "POST"])
+# def api_open_hours_plural(request):
+#     if request.method == "GET":
+#         open_hours_all = EateryOpenHours.objects.all()
+#         return JsonResponse({"open_hours": open_hours_all}, encoder=OpenHoursEncoder)
+#     else:
+#         try:
+#             content = json.loads(request.body)
+#             eatery_id = content["eatery"]
+#             eatery = Eatery.objects.get(pk=eatery_id)
+#             content["eatery"] = eatery
+#             print("THIS IS EATERY!!!", eatery)
+#             open_hours_one = EateryOpenHours.objects.create(**content)
+#             return JsonResponse(open_hours_one, encoder=OpenHoursEncoder, safe=False)
+#         except IntegrityError:
+#             response = JsonResponse(
+#                 {"message": "Could not create open hours"}
+#             )
+#             response.status_code = 400
+#             return response
+
+# @require_http_methods(["GET"])
+# def api_open_hours_singular(request, pk):
+#     if request.method == "GET":
+#         open_hours_singular = EateryOpenHours.objects.get(pk=pk)
+#         return JsonResponse(open_hours_singular, encoder=OpenHoursEncoder, safe=False)

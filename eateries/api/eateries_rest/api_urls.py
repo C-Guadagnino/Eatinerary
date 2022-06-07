@@ -8,7 +8,9 @@ from .api_views import (
     api_location,
     api_locations,
     api_tags,
-    api_categories
+    api_categories,
+    api_open_hours_plural,
+    api_open_hours_singular
 )
 
 urlpatterns = [
@@ -20,4 +22,6 @@ urlpatterns = [
     path("category/<int:pk>/", api_category, name="api_category"),
     path("tags/", api_tags, name="api_tags"),
     path("categories/", api_categories, name="api_categories"),
+    path("openhours/", api_open_hours_plural, name="api_open_hours_plural"),
+    path("openhours/<int:pk>/", api_open_hours_singular, name="api_open_hours_singular"),
 ]
