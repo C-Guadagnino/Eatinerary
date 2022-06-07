@@ -46,13 +46,11 @@ def api_eateries(request):
         try:
             content = json.loads(request.body)
             categories_list = content["categories"]
-
             del content["categories"]
 
             location_id = content["location"]
             location = EateryLocation.objects.get(id=location_id)
             content["location"] = location
-
             # eatery = Eatery(**content)
             # eatery.save()
 

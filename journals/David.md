@@ -6,6 +6,12 @@
 * A reflection on any design conversations that you had
 * At least one ah-ha! moment that you had during your coding, however small. 
 
+## June 3, 2022
+* * As a group we worked on creating the docker-compose.yaml file. We ran into issues with the create-multiple-databases.sh file, since it was only set as a read/write file and not “executable” in the file system. We only identified this issue after not being able to get our PostgreSQL database container running in Docker. After running a specific command in the terminal, we could see that the file only had “rw” (r = read, w = write). It needed to be set as rwx, (read, write, and x = executable). This is an attribute of the filesystem, not the file itself. The command we ran in the terminal was ls -al db to see what the files are readable, writeable, executable, etc. In order to change the file from read/write only to include executable, we ran the command “chmod a+x db/create-multiple-databases.sh”. 
+
+## June 2, 2022
+* The group broke off into twos for pair-programming, Brandon and Ariana paired up to write the Owners microservices side of things, while Cameron and I teamed up to take on the Foodies microservice. We wrote the models for the Foodies microservice and tested it out by creating a superuser and using the Django admin to test it out.  We also wrote a couple of basic functions and a Foodie Encoder in the views file, so that we could use Insomnia to test out our API requests and see what output we were getting. Near the end of the day, the group reconvened and when it came time to commit my work, Brandon and Ariana informed me that I needed to delete all of the pyc files because we never included it in the gitignore file. Understanding that while it’s ok to have extra files called out in the gitignore file, it’s not okay to have extra files committed to gitlab. 
+
 ## June 1, 2022
 * Our group discussed that restaurant and restaurantVO should be a strict many-to-one relationship. The skewered restaurant will be many and restaurantVO will be one. We also discussed that the skewered_restaurant model will represent one single skewered restaurant. This helps clear things up in our BoundedContexts drawing. 
 
