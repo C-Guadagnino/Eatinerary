@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djwto',
 ]
 
 MIDDLEWARE = [
@@ -61,6 +62,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
 ]
 CORS_ALLOW_CREDENTIALS = True
+DJWTO_CSRF = False
 
 ROOT_URLCONF = 'foodies_project.urls'
 

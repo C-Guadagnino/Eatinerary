@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Foodie, Owner, EateryVO
+from django.contrib.auth.admin import UserAdmin
+from .models import Foodie, Owner, EateryVO, User
 
 
 @admin.register(Foodie)
@@ -15,3 +16,6 @@ class OwnerAdmin(admin.ModelAdmin):
 @admin.register(EateryVO)
 class EateryVOAdmin(admin.ModelAdmin):
     pass
+
+
+admin.site.register(User, UserAdmin)

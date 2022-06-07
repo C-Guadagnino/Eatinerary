@@ -10,7 +10,7 @@ volumes:
   # I assume we will need a DB for each of the API groupings of information i.e Maps, eateries, as well as the Application-data
   # I can think of 3 db's maps-data / resturant-data / app-data
 services:
-  react: # we need this for all of our react components 
+  react: # we need this for all of our react components
     image: node:lts-bullseye
     command: /bin/bash run.sh
     working_dir: /app
@@ -22,7 +22,8 @@ services:
       HOST_OS: ${OS}
       NODE_ENV: development
       HOST: "0.0.0.0"
-  database: 
+      REACT_APP_ACCOUNT_API: http://localhost:8070
+  database:
     image: postgres:14.2-bullseye
     volumes:
   # we will change path to [name of DB]:/var/lib/postgresql/data  in volumes
@@ -54,7 +55,7 @@ services:
       DATABASE_URL: postgres://foodies:password@database:5432/foodies
       WAIT_HOSTS: database:5432
       WAIT_TIMEOUT: 240
-
+      DJWTO_SIGNING_KEY: 13fcc604df0deed641c6db316ffd027f5bb8120e7ac40a948562e829f0adf5a4
 
   foodies-poller:
     build:
@@ -86,6 +87,7 @@ services:
       DATABASE_URL: postgres://eateries:password@database:5432/eateries
       WAIT_HOSTS: database:5432
       WAIT_TIMEOUT: 240
+      DJWTO_SIGNING_KEY: 13fcc604df0deed641c6db316ffd027f5bb8120e7ac40a948562e829f0adf5a4
 
   eateries-poller:
     build:
@@ -102,7 +104,7 @@ services:
       DATABASE_URL: postgres://eateries:password@database:5432/eateries
       WAIT_HOSTS: database:5432,eateries-api:8000
       WAIT_TIMEOUT: 240
-    
+
   owners-api:
     build:
       context: ./owners/api
@@ -117,6 +119,7 @@ services:
       DATABASE_URL: postgres://owners:password@database:5432/owners
       WAIT_HOSTS: database:5432
       WAIT_TIMEOUT: 240
+      DJWTO_SIGNING_KEY: 13fcc604df0deed641c6db316ffd027f5bb8120e7ac40a948562e829f0adf5a4
 
   owners-poller:
     build:
@@ -148,3 +151,4 @@ services:
       DATABASE_URL: postgres://users:password@database:5432/users
       WAIT_HOSTS: database:5432
       WAIT_TIMEOUT: 240
+      DJWTO_SIGNING_KEY: 13fcc604df0deed641c6db316ffd027f5bb8120e7ac40a948562e829f0adf5a4

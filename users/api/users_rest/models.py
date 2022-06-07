@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # BELOW IMPORT IS FOR HAVING CUSTOM USER MODEL
 # We used AbstractUser in FearlessFrontend, but we Django Docs recommend AbstractBaseUser ???
@@ -14,24 +15,29 @@ from django.db import models
 
 # WOULD THE FOODIE AND OWNER MODELS NEED TO INHERIT FROM THIS CUSTOM USER MODEL???
 
-# class Foodie(User):
-class Foodie(models.Model):
-    username = models.CharField(max_length=200, unique=True)
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
-    email = models.EmailField(unique=True)
+class User(AbstractUser):
     phone = models.CharField(max_length=200, unique=True)
     google_calendar = models.URLField(unique=True, blank=True, null=True)
+
+
+# class Foodie(User):
+class Foodie(models.Model):
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name="foodie",
+    )
+    # Things here like foodie preferences
 
 
 # class Owner(User):
 class Owner(models.Model):
-    username = models.CharField(max_length=200, unique=True)
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
-    email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=200, unique=True)
-    google_calendar = models.URLField(unique=True, blank=True, null=True)
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name="owner",
+    )
+    # Things here like eateries
 
 
 class EateryVO(models.Model):
