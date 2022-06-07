@@ -1,3 +1,4 @@
+import djwto.authentication as auth
 import json
 from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
@@ -33,6 +34,13 @@ def api_list_foodies(request):
             encoder=FoodieEncoder,
             safe=False,
         )
+
+
+# Will only let this view function run if there's a JWT
+# in the 'Authorization' header
+@auth.jwt_login_required
+def get_foodie_skewers(request):
+    return JsonResponse({"received": request.payload})
 
 
 # NEEDS REVIEW
