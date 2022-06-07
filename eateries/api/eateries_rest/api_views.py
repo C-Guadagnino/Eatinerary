@@ -58,9 +58,9 @@ def api_eateries(request):
 
             eatery = Eatery.objects.create(**content)
 
-            for cat in categories_list:
-                cat_title = EateryCategory.objects.get(title=cat)
-                eatery.categories.add(cat_title)
+            for cat_title in categories_list:
+                cat_obj = EateryCategory.objects.get(title=cat_title)
+                eatery.categories.add(cat_obj)
 
             return JsonResponse(
                 eatery,
