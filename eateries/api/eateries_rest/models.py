@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class Eatery(models.Model):
@@ -12,7 +13,7 @@ class Eatery(models.Model):
     # we might not need this, but keep it in here for convenience for now since yelp API will provide it
     yelp_id = models.CharField(max_length=200, unique=True)
     # what was href for??? Need to refresh memory
-    href = models.URLField(max_length=200, unique=True)
+    # href = models.URLField(max_length=200, unique=True)
     review_count = models.PositiveSmallIntegerField(default=0)
     average_rating = models.FloatField()
     # "$$"
@@ -20,6 +21,9 @@ class Eatery(models.Model):
     # should the tag attribute go in the Eatery model??? or eatery = ManyToManyField to Eatery model within Tag model???
     # tag = models.ManyToManyField("Tag")
     categories = models.ManyToManyField("EateryCategory", related_name="categories")
+
+    def get_api_url(self):
+        return reverse("api_get_eatery", kwargs={"pk": self.pk})
 
 # class YelpSearchTerm(models.Model):
 #     term = models.CharField(max_length=50)
@@ -42,7 +46,7 @@ class Tag(models.Model):
 
 class EateryCategory(models.Model):
     alias = models.CharField(max_length=200)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, unique=True)
     # should this eatery attribute live inside the EateryCategory model or
     # should the categories attribute live inside the Eatery model?????????????????
     # eatery = models.ManyToManyField("Eatery", related_name="categories")
@@ -119,6 +123,9 @@ class EateryLocation(models.Model):
     state = models.CharField(max_length=200, choices=STATES)
     zip = models.CharField(max_length=200)
     country = models.CharField(max_length=200, default="USA")
+
+    def get_api_url(self):
+        return reverse("api_get_eatery", kwargs={"pk": self.pk})
 
     def __str__(self):
         return (

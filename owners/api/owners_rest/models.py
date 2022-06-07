@@ -41,7 +41,7 @@ class EateryVO(models.Model):
     # we might not need this, but keep it in here for convenience for now since yelp API will provide it
     yelp_id = models.CharField(max_length=200, unique=True)
     # what was href for??? Need to refresh memory
-    href = models.URLField(max_length=200, unique=True)
+    # href = models.URLField(max_length=200, unique=True)
     review_count = models.PositiveSmallIntegerField(default=0)
     average_rating = models.FloatField()
     # "$$"

@@ -18,11 +18,14 @@ def get_eatery_entity_data():
     print("This is CONTENT;", content)
     for eatery in content["eateries"]:
         EateryVO.objects.update_or_create(
-            email=eatery["email"],
+            import_href=eatery["href"],
             defaults={
                 "email": eatery["email"],
+                "yelp_id": eatery["yelp_id"],
+                "website": eatery["website"],
+                "email": eatery["email"],
                 "phone": eatery["phone"],
-                "href": eatery["href"], 
+                "import_href": eatery["href"], 
                 "review_count": eatery["review_count"],
                 "average_rating": eatery["average_rating"],
                 "price": eatery["price"],

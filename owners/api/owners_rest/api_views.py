@@ -6,7 +6,7 @@ from .encoders import EateryVOEncoder
 import json
 
 
-@require_http_methods(["GET", "PUT"])
+@require_http_methods(["GET", "POST"])
 def get_eatery_entity_data(request):
     if request.method == "GET":
         eateries = EateryVO.objects.all()
@@ -14,4 +14,16 @@ def get_eatery_entity_data(request):
         return JsonResponse(
             {"eatery": eateries},
             encoder=EateryVOEncoder
+        )
+
+@require_http_methods(["GET"])
+def api_get_eateryvo(request, email):
+    print("I AM INSIDE HERE EATERYVO TRUST ME THE MORE WORDS THE BETTER")
+    if request.method == "GET":
+        eatery = EateryVO.objects.get(email=email)
+        print(eatery)
+        return JsonResponse(
+            {"eatery": eatery},
+            encoder=EateryVOEncoder
+            # safe=False
         )

@@ -16,6 +16,7 @@ class EateryLocationEncoder(ModelEncoder):
 
 class EateryCategoryEncoder(ModelEncoder):
     model = EateryCategory
+    props = []
     properties = [
         "alias",
         "title"
@@ -30,14 +31,18 @@ class EateryEncoder(ModelEncoder):
         "email",
         "phone",
         "yelp_id",
-        "href",
         "review_count",
         "average_rating",
-        "price"
-        # "categories",
-        # "location"
+        "price",
+        "categories",
+        "location"
     ]
-    # encoders = {
-    #     "location": EateryLocationEncoder(),
-    #     "categories": EateryCategoryEncoder(),
-    # }
+    encoders = {
+        "location": EateryLocationEncoder(),
+        "categories": EateryCategoryEncoder(),
+    }
+    # def get_extra_data(self, o):
+    #     cat_list = []
+    #     for cat in :
+
+    #     return {"categories": o.c}
