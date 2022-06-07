@@ -9,6 +9,16 @@ In the journals, every day that you work on the project, you must make an entry 
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
+## Jun 4, 2022
+* Today I worked on:
+    * Implementing the POST method for the api_eateries view function - All
+    * Updating the ModelEncoder to now be able to serialize ManyRelatedManager objects
+    * Updating some models in the Eateries MS to have some more constraints
+
+* When trying to serialize a model that has a ManyToMany relationship with another model, we kept getting a "TypeError: Object of type ManyRelatedManager is not JSON serializable" with the existing ModelEncoder.
+
+* The above problem was solved by updating the ModelEncoder to also account for objects of type ManyRelatedManager.
+
 ## Jun 3, 2022
 * Today I worked on:
     * Updating the models in the Owners microservice(MS) - with Brandon
