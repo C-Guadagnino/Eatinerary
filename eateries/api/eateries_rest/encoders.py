@@ -1,4 +1,4 @@
-from .models import Eatery, EateryCategory, EateryLocation
+from .models import Eatery, EateryCategory, EateryLocation, Tag
 from common.json import ModelEncoder
 
 
@@ -19,8 +19,11 @@ class EateryLocationEncoder(ModelEncoder):
 class EateryCategoryEncoder(ModelEncoder):
     model = EateryCategory
     props = []
-    properties = ["alias", "title"]
+    properties = ["id","alias", "title"]
 
+class TagEncoder(ModelEncoder):
+    model = Tag
+    properties = ["id","tag_name"]
 
 class EateryEncoder(ModelEncoder):
     model = Eatery
@@ -36,8 +39,11 @@ class EateryEncoder(ModelEncoder):
         "price",
         "categories",
         "location",
+        "tags"
     ]
     encoders = {
         "location": EateryLocationEncoder(),
         "categories": EateryCategoryEncoder(),
+        "tags": TagEncoder()
     }
+

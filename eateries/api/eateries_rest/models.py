@@ -19,8 +19,9 @@ class Eatery(models.Model):
     # "$$"
     price = models.CharField(max_length=4)
     # should the tag attribute go in the Eatery model??? or eatery = ManyToManyField to Eatery model within Tag model???
-    # tag = models.ManyToManyField("Tag")
+    tags = models.ManyToManyField("Tag", related_name="tags")
     categories = models.ManyToManyField("EateryCategory", related_name="categories")
+    
 
     def get_api_url(self):
         return reverse("api_eatery", kwargs={"pk": self.pk})
@@ -40,7 +41,7 @@ class Eatery(models.Model):
 
 class Tag(models.Model):
     tag_name = models.CharField(max_length=40)
-    eatery = models.ManyToManyField("Eatery", related_name="tags")
+    # eatery = models.ManyToManyField("Eatery", related_name="tags")
 
     def __str__(self):
         return self.tag_name

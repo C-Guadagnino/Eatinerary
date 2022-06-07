@@ -7,6 +7,8 @@ from .api_views import (
     api_category,
     api_location,
     api_locations,
+    api_tags,
+    api_categories
 )
 
 urlpatterns = [
@@ -16,4 +18,6 @@ urlpatterns = [
     path("locations/", api_locations, name="api_locations"),
     path("locations/<int:pk>/", api_location, name="api_location"),
     path("category/<int:pk>/", api_category, name="api_category"),
+    path("tags/", api_tags, name="api_tags"),
+    path("categories/", api_categories, name="api_categories"),
 ]
