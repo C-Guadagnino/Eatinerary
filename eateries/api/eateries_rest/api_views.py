@@ -45,37 +45,40 @@ def api_get_eatery_data(request):
     #TypeError: Object of type ManyRelatedManager is not JSON serializable
     #Need to fix error when trying to POST with manytomany field relationship
     #Will come back tomorrow and work on this issue
-    else:
-        # try:
-        content = json.loads(request.body)
+    
+    # else:
+    #     # try:
+    #     content = json.loads(request.body)
 
-        print("$$$$$$$$$$$$$$", content)
+    #     print("$$$$$$$$$$$$$$", content)
 
-        categories_list = content["categories"]
+    #     categories_list = content["categories"]
 
-        del content["categories"]
+    #     del content["categories"]
 
-        locations_key = content["location"]
-        location = EateryLocation.objects.get(id=locations_key)
-        content["location"] = location
+    #     locations_key = content["location"]
+    #     location = EateryLocation.objects.get(id=locations_key)
+    #     content["location"] = location
 
-        eatery = Eatery(**content)
+    #     eatery = Eatery(**content)
         
-        eatery.save()
+    #     eatery.save()
 
-        category_dict_list = []
+    #     category_dict_list = []
 
-        for cat in categories_list:
-            cat_title =EateryCategory.objects.get(title=cat)
-            eatery.categories.add(cat_title)
-            category_dict = json.dumps(cat_title)
-            category_dict_list.append(category_dict)
-            print("Category Dict LISt", category_dict_list)
+    #     for cat in categories_list:
+    #         cat_title =EateryCategory.objects.get(title=cat)
+    #         eatery.categories.add(cat_title)
+    #         category_dict = json.dumps(cat_title)
+    #         category_dict_list.append(category_dict)
+    #         print("Category Dict LISt", category_dict_list)
 
-        return JsonResponse(
-            category_dict_list,
-            safe=False,
-        ) 
+    #     return JsonResponse(
+    #         category_dict_list,
+    #         safe=False,
+    #     ) 
+
+
         # return category_dict
 
         # return JsonResponse(
