@@ -13,6 +13,17 @@ class Foodie(models.Model):
     def __str__(self):
         return self.username
 
+# class EateryVO(models.Model):
+#     import_href = models.CharField(max_length=200)
+#     eatery_name = models.CharField(max_length=200, unique=True)
+#     email = models.CharField(max_length=200, unique=True)
+#     phone = models.CharField(max_length=200)
+#     website = models.URLField(max_length=200, unique=True)
+#     yelp_id = models.CharField(max_length=200, unique=True)
+#     review_count = models.PositiveSmallIntegerField(default=0)
+#     average_rating = models.FloatField()
+#     price = models.CharField(max_length=4)
+
 
 # class SkeweredEatery(models.Model):
 #     eatery = models.ForeignKey(

@@ -4,6 +4,7 @@ from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
 from common.json import ModelEncoder
 from .models import Foodie
+#Remember to import EateryVO! 
 from django.shortcuts import render
 
 
@@ -16,6 +17,25 @@ class FoodieEncoder(ModelEncoder):
         "phone",
         "google_calendar",
     ]
+
+# class EateryVOEncoder(ModelEncoder):
+#     model = EateryVO
+#     properties = [
+#         "import_href",
+#         "eatery_name",
+#         "website",
+#         "email",
+#         "phone",
+#         "yelp_id",
+#         "review_count",
+#         "average_rating",
+#         "price"
+#     ]
+
+#class SkeweredEateryEncoder(ModelEncoder)
+#class ReviewEncoder(ModelEncoder)
+
+
 
 
 @require_http_methods(["GET", "POST"])
@@ -44,6 +64,22 @@ def get_foodie_skewers(request):
 
 
 # NEEDS REVIEW
+
+#api_show_eateries
+
+#api_add/create_skewered_eateries 
+#api_list_skewered_eateries (all instances of eateries)
+#api_show_skewered_eatery (detailed instance of 1 eatery)
+#api_delete_skewered_eatery
+#api_update_skewered_eatery (??)
+
+#api_show_skewered_history
+
+#api_foodie_create_review
+#api_foodie_list_reviews
+#api_foodie_show_review 
+
+
 # Get list of all eateries the foodie has skewered
 # need a (request,pk) here for the specific foodie??
 # need to make a SkeweredEateryEncoder!
