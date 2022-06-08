@@ -81,12 +81,23 @@ def api_eateries(request):
 
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["GET", "PUT"])
 def api_eatery(request, pk):
     if request.method == "GET":
         eatery = Eatery.objects.get(pk=pk)
         print("EATERY IS:", eatery)
         return JsonResponse(eatery, encoder=EateryEncoder, safe=False)
+    else:
+        content = json.loads(request.body)
+        tags_list_single_item = content["tags"]
+        eatery = Eatery.objects.get(pk=pk)
+        for tag_name in tags_list_single_item:
+            tag_obj = Tag.objects.get(tag_name=tag_name)
+            eatery.tags.add(tag_obj)
+        return JsonResponse(eatery, encoder=EateryEncoder, safe=False)
+
+
+
 
 
 
@@ -169,6 +180,9 @@ def api_tags(request):
             )
             response.status_code = 400
             return response
+
+
+
 
 
 
