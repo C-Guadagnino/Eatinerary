@@ -1,4 +1,4 @@
-from .models import Eatery, EateryCategory, EateryLocation, Tag, EateryOpenHours, EateryImage
+from .models import Eatery, EateryCategory, EateryLocation, Tag, EateryOpenHours, EateryImage, WEEKDAYS
 from common.json import ModelEncoder
 
 
@@ -27,10 +27,11 @@ class TagEncoder(ModelEncoder):
 
 class OpenHoursEncoder(ModelEncoder):
     model = EateryOpenHours
-    properties = ["id","weekday", "start_time", "end_time"]
+    properties = ["id", "start_time", "end_time"]
 
     def get_extra_data(self, o):
-        return {"eatery": {"eatery_name": o.eatery.eatery_name, "eatery_id": o.eatery.id}}
+        return {"weekday": WEEKDAYS[o.weekday-1][1],"eatery": {"eatery_name": o.eatery.eatery_name, "eatery_id": o.eatery.id}}
+    
 
 class EateryImageEncoder(ModelEncoder):
     model = EateryImage

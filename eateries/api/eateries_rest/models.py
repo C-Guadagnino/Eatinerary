@@ -21,8 +21,8 @@ class Eatery(models.Model):
     # should the tag attribute go in the Eatery model??? or eatery = ManyToManyField to Eatery model within Tag model???
     tags = models.ManyToManyField("Tag", related_name="tags")
     categories = models.ManyToManyField("EateryCategory", related_name="categories")
-    #open_hours is represented through view request
-    #eatery_image is also represented as part of Eatery Instance when request is made
+    #open_hours has a foreign key to eatery and will be accessible on requests
+    #eatery_image has a foreign key to eatery and will be accessible on requests
     
 
     def get_api_url(self):

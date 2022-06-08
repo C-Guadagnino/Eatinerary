@@ -5,7 +5,7 @@ from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.db import IntegrityError
-from .models import EateryCategory, EateryImage, EateryLocation, Eatery, Tag, EateryOpenHours, EateryImage
+from .models import EateryCategory, EateryImage, EateryLocation, Eatery, Tag, EateryOpenHours, EateryImage, WEEKDAYS
 from .encoders import EateryEncoder, EateryLocationEncoder, EateryCategoryEncoder, TagEncoder, OpenHoursEncoder, EateryImageEncoder
 from .acls import get_eateries_from_yelp
 
@@ -184,6 +184,7 @@ def api_open_hours_plural(request):
             eatery = Eatery.objects.get(pk=eatery_id)
             content["eatery"] = eatery
             open_hours_one = EateryOpenHours.objects.create(**content)
+            
             return JsonResponse(open_hours_one, encoder=OpenHoursEncoder, safe=False)
         except IntegrityError:
             response = JsonResponse(
