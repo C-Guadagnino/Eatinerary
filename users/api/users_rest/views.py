@@ -1,5 +1,6 @@
 from django.db import IntegrityError
 from django.http import JsonResponse
+from common.json import ModelEncoder
 from django.views.decorators.http import require_http_methods
 import djwto.authentication as auth
 import json
@@ -23,11 +24,8 @@ def api_users(request):
             if content.get("is_owner") and content["is_owner"]:
                 Owner.objects.create(user=user)
             return JsonResponse(
-                {
-                    "id": user.id,
-                    "username": user.username,
-                    "email": user.email,
-                }
+                {"users": user},
+                encoder = UserEncoder,
             )
         except IntegrityError:
             response = JsonResponse(
@@ -36,6 +34,39 @@ def api_users(request):
             response.status_code = 409
             return response
 
+#Get specific user by their id
+@require_http_methods(["GET"])
+def api_get_specific_user(request, pk):
+    if request.method == "GET":
+        #content = json.loads(request.body)
+        user = User.objects.get(id=pk)
+        return JsonResponse (
+            {
+                "id": user.id,
+                "username": user.username,
+                "email": user.email,
+                
+            }
+        )
+
+class UserEncoder(ModelEncoder):
+    model = User
+    properties = [
+        "id",
+        "username",
+        "email",
+        "phone",
+    ]
+
+@require_http_methods(["GET"])
+def api_list_users(request):
+    if request.method == "GET":
+        #content = json.loads(request.body)
+        user = User.objects.all()
+        return JsonResponse(
+            {"users": user},
+            encoder=UserEncoder,
+        )
 
 @require_http_methods(["GET"])
 def api_user_token(request):
