@@ -19,8 +19,11 @@ class Eatery(models.Model):
     # "$$"
     price = models.CharField(max_length=4)
     # should the tag attribute go in the Eatery model??? or eatery = ManyToManyField to Eatery model within Tag model???
-    # tag = models.ManyToManyField("Tag")
+    tags = models.ManyToManyField("Tag", related_name="tags")
     categories = models.ManyToManyField("EateryCategory", related_name="categories")
+    #open_hours has a foreign key to eatery and will be accessible on requests
+    #eatery_image has a foreign key to eatery and will be accessible on requests
+    
 
     def get_api_url(self):
         return reverse("api_eatery", kwargs={"pk": self.pk})
@@ -40,7 +43,7 @@ class Eatery(models.Model):
 
 class Tag(models.Model):
     tag_name = models.CharField(max_length=40)
-    eatery = models.ManyToManyField("Eatery", related_name="tags")
+    # eatery = models.ManyToManyField("Eatery", related_name="tags")
 
     def __str__(self):
         return self.tag_name
@@ -168,7 +171,7 @@ WEEKDAYS = [
 class EateryOpenHours(models.Model):
 
     eatery = models.ForeignKey(
-        "Eatery", related_name="openhours", on_delete=models.CASCADE
+        "Eatery", related_name="open_hours", on_delete=models.CASCADE
     )
     weekday = models.PositiveSmallIntegerField(choices=WEEKDAYS)
     start_time = models.TimeField()
@@ -199,5 +202,5 @@ class EateryOpenHours(models.Model):
 class EateryImage(models.Model):
     image_url = models.TextField()
     eatery = models.ForeignKey(
-        "Eatery", related_name="images", on_delete=models.CASCADE
+        "Eatery", related_name="eatery_images", on_delete=models.CASCADE
     )
