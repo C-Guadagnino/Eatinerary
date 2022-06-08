@@ -29,16 +29,16 @@ class Eatery(models.Model):
         return reverse("api_eatery", kwargs={"pk": self.pk})
 
 
-# class YelpSearchTerm(models.Model):
-#     term = models.CharField(max_length=50)
+class YelpSearchTerm(models.Model):
+    term = models.CharField(max_length=50)
 
-# #business data
-# class YelpResult(models.Model):
-#     term = models.ForeignKey(
-#         YelpSearchTerm,
-#         on_delete=models.CASCADE,
-#         related_name="results"
-#     )
+#business data
+class YelpResult(models.Model):
+    term = models.ForeignKey(
+        YelpSearchTerm,
+        on_delete=models.CASCADE,
+        related_name="results"
+    )
 
 
 class Tag(models.Model):
@@ -50,8 +50,8 @@ class Tag(models.Model):
 
 
 class EateryCategory(models.Model):
-    alias = models.CharField(max_length=200)
-    title = models.CharField(max_length=200, unique=True)
+    alias = models.CharField(max_length=200, unique=True)
+    title = models.CharField(max_length=200)
     # should this eatery attribute live inside the EateryCategory model or
     # should the categories attribute live inside the Eatery model?????????????????
     # eatery = models.ManyToManyField("Eatery", related_name="categories")

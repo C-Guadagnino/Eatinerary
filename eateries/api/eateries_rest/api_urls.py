@@ -2,7 +2,6 @@ from django.urls import path
 
 from .api_views import (
     api_eateries,
-    api_get_yelp,
     api_eatery,
     api_category,
     api_location,
@@ -12,11 +11,14 @@ from .api_views import (
     api_open_hours_plural,
     api_open_hours_singular,
     api_eatery_images,
-    api_eatery_image
+    api_eatery_image,
+    api_get_yelp_with_category_and_location,
+    api_get_yelp_with_location
 )
 
 urlpatterns = [
-    path("yelp/", api_get_yelp, name="api_get_yelp"),
+    path("yelp/<str:location>/", api_get_yelp_with_location, name="api_get_yelp_with_location"),
+    path("yelp/<str:location>/<str:category>/", api_get_yelp_with_category_and_location, name="api_get_yelp_with_category_and_location"),
     path("eateries/", api_eateries, name="api_eateries"),
     path("eateries/<int:pk>/", api_eatery, name="api_eatery"),
     path("locations/", api_locations, name="api_locations"),

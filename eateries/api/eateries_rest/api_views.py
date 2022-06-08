@@ -7,8 +7,9 @@ from django.shortcuts import render
 from django.db import IntegrityError
 from .models import EateryCategory, EateryImage, EateryLocation, Eatery, Tag, EateryOpenHours, EateryImage, WEEKDAYS
 from .encoders import EateryEncoder, EateryLocationEncoder, EateryCategoryEncoder, TagEncoder, OpenHoursEncoder, EateryImageEncoder
-from .acls import get_eateries_from_yelp
+from .acls import get_eateries_from_yelp, get_restaurants
 
+#distinct? database thing?
 # @require_http_methods(["GET"])
 # def api_get_yelp(request):
 #     if request.method == "GET":
@@ -16,6 +17,8 @@ from .acls import get_eateries_from_yelp
 #         try:
 #             restaurant = get_restaurants()
 #             #create the yelp search term (normalizing the term, make it lowercase before saving it) .lower()
+#             # ^ handled on the front end and brought over through the url path unique str identifiers
+            
 #             #loop over the list of restaurants
 #             # for each restaurant
 #             #create a new YelpSearchResult
@@ -25,15 +28,24 @@ from .acls import get_eateries_from_yelp
 #             #query the search term
 #             # get the results collection from the search term
 #         return JsonResponse(
-#             {"restaurant": restaurant}
+#             {"restaurant": restaurant}s
 #         )
 
 
 @require_http_methods(["GET"])
-def api_get_yelp(request):
+def api_get_yelp_with_category_and_location(request, location, category):
     if request.method == "GET":
-        restaurants = get_eateries_from_yelp("los angeles", "tacos")
+        restaurants = get_eateries_from_yelp(location, category)
         return JsonResponse({"restaurants": restaurants})
+
+
+
+@require_http_methods(["GET"])
+def api_get_yelp_with_location(request, location):
+    if request.method == "GET":
+        restaurants = get_restaurants(location)
+        return JsonResponse({"restaurants": restaurants})
+
 
 
 #For some reason the POST method creates an instance of Eatery even though the request returns a 400 error.
@@ -61,8 +73,8 @@ def api_eateries(request):
 
         eatery = Eatery.objects.create(**content)
 
-        for cat_title in categories_list:
-            cat_obj = EateryCategory.objects.get(title=cat_title)
+        for cat_alias in categories_list:
+            cat_obj = EateryCategory.objects.get(alias=cat_alias)
             eatery.categories.add(cat_obj)
         
         for tag_name in tags_list:
@@ -98,10 +110,6 @@ def api_eatery(request, pk):
 
 
 
-
-
-
-
 @require_http_methods(["GET", "POST"])
 def api_locations(request):
     if request.method == "GET":
@@ -123,7 +131,6 @@ def api_locations(request):
 
 
 
-
 @require_http_methods(["GET"])
 def api_location(request, pk):
     if request.method == "GET":
@@ -133,15 +140,11 @@ def api_location(request, pk):
 
 
 
-
-
 @require_http_methods(["GET"])
 def api_category(request, pk):
     if request.method == "GET":
         category = EateryCategory.objects.get(pk=pk)
         return JsonResponse(category, encoder=EateryCategoryEncoder, safe=False)
-
-
 
 
 
@@ -180,9 +183,6 @@ def api_tags(request):
             )
             response.status_code = 400
             return response
-
-
-
 
 
 
