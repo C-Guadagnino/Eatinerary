@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.db import IntegrityError
 from .models import EateryCategory, EateryImage, EateryLocation, Eatery, Tag, EateryOpenHours, EateryImage
-from .encoders import EateryEncoder, EateryLocationEncoder, EateryCategoryEncoder, TagEncoder, OpenHoursEncoder
+from .encoders import EateryEncoder, EateryLocationEncoder, EateryCategoryEncoder, TagEncoder, OpenHoursEncoder, EateryImageEncoder
 from .acls import get_eateries_from_yelp
 
 # @require_http_methods(["GET"])
@@ -183,7 +183,6 @@ def api_open_hours_plural(request):
             eatery_id = content["eatery"]
             eatery = Eatery.objects.get(pk=eatery_id)
             content["eatery"] = eatery
-            print("THIS IS EATERY!!!", eatery)
             open_hours_one = EateryOpenHours.objects.create(**content)
             return JsonResponse(open_hours_one, encoder=OpenHoursEncoder, safe=False)
         except IntegrityError:
@@ -200,29 +199,29 @@ def api_open_hours_singular(request, pk):
         return JsonResponse(open_hours_singular, encoder=OpenHoursEncoder, safe=False)
 
 
-# @require_http_methods(["GET", "POST"])
-# def api_open_hours_plural(request):
-#     if request.method == "GET":
-#         open_hours_all = EateryOpenHours.objects.all()
-#         return JsonResponse({"open_hours": open_hours_all}, encoder=OpenHoursEncoder)
-#     else:
-#         try:
-#             content = json.loads(request.body)
-#             eatery_id = content["eatery"]
-#             eatery = Eatery.objects.get(pk=eatery_id)
-#             content["eatery"] = eatery
-#             print("THIS IS EATERY!!!", eatery)
-#             open_hours_one = EateryOpenHours.objects.create(**content)
-#             return JsonResponse(open_hours_one, encoder=OpenHoursEncoder, safe=False)
-#         except IntegrityError:
-#             response = JsonResponse(
-#                 {"message": "Could not create open hours"}
-#             )
-#             response.status_code = 400
-#             return response
+@require_http_methods(["GET", "POST"])
+def api_eatery_images(request):
+    if request.method == "GET":
+        eatery_images = EateryImage.objects.all()
+        return JsonResponse({"eatery_images": eatery_images}, encoder=EateryImageEncoder)
+    else:
+        try:
+            content = json.loads(request.body)
+            eatery_id = content["eatery"]
+            eatery = Eatery.objects.get(pk=eatery_id)
+            content["eatery"] = eatery
+            print("THIS IS EATERY!!!", eatery)
+            eatery_image = EateryImage.objects.create(**content)
+            return JsonResponse(eatery_image, encoder=EateryImageEncoder, safe=False)
+        except IntegrityError:
+            response = JsonResponse(
+                {"message": "Could not create eatery image"}
+            )
+            response.status_code = 400
+            return response
 
-# @require_http_methods(["GET"])
-# def api_open_hours_singular(request, pk):
-#     if request.method == "GET":
-#         open_hours_singular = EateryOpenHours.objects.get(pk=pk)
-#         return JsonResponse(open_hours_singular, encoder=OpenHoursEncoder, safe=False)
+@require_http_methods(["GET"])
+def api_eatery_image(request, pk):
+    if request.method == "GET":
+        eatery_image = EateryImage.objects.get(pk=pk)
+        return JsonResponse(eatery_image, encoder=EateryImageEncoder, safe=False)

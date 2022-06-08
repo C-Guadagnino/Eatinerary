@@ -32,6 +32,13 @@ class OpenHoursEncoder(ModelEncoder):
     def get_extra_data(self, o):
         return {"eatery": {"eatery_name": o.eatery.eatery_name, "eatery_id": o.eatery.id}}
 
+class EateryImageEncoder(ModelEncoder):
+    model = EateryImage
+    properties = ["id","image_url"]
+
+    def get_extra_data(self, o):
+        return {"eatery": {"eatery_name": o.eatery.eatery_name, "eatery_id": o.eatery.id}}
+
 class EateryEncoder(ModelEncoder):
     model = Eatery
     properties = [
@@ -47,11 +54,13 @@ class EateryEncoder(ModelEncoder):
         "categories",
         "location",
         "tags",
-        "openhours"
+        "open_hours",
+        "eatery_images"
     ]
     encoders = {
         "location": EateryLocationEncoder(),
         "categories": EateryCategoryEncoder(),
         "tags": TagEncoder(),
-        "openhours": OpenHoursEncoder()
+        "open_hours": OpenHoursEncoder(),
+        "eatery_images": EateryImageEncoder()
     }

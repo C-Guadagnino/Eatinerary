@@ -21,6 +21,8 @@ class Eatery(models.Model):
     # should the tag attribute go in the Eatery model??? or eatery = ManyToManyField to Eatery model within Tag model???
     tags = models.ManyToManyField("Tag", related_name="tags")
     categories = models.ManyToManyField("EateryCategory", related_name="categories")
+    #open_hours is represented through view request
+    #eatery_image is also represented as part of Eatery Instance when request is made
     
 
     def get_api_url(self):
@@ -169,7 +171,7 @@ WEEKDAYS = [
 class EateryOpenHours(models.Model):
 
     eatery = models.ForeignKey(
-        "Eatery", related_name="openhours", on_delete=models.CASCADE
+        "Eatery", related_name="open_hours", on_delete=models.CASCADE
     )
     weekday = models.PositiveSmallIntegerField(choices=WEEKDAYS)
     start_time = models.TimeField()
@@ -200,5 +202,5 @@ class EateryOpenHours(models.Model):
 class EateryImage(models.Model):
     image_url = models.TextField()
     eatery = models.ForeignKey(
-        "Eatery", related_name="images", on_delete=models.CASCADE
+        "Eatery", related_name="eatery_images", on_delete=models.CASCADE
     )
