@@ -29,13 +29,21 @@ class Eatery(models.Model):
         return reverse("api_eatery", kwargs={"pk": self.pk})
 
 
-class YelpSearchTerm(models.Model):
-    term = models.CharField(max_length=50)
+class YelpCategorySearchTerm(models.Model):
+    category_term = models.CharField(max_length=50)
+
+class YelpLocationSearchTerm(models.Model):
+    location_term = models.CharField(max_length=50)
 
 #business data
 class YelpResult(models.Model):
-    term = models.ForeignKey(
-        YelpSearchTerm,
+    category_terms = models.ForeignKey(
+        YelpCategorySearchTerm,
+        on_delete=models.CASCADE,
+        related_name="results"
+    )
+    location_terms = models.ForeignKey(
+        YelpLocationSearchTerm,
         on_delete=models.CASCADE,
         related_name="results"
     )

@@ -10,12 +10,22 @@ from .encoders import EateryEncoder, EateryLocationEncoder, EateryCategoryEncode
 from .acls import get_eateries_from_yelp, get_restaurants
 
 #distinct? database thing?
-# @require_http_methods(["GET"])
-# def api_get_yelp(request):
+# @require_http_methods(["GET", ])
+# def api_return_list_of_restaurants_givin_category_and_location(request, location, category):
 #     if request.method == "GET":
-#         #If Yelp is running...
+#         eateries = get_eateries_from_yelp(location, category)
+#         return JsonResponse({"eateries": eateries})
 #         try:
-#             restaurant = get_restaurants()
+#             eateries_dictionary = get_eateries_from_yelp(location, category)
+#             #Create location search term object
+#             #Create Category search term object
+#             eateries_list = eateries_dictionary["businesses"]
+#             for eatery in eateries_list:
+#                 #format the list of 50 restaurant from yelp to look like our eatery model
+#                 #We create the eatery model 
+#                 #We create a yelp result model linking to that eatery model (by using .add())
+
+
 #             #create the yelp search term (normalizing the term, make it lowercase before saving it) .lower()
 #             # ^ handled on the front end and brought over through the url path unique str identifiers
             
@@ -28,7 +38,7 @@ from .acls import get_eateries_from_yelp, get_restaurants
 #             #query the search term
 #             # get the results collection from the search term
 #         return JsonResponse(
-#             {"restaurant": restaurant}s
+#             {"restaurant": restaurant}
 #         )
 
 
