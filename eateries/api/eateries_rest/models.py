@@ -19,36 +19,50 @@ class Eatery(models.Model):
     # "$$"
     price = models.CharField(max_length=4)
     # should the tag attribute go in the Eatery model??? or eatery = ManyToManyField to Eatery model within Tag model???
-    # tag = models.ManyToManyField("Tag")
+    tags = models.ManyToManyField("Tag", related_name="tags")
     categories = models.ManyToManyField("EateryCategory", related_name="categories")
+    #open_hours has a foreign key to eatery and will be accessible on requests
+    #eatery_image has a foreign key to eatery and will be accessible on requests
+    
 
     def get_api_url(self):
         return reverse("api_eatery", kwargs={"pk": self.pk})
 
 
-# class YelpSearchTerm(models.Model):
-#     term = models.CharField(max_length=50)
+class YelpCategorySearchTerm(models.Model):
+    category_term = models.CharField(max_length=50)
 
-# #business data
-# class YelpResult(models.Model):
-#     term = models.ForeignKey(
-#         YelpSearchTerm,
-#         on_delete=models.CASCADE,
-#         related_name="results"
-#     )
+class YelpLocationSearchTerm(models.Model):
+    location_term = models.CharField(max_length=50)
+
+#business data
+class YelpResult(models.Model):
+    category_terms = models.ForeignKey(
+        YelpCategorySearchTerm,
+        on_delete=models.CASCADE,
+        related_name="results"
+    )
+    location_terms = models.ForeignKey(
+        YelpLocationSearchTerm,
+        on_delete=models.CASCADE,
+        related_name="results"
+    )
 
 
 class Tag(models.Model):
-    tag_name = models.CharField(max_length=40)
-    eatery = models.ManyToManyField("Eatery", related_name="tags")
+    tag_name = models.CharField(max_length=40,unique=True)
+    # eatery = models.ManyToManyField("Eatery", related_name="tags")
 
     def __str__(self):
         return self.tag_name
+    
+    def get_api_url(self):
+        return reverse("api_tag", kwargs={"pk": self.pk})
 
 
 class EateryCategory(models.Model):
-    alias = models.CharField(max_length=200)
-    title = models.CharField(max_length=200, unique=True)
+    alias = models.CharField(max_length=200, unique=True)
+    title = models.CharField(max_length=200)
     # should this eatery attribute live inside the EateryCategory model or
     # should the categories attribute live inside the Eatery model?????????????????
     # eatery = models.ManyToManyField("Eatery", related_name="categories")
@@ -168,7 +182,7 @@ WEEKDAYS = [
 class EateryOpenHours(models.Model):
 
     eatery = models.ForeignKey(
-        "Eatery", related_name="openhours", on_delete=models.CASCADE
+        "Eatery", related_name="open_hours", on_delete=models.CASCADE
     )
     weekday = models.PositiveSmallIntegerField(choices=WEEKDAYS)
     start_time = models.TimeField()
@@ -199,5 +213,5 @@ class EateryOpenHours(models.Model):
 class EateryImage(models.Model):
     image_url = models.TextField()
     eatery = models.ForeignKey(
-        "Eatery", related_name="images", on_delete=models.CASCADE
+        "Eatery", related_name="eatery_images", on_delete=models.CASCADE
     )

@@ -7,6 +7,35 @@
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
+## June 08, 2022
+Today, I worked on:
+* Ariana and I fine tuned the yelp integration
+
+* Our api_get_yelp_category_and_location function is now able to take in a location and category input and it will be used in the front end to take in search input form the user.
+
+* A struggle that we have been going back and forth on is the many to many relationship and how to pull from the eateries microservice to the foodies/owners microservices. 
+
+* We learned that the pattern of categories that the yelp api takes and now know how to normalize out inputs form the users and feed them into the yelp request parameter.
+
+
+## June 07, 2022
+Today, I worked on:
+* Ariana and I worked on finishing the views for the models in the eateries microservice
+
+* We changed the many to many holder of the relationship between Eatery and Tag to live on the Eatery model. Also a sweet AHA moment learning that we can chose what side to put it on and it doesn't matter. 
+
+* Huge aha moment was when Ariana thought about using the get_extra_data() function to add in the many to many field because of the circular logic from the encoders because we needed to include the encoders into eachother but couldnt because of inheritance laws, so we added in the extra data to one encoder.
+
+## June 06, 2022
+Today, I worked on:
+* We worked as a team towards finishing the eateries microservice by creating views for specifically getting the eateries.
+
+* We talked about incorporating a loop somewhere to go through the many to many lists and record each as part of that eatery instance but we were not sure on how to do that or where that goes. We also struggled with adding the categories to a list in the views and found that the many to many manager had a method .add() that we were able to use for each iteration through the list we are getting from the request.
+
+* Ariana (the GOAT) made additions to the json.py file in the common directory so that our model encoder would be able to return many to many relationships as nested object. 
+
+* Tuesday morning this was the AHA ^
+
 ## June 04, 2022
 Today, I worked on:
 * I worked on Testing the Models, Views, and Poller service
