@@ -1,9 +1,7 @@
 from common.json import ModelEncoder
-from .resources import STATES
 from .models import (
     EateryTagVO, 
-    EateryCategoriesVO, 
-    EateryLocationVO, 
+    EateryCategoriesVO,  
     ImageVO, 
     Foodie, 
     EateryVO, 
@@ -12,26 +10,11 @@ from .models import (
 
 class EateryTagVOEncoder(ModelEncoder):
     model = EateryTagVO
-    properties = ["tag_name"]
+    properties = ["tag_name", "import_href"]
 
 class EateryCategoriesVOEncoder(ModelEncoder):
     model = EateryCategoriesVO
     properties = ["alias", "title"]
-
-class EateryLocationVOEncoder(ModelEncoder):
-    model = EateryLocationVO
-    properties = [
-        "address1",
-        "address2",
-        "address3",
-        "city",
-        "state",
-        "zip",
-        "country"
-    ]
-    #needs review
-    def get_extra_data(self,o):
-        return {"states": STATES}
 
 class ImageVOEncoder(ModelEncoder):
     model = ImageVO
@@ -60,12 +43,17 @@ class EateryVOEncoder(ModelEncoder):
         "average_rating",
         "price"
         "eatery_open_hours",
-        "location",
         "tag",
         "categories"
+        "location_address1"
+        "location_address2"
+        "location_address3"
+        "location_city"
+        "location_state"
+        "location_zip"
+        "location_country"
     ]
     encoders = {
-        "location": EateryLocationVOEncoder(),
         "tag": EateryTagVOEncoder(),
         "categories": EateryCategoriesVOEncoder(),
     }

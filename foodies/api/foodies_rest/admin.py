@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import (
     Foodie,
     EateryVO,
+    EateryTagVO,
     SkeweredEatery,
     Review
     )
@@ -22,6 +23,10 @@ class SkeweredEateryAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(EateryTagVO)
+class EateryTagVOAdmin(admin.ModelAdmin):
     pass
 
 

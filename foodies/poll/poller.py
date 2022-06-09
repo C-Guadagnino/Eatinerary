@@ -9,7 +9,7 @@ sys.path.append("")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "foodies_project.settings")
 django.setup()
 
-from foodies_rest.models import EateryVO
+from foodies_rest.models import EateryVO, EateryTagVO
 
 
 def get_eatery_entity_data():
@@ -39,10 +39,16 @@ def get_eatery_entity_data():
                 #"tag": eatery["tag"],
                 #"categories": eatery["categories"]
             },
-        # TagVO.objects.update_or_create(
-        #     import_href = eateryta
-        # )
         )
+        # eateryvo_obj = EateryVO.objects.get(import_href=eatery["href"])
+        # for tag in content["eateries"]["tags"]:
+        #     EateryTagVO.objects.update_or_create(
+        #         import_href = eatery["href"],
+        #         defaults = {
+        #             "tag_name": tag[0],
+        #             "eatery": eateryvo_obj
+        #     },
+        # )
 
 
 def poll():

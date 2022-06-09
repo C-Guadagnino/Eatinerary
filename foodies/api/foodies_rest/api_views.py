@@ -4,8 +4,7 @@ from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
 from .encoders import (
     EateryTagVOEncoder, 
-    EateryCategoriesVOEncoder, 
-    EateryLocationVOEncoder, 
+    EateryCategoriesVOEncoder,  
     ImageVOEncoder, 
     FoodieEncoder, 
     EateryVOEncoder, 
@@ -14,7 +13,6 @@ from .encoders import (
 from .models import (
     EateryTagVO, 
     EateryCategoriesVO, 
-    EateryLocationVO, 
     ImageVO, 
     Foodie, 
     EateryVO, 
