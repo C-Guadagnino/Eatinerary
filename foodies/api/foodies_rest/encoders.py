@@ -1,8 +1,8 @@
 from common.json import ModelEncoder
 from .models import (
     EateryTagVO,
-    EateryCategoriesVO,
-    ImageVO,
+    EateryCategoryVO,
+    EateryImageVO,
     Foodie,
     EateryVO,
     SkeweredEatery,
@@ -15,13 +15,13 @@ class EateryTagVOEncoder(ModelEncoder):
     properties = ["tag_name", "import_href"]
 
 
-class EateryCategoriesVOEncoder(ModelEncoder):
-    model = EateryCategoriesVO
+class EateryCategoryVOEncoder(ModelEncoder):
+    model = EateryCategoryVO
     properties = ["alias", "title"]
 
 
-class ImageVOEncoder(ModelEncoder):
-    model = ImageVO
+class EateryImageVOEncoder(ModelEncoder):
+    model = EateryImageVO
     properties = ["image_url"]
 
 
@@ -61,7 +61,7 @@ class EateryVOEncoder(ModelEncoder):
     ]
     encoders = {
         "tag": EateryTagVOEncoder(),
-        "categories": EateryCategoriesVOEncoder(),
+        "categories": EateryCategoryVOEncoder(),
     }
 
 
@@ -94,5 +94,5 @@ class ReviewEncoder(ModelEncoder):
     ]
     encoders = {
         "skewered_restaurant": SkeweredEateryEncoder(),
-        "image": ImageVOEncoder(),
+        "image": EateryImageVOEncoder(),
     }

@@ -21,9 +21,8 @@ class Eatery(models.Model):
     # should the tag attribute go in the Eatery model??? or eatery = ManyToManyField to Eatery model within Tag model???
     tags = models.ManyToManyField("Tag", related_name="tags")
     categories = models.ManyToManyField("EateryCategory", related_name="categories")
-    #open_hours has a foreign key to eatery and will be accessible on requests
-    #eatery_image has a foreign key to eatery and will be accessible on requests
-    
+    # open_hours has a foreign key to eatery and will be accessible on requests
+    # eatery_image has a foreign key to eatery and will be accessible on requests
 
     def get_api_url(self):
         return reverse("api_eatery", kwargs={"pk": self.pk})
@@ -32,30 +31,28 @@ class Eatery(models.Model):
 class YelpCategorySearchTerm(models.Model):
     category_term = models.CharField(max_length=50)
 
+
 class YelpLocationSearchTerm(models.Model):
     location_term = models.CharField(max_length=50)
 
-#business data
+
+# business data
 class YelpResult(models.Model):
     category_terms = models.ForeignKey(
-        YelpCategorySearchTerm,
-        on_delete=models.CASCADE,
-        related_name="results"
+        YelpCategorySearchTerm, on_delete=models.CASCADE, related_name="results"
     )
     location_terms = models.ForeignKey(
-        YelpLocationSearchTerm,
-        on_delete=models.CASCADE,
-        related_name="results"
+        YelpLocationSearchTerm, on_delete=models.CASCADE, related_name="results"
     )
 
 
 class Tag(models.Model):
-    tag_name = models.CharField(max_length=40,unique=True)
+    tag_name = models.CharField(max_length=40, unique=True)
     # eatery = models.ManyToManyField("Eatery", related_name="tags")
 
     def __str__(self):
         return self.tag_name
-    
+
     def get_api_url(self):
         return reverse("api_tag", kwargs={"pk": self.pk})
 
@@ -69,6 +66,9 @@ class EateryCategory(models.Model):
 
     def __str__(self):
         return self.alias + " " + self.title
+
+    def get_api_url(self):
+        return reverse("api_category", kwargs={"pk": self.pk})
 
 
 STATES = [
@@ -191,6 +191,9 @@ class EateryOpenHours(models.Model):
     def get_weekday_display(self):
         return WEEKDAYS[self.weekday - 1][1]
 
+    def get_api_url(self):
+        return reverse("api_open_hours_singular", kwargs={"pk": self.pk})
+
     class Meta:
         ordering = ("weekday", "start_time")
         unique_together = ("weekday", "start_time", "end_time")
@@ -211,7 +214,11 @@ class EateryOpenHours(models.Model):
 
 
 class EateryImage(models.Model):
+    # not unique because an owner should be able to upload the same picture to location1 and location2
     image_url = models.TextField()
     eatery = models.ForeignKey(
         "Eatery", related_name="eatery_images", on_delete=models.CASCADE
     )
+
+    def get_api_url(self):
+        return reverse("api_eatery_image", kwargs={"pk": self.pk})
