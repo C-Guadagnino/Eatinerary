@@ -2,40 +2,25 @@ import djwto.authentication as auth
 import json
 from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
-from common.json import ModelEncoder
-from .models import Foodie
-#Remember to import EateryVO! 
+from .encoders import (
+    EateryTagVOEncoder, 
+    EateryCategoriesVOEncoder, 
+    EateryLocationVOEncoder, 
+    ImageVOEncoder, 
+    FoodieEncoder, 
+    EateryVOEncoder, 
+    SkeweredEateryEncoder, 
+    ReviewEncoder)
+from .models import (
+    EateryTagVO, 
+    EateryCategoriesVO, 
+    EateryLocationVO, 
+    ImageVO, 
+    Foodie, 
+    EateryVO, 
+    SkeweredEatery, 
+    Review)
 from django.shortcuts import render
-
-
-class FoodieEncoder(ModelEncoder):
-    model = Foodie
-    properties = [
-        "username",
-        "first_name",
-        "email",
-        "phone",
-        "google_calendar",
-    ]
-
-# class EateryVOEncoder(ModelEncoder):
-#     model = EateryVO
-#     properties = [
-#         "import_href",
-#         "eatery_name",
-#         "website",
-#         "email",
-#         "phone",
-#         "yelp_id",
-#         "review_count",
-#         "average_rating",
-#         "price"
-#     ]
-
-#class SkeweredEateryEncoder(ModelEncoder)
-#class ReviewEncoder(ModelEncoder)
-
-
 
 
 @require_http_methods(["GET", "POST"])
@@ -56,9 +41,11 @@ def api_list_foodies(request):
         )
 
 
+
 # Will only let this view function run if there's a JWT
 # in the 'Authorization' header
 @auth.jwt_login_required
+#@require_http_methods(["GET", "POST"])
 def get_foodie_skewers(request):
     return JsonResponse({"received": request.payload})
 
@@ -80,24 +67,41 @@ def get_foodie_skewers(request):
 #api_foodie_show_review 
 
 
-# Get list of all eateries the foodie has skewered
-# need a (request,pk) here for the specific foodie??
-# need to make a SkeweredEateryEncoder!
-# @require_http_methods(["GET"])
-# def api_list_skewered_eateries(request):
-#     if request.method == "GET":
-#         try:
-#             skewered_eateries = SkeweredEatery.objects.all()
-#             return JsonResponse(
-#                 {"skewered_eateries": skewered_eateries},
-#                 encoder=SkeweredEateryEncoder,
-#                 safe=False
-#             )
-#         except SkeweredEatery.DoesNotExist:
-#             return JsonResponse(
-#                 {"message": "Does not exist"},
-#                 status=400,
-#             )
+#Get list of all eateries the foodie has skewered
+#need a (request,pk) here for the specific foodie??
+@require_http_methods(["GET"])
+def api_list_skewered_eateries(request):
+    if request.method == "GET":
+        try:
+            skewered_eateries = SkeweredEatery.objects.all()
+            return JsonResponse(
+                {"skewered_eateries": skewered_eateries},
+                encoder=SkeweredEateryEncoder,
+                safe=False
+            )
+        except SkeweredEatery.DoesNotExist:
+            return JsonResponse(
+                {"message": "Does not exist"},
+                status=400,
+            )
+
+#For EateryVO
+@require_http_methods(["GET"])
+def api_list_eateries(request):
+    if request.method == "GET":
+        try:
+            eateries = EateryVO.objects.all()
+            return JsonResponse(
+                {"eateries": eateries},
+                encoder=EateryVOEncoder,
+                safe=False
+            )
+        except EateryVO.DoesNotExist:
+            return JsonResponse(
+                {"message": "Does not exist"},
+                status=400,
+            )
+
 
 
 # If we do need the (request,pk)...
@@ -124,17 +128,17 @@ def get_foodie_skewers(request):
 # API endpoint: mySkewered/spotID
 # api_urls = "mySkewered/eatery/<int:pk>/", api_show_skewered_eatery, name = ""
 # NEEDS REVIEW
-# @require_http_methods(["GET"])
-# def api_show_skewered_eatery(request, pk):
-#     if request.method == "GET":
-#         try:
-#             eatery = SkeweredEatery.objects.filter(eatery=pk)
-#             return JsonResponse(
-#                 eatery,
-#                 encoder=SkeweredEateryEncoder,
-#                 safe=False
-#             )
-#         except SkeweredEatery.DoesNotExist:
-#             response = JsonResponse({"message": "Does not exist"})
-#             response.status_code = 404
-#             return response
+@require_http_methods(["GET"])
+def api_show_skewered_eatery(request, pk):
+    if request.method == "GET":
+        try:
+            eatery = SkeweredEatery.objects.filter(eatery=pk)
+            return JsonResponse(
+                eatery,
+                encoder=SkeweredEateryEncoder,
+                safe=False
+            )
+        except SkeweredEatery.DoesNotExist:
+            response = JsonResponse({"message": "Does not exist"})
+            response.status_code = 404
+            return response

@@ -42,11 +42,14 @@ class Eatery(models.Model):
 
 
 class Tag(models.Model):
-    tag_name = models.CharField(max_length=40)
+    tag_name = models.CharField(max_length=40,unique=True)
     # eatery = models.ManyToManyField("Eatery", related_name="tags")
 
     def __str__(self):
         return self.tag_name
+    
+    def get_api_url(self):
+        return reverse("api_tag", kwargs={"pk": self.pk})
 
 
 class EateryCategory(models.Model):
