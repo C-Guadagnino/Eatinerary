@@ -175,6 +175,12 @@ def api_categories(request):
             response.status_code = 400
             return response
 
+@require_http_methods(["GET"])
+def api_tag(request, pk):
+    if request.method == "GET":
+        tag = Tag.objects.get(pk=pk)
+        return JsonResponse(tag, encoder=TagEncoder, safe=False)
+
 
 
 @require_http_methods(["GET", "POST"])
