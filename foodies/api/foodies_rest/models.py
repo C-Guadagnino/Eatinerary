@@ -6,18 +6,22 @@ class EateryTagVO(models.Model):
     import_href = models.CharField(max_length=200)
     tag_name = models.CharField(max_length=40)
     eatery = models.ForeignKey(
-        "EateryVO",
-        related_name="tagsvo",
-        on_delete= models.CASCADE
+        "EateryVO", related_name="tagsvo", on_delete=models.CASCADE
     )
+
+    def __str__(self):
+        return "Tag #" + self.tag_name + " for Eatery: " + self.eatery.eatery_name
+
 
 class EateryCategoriesVO(models.Model):
     alias = models.CharField(max_length=200)
     title = models.CharField(max_length=200)
 
+
 class ImageVO(models.Model):
     image_url = models.URLField(unique=True)
-    #image_url2 = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=100, unique=True)
+    # image_url2 = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=100, unique=True)
+
 
 # Create your models here.
 class Foodie(models.Model):
@@ -30,6 +34,7 @@ class Foodie(models.Model):
 
     def __str__(self):
         return self.username
+
 
 class EateryVO(models.Model):
     import_href = models.CharField(max_length=200)
@@ -48,9 +53,9 @@ class EateryVO(models.Model):
     location_state = models.CharField(max_length=200)
     location_zip = models.CharField(max_length=200)
     location_country = models.CharField(max_length=200)
-    #eatery_open_hours = models.CharField(max_length=200)
-    #eatery_image = models.
-    #M2M
+    # eatery_open_hours = models.CharField(max_length=200)
+    # eatery_image = models.
+    # M2M
     # tag = models.ForeignKey(
     #     EateryTagVO,
     #     related_name="foodies_tag",
@@ -61,20 +66,20 @@ class EateryVO(models.Model):
     #     EateryCategoriesVO,
     #     related_name="foodies_categories",
     #     on_delete = models.CASCADE
-    # ) 
+    # )
 
 
 class SkeweredEatery(models.Model):
     eatery = models.ForeignKey(
-    EateryVO,
-    related_name="skewered_eatery",
-    on_delete=models.CASCADE,
+        EateryVO,
+        related_name="skewered_eatery",
+        on_delete=models.CASCADE,
     )
     foodie = models.ForeignKey(
         Foodie,
         related_name="foodie",
         on_delete=models.CASCADE,
-        blank=True #needs review!
+        blank=True,  # needs review!
     )
     created_DateTime = models.DateTimeField(auto_now_add=True)
     updated_DateTime = models.DateTimeField(auto_now=True)
@@ -97,15 +102,10 @@ class Review(models.Model):
     created_DateTime = models.DateTimeField(auto_now_add=True)
     description = models.TextField()
     skewered_restaurant = models.OneToOneField(
-        SkeweredEatery,
-        on_delete=models.CASCADE,
-        primary_key=True
+        SkeweredEatery, on_delete=models.CASCADE, primary_key=True
     )
     image = models.ForeignKey(
-        ImageVO,
-        related_name = "image",
-        on_delete=models.CASCADE,
-        blank=True
+        ImageVO, related_name="image", on_delete=models.CASCADE, blank=True
     )
 
     def __str__(self):
