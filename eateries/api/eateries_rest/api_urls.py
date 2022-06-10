@@ -12,14 +12,23 @@ from .api_views import (
     api_open_hours_singular,
     api_eatery_images,
     api_eatery_image,
-    api_get_yelp_with_category_and_location,
+    api_return_list_of_restaurants_given_category_and_location,
+    # api_get_yelp_with_category_and_location,
     api_get_yelp_with_location,
-    api_tag
+    api_tag,
 )
 
 urlpatterns = [
-    path("yelp/<str:location>/", api_get_yelp_with_location, name="api_get_yelp_with_location"),
-    path("yelp/<str:location>/<str:category>/", api_get_yelp_with_category_and_location, name="api_get_yelp_with_category_and_location"),
+    path(
+        "yelp/<str:location>/",
+        api_get_yelp_with_location,
+        name="api_get_yelp_with_location",
+    ),
+    path(
+        "yelp/<str:location>/<str:category>/",
+        api_return_list_of_restaurants_given_category_and_location,
+        name="api_return_list_of_restaurants_given_category_and_location",
+    ),
     path("eateries/", api_eateries, name="api_eateries"),
     path("eateries/<int:pk>/", api_eatery, name="api_eatery"),
     path("locations/", api_locations, name="api_locations"),
@@ -29,7 +38,9 @@ urlpatterns = [
     path("tags/<int:pk>/", api_tag, name="api_tag"),
     path("categories/", api_categories, name="api_categories"),
     path("openhours/", api_open_hours_plural, name="api_open_hours_plural"),
-    path("openhours/<int:pk>/", api_open_hours_singular, name="api_open_hours_singular"),
+    path(
+        "openhours/<int:pk>/", api_open_hours_singular, name="api_open_hours_singular"
+    ),
     path("eateryimages/", api_eatery_images, name="api_eatery_images"),
     path("eateryimages/<int:pk>/", api_eatery_image, name="api_eatery_image"),
 ]
