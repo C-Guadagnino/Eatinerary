@@ -11,14 +11,12 @@ def get_restaurants(location):
         "Authorization": "Bearer %s" % YELP_API_KEY,
     }
 
-    url_params = {
-        "limit": 50
-    }
+    url_params = {"limit": 50}
     # response = requests.get(url, headers=headers)
     response = requests.request("GET", url, headers=headers, params=url_params)
 
     content = json.loads(response.content)
-    print("content is:", content)
+    # print("IM INSIDE OF ACLS.PY and content is:", content)
     print("length of content is:", len(content["businesses"]))
     return content
     # locations = response["businesses"]
@@ -39,7 +37,7 @@ def get_eateries_from_yelp(location, categories):
     url_params = {
         "categories": categories.replace(" ", "+"),
         "location": location.replace(" ", "+"),
-        "limit": 50
+        "limit": 50,
     }
 
     # response = requests.get(url, headers=headers)
@@ -47,7 +45,7 @@ def get_eateries_from_yelp(location, categories):
     # response = requests.request('GET', url, headers=headers)
 
     content = json.loads(response.content)
-    print("content is:", content)
+    # print("IM INSIDE OF ACLS.PY and content is:", content)
     # print("length of content is:", len(content["businesses"]))
     return content
     # locations = response["businesses"]

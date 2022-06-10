@@ -12,7 +12,8 @@ from .api_views import (
     api_open_hours_singular,
     api_eatery_images,
     api_eatery_image,
-    api_get_yelp_with_category_and_location,
+    api_return_list_of_restaurants_given_category_and_location,
+    # api_get_yelp_with_category_and_location,
     api_get_yelp_with_location,
     api_tag,
 )
@@ -25,8 +26,8 @@ urlpatterns = [
     ),
     path(
         "yelp/<str:location>/<str:category>/",
-        api_get_yelp_with_category_and_location,
-        name="api_get_yelp_with_category_and_location",
+        api_return_list_of_restaurants_given_category_and_location,
+        name="api_return_list_of_restaurants_given_category_and_location",
     ),
     path("eateries/", api_eateries, name="api_eateries"),
     path("eateries/<int:pk>/", api_eatery, name="api_eatery"),

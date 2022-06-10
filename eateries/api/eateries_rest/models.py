@@ -23,6 +23,7 @@ class Eatery(models.Model):
     categories = models.ManyToManyField("EateryCategory", related_name="categories")
     # open_hours has a foreign key to eatery and will be accessible on requests
     # eatery_image has a foreign key to eatery and will be accessible on requests
+    from_yelp = models.BooleanField(default=False)
 
     def get_api_url(self):
         return reverse("api_eatery", kwargs={"pk": self.pk})
@@ -38,11 +39,14 @@ class YelpLocationSearchTerm(models.Model):
 
 # business data
 class YelpResult(models.Model):
-    category_terms = models.ForeignKey(
+    category_term = models.ForeignKey(
         YelpCategorySearchTerm, on_delete=models.CASCADE, related_name="results"
     )
-    location_terms = models.ForeignKey(
+    location_term = models.ForeignKey(
         YelpLocationSearchTerm, on_delete=models.CASCADE, related_name="results"
+    )
+    eatery = models.ForeignKey(
+        "Eatery", related_name="eatery_yelpresults", on_delete=models.CASCADE
     )
 
 

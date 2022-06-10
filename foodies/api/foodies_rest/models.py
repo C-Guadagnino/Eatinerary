@@ -74,6 +74,7 @@ class EateryVO(models.Model):
     review_count = models.PositiveSmallIntegerField(default=0)
     average_rating = models.FloatField()
     price = models.CharField(max_length=4)
+    from_yelp = models.BooleanField()
     location_address1 = models.CharField(max_length=200)
     location_address2 = models.CharField(max_length=200)
     location_address3 = models.CharField(max_length=200)

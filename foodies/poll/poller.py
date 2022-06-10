@@ -34,6 +34,7 @@ def get_eatery_entity_data():
                 "review_count": eatery["review_count"],
                 "average_rating": eatery["average_rating"],
                 "price": eatery["price"],
+                "from_yelp": eatery["from_yelp"],
                 "location_address1": eatery["location"]["address1"],
                 "location_address2": eatery["location"]["address2"],
                 "location_address3": eatery["location"]["address3"],
@@ -47,9 +48,6 @@ def get_eatery_entity_data():
         print("eateryvo_obj", eateryvo_obj)
         # POLLING EATERYTAG MODEL
         for tag in eatery["tags"]:
-            print("tag", tag)
-            print("eatery[href]", eatery["href"])
-            print("tag[tag_name]", tag["tag_name"])
             EateryTagVO.objects.update_or_create(
                 import_href=tag["href"],
                 defaults={"tag_name": tag["tag_name"], "eatery": eateryvo_obj},
