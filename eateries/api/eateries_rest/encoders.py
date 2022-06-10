@@ -68,6 +68,7 @@ class EateryEncoder(ModelEncoder):
         "review_count",
         "average_rating",
         "price",
+        "from_yelp",
         "categories",
         "location",
         "tags",

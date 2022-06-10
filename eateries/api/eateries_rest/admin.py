@@ -6,6 +6,9 @@ from .models import (
     EateryOpenHours,
     EateryImage,
     Tag,
+    YelpCategorySearchTerm,
+    YelpLocationSearchTerm,
+    YelpResult,
 )
 
 
@@ -36,4 +39,19 @@ class EateryImageAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(YelpCategorySearchTerm)
+class YelpCategorySearchTermAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(YelpLocationSearchTerm)
+class YelpLocationSearchTermAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(YelpResult)
+class YelpResultAdmin(admin.ModelAdmin):
     pass
