@@ -88,7 +88,7 @@ class SkeweredEatery(models.Model):
     notes = models.TextField()
 
     def __str__(self):
-        return self.eatery
+        return self.eatery.eatery_name
 
 
 class Review(models.Model):

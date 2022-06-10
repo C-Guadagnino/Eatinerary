@@ -4,7 +4,7 @@ from .models import (
     EateryVO,
     EateryTagVO,
     SkeweredEatery,
-    Review
+    Review,
     )
 
 
@@ -28,6 +28,7 @@ class ReviewAdmin(admin.ModelAdmin):
 @admin.register(EateryTagVO)
 class EateryTagVOAdmin(admin.ModelAdmin):
     pass
+
 
 
 

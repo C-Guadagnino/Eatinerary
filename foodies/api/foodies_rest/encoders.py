@@ -68,6 +68,7 @@ class EateryVOEncoder(ModelEncoder):
 class SkeweredEateryEncoder(ModelEncoder):
     model = SkeweredEatery
     properties = [
+        "id",
         "eatery",
         "foodie",
         "created_DateTime",
@@ -85,6 +86,7 @@ class SkeweredEateryEncoder(ModelEncoder):
 class ReviewEncoder(ModelEncoder):
     model = Review
     properties = [
+        "id",
         "title",
         "rating",
         "created_DateTime",
