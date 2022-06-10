@@ -4,7 +4,7 @@ from django.urls import reverse
 # Create your models here.
 class Eatery(models.Model):
     eatery_name = models.CharField(max_length=200)
-    email = models.CharField(max_length=200, unique=True)
+    email = models.CharField(max_length=200, null=True, blank=True)
     phone = models.CharField(max_length=200)
     location = models.OneToOneField(
         "EateryLocation", related_name="eatery", on_delete=models.CASCADE
@@ -137,26 +137,26 @@ STATES = [
 # NEEDS REVIEW BASED ON CURTIS' FEEDBACK
 class EateryLocation(models.Model):
     address1 = models.CharField(max_length=200)
-    address2 = models.CharField(max_length=200, blank=True)
-    address3 = models.CharField(max_length=200, blank=True)
+    address2 = models.CharField(max_length=200, null=True, blank=True)
+    address3 = models.CharField(max_length=200, null=True, blank=True)
     city = models.CharField(max_length=200)
     state = models.CharField(max_length=200, choices=STATES)
-    zip = models.CharField(max_length=200)
+    zip_code = models.CharField(max_length=200)
     country = models.CharField(max_length=200, default="USA")
 
     def get_api_url(self):
         return reverse("api_location", kwargs={"pk": self.pk})
 
-    class Meta:
-        unique_together = (
-            "address1",
-            "address2",
-            "address3",
-            "city",
-            "state",
-            "zip",
-            "country",
-        )
+    # class Meta:
+    #     unique_together = (
+    #         "address1",
+    #         "address2",
+    #         "address3",
+    #         "city",
+    #         "state",
+    #         "zip_code",
+    #         "country",
+    #     )
 
     def __str__(self):
         return (
@@ -166,7 +166,7 @@ class EateryLocation(models.Model):
             + ", "
             + self.state
             + " "
-            + self.zip
+            + self.zip_code
             + ", "
             + self.country
         )

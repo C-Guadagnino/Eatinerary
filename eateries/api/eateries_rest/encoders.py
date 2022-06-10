@@ -19,7 +19,7 @@ class EateryLocationEncoder(ModelEncoder):
         "address3",
         "city",
         "state",
-        "zip",
+        "zip_code",
         "country",
     ]
 

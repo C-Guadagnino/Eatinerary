@@ -49,25 +49,88 @@ def api_return_list_of_restaurants_given_category_and_location(
         print("CATEGORY_SEARCH_TERM", category_searchterm)
         # Create Category search term object
         eateries_list = eateries_dictionary["businesses"]
-        # for eatery in eateries_list:
-        # format the list of 50 restaurant from yelp to look like our eatery model
+        # print("EATERIES LIST", eateries_list)
+        for eatery in eateries_list:
+        # # format the list of 50 restaurant from yelp to look like our eatery model
 
-        # We create the eatery model
-        # We create a yelp result model linking to that eatery model (by using .add())
+        # # We create the eatery model
+        # # We create a yelp result model linking to that eatery model (by using .add())
 
-        # create the yelp search term (normalizing the term, make it lowercase before saving it) .lower()
-        # ^ handled on the front end and brought over through the url path unique str identifiers
 
-        # loop over the list of restaurants
-        # for each restaurant
-        # create a new YelpSearchResult
+
+        # #zip-code is what Yelp uses, might as well change it imo so we can return the 
+        # #whole location object clean
+            if eatery["location"]["display_address"]:
+                del eatery["location"]["display_address"]
+            # print("EATERY", eatery)
+            location_dict = eatery["location"]
+            print("LOCATION DICTIONARY", location_dict)
+            try:
+                location_obj = EateryLocation.objects.create(**location_dict)
+                print("Location OBJ" ,location_obj)
+            except IntegrityError:
+                pass
+
+        #     location_obj = EateryLocation.objects.get(zip_code=eatery["location"]["zip_code"])
+            
+        #     print("LOCATION_OBJ: ", location_obj)
+
+            
+        # categories = eateries_list["categories"]
+        # categories_list = []
+        # for cats in categories:
+        #     #EateryCategory.objects.create(categories=categories)
+        #     category_obj = EateryCategory.objects.get(alias=eateries_list["categories"]["alias"])
+        #     categories_list.append(category_obj)
+
+        # image = eateries_list["image_url"]
+        # #EateryImage.objects.create(image=image)
+        # image_url = EateryImage.objects.get(image_url=eateries_list["image_url"])
+
+
+        # eatery_name = eateries_list["name"]
+        # email = "unique@unique.com"
+        # phone = eateries_list["display_phone"]
+        # website = eateries_list["url"]
+        # yelp_id = eateries_list["id"]
+        # review_count = eateries_list["review_count"]
+        # average_rating = eateries_list["rating"]
+        # price = eateries_list["price"]
+        # from_yelp = "True"
+
+        # eatery_instance = {
+		# 	"eatery_name": eatery_name,
+		# 	"website": website,
+		# 	"email": email,
+		# 	"phone": phone,
+		# 	"yelp_id": yelp_id,
+		# 	"review_count": review_count,
+		# 	"average_rating": average_rating,
+		# 	"price": price,
+		# 	"categories": categories_list,
+		# 	"location": location_obj,
+		# 	"tags": [],
+		# 	"open_hours": [],
+		# 	"eatery_images": [image_url]
+		# }
+        #Eatery.objects.create(eateryinstance=eateryinstance)
+
+
+#             #create the yelp search term (normalizing the term, make it lowercase before saving it) .lower()
+#             # ^ handled on the front end and brought over through the url path unique str identifiers
+            
+#             #loop over the list of restaurants
+#             # for each restaurant
+#             #create a new YelpSearchResult
+#         #If Yelp is down...
         return JsonResponse({"eateries": eateries_dictionary})
-        # If Yelp is down...
-        # except:
-        #     pass
-        #     # query the search term
-        #     # get the results collection from the search term
-        # return JsonResponse({"restaurant": restaurant})
+#         except:
+#             pass
+#             #query the search term
+#             # get the results collection from the search term
+#         return JsonResponse(
+#             {"restaurant": restaurant}
+#         )
 
 
 @require_http_methods(["GET"])
