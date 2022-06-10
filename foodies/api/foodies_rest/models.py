@@ -119,9 +119,6 @@ class Review(models.Model):
     skewered_restaurant = models.OneToOneField(
         SkeweredEatery, on_delete=models.CASCADE, primary_key=True
     )
-    image = models.ForeignKey(
-        "ReviewImage", related_name="image", on_delete=models.CASCADE, blank=True
-    )
 
     def __str__(self):
         restaurant = str(self.skewered_restaurant)

@@ -8,6 +8,7 @@ from .models import (
     EateryImageVO,
     SkeweredEatery,
     Review,
+    ReviewImage,
 )
 
 
@@ -49,4 +50,8 @@ class EateryCategoryVOAdmin(admin.ModelAdmin):
 
 @admin.register(EateryOpenHoursVO)
 class EateryOpenHoursVOAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(ReviewImage)
+class ReviewImageAdmin(admin.ModelAdmin):
     pass
