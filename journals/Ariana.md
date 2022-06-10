@@ -9,26 +9,32 @@ In the journals, every day that you work on the project, you must make an entry 
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
-## June 08, 2022
+## June 9, 2022
 * Today, I worked on:
-    * Ariana and I fine tuned the yelp integration
-* Our api_get_yelp_category_and_location function is now able to take in a location and category input and it will be used in the front end to take in search input form the user.
+    * finishing the poller.py in the Foodies MS that polls the Eatery (and related) models from the Eateries MS - All
+    * writing the api_return_list_of_restaurants_given_category_and_location function view - Brandon and I
+* In the Foodies MS poller, we decided to flatten the EateryLocation data into the EateryVO model.
+* It was a nice realization that while api_return_list_of_restaurants_given_category_and_location is a function view that takes care of a GET request, it creates instances of YelpLocationSearchTerm, YelpCategorySearchTerm, and YelpResult models as a side effect!
+
+## June 8, 2022
+* Today, I worked on:
+    * fine-tuning the yelp integration - Brandon and I
+* Our api_get_yelp_category_and_location function is now able to take in a location and category input and it will be used in the front end to take in search input from the user.
 * A struggle that we have been going back and forth on is the many to many relationship and how to pull from the eateries microservice to the foodies/owners microservices.
-* We learned that the pattern of categories that the yelp api takes and now know how to normalize out inputs form the users and feed them into the yelp request parameter.
+* We learned that the pattern of categories that the yelp api takes and now know how to normalize out inputs from the users and feed them into the yelp request parameter.
 
-## June 07, 2022
+## June 7, 2022
 * Today, I worked on:
-    * Ariana and I worked on finishing the views for the models in the eateries microservice
-* We changed the many to many holder of the relationship between Eatery and Tag to live on the Eatery model. Also a sweet AHA moment learning that we can chose what side to put it on and it doesn't matter.
-* Huge aha moment was when Ariana thought about using the get_extra_data() function to add in the many to many field because of the circular logic from the encoders because we needed to include the encoders into eachother but couldnt because of inheritance laws, so we added in the extra data to one encoder.
+    * finishing the views for the models in the eateries microservice - Brandon and I
+* We changed the many to many holder of the relationship between Eatery and Tag to live on the Eatery model. Also a sweet AHA moment learning that we can chose what side to put it on and it doesn't matter -- They're have a many-to-many relationship!
+* Huge aha moment was when Brandon and I thought about using the get_extra_data() function to output (as Json Response) the model with a many-to-many relationship because of the circular logic from the encoders because we needed to include the encoders into each other but couldn't because of inheritance laws, so we added in the extra data to one encoder.
 
-## June 06, 2022
+## June 6, 2022
 * Today, I worked on:
-    * We worked as a team towards finishing the eateries microservice by creating views for specifically getting the eateries.
-* We talked about incorporating a loop somewhere to go through the many to many lists and record each as part of that eatery instance but we were not sure on how to do that or where that goes. We also struggled with adding the categories to a list in the views and found that the many to many manager had a method .add() that we were able to use for each iteration through the list we are getting from the request.
-* Ariana (the GOAT) made additions to the json.py file in the common directory so that our model encoder would be able to return many to many relationships as nested object.
+    * finishing the eateries microservice by creating views for specifically getting the eateries - All
+* We talked about incorporating a loop somewhere to go through the list of objects (e.g. EateryCategory) from the models that have a many to many relationship to the Eatery model and record each as part of that eatery instance. But we were not sure on how exactly to do that or where to write it. We also struggled with adding the categories to a list in the views and found that the many to many manager had a method .add() that we were able to use for each iteration through the list we are getting from the request.
+* I made additions to the json.py file in the common directory so that our model encoder would be able to return many to many relationships as a nested object.
 * Tuesday morning this was the AHA ^
-
 
 ## Jun 4, 2022
 * Today I worked on:

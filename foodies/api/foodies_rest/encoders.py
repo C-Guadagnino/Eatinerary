@@ -1,8 +1,8 @@
 from common.json import ModelEncoder
 from .models import (
     EateryTagVO,
-    EateryCategoriesVO,
-    ImageVO,
+    EateryCategoryVO,
+    EateryImageVO,
     Foodie,
     EateryVO,
     SkeweredEatery,
@@ -15,13 +15,13 @@ class EateryTagVOEncoder(ModelEncoder):
     properties = ["tag_name", "import_href"]
 
 
-class EateryCategoriesVOEncoder(ModelEncoder):
-    model = EateryCategoriesVO
+class EateryCategoryVOEncoder(ModelEncoder):
+    model = EateryCategoryVO
     properties = ["alias", "title"]
 
 
-class ImageVOEncoder(ModelEncoder):
-    model = ImageVO
+class EateryImageVOEncoder(ModelEncoder):
+    model = EateryImageVO
     properties = ["image_url"]
 
 
@@ -48,9 +48,7 @@ class EateryVOEncoder(ModelEncoder):
         "review_count",
         "average_rating",
         "price",
-        # "eatery_open_hours",
-        # "tags",
-        # "categories",
+        "from_yelp",
         "location_address1",
         "location_address2",
         "location_address3",
@@ -61,13 +59,14 @@ class EateryVOEncoder(ModelEncoder):
     ]
     encoders = {
         "tag": EateryTagVOEncoder(),
-        "categories": EateryCategoriesVOEncoder(),
+        "categories": EateryCategoryVOEncoder(),
     }
 
 
 class SkeweredEateryEncoder(ModelEncoder):
     model = SkeweredEatery
     properties = [
+        "id",
         "eatery",
         "foodie",
         "created_DateTime",
@@ -85,6 +84,7 @@ class SkeweredEateryEncoder(ModelEncoder):
 class ReviewEncoder(ModelEncoder):
     model = Review
     properties = [
+        "id",
         "title",
         "rating",
         "created_DateTime",
@@ -94,5 +94,5 @@ class ReviewEncoder(ModelEncoder):
     ]
     encoders = {
         "skewered_restaurant": SkeweredEateryEncoder(),
-        "image": ImageVOEncoder(),
+        "image": EateryImageVOEncoder(),
     }

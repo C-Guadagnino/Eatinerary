@@ -19,7 +19,7 @@ class EateryLocationEncoder(ModelEncoder):
         "address3",
         "city",
         "state",
-        "zip",
+        "zip_code",
         "country",
     ]
 
@@ -68,6 +68,7 @@ class EateryEncoder(ModelEncoder):
         "review_count",
         "average_rating",
         "price",
+        "from_yelp",
         "categories",
         "location",
         "tags",
