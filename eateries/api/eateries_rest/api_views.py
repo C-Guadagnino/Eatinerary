@@ -33,6 +33,7 @@ from .acls import get_eateries_from_yelp, get_restaurants
 #             # for each restaurant
 #             #create a new YelpSearchResult
 #         #If Yelp is down...
+#         return JsonResponse({"eateries": eateries_dictionary})
 #         except:
 #             pass
 #             #query the search term
