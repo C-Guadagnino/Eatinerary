@@ -3,7 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class EateryTagVO(models.Model):
-    import_href = models.CharField(max_length=200)
+    import_href = models.CharField(max_length=200)  
     tag_name = models.CharField(max_length=40)
     eatery = models.ForeignKey(
         "EateryVO", related_name="tagsvo", on_delete=models.CASCADE
