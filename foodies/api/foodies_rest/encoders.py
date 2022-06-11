@@ -56,6 +56,8 @@ class EateryVOEncoder(ModelEncoder):
         "location_state",
         "location_zip",
         "location_country",
+        "latitude",
+        "longitude"
     ]
     encoders = {
         "tag": EateryTagVOEncoder(),

@@ -74,6 +74,8 @@ class EateryEncoder(ModelEncoder):
         "tags",
         "open_hours",
         "eatery_images",
+        "latitude",
+        "longitude"
     ]
     encoders = {
         "location": EateryLocationEncoder(),

@@ -9,12 +9,12 @@ class Eatery(models.Model):
     location = models.OneToOneField(
         "EateryLocation", related_name="eatery", on_delete=models.CASCADE
     )
-    website = models.URLField(max_length=200, unique=True)
+    website = models.URLField(max_length=200)
     # we might not need this, but keep it in here for convenience for now since yelp API will provide it
     yelp_id = models.CharField(max_length=200, unique=True)
     # what was href for??? Need to refresh memory
     # href = models.URLField(max_length=200, unique=True)
-    review_count = models.PositiveSmallIntegerField(default=0)
+    review_count = models.PositiveIntegerField(default=0)
     average_rating = models.FloatField()
     # "$$"
     price = models.CharField(max_length=4)
@@ -24,6 +24,8 @@ class Eatery(models.Model):
     # open_hours has a foreign key to eatery and will be accessible on requests
     # eatery_image has a foreign key to eatery and will be accessible on requests
     from_yelp = models.BooleanField(default=False)
+    latitude = models.FloatField(default=0)
+    longitude = models.FloatField(default=0)
 
     def get_api_url(self):
         return reverse("api_eatery", kwargs={"pk": self.pk})

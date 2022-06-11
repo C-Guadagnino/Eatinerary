@@ -82,6 +82,8 @@ class EateryVO(models.Model):
     location_state = models.CharField(max_length=200)
     location_zip = models.CharField(max_length=200)
     location_country = models.CharField(max_length=200)
+    latitude = models.CharField(max_length=200)
+    longitude = models.CharField(max_length=200)
 
 
 class SkeweredEatery(models.Model):
