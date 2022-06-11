@@ -52,3 +52,18 @@ def get_eateries_from_yelp(location, categories):
 
     # if locations and len(locations) > 0:
     #     return locations
+
+def get_details_of_one_eatery(yelp_id):
+    url = "https://api.yelp.com/v3/businesses/" + yelp_id
+
+    headers = {
+        "Authorization": "Bearer %s" % YELP_API_KEY,
+    }
+
+
+    # response = requests.get(url, headers=headers)
+    response = requests.request("GET", url, headers=headers)
+
+    content = json.loads(response.content)
+    # print("IM INSIDE OF ACLS.PY and content is:", content)
+    return content

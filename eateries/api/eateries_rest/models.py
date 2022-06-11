@@ -9,7 +9,7 @@ class Eatery(models.Model):
     location = models.OneToOneField(
         "EateryLocation", related_name="eatery", on_delete=models.CASCADE
     )
-    website = models.URLField(max_length=200)
+    website = models.URLField(max_length=500)
     # we might not need this, but keep it in here for convenience for now since yelp API will provide it
     yelp_id = models.CharField(max_length=200, unique=True)
     # what was href for??? Need to refresh memory
@@ -17,7 +17,7 @@ class Eatery(models.Model):
     review_count = models.PositiveIntegerField(default=0)
     average_rating = models.FloatField()
     # "$$"
-    price = models.CharField(max_length=4)
+    price = models.CharField(max_length=4, null=True, blank=True)
     # should the tag attribute go in the Eatery model??? or eatery = ManyToManyField to Eatery model within Tag model???
     tags = models.ManyToManyField("Tag", related_name="tags")
     categories = models.ManyToManyField("EateryCategory", related_name="categories")
@@ -32,11 +32,11 @@ class Eatery(models.Model):
 
 
 class YelpCategorySearchTerm(models.Model):
-    category_term = models.CharField(max_length=50)
+    category_term = models.CharField(max_length=100, unique=True)
 
 
 class YelpLocationSearchTerm(models.Model):
-    location_term = models.CharField(max_length=50)
+    location_term = models.CharField(max_length=100, unique=True)
 
 
 # business data
@@ -51,6 +51,12 @@ class YelpResult(models.Model):
         "Eatery", related_name="eatery_yelpresults", on_delete=models.CASCADE
     )
 
+    class Meta:
+        unique_together = (
+            "category_term",
+            "location_term",
+            "eatery",
+        )
 
 class Tag(models.Model):
     tag_name = models.CharField(max_length=40, unique=True)

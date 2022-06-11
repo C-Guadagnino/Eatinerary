@@ -16,6 +16,10 @@ from .api_views import (
     # api_get_yelp_with_category_and_location,
     api_get_yelp_with_location,
     api_tag,
+    api_get_yelp_one_eatery,
+    api_yelp_location_search_terms,
+    api_yelp_category_search_terms,
+    api_yelp_result
 )
 
 urlpatterns = [
@@ -23,6 +27,26 @@ urlpatterns = [
         "yelp/<str:location>/",
         api_get_yelp_with_location,
         name="api_get_yelp_with_location",
+    ),
+    path(
+        "yelpresults/",
+        api_yelp_result,
+        name="api_yelp_result",
+    ),
+    path(
+        "locationsearchterms/",
+        api_yelp_location_search_terms,
+        name="api_yelp_location_search_terms",
+    ),
+    path(
+        "categorysearchterms/",
+        api_yelp_category_search_terms,
+        name="api_yelp_category_search_terms",
+    ),
+    path(
+        "yelp/one/<str:yelp_id>/",
+        api_get_yelp_one_eatery,
+        name="api_get_yelp_one_eatery",
     ),
     path(
         "yelp/<str:location>/<str:category>/",
