@@ -208,7 +208,7 @@ class EateryOpenHours(models.Model):
 
     class Meta:
         ordering = ("weekday", "start_time")
-        unique_together = ("weekday", "start_time", "end_time")
+        unique_together = ("weekday", "start_time", "end_time", "eatery")
 
     # def __unicode__(self):
     #     return "%s: %s - %s" % (

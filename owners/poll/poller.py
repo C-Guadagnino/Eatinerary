@@ -9,7 +9,13 @@ sys.path.append("")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "owners_project.settings")
 django.setup()
 
-from owners_rest.models import EateryVO
+from owners_rest.models import (
+    EateryVO,
+    EateryTagVO,
+    EateryCategoryVO,
+    EateryOpenHoursVO,
+    EateryImageVO,
+)
 
 
 def get_eatery_entity_data():
@@ -20,18 +26,65 @@ def get_eatery_entity_data():
         EateryVO.objects.update_or_create(
             import_href=eatery["href"],
             defaults={
-                "email": eatery["email"],
-                "yelp_id": eatery["yelp_id"],
-                "website": eatery["website"],
+                "eatery_name": eatery["eatery_name"],
                 "email": eatery["email"],
                 "phone": eatery["phone"],
-                "import_href": eatery["href"],
+                "website": eatery["website"],
+                "yelp_id": eatery["yelp_id"],
                 "review_count": eatery["review_count"],
                 "average_rating": eatery["average_rating"],
                 "price": eatery["price"],
-                "eatery_name": eatery["eatery_name"],
+                "from_yelp": eatery["from_yelp"],
+                "location_address1": eatery["location"]["address1"],
+                "location_address2": eatery["location"]["address2"],
+                "location_address3": eatery["location"]["address3"],
+                "location_city": eatery["location"]["city"],
+                "location_state": eatery["location"]["state"],
+                "location_zip": eatery["location"]["zip_code"],
+                "location_country": eatery["location"]["country"],
+                "latitude": eatery["latitude"],
+                "longitude": eatery["longitude"],
             },
         )
+        eateryvo_obj = EateryVO.objects.get(import_href=eatery["href"])
+        print("eateryvo_obj", eateryvo_obj)
+        # POLLING EATERYTAG MODEL
+        for tag in eatery["tags"]:
+            EateryTagVO.objects.update_or_create(
+                import_href=tag["href"],
+                defaults={"tag_name": tag["tag_name"], "eatery": eateryvo_obj},
+            )
+        # POLLING EATERYCATEGORY MODEL
+        for category in eatery["categories"]:
+            EateryCategoryVO.objects.update_or_create(
+                import_href=category["href"],
+                defaults={
+                    "alias": category["alias"],
+                    "title": category["title"],
+                    "eatery": eateryvo_obj,
+                },
+            )
+        # POLLING EATERYOPENHOURS MODEL
+        for openhours_one in eatery["open_hours"]:
+            EateryOpenHoursVO.objects.update_or_create(
+                import_href=openhours_one["href"],
+                defaults={
+                    "weekday": openhours_one["weekday"],
+                    "start_time": openhours_one["start_time"],
+                    "end_time": openhours_one["end_time"],
+                    "eatery": eateryvo_obj,
+                },
+            )
+        # POLLING EATERYIMAGE MODEL
+        for eatery_image in eatery["eatery_images"]:
+            print("eatery_image[image_url]", eatery_image["image_url"])
+            EateryImageVO.objects.update_or_create(
+                import_href=eatery_image["href"],
+                defaults={
+                    "image_url": eatery_image["image_url"],
+                    "eatery": eateryvo_obj,
+                },
+            )
 
 
 def poll():
@@ -46,3 +99,4 @@ def poll():
 
 if __name__ == "__main__":
     poll()
+
