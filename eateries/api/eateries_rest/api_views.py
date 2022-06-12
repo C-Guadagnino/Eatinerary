@@ -39,139 +39,198 @@ def api_return_list_of_restaurants_given_category_and_location(
 ):
     if request.method == "GET":
         #Send request to Yelp API to get a list of eateries given category and location
-        eateries_dictionary = get_eateries_from_yelp(location, category)
-        # Create location search term object if it doesn't already exist
         try:
-            location_searchterm_obj = YelpLocationSearchTerm.objects.create(
-                location_term=location
-            )
-        except IntegrityError:
-            pass
-        # Create category search term object if it doesn't already exist
-        try:
-            category_searchterm_obj = YelpCategorySearchTerm.objects.create(
-                category_term=category
-            )
-        except IntegrityError:
-            pass 
-
-        eateries_list = eateries_dictionary["businesses"]
-        for eatery in eateries_list:
-
-            if eatery["location"]["display_address"]:
-                del eatery["location"]["display_address"]
-
-            location_dict = eatery["location"]
-            location_obj = EateryLocation.objects.create(**location_dict)
-
-            categories_list = eatery["categories"]
-
-            for category_dict in categories_list:
-                category_obj = EateryCategory.objects.update_or_create(
-                    alias=category_dict["alias"],
-                    defaults={
-                        "title": category_dict["title"]
-                    }
+            eateries_dictionary = get_eateries_from_yelp(location, category)
+            # if the eateries dictionary comes back with error dictionary from yelp with wrong location input
+            if "not_okay" in eateries_dictionary:
+                return JsonResponse(
+                    {"Message": eateries_dictionary["not_okay"]}
                 )
-            #check if the current eatery already exists in our database
-            try:
-                Eatery.objects.get(yelp_id=eatery["id"])
-            #if it doesn't exist lets create it
-            except ObjectDoesNotExist:
-                eatery_name = eatery["name"]
-                phone = eatery["display_phone"]
-                latitude = eatery["coordinates"]["latitude"]
-                longitude = eatery["coordinates"]["longitude"]
-                website = eatery["url"]
-                yelp_id = eatery["id"]
-                review_count = eatery["review_count"]
-                average_rating = eatery["rating"]
-                from_yelp = "True"
-                if "price" in eatery:
-                    price = eatery["price"]
-                    eatery_dict = {
-                        "eatery_name": eatery_name,
-                        "website": website,
-                        "latitude": latitude,
-                        "longitude": longitude,
-                        "phone": phone,
-                        "yelp_id": yelp_id,
-                        "review_count": review_count,
-                        "average_rating": average_rating,
-                        "location": location_obj,
-                        "from_yelp": from_yelp,
-                        "price": price,
-                    }
-                else:
-                    eatery_dict = {
-                        "eatery_name": eatery_name,
-                        "website": website,
-                        "latitude": latitude,
-                        "longitude": longitude,
-                        "phone": phone,
-                        "yelp_id": yelp_id,
-                        "review_count": review_count,
-                        "average_rating": average_rating,
-                        "location": location_obj,
-                        "from_yelp": from_yelp,
-                    }
-                eatery_obj = Eatery.objects.create(**eatery_dict)
-
-                # Loop through list of categories to create a relationship to the current eatery
-                for category_dict in categories_list:
-                    category_obj = EateryCategory.objects.get(alias=category_dict["alias"])
-                    eatery_obj.categories.add(category_obj)
-
-                # Create relationship between the image url and the current eatery
-                image_url = eatery["image_url"]
-                EateryImage.objects.create(image_url=image_url, eatery=eatery_obj)
-                image_obj = EateryImage.objects.get(image_url=image_url)
-
-                # Send request to yelp api with function call to get the details of the current eatery
-                # to specifically access the open hours
-                current_eatery_yelp_id = eatery_obj.yelp_id
-                eatery_details_dict = get_details_of_one_eatery(current_eatery_yelp_id)
-
-                # if an eatery has hours then create EateryOpenHours objects and create a relationship
-                # to the current eatery.
+            #if the eateries dictionary is populated with business     
+            else:
+            # Create location search term object if it doesn't already exist
                 try:
-                    open_hours_list = eatery_details_dict["hours"][0]["open"]
-                    for open_hours_singular in open_hours_list:
-                        initial_start_time = open_hours_singular["start"]
-                        # "1130"
-                        start_time = initial_start_time[:2:] + ":" + initial_start_time[2::]
-                        initial_end_time = open_hours_singular["end"]
-                        # "1130"
-                        end_time = initial_end_time[:2:] + ":" + initial_end_time[2::]
-                        initial_day = open_hours_singular["day"]
-                        # "1130"
-                        weekday = initial_day + 1
-
-                        open_hours_dict= {
-                            "eatery": eatery_obj,
-                            "weekday": weekday,
-                            "start_time": start_time,
-                            "end_time": end_time,
-                        }
-
-                        open_hours_singular_obj = EateryOpenHours.objects.create(**open_hours_dict)
-                except KeyError:
+                    location_searchterm_obj = YelpLocationSearchTerm.objects.create(
+                        location_term=location
+                    )
+                except IntegrityError:
                     pass
-            
-            # If YelpResult object with the location category and eatery doesn't already exist then create it
+                # Create category search term object if it doesn't already exist
+                try:
+                    category_searchterm_obj = YelpCategorySearchTerm.objects.create(
+                        category_term=category
+                    )
+                except IntegrityError:
+                    pass 
+
+                eateries_list = eateries_dictionary["businesses"]
+                for eatery in eateries_list:
+
+                    if eatery["location"]["display_address"]:
+                        del eatery["location"]["display_address"]
+
+                    location_dict = eatery["location"]
+                    location_obj = EateryLocation.objects.create(**location_dict)
+
+                    categories_list = eatery["categories"]
+
+                    for category_dict in categories_list:
+                        category_obj = EateryCategory.objects.update_or_create(
+                            alias=category_dict["alias"],
+                            defaults={
+                                "title": category_dict["title"]
+                            }
+                        )
+                    #check if the current eatery already exists in our database
+                    try:
+                        Eatery.objects.get(yelp_id=eatery["id"])
+                    #if it doesn't exist lets create it
+                    except ObjectDoesNotExist:
+                        eatery_name = eatery["name"]
+                        phone = eatery["display_phone"]
+                        latitude = eatery["coordinates"]["latitude"]
+                        longitude = eatery["coordinates"]["longitude"]
+                        website = eatery["url"]
+                        yelp_id = eatery["id"]
+                        review_count = eatery["review_count"]
+                        average_rating = eatery["rating"]
+                        from_yelp = "True"
+                        if "price" in eatery:
+                            price = eatery["price"]
+                            eatery_dict = {
+                                "eatery_name": eatery_name,
+                                "website": website,
+                                "latitude": latitude,
+                                "longitude": longitude,
+                                "phone": phone,
+                                "yelp_id": yelp_id,
+                                "review_count": review_count,
+                                "average_rating": average_rating,
+                                "location": location_obj,
+                                "from_yelp": from_yelp,
+                                "price": price,
+                            }
+                        else:
+                            eatery_dict = {
+                                "eatery_name": eatery_name,
+                                "website": website,
+                                "latitude": latitude,
+                                "longitude": longitude,
+                                "phone": phone,
+                                "yelp_id": yelp_id,
+                                "review_count": review_count,
+                                "average_rating": average_rating,
+                                "location": location_obj,
+                                "from_yelp": from_yelp,
+                            }
+                        eatery_obj = Eatery.objects.create(**eatery_dict)
+
+                        # Loop through list of categories to create a relationship to the current eatery
+                        for category_dict in categories_list:
+                            category_obj = EateryCategory.objects.get(alias=category_dict["alias"])
+                            eatery_obj.categories.add(category_obj)
+
+                        # Create relationship between the image url and the current eatery
+                        image_url = eatery["image_url"]
+                        EateryImage.objects.create(image_url=image_url, eatery=eatery_obj)
+                        image_obj = EateryImage.objects.get(image_url=image_url)
+
+                        # Send request to yelp api with function call to get the details of the current eatery
+                        # to specifically access the open hours
+                        current_eatery_yelp_id = eatery_obj.yelp_id
+                        eatery_details_dict = get_details_of_one_eatery(current_eatery_yelp_id)
+
+                        # if an eatery has hours then create EateryOpenHours objects and create a relationship
+                        # to the current eatery.
+                        try:
+                            open_hours_list = eatery_details_dict["hours"][0]["open"]
+                            for open_hours_singular in open_hours_list:
+                                initial_start_time = open_hours_singular["start"]
+                                # "1130"
+                                start_time = initial_start_time[:2:] + ":" + initial_start_time[2::]
+                                initial_end_time = open_hours_singular["end"]
+                                # "1130"
+                                end_time = initial_end_time[:2:] + ":" + initial_end_time[2::]
+                                initial_day = open_hours_singular["day"]
+                                # "1130"
+                                weekday = initial_day + 1
+
+                                open_hours_dict= {
+                                    "eatery": eatery_obj,
+                                    "weekday": weekday,
+                                    "start_time": start_time,
+                                    "end_time": end_time,
+                                }
+
+                                open_hours_singular_obj = EateryOpenHours.objects.create(**open_hours_dict)
+                        #when eatery from yelp doesnt have open hours
+                        except KeyError:
+                            pass
+                    
+                    # If YelpResult object with the location category and eatery doesn't already exist then create it
+                    try:
+                        yelp_result_dict = {
+                            "location_term": YelpLocationSearchTerm.objects.get(location_term=location),
+                            "category_term": YelpCategorySearchTerm.objects.get(category_term=category),
+                            "eatery": Eatery.objects.get(yelp_id=eatery["id"])
+                        }
+                        yelp_result_obj = YelpResult.objects.create(**yelp_result_dict)
+                    except IntegrityError:
+                        pass
+                print("I AM RIGHT BEFORE THE JSON RESPONSE")
+                return JsonResponse({"eateries": eateries_dictionary})
+        #If yelp api receives incorrect location or category, or doesn't return expected content dictionary
+        #potentially because yelp is down
+        # when Yelp is down the ACLS function returns a dictionary yelp_down_dict = {
+        #     "yelp_down": "something is wrong with yelp"
+        # } 
+        # and when the view runs eateries_list = eateries_dictionary["businesses"] it will come back with a key error.
+        except:
+        # Should be a a Key error because except block from ACLS should send over dictionary without ["businesses"]
             try:
-                yelp_result_dict = {
-                    "location_term": YelpLocationSearchTerm.objects.get(location_term=location),
-                    "category_term": YelpCategorySearchTerm.objects.get(category_term=category),
-                    "eatery": Eatery.objects.get(yelp_id=eatery["id"])
-                }
-                yelp_result_obj = YelpResult.objects.create(**yelp_result_dict)
-            except IntegrityError:
-                pass
-        return JsonResponse({"eateries": eateries_dictionary})
+                location_obj = YelpLocationSearchTerm.objects.get(location_term=location)
+                category_obj = YelpCategorySearchTerm.objects.get(category_term=category)
+                yelp_results_list = YelpResult.objects.filter(
+                    location_term=location_obj
+                ).filter(category_term=category_obj)
+                return JsonResponse(
+                    {"eateries": yelp_results_list},
+                    encoder=YelpResultEncoder
+                    )
+                # if Yelp is down then go to our database with the location and category search term
+                # to match to find existing YelpResult instances. 
+            except:
+                return JsonResponse({"yelp_down_and_we_down": "AHHHHH"})
+                #If yelp is down and we do not have either the c
+            # return a list of YelpResult objects that have the requested location and category
+            # and we dont have those matching "not composite keys" in YelpResult instance
+
+            #if the bot that populates our database does not do a sufficient job of capturing many categories
+            # than we will go back and look to implement solutions like returning other categories later
+        
+        #try to get response "eateries_dictionary"
+        #except "no response came back error"
+            #check to see if data in database for that search term combination
+            #if no matching data in database:
+                #"So sorry that YELP let you down, not us!"
+
 
 @require_http_methods(["GET"])
-def api_yelp_result(request):
+def api_yelp_results_from_db(request, location, category):
+    if request.method == "GET":
+        location_obj = YelpLocationSearchTerm.objects.get(location_term=location)
+        category_obj = YelpCategorySearchTerm.objects.get(category_term=category)
+        yelp_results_list = YelpResult.objects.filter(
+                    location_term=location_obj
+                ).filter(category_term=category_obj)
+        return JsonResponse(
+                    {"eateries": yelp_results_list},
+                    encoder=YelpResultEncoder
+                    )
+
+
+@require_http_methods(["GET"])
+def api_yelp_results(request):
     if request.method == "GET":
         yelp_results = YelpResult.objects.all()
         return JsonResponse({"yelp_results": yelp_results},

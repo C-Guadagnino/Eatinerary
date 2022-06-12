@@ -29,25 +29,42 @@ def get_restaurants(location):
 # Query the search API by a search term and location
 def get_eateries_from_yelp(location, categories):
     # url = "https://api.yelp.com/v3/businesses/search?categories=" + categories + "&location=" + location
-    url = "https://api.yelp.com/v3/businesses/search"
-    headers = {
-        "Authorization": "Bearer %s" % YELP_API_KEY,
-    }
+    # We will handle the key errors for location mis spells in views
+    try:
+        url = "https://api.yelp.com/v3/businesses/search"
+        headers = {
+            "Authorization": "Bearer %s" % YELP_API_KEY,
+        }
 
-    url_params = {
-        "categories": categories.replace(" ", "+"),
-        "location": location.replace(" ", "+"),
-        "limit": 50,
-    }
+        url_params = {
+            "categories": categories.replace(" ", "+"),
+            "location": location.replace(" ", "+"),
+            "limit": 50,
+        }
 
-    # response = requests.get(url, headers=headers)
-    response = requests.request("GET", url, headers=headers, params=url_params)
-    # response = requests.request('GET', url, headers=headers)
+        # response = requests.get(url, headers=headers)
+        response = requests.request("GET", url, headers=headers, params=url_params)
+        # response = requests.request('GET', url, headers=headers)
 
-    content = json.loads(response.content)
-    # print("IM INSIDE OF ACLS.PY and content is:", content)
-    # print("length of content is:", len(content["businesses"]))
-    return content
+        content = json.loads(response.content)
+        # print("IM INSIDE OF ACLS.PY and content is:", content)
+        # print("length of content is:", len(content["businesses"]))
+        print("CONTENT", content)
+        # if the location is bad the Yelp Api return content dictionary that holds error key
+        # but if the category is bad it still returns businesses dictionary
+        if "error" in content:
+            return {"not_ok": content["error"]["code"]} 
+        return content
+    #handles the case when Yelp is Down
+    #per Yelp Api documentation, it will return a 500 internal server error
+    #https://docs.developer.yelp.com/docs/api-errors
+    except:
+        yelp_down_dict = {
+            "yelp_down": "something is wrong with yelp"
+        }
+        return yelp_down_dict
+
+
     # locations = response["businesses"]
 
     # if locations and len(locations) > 0:

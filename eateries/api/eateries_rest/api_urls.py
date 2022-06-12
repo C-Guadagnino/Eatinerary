@@ -19,7 +19,8 @@ from .api_views import (
     api_get_yelp_one_eatery,
     api_yelp_location_search_terms,
     api_yelp_category_search_terms,
-    api_yelp_result
+    api_yelp_results,
+    api_yelp_results_from_db
 )
 
 urlpatterns = [
@@ -29,8 +30,13 @@ urlpatterns = [
         name="api_get_yelp_with_location",
     ),
     path(
+        "yelpdb/<str:location>/<str:category>/",
+        api_yelp_results_from_db,
+        name="api_yelp_results_from_db",
+    ),
+    path(
         "yelpresults/",
-        api_yelp_result,
+        api_yelp_results,
         name="api_yelp_result",
     ),
     path(
