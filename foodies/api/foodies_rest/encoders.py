@@ -5,6 +5,7 @@ from .models import (
     EateryImageVO,
     Foodie,
     EateryVO,
+    ReviewImage,
     SkeweredEatery,
     Review,
 )
@@ -80,6 +81,17 @@ class SkeweredEateryEncoder(ModelEncoder):
         "foodie": FoodieEncoder(),
     }
 
+class ReviewImageEncoder(ModelEncoder):
+    model = ReviewImage
+    properties = [ "id", "image_url"] 
+
+    def get_extra_data(self, o):
+        return {
+            "review": {
+                "title": o.review.title,
+                "review_id": o.review.id
+            }
+        }
 
 class ReviewEncoder(ModelEncoder):
     model = Review
@@ -90,9 +102,11 @@ class ReviewEncoder(ModelEncoder):
         "created_DateTime",
         "description",
         "skewered_restaurant",
-        "image",
+        #"review_images"
     ]
     encoders = {
         "skewered_restaurant": SkeweredEateryEncoder(),
-        "image": EateryImageVOEncoder(),
+        #"review_images": ReviewImageEncoder()
     }
+
+

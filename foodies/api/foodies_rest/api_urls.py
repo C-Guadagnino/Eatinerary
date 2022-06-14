@@ -7,6 +7,8 @@ from .api_views import (
     api_list_create_skewered_eatery,
     api_get_details_of_skewered_eatery,
     api_delete_update_skewered_eatery,
+    api_list_create_review,
+    api_list_all_review_images
 )
 
 urlpatterns = [
@@ -16,4 +18,6 @@ urlpatterns = [
     path("mySkewered/", api_list_create_skewered_eatery, name="api_list__create_skewered_eatery"),
     path("mySkewered/<int:pk>/", api_get_details_of_skewered_eatery, name="api_get_details_of_skewered_eatery"),
     path("mySkewered/modify/<int:pk>/", api_delete_update_skewered_eatery, name="api_delete_update_skewered_eatery"),
+    path("myReviews/", api_list_create_review, name="api_list_create_review"),
+    path("myReviews/images/", api_list_all_review_images, name="api_list_all_review_images")
 ]

@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
@@ -99,7 +100,7 @@ class SkeweredEatery(models.Model):
     created_DateTime = models.DateTimeField(auto_now_add=True)
     updated_DateTime = models.DateTimeField(auto_now=True)
     has_visited = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     notes = models.TextField()
 
     def __str__(self):
@@ -117,7 +118,7 @@ class Review(models.Model):
     created_DateTime = models.DateTimeField(auto_now_add=True)
     description = models.TextField()
     skewered_restaurant = models.OneToOneField(
-        SkeweredEatery, on_delete=models.CASCADE, primary_key=True
+        SkeweredEatery, on_delete=models.CASCADE,
     )
 
     def __str__(self):
@@ -128,5 +129,8 @@ class Review(models.Model):
 class ReviewImage(models.Model):
     image_url = models.URLField(unique=True)
     review = models.ForeignKey(
-        "Review", related_name="reviewimages", on_delete=models.CASCADE
+        "Review", related_name="review_images", on_delete=models.CASCADE
     )
+
+    def get_api_url(self):
+        return reverse("api_eatery_image", kwargs={"pk": self.pk})
