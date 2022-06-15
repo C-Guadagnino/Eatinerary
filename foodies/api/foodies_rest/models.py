@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
@@ -66,22 +67,24 @@ class Foodie(models.Model):
 
 class EateryVO(models.Model):
     import_href = models.CharField(max_length=200)
-    eatery_name = models.CharField(max_length=200, unique=True)
-    email = models.CharField(max_length=200, unique=True)
+    eatery_name = models.CharField(max_length=200)
+    email = models.CharField(max_length=200, null=True, blank=True)
     phone = models.CharField(max_length=200)
-    website = models.URLField(max_length=200, unique=True)
-    yelp_id = models.CharField(max_length=200, unique=True)
-    review_count = models.PositiveSmallIntegerField(default=0)
+    website = models.URLField(max_length=500)
+    yelp_id = models.CharField(max_length=200)
+    review_count = models.PositiveIntegerField(default=0)
     average_rating = models.FloatField()
-    price = models.CharField(max_length=4)
+    price = models.CharField(max_length=4, blank=True, null=True)
     from_yelp = models.BooleanField()
-    location_address1 = models.CharField(max_length=200)
-    location_address2 = models.CharField(max_length=200)
-    location_address3 = models.CharField(max_length=200)
-    location_city = models.CharField(max_length=200)
-    location_state = models.CharField(max_length=200)
-    location_zip = models.CharField(max_length=200)
-    location_country = models.CharField(max_length=200)
+    location_address1 = models.CharField(max_length=200, blank=True, null=True)
+    location_address2 = models.CharField(max_length=200, blank=True, null=True)
+    location_address3 = models.CharField(max_length=200, blank=True, null=True)
+    location_city = models.CharField(max_length=200, blank=True, null=True)
+    location_state = models.CharField(max_length=200, blank=True, null=True)
+    location_zip = models.CharField(max_length=200, blank=True, null=True)
+    location_country = models.CharField(max_length=200, blank=True, null=True)
+    latitude = models.CharField(max_length=200, blank=True, null=True)
+    longitude = models.CharField(max_length=200, blank=True, null=True)
 
 
 class SkeweredEatery(models.Model):
@@ -99,7 +102,7 @@ class SkeweredEatery(models.Model):
     created_DateTime = models.DateTimeField(auto_now_add=True)
     updated_DateTime = models.DateTimeField(auto_now=True)
     has_visited = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     notes = models.TextField()
 
     def __str__(self):
@@ -117,7 +120,7 @@ class Review(models.Model):
     created_DateTime = models.DateTimeField(auto_now_add=True)
     description = models.TextField()
     skewered_restaurant = models.OneToOneField(
-        SkeweredEatery, on_delete=models.CASCADE, primary_key=True
+        SkeweredEatery, on_delete=models.CASCADE,
     )
 
     def __str__(self):
@@ -128,5 +131,8 @@ class Review(models.Model):
 class ReviewImage(models.Model):
     image_url = models.URLField(unique=True)
     review = models.ForeignKey(
-        "Review", related_name="reviewimages", on_delete=models.CASCADE
+        "Review", related_name="review_images", on_delete=models.CASCADE
     )
+
+    def get_api_url(self):
+        return reverse("api_eatery_image", kwargs={"pk": self.pk})

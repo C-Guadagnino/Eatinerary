@@ -42,10 +42,12 @@ def get_eatery_entity_data():
                 "location_state": eatery["location"]["state"],
                 "location_zip": eatery["location"]["zip_code"],
                 "location_country": eatery["location"]["country"],
+                "latitude": eatery["latitude"],
+                "longitude": eatery["longitude"],
             },
         )
         eateryvo_obj = EateryVO.objects.get(import_href=eatery["href"])
-        print("eateryvo_obj", eateryvo_obj)
+        # print("eateryvo_obj", eateryvo_obj)
         # POLLING EATERYTAG MODEL
         for tag in eatery["tags"]:
             EateryTagVO.objects.update_or_create(
@@ -75,7 +77,7 @@ def get_eatery_entity_data():
             )
         # POLLING EATERYIMAGE MODEL
         for eatery_image in eatery["eatery_images"]:
-            print("eatery_image[image_url]", eatery_image["image_url"])
+            # print("eatery_image[image_url]", eatery_image["image_url"])
             EateryImageVO.objects.update_or_create(
                 import_href=eatery_image["href"],
                 defaults={
