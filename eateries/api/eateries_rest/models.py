@@ -10,7 +10,11 @@ class Eatery(models.Model):
         "EateryLocation", related_name="eatery", on_delete=models.CASCADE
     )
     website = models.URLField(max_length=500)
-    # we might not need this, but keep it in here for convenience for now since yelp API will provide it
+    # YELP_ID IS NOT UNIQUE, BECAUSE ONLY THE EATERIES THAT GET IMPORTED FROM YELP WILL HAVE AN ID.
+    # EATERIES THAT OWNERS IN OUR APP CREATE (AKA THAT DO NOT COME FROM YELP) WILL NOT HAVE A YELP ID
+    # -- which means more than 1 eatery will have "" for yelp_id, which makes this attribute NOT unique
+    # !!!!!!!!!!!!!!!!!!!!!!!!! NEED TO update model and make migrations when least disruptive to the team
+    # yelp_id = models.CharField(max_length=200, blank=True, null=True)
     yelp_id = models.CharField(max_length=200, unique=True)
     # what was href for??? Need to refresh memory
     # href = models.URLField(max_length=200, unique=True)
@@ -57,6 +61,7 @@ class YelpResult(models.Model):
             "location_term",
             "eatery",
         )
+
 
 class Tag(models.Model):
     tag_name = models.CharField(max_length=40, unique=True)
