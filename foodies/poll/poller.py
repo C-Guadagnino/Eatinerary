@@ -77,7 +77,7 @@ def get_eatery_entity_data():
             )
         # POLLING EATERYIMAGE MODEL
         for eatery_image in eatery["eatery_images"]:
-            print("eatery_image[image_url]", eatery_image["image_url"])
+            # print("eatery_image[image_url]", eatery_image["image_url"])
             EateryImageVO.objects.update_or_create(
                 import_href=eatery_image["href"],
                 defaults={
