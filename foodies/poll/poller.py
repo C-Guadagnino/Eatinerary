@@ -40,8 +40,10 @@ def get_eatery_entity_data():
                 "location_address3": eatery["location"]["address3"],
                 "location_city": eatery["location"]["city"],
                 "location_state": eatery["location"]["state"],
-                "location_zip": eatery["location"]["zip"],
+                "location_zip": eatery["location"]["zip_code"],
                 "location_country": eatery["location"]["country"],
+                "latitude": eatery["latitude"],
+                "longitude": eatery["longitude"],
             },
         )
         eateryvo_obj = EateryVO.objects.get(import_href=eatery["href"])

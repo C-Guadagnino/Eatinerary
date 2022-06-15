@@ -4,37 +4,39 @@ from django.urls import reverse
 # Create your models here.
 class Eatery(models.Model):
     eatery_name = models.CharField(max_length=200)
-    email = models.CharField(max_length=200, unique=True)
+    email = models.CharField(max_length=200, null=True, blank=True)
     phone = models.CharField(max_length=200)
     location = models.OneToOneField(
         "EateryLocation", related_name="eatery", on_delete=models.CASCADE
     )
-    website = models.URLField(max_length=200, unique=True)
+    website = models.URLField(max_length=500)
     # we might not need this, but keep it in here for convenience for now since yelp API will provide it
     yelp_id = models.CharField(max_length=200, unique=True)
     # what was href for??? Need to refresh memory
     # href = models.URLField(max_length=200, unique=True)
-    review_count = models.PositiveSmallIntegerField(default=0)
+    review_count = models.PositiveIntegerField(default=0)
     average_rating = models.FloatField()
     # "$$"
-    price = models.CharField(max_length=4)
+    price = models.CharField(max_length=4, null=True, blank=True)
     # should the tag attribute go in the Eatery model??? or eatery = ManyToManyField to Eatery model within Tag model???
     tags = models.ManyToManyField("Tag", related_name="tags")
     categories = models.ManyToManyField("EateryCategory", related_name="categories")
     # open_hours has a foreign key to eatery and will be accessible on requests
     # eatery_image has a foreign key to eatery and will be accessible on requests
     from_yelp = models.BooleanField(default=False)
+    latitude = models.FloatField(default=0)
+    longitude = models.FloatField(default=0)
 
     def get_api_url(self):
         return reverse("api_eatery", kwargs={"pk": self.pk})
 
 
 class YelpCategorySearchTerm(models.Model):
-    category_term = models.CharField(max_length=50)
+    category_term = models.CharField(max_length=100, unique=True)
 
 
 class YelpLocationSearchTerm(models.Model):
-    location_term = models.CharField(max_length=50)
+    location_term = models.CharField(max_length=100, unique=True)
 
 
 # business data
@@ -49,6 +51,12 @@ class YelpResult(models.Model):
         "Eatery", related_name="eatery_yelpresults", on_delete=models.CASCADE
     )
 
+    class Meta:
+        unique_together = (
+            "category_term",
+            "location_term",
+            "eatery",
+        )
 
 class Tag(models.Model):
     tag_name = models.CharField(max_length=40, unique=True)
@@ -137,26 +145,26 @@ STATES = [
 # NEEDS REVIEW BASED ON CURTIS' FEEDBACK
 class EateryLocation(models.Model):
     address1 = models.CharField(max_length=200)
-    address2 = models.CharField(max_length=200, blank=True)
-    address3 = models.CharField(max_length=200, blank=True)
+    address2 = models.CharField(max_length=200, null=True, blank=True)
+    address3 = models.CharField(max_length=200, null=True, blank=True)
     city = models.CharField(max_length=200)
     state = models.CharField(max_length=200, choices=STATES)
-    zip = models.CharField(max_length=200)
+    zip_code = models.CharField(max_length=200)
     country = models.CharField(max_length=200, default="USA")
 
     def get_api_url(self):
         return reverse("api_location", kwargs={"pk": self.pk})
 
-    class Meta:
-        unique_together = (
-            "address1",
-            "address2",
-            "address3",
-            "city",
-            "state",
-            "zip",
-            "country",
-        )
+    # class Meta:
+    #     unique_together = (
+    #         "address1",
+    #         "address2",
+    #         "address3",
+    #         "city",
+    #         "state",
+    #         "zip_code",
+    #         "country",
+    #     )
 
     def __str__(self):
         return (
@@ -166,7 +174,7 @@ class EateryLocation(models.Model):
             + ", "
             + self.state
             + " "
-            + self.zip
+            + self.zip_code
             + ", "
             + self.country
         )
@@ -200,7 +208,7 @@ class EateryOpenHours(models.Model):
 
     class Meta:
         ordering = ("weekday", "start_time")
-        unique_together = ("weekday", "start_time", "end_time")
+        unique_together = ("weekday", "start_time", "end_time", "eatery")
 
     # def __unicode__(self):
     #     return "%s: %s - %s" % (

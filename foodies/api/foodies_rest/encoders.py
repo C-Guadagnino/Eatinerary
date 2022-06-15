@@ -13,18 +13,32 @@ from .models import (
 
 class EateryTagVOEncoder(ModelEncoder):
     model = EateryTagVO
-    properties = ["tag_name", "import_href"]
+    properties = ["import_href", "tag_name"]
+
+    def get_extra_data(self, o):
+        return {
+            "eatery": {"eatery_name": o.eatery.eatery_name, "eatery_import_href": o.eatery.import_href}
+        }
 
 
 class EateryCategoryVOEncoder(ModelEncoder):
     model = EateryCategoryVO
-    properties = ["alias", "title"]
+    properties = ["import_href", "alias", "title"]
+
+    def get_extra_data(self, o):
+        return {
+            "eatery": {"eatery_name": o.eatery.eatery_name, "eatery_import_href": o.eatery.import_href}
+        }
 
 
 class EateryImageVOEncoder(ModelEncoder):
     model = EateryImageVO
     properties = ["image_url"]
 
+    def get_extra_data(self, o):
+        return {
+            "eatery": {"eatery_name": o.eatery.eatery_name, "eatery_import_href": o.eatery.import_href}
+        }
 
 class FoodieEncoder(ModelEncoder):
     model = Foodie
@@ -57,12 +71,10 @@ class EateryVOEncoder(ModelEncoder):
         "location_state",
         "location_zip",
         "location_country",
-    ]
-    encoders = {
-        "tag": EateryTagVOEncoder(),
-        "categories": EateryCategoryVOEncoder(),
-    }
+        "latitude",
+        "longitude",
 
+    ]
 
 class SkeweredEateryEncoder(ModelEncoder):
     model = SkeweredEatery

@@ -6,6 +6,10 @@ from .models import (
     EateryOpenHours,
     EateryImage,
     WEEKDAYS,
+    YelpLocationSearchTerm,
+    YelpCategorySearchTerm,
+    YelpResult
+
 )
 from common.json import ModelEncoder
 
@@ -19,14 +23,13 @@ class EateryLocationEncoder(ModelEncoder):
         "address3",
         "city",
         "state",
-        "zip",
+        "zip_code",
         "country",
     ]
 
 
 class EateryCategoryEncoder(ModelEncoder):
     model = EateryCategory
-    props = []
     properties = ["id", "alias", "title"]
 
 
@@ -34,6 +37,25 @@ class TagEncoder(ModelEncoder):
     model = Tag
     properties = ["id", "tag_name"]
 
+class YelpLocationSearchTermEncoder(ModelEncoder):
+    model = YelpLocationSearchTerm
+    properties = ["id", "location_term"]
+
+class YelpCategorySearchTermEncoder(ModelEncoder):
+    model = YelpCategorySearchTerm
+    properties = ["id", "category_term"]
+
+class YelpResultEncoder(ModelEncoder):
+    model = YelpResult
+    properties = ["id", "category_term", "location_term"]
+    encoders = {
+        "category_term": YelpCategorySearchTermEncoder(),
+        "location_term": YelpLocationSearchTermEncoder()
+    }
+    def get_extra_data(self, o):
+        return {
+            "eatery": {"eatery_name": o.eatery.eatery_name, "eatery_id": o.eatery.id},
+        }
 
 class OpenHoursEncoder(ModelEncoder):
     model = EateryOpenHours
@@ -74,6 +96,8 @@ class EateryEncoder(ModelEncoder):
         "tags",
         "open_hours",
         "eatery_images",
+        "latitude",
+        "longitude"
     ]
     encoders = {
         "location": EateryLocationEncoder(),
