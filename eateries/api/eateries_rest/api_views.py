@@ -34,6 +34,9 @@ from .acls import get_eateries_from_yelp, get_restaurants, get_details_of_one_ea
 
 # THERE ARE MANY VARIABLES IN THIS VIEW THAT ARE INITIALIZED BUT NEVER USED.
 # LEAVING THEM FOR NOW IN CASE WE NEED TO PRINT THEM -- BUT WILL NEED TO REMOVE BEFORE SUBMITTING PROJECT
+
+# Where will the view be called, what are we returning, what are we creating, 
+# do we need to split anything into another view?
 @require_http_methods(["GET"])
 def api_return_list_of_restaurants_given_category_and_location(
     request, location, category
@@ -187,7 +190,6 @@ def api_return_list_of_restaurants_given_category_and_location(
                         yelp_result_obj = YelpResult.objects.create(**yelp_result_dict)
                     except IntegrityError:
                         pass
-                print("I AM RIGHT BEFORE THE JSON RESPONSE")
                 return JsonResponse({"eateries": eateries_dictionary})
         # If yelp api receives incorrect location or category, or doesn't return expected content dictionary
         # potentially because yelp is down
@@ -198,34 +200,22 @@ def api_return_list_of_restaurants_given_category_and_location(
         except:
             # Should be a a Key error because except block from ACLS should send over dictionary without ["businesses"]
             try:
-                location_obj = YelpLocationSearchTerm.objects.get(
-                    location_term=location
-                )
-                category_obj = YelpCategorySearchTerm.objects.get(
-                    category_term=category
-                )
+                location_obj = YelpLocationSearchTerm.objects.get(location_term=location)
+                category_obj = YelpCategorySearchTerm.objects.get(category_term=category)
                 yelp_results_list = YelpResult.objects.filter(
                     location_term=location_obj
                 ).filter(category_term=category_obj)
+                eateries_from_yelp_results_list = []
+                for yelp_result in yelp_results_list:
+                    eatery_from_yelp_result = Eatery.objects.get(id=yelp_result.eatery.id)
+                    eateries_from_yelp_results_list.append(eatery_from_yelp_result)
                 return JsonResponse(
-                    {"eateries": yelp_results_list}, encoder=YelpResultEncoder
+                    {"eateries": eateries_from_yelp_results_list }, encoder=EateryEncoder
                 )
                 # if Yelp is down then go to our database with the location and category search term
                 # to match to find existing YelpResult instances.
             except:
-                return JsonResponse({"yelp_down_and_we_down": "AHHHHH"})
-                # If yelp is down and we do not have either the c
-            # return a list of YelpResult objects that have the requested location and category
-            # and we dont have those matching "not composite keys" in YelpResult instance
-
-            # if the bot that populates our database does not do a sufficient job of capturing many categories
-            # than we will go back and look to implement solutions like returning other categories later
-
-        # try to get response "eateries_dictionary"
-        # except "no response came back error"
-        # check to see if data in database for that search term combination
-        # if no matching data in database:
-        # "So sorry that YELP let you down, not us!"
+                return JsonResponse({"Message": "Something went wrong, please try again later"})
 
 
 @require_http_methods(["GET"])
@@ -236,7 +226,16 @@ def api_yelp_results_from_db(request, location, category):
         yelp_results_list = YelpResult.objects.filter(
             location_term=location_obj
         ).filter(category_term=category_obj)
-        return JsonResponse({"eateries": yelp_results_list}, encoder=YelpResultEncoder)
+        eateries_from_yelp_results_list = []
+        for yelp_result in yelp_results_list:
+            eatery_from_yelp_result = Eatery.objects.get(id=yelp_result.eatery.id)
+            print("$$$$$$$$$$$$$", eatery_from_yelp_result)
+            eateries_from_yelp_results_list.append(eatery_from_yelp_result)
+            # print("Yelp Result", yelp_result)
+        # print("@@@@@@@@@@@@@@@@", eateries_from_yelp_results_list)
+        return JsonResponse(
+            {"eateries": eateries_from_yelp_results_list }, encoder=EateryEncoder
+        )
 
 
 @require_http_methods(["GET"])
