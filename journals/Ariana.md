@@ -9,6 +9,31 @@ In the journals, every day that you work on the project, you must make an entry 
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
+## June 14, 2022
+* Today, I worked on:
+    * finishing the api_return_list_of_restaurants_given_category_and_location function view. Needed to return the actual Eatery objects related to the YelpResult objects, instead of the YelpResult objects.
+    * looked into and took care of some merge issues from the codes that David/Cameron and Brandon/I have been working on. (migrations files we had deleted and should have stayed deleted were accidentally added back to the remote main branch) - David and I
+* David and I decided that the Review model will have a DELETE view function for the administrators to be able to remove reviews (in case a foodie leaves an inappropriate review). However, the foodie will not be able to delete a review -- they will only be able to update a review.
+* David and I realized that the EateryImageVO, EateryCategoryVO and EateryTagVO will need views with GET requests, since the EateryVO's JSON response does not include the data of the 3 models (EateryImageVO, EateryCategoryVO and EateryTagVO) nested inside of it.
+
+## June 12, 2022
+* Today, I worked on:
+    * continuing writing the api_return_list_of_restaurants_given_category_and_location function view. Actually thought we were done, but towards the end, we realized we weren't quite done yet! - Brandon and I
+* Brandon and I refactored the api_return_list_of_restaurants_given_category_and_location function view. The overall logic (that Curtis helped us come up with is that): 1) If Yelp's API is up and running, then when a foodie makes a request for a list of eateries for a specific location and category, our app will send a request to the Yelp API for a list of eateries. 2) If the location given by the foodie isn't a valid location, then the foodie will get a message letting the foodie know that the location is invalid. 3) If Yelp's API is down, then a) if it's a category and location that has been searched for before, then our database will have some Eatery instances to return to the foodie, b) if it's a category and location that hasn't been searched for before, then our app will return a message to the foodie that something went wrong, and to try again later. Based on that logic, we updated our functions in the acls.py as well as updating our code in api_return_list_of_restaurants_given_category_and_location to be wrapped in try/except and if/else blocks.
+* While thinking through the details of the logic above, we ran into a lot of questions and design decisions on every try/except block. One ah-ha moment we had is that while testing what the Yelp API returns with different inputs (as query parameters) we learned about the different JSON response objects that it returns when the API receives info that it doesn't know how to handle. So whereas it's raises and error on their end, we receive a nice error message describing the error message (just like we learned API points should :)) so based on those error messages, we were able to write and update our functions in acls.py
+
+## June 11, 2022
+* Today, I worked on:
+    * continuing writing the api_return_list_of_restaurants_given_category_and_location function view - Brandon and I
+* Brandon and I discussed and made some decisions on how to populate the EateryOpenHours model from the Yelp API (the Yelp API endpoint that returns the open hours for a specific restaurant is a separate one that requires the ID of a specific business). So we wrote the above view based on that, as well as making some updates to the Eatery model by adding some more attributes.
+* While working on the integration of the open hours for a business from Yelp into our app, Brandon and I had to figure out how to handle store hours from the Yelp API that we get as a string (e.g. "0800" to create a Django TimeField in the EateryOpenHours model). We learned that feeding the EateryOpenHours model a string formatted as "08:00" was good enough for Django to create a TimeField from that!
+
+## June 10, 2022
+* Today, I worked on:
+    * continuing writing the api_return_list_of_restaurants_given_category_and_location function view, creating EateryLocation object instances and EateryCategory object instances - Brandon and I
+* After receiving the rubric from Curtis, the 4 of us decided what we should consider as part of the MVP for our app, and what becomes a part of the stretch goals.
+* The 4 of us also discussed the need for 2 separate models (EateryImage and ReviewImage) vs getting away with just having 1 model (Image) for both the Eatery and Review models. After discussing, we realized we needed 2 separate models as the EateryImage will have a foreign key to the Eatery model, and the ReviewImage will have a foreign key to the Review model.
+
 ## June 9, 2022
 * Today, I worked on:
     * finishing the poller.py in the Foodies MS that polls the Eatery (and related) models from the Eateries MS - All

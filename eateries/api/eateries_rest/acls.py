@@ -53,22 +53,20 @@ def get_eateries_from_yelp(location, categories):
         # if the location is bad the Yelp Api return content dictionary that holds error key
         # but if the category is bad it still returns businesses dictionary
         if "error" in content:
-            return {"not_ok": content["error"]["code"]} 
+            return {"invalid": content["error"]["code"]}
         return content
-    #handles the case when Yelp is Down
-    #per Yelp Api documentation, it will return a 500 internal server error
-    #https://docs.developer.yelp.com/docs/api-errors
+    # handles the case when Yelp is Down
+    # per Yelp Api documentation, it will return a 500 internal server error
+    # https://docs.developer.yelp.com/docs/api-errors
     except:
-        yelp_down_dict = {
-            "yelp_down": "something is wrong with yelp"
-        }
+        yelp_down_dict = {"yelp_down": "something is wrong with yelp"}
         return yelp_down_dict
-
 
     # locations = response["businesses"]
 
     # if locations and len(locations) > 0:
     #     return locations
+
 
 def get_details_of_one_eatery(yelp_id):
     url = "https://api.yelp.com/v3/businesses/" + yelp_id
@@ -77,8 +75,6 @@ def get_details_of_one_eatery(yelp_id):
         "Authorization": "Bearer %s" % YELP_API_KEY,
     }
 
-
-    # response = requests.get(url, headers=headers)
     response = requests.request("GET", url, headers=headers)
 
     content = json.loads(response.content)
