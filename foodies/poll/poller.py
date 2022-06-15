@@ -47,7 +47,7 @@ def get_eatery_entity_data():
             },
         )
         eateryvo_obj = EateryVO.objects.get(import_href=eatery["href"])
-        print("eateryvo_obj", eateryvo_obj)
+        # print("eateryvo_obj", eateryvo_obj)
         # POLLING EATERYTAG MODEL
         for tag in eatery["tags"]:
             EateryTagVO.objects.update_or_create(
