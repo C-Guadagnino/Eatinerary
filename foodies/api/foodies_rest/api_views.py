@@ -128,8 +128,34 @@ def api_get_specific_category_vo(request,alias):
         )
 
 #Get all EateryImageVOs
-#Get specific EateryImageVO
+@require_http_methods(["GET"])
+def api_list_eatery_images_vo(request):
+    if request.method == "GET":
+        try:
+            eatery_images = EateryImageVO.objects.all()
+            return JsonResponse(
+                {"eatery_images": eatery_images}, 
+                encoder=EateryImageVOEncoder, 
+                safe=False
+            )
+        except EateryImageVO.DoesNotExist:
+            return JsonResponse(
+                {"message": "Does not exist"},
+                status=400,
+            )
 
+#Get specific EateryImageVO
+@require_http_methods(["GET"])
+def api_get_specific_eatery_image_vo(request,eatery_image_entity_id):
+    if request.method == "GET":
+        #try:
+        full_import_href = "/api/eateryimages/" + str(eatery_image_entity_id) + "/"
+        category = EateryImageVO.objects.get(import_href=full_import_href)
+        return JsonResponse(
+            category,
+            encoder = EateryImageVOEncoder,
+            safe=False
+        )
 #Get all open hours RELATED to a specific eatery
 
 
@@ -224,9 +250,44 @@ def api_delete_update_skewered_eatery(request,pk):
             )
 
 
+# #List all foodie reviews, create review
+# @require_http_methods(["GET", "POST"])
+# def api_list_create_reviews(request):
+#     if request.method == "GET":
+#         try:
+#             reviews = Review.objects.all()
+#             return JsonResponse(
+#                 {"reviews": reviews},
+#                 encoder=ReviewEncoder,
+#                 safe=False
+#             )
+#         except Review.DoesNotExist:
+#             return JsonResponse(
+#                 {"message": "Does not exist"},
+#                 status=400
+#             )
+#     else:
+#         try:
+#             content = json.loads(request.body)
+#             skewered_restaurant_id = content["skewered_restaurant"]
+#             skewered_restaurant = SkeweredEatery.objects.get(id=skewered_restaurant_id)
+#             content["skewered_restaurant"] = skewered_restaurant
+#             review = Review.objects.create(**content)
+
+#             return JsonResponse(
+#                 review,
+#                 encoder=ReviewEncoder,
+#                 safe=False
+#             )
+#         except Review.DoesNotExist:
+#             return JsonResponse(
+#                 {"message": "Could not create the skewered eatery"},
+#                 status = 400,
+#             )
+
 #List all foodie reviews, create review
 @require_http_methods(["GET", "POST"])
-def api_list_create_review(request):
+def api_list_create_reviews(request):
     if request.method == "GET":
         try:
             reviews = Review.objects.all()
@@ -314,20 +375,20 @@ def api_delete_update_review(request,pk):
 
 #List all review images, create a review image
 @require_http_methods(["GET", "POST"])
-def api_list_create_review_images(request):
+def api_list_create_review_images(request, review_id=None):
     if request.method == "GET":
-        try:
+        #Get all review images regardless of review
+        if review_id == None:
             reviews = ReviewImage.objects.all()
-            return JsonResponse(
-                {"reviews": reviews},
-                encoder=ReviewImageEncoder,
-                safe=False
-            )
-        except ReviewImage.DoesNotExist:
-            return JsonResponse(
-                {"message": "Review image does not exist"},
-                status=400,
-            )
+        #Otherwise, get all review images for a specific review
+        else:
+            review_obj = Review.objects.get(id=review_id)
+            reviews = ReviewImage.objects.filter(review=review_obj)
+        return JsonResponse(
+            {"reviews": reviews},
+            encoder=ReviewImageEncoder,
+            safe=False
+        )
     else:
         try:
             content = json.loads(request.body)
