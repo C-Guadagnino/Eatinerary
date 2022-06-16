@@ -35,7 +35,7 @@ from .acls import get_eateries_from_yelp, get_restaurants, get_details_of_one_ea
 # THERE ARE MANY VARIABLES IN THIS VIEW THAT ARE INITIALIZED BUT NEVER USED.
 # LEAVING THEM FOR NOW IN CASE WE NEED TO PRINT THEM -- BUT WILL NEED TO REMOVE BEFORE SUBMITTING PROJECT
 
-# Where will the view be called, what are we returning, what are we creating, 
+# Where will the view be called, what are we returning, what are we creating,
 # do we need to split anything into another view?
 @require_http_methods(["GET"])
 def api_return_list_of_restaurants_given_category_and_location(
@@ -200,42 +200,48 @@ def api_return_list_of_restaurants_given_category_and_location(
         except:
             # Should be a a Key error because except block from ACLS should send over dictionary without ["businesses"]
             try:
-                location_obj = YelpLocationSearchTerm.objects.get(location_term=location)
-                category_obj = YelpCategorySearchTerm.objects.get(category_term=category)
+                location_obj = YelpLocationSearchTerm.objects.get(
+                    location_term=location
+                )
+                category_obj = YelpCategorySearchTerm.objects.get(
+                    category_term=category
+                )
                 yelp_results_list = YelpResult.objects.filter(
                     location_term=location_obj
                 ).filter(category_term=category_obj)
                 eateries_from_yelp_results_list = []
                 for yelp_result in yelp_results_list:
-                    eatery_from_yelp_result = Eatery.objects.get(id=yelp_result.eatery.id)
+                    eatery_from_yelp_result = Eatery.objects.get(
+                        id=yelp_result.eatery.id
+                    )
                     eateries_from_yelp_results_list.append(eatery_from_yelp_result)
                 return JsonResponse(
-                    {"eateries": eateries_from_yelp_results_list }, encoder=EateryEncoder
+                    {"eateries": eateries_from_yelp_results_list}, encoder=EateryEncoder
                 )
                 # if Yelp is down then go to our database with the location and category search term
                 # to match to find existing YelpResult instances.
             except:
-                return JsonResponse({"Message": "Something went wrong, please try again later"})
+                return JsonResponse(
+                    {"Message": "Something went wrong, please try again later"}
+                )
 
 
-@require_http_methods(["GET"])
-def api_yelp_results_from_db(request, location, category):
-    if request.method == "GET":
-        location_obj = YelpLocationSearchTerm.objects.get(location_term=location)
-        category_obj = YelpCategorySearchTerm.objects.get(category_term=category)
-        yelp_results_list = YelpResult.objects.filter(
-            location_term=location_obj
-        ).filter(category_term=category_obj)
-        eateries_from_yelp_results_list = []
-        for yelp_result in yelp_results_list:
-            eatery_from_yelp_result = Eatery.objects.get(id=yelp_result.eatery.id)
-            print("$$$$$$$$$$$$$", eatery_from_yelp_result)
-            eateries_from_yelp_results_list.append(eatery_from_yelp_result)
-            # print("Yelp Result", yelp_result)
-        # print("@@@@@@@@@@@@@@@@", eateries_from_yelp_results_list)
-        return JsonResponse(
-            {"eateries": eateries_from_yelp_results_list }, encoder=EateryEncoder
-        )
+# WAS USED TO TEST SMALLER PORTION OF CODE THAT GOES IN THE YELP INTEGRATION FUNCTION
+# @require_http_methods(["GET"])
+# def api_yelp_results_from_db(request, location, category):
+#     if request.method == "GET":
+#         location_obj = YelpLocationSearchTerm.objects.get(location_term=location)
+#         category_obj = YelpCategorySearchTerm.objects.get(category_term=category)
+#         yelp_results_list = YelpResult.objects.filter(
+#             location_term=location_obj
+#         ).filter(category_term=category_obj)
+#         eateries_from_yelp_results_list = []
+#         for yelp_result in yelp_results_list:
+#             eatery_from_yelp_result = Eatery.objects.get(id=yelp_result.eatery.id)
+#             eateries_from_yelp_results_list.append(eatery_from_yelp_result)
+#         return JsonResponse(
+#             {"eateries": eateries_from_yelp_results_list}, encoder=EateryEncoder
+#         )
 
 
 @require_http_methods(["GET"])
@@ -279,24 +285,25 @@ def api_get_yelp_with_location(request, location):
         return JsonResponse({"restaurants": restaurants})
 
 
-@require_http_methods(["GET"])
-def api_get_yelp_one_eatery(request, yelp_id):
-    if request.method == "GET":
-        eatery_details_dict = get_details_of_one_eatery(yelp_id)
-        print("Eatery Dictionary", eatery_details_dict)
-        open_hours_list = eatery_details_dict["hours"][0]["open"]
-        for open_hours_singular in open_hours_list:
-            raw_start_time = open_hours_singular["start"]
-            start_time = raw_start_time[:2:] + ":" + raw_start_time[2::]
+# WAS USED TO TEST SMALLER PORTION OF CODE THAT GOES IN THE YELP INTEGRATION FUNCTION
+# @require_http_methods(["GET"])
+# def api_get_yelp_one_eatery(request, yelp_id):
+#     if request.method == "GET":
+#         eatery_details_dict = get_details_of_one_eatery(yelp_id)
+#         print("Eatery Dictionary", eatery_details_dict)
+#         open_hours_list = eatery_details_dict["hours"][0]["open"]
+#         for open_hours_singular in open_hours_list:
+#             raw_start_time = open_hours_singular["start"]
+#             start_time = raw_start_time[:2:] + ":" + raw_start_time[2::]
 
-            raw_end_time = open_hours_singular["end"]
-            end_time = raw_end_time[:2:] + ":" + raw_end_time[2::]
+#             raw_end_time = open_hours_singular["end"]
+#             end_time = raw_end_time[:2:] + ":" + raw_end_time[2::]
 
-            raw_day = open_hours_singular["day"]
-            weekday = raw_day + 1
+#             raw_day = open_hours_singular["day"]
+#             weekday = raw_day + 1
 
-            print("Week Day Index", weekday)
-        return JsonResponse({"eatery_details_dic": eatery_details_dict})
+#             print("Week Day Index", weekday)
+#         return JsonResponse({"eatery_details_dic": eatery_details_dict})
 
 
 # For some reason the POST method creates an instance of Eatery even though the request returns a 400 error.

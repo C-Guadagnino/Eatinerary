@@ -6,36 +6,36 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class EateryTagVO(models.Model):
     import_href = models.CharField(max_length=200)  
     tag_name = models.CharField(max_length=40)
-    eatery = models.ForeignKey(
+    eatery_vo = models.ForeignKey(
         "EateryVO", related_name="tagsvo", on_delete=models.CASCADE
     )
 
     def __str__(self):
-        return "Tag #" + self.tag_name + " for Eatery: " + self.eatery.eatery_name
+        return "Tag #" + self.tag_name + " for Eatery: " + self.eatery_vo.eatery_name
 
 
 class EateryCategoryVO(models.Model):
     import_href = models.CharField(max_length=200)
     alias = models.CharField(max_length=200)
     title = models.CharField(max_length=200)
-    eatery = models.ForeignKey(
+    eatery_vo = models.ForeignKey(
         "EateryVO", related_name="categoriesvo", on_delete=models.CASCADE
     )
 
     def __str__(self):
-        return "Category " + self.alias + " for Eatery: " + self.eatery.eatery_name
+        return "Category " + self.alias + " for Eatery: " + self.eatery_vo.eatery_name
 
 
 class EateryImageVO(models.Model):
     import_href = models.CharField(max_length=200)
     image_url = models.CharField(max_length=200)
     # image_url2 = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=100, unique=True)
-    eatery = models.ForeignKey(
+    eatery_vo = models.ForeignKey(
         "EateryVO", related_name="eateryimagesvo", on_delete=models.CASCADE
     )
 
     def __str__(self):
-        return "Image " + self.image_url + " for Eatery: " + self.eatery.eatery_name
+        return "Image " + self.image_url + " for Eatery: " + self.eatery_vo.eatery_name
 
 
 class EateryOpenHoursVO(models.Model):
@@ -43,13 +43,16 @@ class EateryOpenHoursVO(models.Model):
     weekday = models.CharField(max_length=200)
     start_time = models.TimeField()
     end_time = models.TimeField()
-    eatery = models.ForeignKey(
+    eatery_vo = models.ForeignKey(
         "EateryVO", related_name="allopenhoursvo", on_delete=models.CASCADE
     )
 
     def __str__(self):
         return (
-            "Open Hours for Eatery " + self.eatery.eatery_name + " on " + self.weekday
+            "Open Hours for Eatery "
+            + self.eatery_vo.eatery_name
+            + " on "
+            + self.weekday
         )
 
 
@@ -59,7 +62,7 @@ class Foodie(models.Model):
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=254, unique=True)
     phone = models.CharField(max_length=13, unique=True)
-    google_calendar = models.URLField(null=True)  # needs review
+    google_calendar = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.username
@@ -86,18 +89,20 @@ class EateryVO(models.Model):
     latitude = models.CharField(max_length=200, blank=True, null=True)
     longitude = models.CharField(max_length=200, blank=True, null=True)
 
+    def __str__(self):
+        return self.eatery_name
+
 
 class SkeweredEatery(models.Model):
-    eatery = models.ForeignKey(
+    eatery_vo = models.ForeignKey(
         EateryVO,
-        related_name="skewered_eatery",
+        related_name="skewered_eateries",
         on_delete=models.CASCADE,
     )
     foodie = models.ForeignKey(
         Foodie,
-        related_name="foodie",
+        related_name="skewered_eateries",
         on_delete=models.CASCADE,
-        blank=True,  # needs review!
     )
     created_DateTime = models.DateTimeField(auto_now_add=True)
     updated_DateTime = models.DateTimeField(auto_now=True)
@@ -106,7 +111,7 @@ class SkeweredEatery(models.Model):
     notes = models.TextField()
 
     def __str__(self):
-        return self.eatery.eatery_name
+        return self.eatery_vo.eatery_name
 
 
 class Review(models.Model):
@@ -119,13 +124,19 @@ class Review(models.Model):
     )
     created_DateTime = models.DateTimeField(auto_now_add=True)
     description = models.TextField()
-    skewered_restaurant = models.OneToOneField(
-        SkeweredEatery, on_delete=models.CASCADE,
+    eatery_vo = models.ForeignKey(
+        EateryVO,
+        related_name="reviews",
+        on_delete=models.CASCADE,
+    )
+    skewered_eatery = models.OneToOneField(
+        SkeweredEatery,
+        on_delete=models.CASCADE,
     )
 
     def __str__(self):
-        restaurant = str(self.skewered_restaurant)
-        return self.title + " for " + restaurant
+        eatery = str(self.skewered_eatery)
+        return self.title + " for " + eatery
 
 
 class ReviewImage(models.Model):
