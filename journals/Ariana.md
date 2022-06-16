@@ -9,9 +9,15 @@ In the journals, every day that you work on the project, you must make an entry 
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
-## June 14, 2022
+## June 15, 2022
 * Today, I worked on:
-    * finishing the api_return_list_of_restaurants_given_category_and_location function view. Needed to return the actual Eatery objects related to the YelpResult objects, instead of the YelpResult objects.
+    * finishing the api_return_list_of_restaurants_given_category_and_location function view. Needed to return the actual Eatery objects related to the YelpResult objects, instead of the YelpResult objects - Brandon and I
+    * writing some more views in the Foodies MS - David and I
+* David and I discussed path "conventions" in the api_urls.py in the Foodies MS given that there are so many views, plus we are starting to write even more for the "double" function views referenced below.
+* David and I realized that a lot of the views in the Foodies MS need "double" function for the GET all function views: Get all instances of X model (in general) + Get all instances of X model related to Y model.
+
+## June 14, 2022
+* Today, I:
     * looked into and took care of some merge issues from the codes that David/Cameron and Brandon/I have been working on. (migrations files we had deleted and should have stayed deleted were accidentally added back to the remote main branch) - David and I
 * David and I decided that the Review model will have a DELETE view function for the administrators to be able to remove reviews (in case a foodie leaves an inappropriate review). However, the foodie will not be able to delete a review -- they will only be able to update a review.
 * David and I realized that the EateryImageVO, EateryCategoryVO and EateryTagVO will need views with GET requests, since the EateryVO's JSON response does not include the data of the 3 models (EateryImageVO, EateryCategoryVO and EateryTagVO) nested inside of it.
