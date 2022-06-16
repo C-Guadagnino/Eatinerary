@@ -247,6 +247,8 @@ def api_delete_update_skewered_eatery(request, pk):
 # TO-DO: WRITE THE GET ALL EATERY VOS FUNCTION VIEW
 
 
+
+
 # List all foodie reviews, create review
 @require_http_methods(["GET", "POST"])
 def api_list_create_reviews(request, eatery_entity_id=None):
