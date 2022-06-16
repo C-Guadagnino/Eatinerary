@@ -18,6 +18,7 @@ function App() {
       <Nav token={token} />
       <div className='container-fluid p-0'>
         <Routes>
+          <Route path="/" element={<HomePage />} />
           <Route Path='users'>
             <Route path='login' element={<Login token={token} login={login} />} />
             <Route path='logout' element={<Logout logout={logout} />} />
