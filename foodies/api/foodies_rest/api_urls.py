@@ -4,6 +4,7 @@ from .api_views import (
     api_foodies,
     api_eateries_vo,
     api_eatery_vo,
+    # needs update
     api_tags_vo,
     api_tag_vo,
     api_skewered_eateries,
@@ -13,10 +14,13 @@ from .api_views import (
     api_review_based_on_skeweredeatery,
     api_review_images,
     api_review_image,
+    # needs update
     api_categories_vo,
     api_category_vo,
+    # needs update
     api_eatery_images_vo,
     api_eatery_image_vo,
+    # NEED TO WRITE API_EATERY_OPEN_HOURS_VO
 )
 
 urlpatterns = [
