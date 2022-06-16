@@ -52,7 +52,7 @@ def get_eatery_entity_data():
         for tag in eatery["tags"]:
             EateryTagVO.objects.update_or_create(
                 import_href=tag["href"],
-                defaults={"tag_name": tag["tag_name"], "eatery": eateryvo_obj},
+                defaults={"tag_name": tag["tag_name"], "eatery_vo": eateryvo_obj},
             )
 
         # POLLING EATERYCATEGORY MODEL
@@ -62,7 +62,7 @@ def get_eatery_entity_data():
                 defaults={
                     "alias": category["alias"],
                     "title": category["title"],
-                    "eatery": eateryvo_obj,
+                    "eatery_vo": eateryvo_obj,
                 },
             )
 
@@ -74,7 +74,7 @@ def get_eatery_entity_data():
                     "weekday": openhours_one["weekday"],
                     "start_time": openhours_one["start_time"],
                     "end_time": openhours_one["end_time"],
-                    "eatery": eateryvo_obj,
+                    "eatery_vo": eateryvo_obj,
                 },
             )
 
@@ -84,7 +84,7 @@ def get_eatery_entity_data():
                 import_href=eatery_image["href"],
                 defaults={
                     "image_url": eatery_image["image_url"],
-                    "eatery": eateryvo_obj,
+                    "eatery_vo": eateryvo_obj,
                 },
             )
 

@@ -17,7 +17,10 @@ class EateryTagVOEncoder(ModelEncoder):
 
     def get_extra_data(self, o):
         return {
-            "eatery": {"eatery_name": o.eatery.eatery_name, "eatery_import_href": o.eatery.import_href}
+            "eatery": {
+                "eatery_name": o.eatery.eatery_name,
+                "eatery_import_href": o.eatery.import_href,
+            }
         }
 
 
@@ -27,18 +30,25 @@ class EateryCategoryVOEncoder(ModelEncoder):
 
     def get_extra_data(self, o):
         return {
-            "eatery": {"eatery_name": o.eatery.eatery_name, "eatery_import_href": o.eatery.import_href}
+            "eatery": {
+                "eatery_name": o.eatery.eatery_name,
+                "eatery_import_href": o.eatery.import_href,
+            }
         }
 
 
 class EateryImageVOEncoder(ModelEncoder):
     model = EateryImageVO
-    properties = ["import_href","image_url"]
+    properties = ["import_href", "image_url"]
 
     def get_extra_data(self, o):
         return {
-            "eatery": {"eatery_name": o.eatery.eatery_name, "eatery_import_href": o.eatery.import_href}
+            "eatery": {
+                "eatery_name": o.eatery.eatery_name,
+                "eatery_import_href": o.eatery.import_href,
+            }
         }
+
 
 class FoodieEncoder(ModelEncoder):
     model = Foodie
@@ -73,14 +83,14 @@ class EateryVOEncoder(ModelEncoder):
         "location_country",
         "latitude",
         "longitude",
-
     ]
+
 
 class SkeweredEateryEncoder(ModelEncoder):
     model = SkeweredEatery
     properties = [
         "id",
-        "eatery",
+        "eatery_vo",
         "foodie",
         "created_DateTime",
         "updated_DateTime",
@@ -89,21 +99,18 @@ class SkeweredEateryEncoder(ModelEncoder):
         "notes",
     ]
     encoders = {
-        "eatery": EateryVOEncoder(),
+        "eatery_vo": EateryVOEncoder(),
         "foodie": FoodieEncoder(),
     }
 
+
 class ReviewImageEncoder(ModelEncoder):
     model = ReviewImage
-    properties = [ "id", "image_url"] 
+    properties = ["id", "image_url"]
 
     def get_extra_data(self, o):
-        return {
-            "review": {
-                "title": o.review.title,
-                "review_id": o.review.id
-            }
-        }
+        return {"review": {"title": o.review.title, "review_id": o.review.id}}
+
 
 class ReviewEncoder(ModelEncoder):
     model = Review
@@ -113,12 +120,12 @@ class ReviewEncoder(ModelEncoder):
         "rating",
         "created_DateTime",
         "description",
-        "skewered_restaurant",
-        #"review_images"
+        "eatery_vo",
+        "skewered_eatery",
+        # "review_images"
     ]
     encoders = {
-        "skewered_restaurant": SkeweredEateryEncoder(),
-        #"review_images": ReviewImageEncoder()
+        "eatery_vo": EateryVOEncoder(),
+        "skewered_eatery": SkeweredEateryEncoder(),
+        # "review_images": ReviewImageEncoder()
     }
-
-

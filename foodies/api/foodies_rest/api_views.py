@@ -24,7 +24,7 @@ from .models import (
 )
 from django.shortcuts import render
 
-#List all foodies, create a foodie
+# List all foodies, create a foodie
 @require_http_methods(["GET", "POST"])
 def api_list_foodies(request):
     if request.method == "GET":
@@ -51,16 +51,14 @@ def get_foodie_skewers(request):
     return JsonResponse({"received": request.payload})
 
 
-#List all EateryVOs
+# List all EateryVOs
 @require_http_methods(["GET"])
 def api_list_eateries_vo(request):
     if request.method == "GET":
         try:
             eateries = EateryVO.objects.all()
             return JsonResponse(
-                {"eateries": eateries}, 
-                encoder=EateryVOEncoder, 
-                safe=False
+                {"eateries": eateries}, encoder=EateryVOEncoder, safe=False
             )
         except EateryVO.DoesNotExist:
             return JsonResponse(
@@ -69,45 +67,39 @@ def api_list_eateries_vo(request):
             )
 
 
-#Get all EateryTagsVO 
+# Get all EateryTagsVO
 @require_http_methods(["GET"])
 def api_list_tags_vo(request):
     if request.method == "GET":
         try:
             tags = EateryTagVO.objects.all()
-            return JsonResponse(
-                {"tags": tags}, 
-                encoder=EateryTagVOEncoder, 
-                safe=False
-            )
+            return JsonResponse({"tags": tags}, encoder=EateryTagVOEncoder, safe=False)
         except EateryTagVO.DoesNotExist:
             return JsonResponse(
                 {"message": "Does not exist"},
                 status=400,
             )
 
-#Get details of an EateryTagVO
-@require_http_methods(["GET"])
-def api_get_specific_tag_vo(request,tag_name):
-    if request.method == "GET":
-        #try:
-        tag = EateryTagVO.objects.get(tag_name=tag_name)
-        return JsonResponse(
-            tag,
-            encoder = EateryTagVOEncoder,
-            safe=False
-        )
 
-#Get all EateryCategoryVOs
+# Get details of an EateryTagVO
+@require_http_methods(["GET"])
+def api_get_specific_tag_vo(request, tag_name):
+    if request.method == "GET":
+        # try:
+        tag = EateryTagVO.objects.get(tag_name=tag_name)
+        return JsonResponse(tag, encoder=EateryTagVOEncoder, safe=False)
+
+
+# Get all EateryCategoryVOs
 @require_http_methods(["GET"])
 def api_list_eatery_categories_vo(request):
     if request.method == "GET":
         try:
             eatery_categories = EateryCategoryVO.objects.all()
             return JsonResponse(
-                {"eatery_categories": eatery_categories}, 
-                encoder=EateryCategoryVOEncoder, 
-                safe=False
+                {"eatery_categories": eatery_categories},
+                encoder=EateryCategoryVOEncoder,
+                safe=False,
             )
         except EateryCategoryVO.DoesNotExist:
             return JsonResponse(
@@ -115,28 +107,26 @@ def api_list_eatery_categories_vo(request):
                 status=400,
             )
 
-#Get a specific details of a EateryCategoryVO
-@require_http_methods(["GET"])
-def api_get_specific_category_vo(request,alias):
-    if request.method == "GET":
-        #try:
-        category = EateryCategoryVO.objects.get(alias=alias)
-        return JsonResponse(
-            category,
-            encoder = EateryCategoryVOEncoder,
-            safe=False
-        )
 
-#Get all EateryImageVOs
+# Get a specific details of a EateryCategoryVO
+@require_http_methods(["GET"])
+def api_get_specific_category_vo(request, alias):
+    if request.method == "GET":
+        # try:
+        category = EateryCategoryVO.objects.get(alias=alias)
+        return JsonResponse(category, encoder=EateryCategoryVOEncoder, safe=False)
+
+
+# Get all EateryImageVOs
 @require_http_methods(["GET"])
 def api_list_eatery_images_vo(request):
     if request.method == "GET":
         try:
             eatery_images = EateryImageVO.objects.all()
             return JsonResponse(
-                {"eatery_images": eatery_images}, 
-                encoder=EateryImageVOEncoder, 
-                safe=False
+                {"eatery_images": eatery_images},
+                encoder=EateryImageVOEncoder,
+                safe=False,
             )
         except EateryImageVO.DoesNotExist:
             return JsonResponse(
@@ -144,72 +134,70 @@ def api_list_eatery_images_vo(request):
                 status=400,
             )
 
-#Get specific EateryImageVO
+
+# Get specific EateryImageVO
 @require_http_methods(["GET"])
-def api_get_specific_eatery_image_vo(request,eatery_image_entity_id):
+def api_get_specific_eatery_image_vo(request, eatery_image_entity_id):
     if request.method == "GET":
-        #try:
+        # try:
         full_import_href = "/api/eateryimages/" + str(eatery_image_entity_id) + "/"
         category = EateryImageVO.objects.get(import_href=full_import_href)
-        return JsonResponse(
-            category,
-            encoder = EateryImageVOEncoder,
-            safe=False
-        )
-#Get all open hours RELATED to a specific eatery
+        return JsonResponse(category, encoder=EateryImageVOEncoder, safe=False)
 
 
-        
-#List skewered eateries & Add eatery to skewered list
+# Get all open hours RELATED to a specific eatery
+
+
+# List skewered eateries & Add eatery to skewered list
 @require_http_methods(["GET", "POST"])
 def api_list_create_skewered_eatery(request):
     if request.method == "GET":
         try:
-            skewered_eatery = SkeweredEatery.objects.all()
+            skewered_eateries = SkeweredEatery.objects.all()
             return JsonResponse(
-                {"skewered_eatery": skewered_eatery},
-                encoder = SkeweredEateryEncoder,
-                safe=False
+                {"skewered_eateries": skewered_eateries},
+                encoder=SkeweredEateryEncoder,
+                safe=False,
             )
         except SkeweredEatery.DoesNotExist:
             return JsonResponse(
                 {"message": "Does not exist"},
                 status=400,
             )
-    else: 
+    # COME BACK TO THIS (CONTENT DICTIONARY) AND TEST THIS VIEW!!!!!
+    else:
         try:
             content = json.loads(request.body)
 
             eatery_href = content["eatery"]
             eateryvo_obj = EateryVO.objects.get(import_href=eatery_href)
-            content["eatery"] = eateryvo_obj
+            content["eatery_vo"] = eateryvo_obj
 
             foodie_username = content["foodie"]
-            foodie_obj = Foodie.objects.get(username= foodie_username)
+            foodie_obj = Foodie.objects.get(username=foodie_username)
             content["foodie"] = foodie_obj
             skewered_eatery = SkeweredEatery.objects.create(**content)
 
             return JsonResponse(
-                skewered_eatery,
-                encoder=SkeweredEateryEncoder,
-                safe=False
+                skewered_eatery, encoder=SkeweredEateryEncoder, safe=False
             )
         except SkeweredEatery.DoesNotExist:
             return JsonResponse(
                 {"message": "Could not create the skewered eatery"},
-                status = 400,
+                status=400,
             )
 
-#Get details of a skewered eatery
+
+# Get details of a skewered eatery
 @require_http_methods(["GET"])
-def api_get_details_of_skewered_eatery(request,pk):
+def api_get_details_of_skewered_eatery(request, pk):
     if request.method == "GET":
         try:
             skewered_eatery = SkeweredEatery.objects.get(id=pk)
             return JsonResponse(
                 {"skewered_eatery": skewered_eatery},
-                encoder = SkeweredEateryEncoder,
-                safe=False
+                encoder=SkeweredEateryEncoder,
+                safe=False,
             )
         except SkeweredEatery.DoesNotExist:
             return JsonResponse(
@@ -217,12 +205,15 @@ def api_get_details_of_skewered_eatery(request,pk):
                 status=400,
             )
 
-#Delete or update a skewered eatery
+
+# Delete or update a skewered eatery
 @require_http_methods(["DELETE", "PUT"])
-def api_delete_update_skewered_eatery(request,pk):
+def api_delete_update_skewered_eatery(request, pk):
     if request.method == "DELETE":
         try:
-            skewered_eatery = SkeweredEatery.objects.filter(id=pk).update(is_active=False)
+            skewered_eatery = SkeweredEatery.objects.filter(id=pk).update(
+                is_active=False
+            )
             return JsonResponse(
                 skewered_eatery,
                 encoder=SkeweredEateryEncoder,
@@ -239,14 +230,11 @@ def api_delete_update_skewered_eatery(request,pk):
             SkeweredEatery.objects.filter(id=pk).update(**content)
             skewered_eatery = SkeweredEatery.objects.get(id=pk)
             return JsonResponse(
-                skewered_eatery,
-                encoder=SkeweredEateryEncoder,
-                safe=False
+                skewered_eatery, encoder=SkeweredEateryEncoder, safe=False
             )
         except SkeweredEatery.DoesNotExist:
             return JsonResponse(
-                {"message": "Cannot update skewered eatery"},
-                status=404
+                {"message": "Cannot update skewered eatery"}, status=404
             )
 
 
@@ -269,9 +257,9 @@ def api_delete_update_skewered_eatery(request,pk):
 #     else:
 #         try:
 #             content = json.loads(request.body)
-#             skewered_restaurant_id = content["skewered_restaurant"]
-#             skewered_restaurant = SkeweredEatery.objects.get(id=skewered_restaurant_id)
-#             content["skewered_restaurant"] = skewered_restaurant
+#             skewered_eatery_id = content["skewered_eatery"]
+#             skewered_eatery = SkeweredEatery.objects.get(id=skewered_eatery_id)
+#             content["skewered_eatery"] = skewered_eatery
 #             review = Review.objects.create(**content)
 
 #             return JsonResponse(
@@ -285,52 +273,41 @@ def api_delete_update_skewered_eatery(request,pk):
 #                 status = 400,
 #             )
 
-#List all foodie reviews, create review
+# List all foodie reviews, create review
 @require_http_methods(["GET", "POST"])
-def api_list_create_reviews(request):
+def api_list_create_reviews(request, eatery_entity_id=None):
     if request.method == "GET":
-        try:
+
+        if eatery_entity_id == None:
             reviews = Review.objects.all()
-            return JsonResponse(
-                {"reviews": reviews},
-                encoder=ReviewEncoder,
-                safe=False
-            )
-        except Review.DoesNotExist:
-            return JsonResponse(
-                {"message": "Does not exist"},
-                status=400
-            )
+        else:
+            reviews = Review.objects.filter()
+            return JsonResponse({"reviews": reviews}, encoder=ReviewEncoder, safe=False)
+
     else:
         try:
             content = json.loads(request.body)
-            skewered_restaurant_id = content["skewered_restaurant"]
-            skewered_restaurant = SkeweredEatery.objects.get(id=skewered_restaurant_id)
-            content["skewered_restaurant"] = skewered_restaurant
+            skewered_eatery_id = content["skewered_eatery"]
+            skewered_eatery = SkeweredEatery.objects.get(id=skewered_eatery_id)
+            content["skewered_eatery"] = skewered_eatery
             review = Review.objects.create(**content)
 
-            return JsonResponse(
-                review,
-                encoder=ReviewEncoder,
-                safe=False
-            )
+            return JsonResponse(review, encoder=ReviewEncoder, safe=False)
         except Review.DoesNotExist:
             return JsonResponse(
                 {"message": "Could not create the skewered eatery"},
-                status = 400,
+                status=400,
             )
 
 
-#Get details of a specific review 
+# Get details of a specific review
 @require_http_methods(["GET"])
-def api_get_details_of_review(request,pk):
+def api_get_details_of_review(request, pk):
     if request.method == "GET":
         try:
             foodie_review = Review.objects.get(id=pk)
             return JsonResponse(
-                {"foodie_review": foodie_review},
-                encoder=ReviewEncoder,
-                safe=False
+                {"foodie_review": foodie_review}, encoder=ReviewEncoder, safe=False
             )
         except Review.DoesNotExist:
             return JsonResponse(
@@ -339,9 +316,9 @@ def api_get_details_of_review(request,pk):
             )
 
 
-#Foodie deletes or updates a review
+# Foodie deletes or updates a review
 @require_http_methods(["DELETE", "PUT"])
-def api_delete_update_review(request,pk):
+def api_delete_update_review(request, pk):
     if request.method == "DELETE":
         try:
             foodie_review = Review.objects.get(id=pk)
@@ -358,36 +335,29 @@ def api_delete_update_review(request,pk):
     else:
         try:
             content = json.loads(request.body)
-            
+
             Review.objects.filter(id=pk).update(**content)
             foodie_review = Review.objects.get(id=pk)
-            return JsonResponse(
-                foodie_review,
-                encoder=ReviewEncoder,
-                safe=False
-            )
+            return JsonResponse(foodie_review, encoder=ReviewEncoder, safe=False)
         except Review.DoesNotExist:
             return JsonResponse(
-                {"message": "Cannot update skewered eatery"},
-                status=404
+                {"message": "Cannot update skewered eatery"}, status=404
             )
 
 
-#List all review images, create a review image
+# List all review images, create a review image
 @require_http_methods(["GET", "POST"])
 def api_list_create_review_images(request, review_id=None):
     if request.method == "GET":
-        #Get all review images regardless of review
+        # Get all review images regardless of review
         if review_id == None:
             reviews = ReviewImage.objects.all()
-        #Otherwise, get all review images for a specific review
+        # Otherwise, get all review images for a specific review
         else:
             review_obj = Review.objects.get(id=review_id)
             reviews = ReviewImage.objects.filter(review=review_obj)
         return JsonResponse(
-            {"reviews": reviews},
-            encoder=ReviewImageEncoder,
-            safe=False
+            {"reviews": reviews}, encoder=ReviewImageEncoder, safe=False
         )
     else:
         try:
@@ -398,28 +368,22 @@ def api_list_create_review_images(request, review_id=None):
             content["review"] = review
             review_image = ReviewImage.objects.create(**content)
 
-            return JsonResponse(
-                review_image,
-                encoder=ReviewImageEncoder,
-                safe=False
-            )
+            return JsonResponse(review_image, encoder=ReviewImageEncoder, safe=False)
         except ReviewImage.DoesNotExist:
             return JsonResponse(
                 {"message": "Could not create the skewered eatery"},
-                status = 400,
+                status=400,
             )
 
 
-#Get a specific review image
+# Get a specific review image
 @require_http_methods(["GET"])
-def api_get_specific_review_image(request,pk):
+def api_get_specific_review_image(request, pk):
     if request.method == "GET":
         try:
             review = ReviewImage.objects.get(id=pk)
             return JsonResponse(
-                {"review": review},
-                encoder=ReviewImageEncoder,
-                safe=False
+                {"review": review}, encoder=ReviewImageEncoder, safe=False
             )
         except ReviewImage.DoesNotExist:
             return JsonResponse(
@@ -427,9 +391,10 @@ def api_get_specific_review_image(request,pk):
                 status=400,
             )
 
-#Delete a review image
+
+# Delete a review image
 @require_http_methods(["DELETE"])
-def api_delete_review_image(request,pk):
+def api_delete_review_image(request, pk):
     if request.method == "DELETE":
         try:
             review_image = ReviewImage.objects.get(id=pk)
@@ -443,7 +408,3 @@ def api_delete_review_image(request,pk):
             return JsonResponse(
                 {"message": "Does not exist"},
             )
-
-
-
-
