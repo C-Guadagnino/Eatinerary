@@ -28,9 +28,6 @@ function App() {
           </Route>
         </Routes>
       </div>
-      {/* <div className='footer-container'>
-        <Footer />
-      </div> */}
     </BrowserRouter>
   );
 }

@@ -22,7 +22,7 @@ const classesIfNotLoggedIn = "navbar-nav";
 
 
 function Nav(props) {
-    const links = props.token ? loggedoutLinks : loggedinLinks;
+    const links = props.token ? loggedinLinks : loggedoutLinks;
     return (
       <nav className='navbar navbar-expand-md navbar-dark fixed-top bg-dark'>
         <div className='container-fluid'>
@@ -32,17 +32,6 @@ function Nav(props) {
               {/* What this is doing is creating a link back using the Eatinerary Button */}
             </h1>
           </NavLink>
-          <button
-            className='navbar-toggler'
-            type='button'
-            data-bs-toggle='collapse'
-            data-bs-target='#navbarCollapse'
-            aria-controls='navbarCollapse'
-            aria-expanded='false'
-            aria-label='Toggle navigation'
-          >
-            <span className='navbar-toggler-icon'></span>
-          </button>
           <div className='collapse navbar-collapse' id='navbarCollapse'>
             <ul
               className={props.token ? classesIfLoggedIn : classesIfNotLoggedIn}
