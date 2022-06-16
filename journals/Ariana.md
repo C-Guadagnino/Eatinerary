@@ -12,7 +12,8 @@ In the journals, every day that you work on the project, you must make an entry 
 ## June 15, 2022
 * Today, I worked on:
     * finishing the api_return_list_of_restaurants_given_category_and_location function view. Needed to return the actual Eatery objects related to the YelpResult objects, instead of the YelpResult objects - Brandon and I
-    * writing some more views in the Foodies MS - David and I
+    * writing and updating some more views in the Foodies MS - David and I
+    * writing view to get all reviews based on an eatery, and get a review based on SkeweredEatery - David and I
 * David and I discussed path "conventions" in the api_urls.py in the Foodies MS given that there are so many views, plus we are starting to write even more for the "double" function views referenced below.
 * David and I realized that a lot of the views in the Foodies MS need "double" function for the GET all function views: Get all instances of X model (in general) + Get all instances of X model related to Y model.
 
