@@ -47,13 +47,14 @@ def get_eatery_entity_data():
             },
         )
         eateryvo_obj = EateryVO.objects.get(import_href=eatery["href"])
-        # print("eateryvo_obj", eateryvo_obj)
+
         # POLLING EATERYTAG MODEL
         for tag in eatery["tags"]:
             EateryTagVO.objects.update_or_create(
                 import_href=tag["href"],
-                defaults={"tag_name": tag["tag_name"], "eatery": eateryvo_obj},
+                defaults={"tag_name": tag["tag_name"], "eatery_vo": eateryvo_obj},
             )
+
         # POLLING EATERYCATEGORY MODEL
         for category in eatery["categories"]:
             EateryCategoryVO.objects.update_or_create(
@@ -61,9 +62,10 @@ def get_eatery_entity_data():
                 defaults={
                     "alias": category["alias"],
                     "title": category["title"],
-                    "eatery": eateryvo_obj,
+                    "eatery_vo": eateryvo_obj,
                 },
             )
+
         # POLLING EATERYOPENHOURS MODEL
         for openhours_one in eatery["open_hours"]:
             EateryOpenHoursVO.objects.update_or_create(
@@ -72,17 +74,17 @@ def get_eatery_entity_data():
                     "weekday": openhours_one["weekday"],
                     "start_time": openhours_one["start_time"],
                     "end_time": openhours_one["end_time"],
-                    "eatery": eateryvo_obj,
+                    "eatery_vo": eateryvo_obj,
                 },
             )
+
         # POLLING EATERYIMAGE MODEL
         for eatery_image in eatery["eatery_images"]:
-            # print("eatery_image[image_url]", eatery_image["image_url"])
             EateryImageVO.objects.update_or_create(
                 import_href=eatery_image["href"],
                 defaults={
                     "image_url": eatery_image["image_url"],
-                    "eatery": eateryvo_obj,
+                    "eatery_vo": eateryvo_obj,
                 },
             )
 
