@@ -16,11 +16,11 @@ from .api_views import (
     # api_get_yelp_with_category_and_location,
     api_get_yelp_with_location,
     api_tag,
-    api_get_yelp_one_eatery,
+    # api_get_yelp_one_eatery,
     api_yelp_location_search_terms,
     api_yelp_category_search_terms,
     api_yelp_results,
-    api_yelp_results_from_db
+    # api_yelp_results_from_db
 )
 
 urlpatterns = [
@@ -29,11 +29,11 @@ urlpatterns = [
         api_get_yelp_with_location,
         name="api_get_yelp_with_location",
     ),
-    path(
-        "yelpdb/<str:location>/<str:category>/",
-        api_yelp_results_from_db,
-        name="api_yelp_results_from_db",
-    ),
+    # path(
+    #     "yelpdb/<str:location>/<str:category>/",
+    #     api_yelp_results_from_db,
+    #     name="api_yelp_results_from_db",
+    # ),
     path(
         "yelpresults/",
         api_yelp_results,
@@ -49,11 +49,11 @@ urlpatterns = [
         api_yelp_category_search_terms,
         name="api_yelp_category_search_terms",
     ),
-    path(
-        "yelp/one/<str:yelp_id>/",
-        api_get_yelp_one_eatery,
-        name="api_get_yelp_one_eatery",
-    ),
+    # path(
+    #     "yelp/one/<str:yelp_id>/",
+    #     api_get_yelp_one_eatery,
+    #     name="api_get_yelp_one_eatery",
+    # ),
     path(
         "yelp/<str:location>/<str:category>/",
         api_return_list_of_restaurants_given_category_and_location,
