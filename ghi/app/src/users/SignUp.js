@@ -15,9 +15,9 @@ import {
 function SignUp(props) {
   const {token, signup} = props;
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
 
   if (token) {
     return <Navigate to="/" />;
@@ -37,7 +37,7 @@ function SignUp(props) {
         </CardFieldset>
 
         <CardFieldset>
-          <CardInput onChange={e => setPhone(e.target.value)} value={phone} placeholder="Phone" type="text" required />
+          <CardInput onChange={e => setPhone(e.target.value)} value={phone} placeholder="Phone" type="int" required />
         </CardFieldset>
 
         <CardFieldset>
