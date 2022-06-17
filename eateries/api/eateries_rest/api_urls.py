@@ -65,7 +65,7 @@ urlpatterns = [
     path("locations/<int:pk>/", api_location, name="api_location"),
     path("category/<int:pk>/", api_category, name="api_category"),
     path("tags/", api_tags, name="api_tags"),
-    path("tags/<int:pk>/", api_tag, name="api_tag"),
+    path("tags/<str:tag_name>/", api_tag, name="api_tag"),
     path("categories/", api_categories, name="api_categories"),
     path("openhours/", api_open_hours_plural, name="api_open_hours_plural"),
     path(

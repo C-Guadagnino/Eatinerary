@@ -1,13 +1,19 @@
 # Ariana's Journal
 
 ## Temporary guidelines for myself:
-
-In the journals, every day that you work on the project, you must make an entry in your journal after you've finished that day. At a minimum, you will need to include the following information:
-
 1) The date of the entry
 2) A list of features/issues that you worked on and who you worked with, if applicable
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
+
+## June 16, 2022
+* Today, I worked on:
+    * Modifying the view functions in the Foodies that raise a DoesNotExist exception from 400 status to 404
+    * Writing the view function to GET a specific eateryvo instance in Foodies MS
+    * Modified view function names in Foodies MS to be more reflective of their functionality
+* When creating tags, the tag was created, but there was no association with it to an eatery. However, we discussed that foodie could create a tag, the front end will make sure to create the tag and associate the tag to the eatery that the foodie is adding the tag to.
+* The design decision was that we didn't need to change/rewrite the view for TagVOs. And the Ah-ha moment was that it would be taken care of by making 2 API calls to the backend from the React front-end!
+
 
 ## June 15, 2022
 * Today, I worked on:

@@ -70,7 +70,7 @@ class Tag(models.Model):
         return self.tag_name
 
     def get_api_url(self):
-        return reverse("api_tag", kwargs={"pk": self.pk})
+        return reverse("api_tag", kwargs={"tag_name": self.tag_name})
 
 
 class EateryCategory(models.Model):
