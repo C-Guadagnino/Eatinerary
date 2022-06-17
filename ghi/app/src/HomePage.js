@@ -8,10 +8,16 @@ function HomePage() {
 
   //creating function to load ip address from the API
   const getData = async () => {
-    const res = await axios.get('https://geolocation-db.com/json/')
+    const res = await axios.get('http://ip-api.com/json/')
     console.log(res.data);
-    setIP(res.data.IPv4)
+    setIP(res.data.city)
   }
+
+  // const getYelpData = async () => {
+  //   const data = await axios.get('http://ip-api.com/json/')
+  //   console.log(res.data);
+  //   setIP(res.data.city)
+  // }
   
   useEffect( () => {
     //passing getData method to the lifecycle method
@@ -21,7 +27,7 @@ function HomePage() {
 
   return (
     <div className="App">
-      <h2>Your IP Address is</h2>
+      <h2>Your Live in</h2>
       <h4>{ip}</h4>
     </div>
   );
