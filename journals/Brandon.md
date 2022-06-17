@@ -7,6 +7,48 @@
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
+## June 16, 2022
+* Today I worked on researching grabbing user location from IP address. I created the HomePage and was able to receive the location object but currently working on using a different API because the response did not contain the location information I needed.
+* Our team discussed how we wanted to handle the functionality of our HomePage. We decided that we were going to gather user location information on page load that would send an api request to return a location object so we can pre populate the home page with eateries in their area.
+* an AHA moment I had today was DO NOT RUN npn audit ---force...something. Also that you can use IP addresses to get location. 
+
+## June 15, 2022
+* Today, I worked on:
+    * finishing the api_return_list_of_restaurants_given_category_and_location function view. Needed to return the actual Eatery objects related to the YelpResult objects, instead of the YelpResult objects - Ariana and I
+    * updating models and updating the BoundedContexts diagram based on the model changes
+* Cameron and I discussed the teams workflow plan going forward. We talked about the projects bounded context, what truly the MVP was, and how we should delegate which task in the corresponding priority order
+* AHA we underestimated the time line! ahhhh
+
+## June 14, 2022
+* Today, I worked on refactoring the monster view, I ended up just making comments and running tests.
+* No design changes and discussion, just testing and making notes
+* Aha testing is fun!
+
+## June 12, 2022
+* Today, I worked on:
+    * continuing writing the api_return_list_of_restaurants_given_category_and_location function view. Actually thought we were done, but towards the end, we realized we weren't quite done yet! - Ariana and I
+* Ariana and I refactored the api_return_list_of_restaurants_given_category_and_location function view. The overall logic (that Curtis helped us come up with is that): 1) If Yelp's API is up and running, then when a foodie makes a request for a list of eateries for a specific location and category, our app will send a request to the Yelp API for a list of eateries. 2) If the location given by the foodie isn't a valid location, then the foodie will get a message letting the foodie know that the location is invalid. 3) If Yelp's API is down, then a) if it's a category and location that has been searched for before, then our database will have some Eatery instances to return to the foodie, b) if it's a category and location that hasn't been searched for before, then our app will return a message to the foodie that something went wrong, and to try again later. Based on that logic, we updated our functions in the acls.py as well as updating our code in api_return_list_of_restaurants_given_category_and_location to be wrapped in try/except and if/else blocks.
+* While thinking through the details of the logic above, we ran into a lot of questions and design decisions on every try/except block. One ah-ha moment we had is that while testing what the Yelp API returns with different inputs (as query parameters) we learned about the different JSON response objects that it returns when the API receives info that it doesn't know how to handle. So whereas it's raises and error on their end, we receive a nice error message describing the error message (just like we learned API points should :)) so based on those error messages, we were able to write and update our functions in acls.py
+
+## June 11, 2022
+* Today, I worked on:
+    * continuing writing the api_return_list_of_restaurants_given_category_and_location function view - Ariana and I
+* Ariana and I discussed and made some decisions on how to populate the EateryOpenHours model from the Yelp API (the Yelp API endpoint that returns the open hours for a specific restaurant is a separate one that requires the ID of a specific business). So we wrote the above view based on that, as well as making some updates to the Eatery model by adding some more attributes.
+* While working on the integration of the open hours for a business from Yelp into our app, Ariana and I had to figure out how to handle store hours from the Yelp API that we get as a string (e.g. "0800" to create a Django TimeField in the EateryOpenHours model). We learned that feeding the EateryOpenHours model a string formatted as "08:00" was good enough for Django to create a TimeField from that!
+
+## June 10, 2022
+* Today, I worked on:
+    * continuing writing the api_return_list_of_restaurants_given_category_and_location function view, creating EateryLocation object instances and EateryCategory object instances - Ariana and I
+* After receiving the rubric from Curtis, the 4 of us decided what we should consider as part of the MVP for our app, and what becomes a part of the stretch goals.
+* The 4 of us also discussed the need for 2 separate models (EateryImage and ReviewImage) vs getting away with just having 1 model (Image) for both the Eatery and Review models. After discussing, we realized we needed 2 separate models as the EateryImage will have a foreign key to the Eatery model, and the ReviewImage will have a foreign key to the Review model.
+
+## June 9, 2022
+* Today, I worked on:
+    * finishing the poller.py in the Foodies MS that polls the Eatery (and related) models from the Eateries MS - All
+    * writing the api_return_list_of_restaurants_given_category_and_location function view - Ariana and I
+* In the Foodies MS poller, we decided to flatten the EateryLocation data into the EateryVO model.
+* It was a nice realization that while api_return_list_of_restaurants_given_category_and_location is a function view that takes care of a GET request, it creates instances of YelpLocationSearchTerm, YelpCategorySearchTerm, and YelpResult models as a side effect!
+
 ## June 08, 2022
 Today, I worked on:
 * Ariana and I fine tuned the yelp integration
