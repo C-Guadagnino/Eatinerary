@@ -82,9 +82,14 @@ def api_eatery_vo(request, eatery_entity_id):
 
 # Get all EateryTagsVO
 @require_http_methods(["GET"])
-def api_tags_vo(request):
+def api_tags_vo(request, eatery_entity_id=None):
     if request.method == "GET":
-        tags = EateryTagVO.objects.all()
+        if eatery_entity_id == None:
+            tags = EateryTagVO.objects.all()
+        else:
+            full_import_href = "/api/eateries/" + str(eatery_entity_id) + "/"
+            eateryvo_obj = EateryVO.objects.get(import_href=full_import_href)
+            tags = EateryTagVO.objects.filter(eatery_vo=eateryvo_obj)
         return JsonResponse({"tags": tags}, encoder=EateryTagVOEncoder)
 
 
@@ -339,7 +344,7 @@ def api_review(request, pk):
 
 # Get details of a specific review
 @require_http_methods(["GET"])
-def api_review_based_on_skeweredeatery(request, skeweredeatery_id):
+def api_review_for_skeweredeatery(request, skeweredeatery_id):
     if request.method == "GET":
         try:
             skewered_eatery_obj = SkeweredEatery.objects.get(id=skeweredeatery_id)

@@ -11,7 +11,7 @@ from .api_views import (
     api_skewered_eatery,
     api_reviews,
     api_review,
-    api_review_based_on_skeweredeatery,
+    api_review_for_skeweredeatery,
     api_review_images,
     api_review_image,
     # needs update
@@ -31,9 +31,14 @@ urlpatterns = [
         api_eatery_vo,
         name="api_eatery_vo",
     ),
-    path("foodies/tags/", api_tags_vo, name="api_tags_vo"),
+    path("foodies/eateries/tags/", api_tags_vo, name="api_tags_vo"),
     path(
-        "foodies/tags/<str:tag_name>/",
+        "foodies/eateries/<int:eatery_entity_id>/tags/",
+        api_tags_vo,
+        name="api_tags_vo_for_eatery",
+    ),
+    path(
+        "foodies/eateries/tags/<str:tag_name>/",
         api_tag_vo,
         name="api_tag_vo",
     ),
@@ -71,8 +76,8 @@ urlpatterns = [
     path("eateries/reviews/<int:pk>/", api_review, name="api_review"),
     path(
         "eateries/skewered/<int:skeweredeatery_id>/reviews/",
-        api_review_based_on_skeweredeatery,
-        name="api_review_based_on_skeweredeatery",
+        api_review_for_skeweredeatery,
+        name="api_review_for_skeweredeatery",
     ),
     path(
         "categories/",

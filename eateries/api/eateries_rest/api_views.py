@@ -419,10 +419,13 @@ def api_categories(request):
 
 
 @require_http_methods(["GET"])
-def api_tag(request, pk):
+def api_tag(request, tag_name):
     if request.method == "GET":
-        tag = Tag.objects.get(pk=pk)
-        return JsonResponse(tag, encoder=TagEncoder, safe=False)
+        try:
+            tag = Tag.objects.get(tag_name=tag_name)
+            return JsonResponse(tag, encoder=TagEncoder, safe=False)
+        except ObjectDoesNotExist:
+            return JsonResponse({"message": "Tag does not exist"})
 
 
 @require_http_methods(["GET", "POST"])
