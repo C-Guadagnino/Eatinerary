@@ -48,52 +48,19 @@ class FoodieEncoder(ModelEncoder):
     ]
 
 
-# class EateryTagVOEncoder(ModelEncoder):
-#     model = EateryTagVO
-#     properties = ["import_href", "tag_name", "eatery_vo"]
-#     encoders = {
-#         "eatery_vo": EateryVOEncoder(),
-#     }
-
-#     # def get_extra_data(self, o):
-#     #     return {
-#     #         "eatery": {
-#     #             "eatery_name": o.eatery_vo,
-#     #             "eatery_import_href": o.eatery_vo,
-#     #         }
-#     #     }
-
-
 class EateryTagVOEncoder(ModelEncoder):
     model = EateryTagVO
     properties = ["import_href", "tag_name"]
 
-    def get_extra_data(self, o):
-        eateries = []
-        for eatery in o.eatery_vo.all():
-            eatery_dict = {}
-            eatery_dict["eatery_name"] = eatery.eatery_name
-            eatery_dict["eatery_import_href"] = eatery.import_href
-            eateries.append(eatery_dict)
+    # def get_extra_data(self, o):
+    #     eateries = []
+    #     for eatery in o.eatery_vo.all():
+    #         eatery_dict = {}
+    #         eatery_dict["eatery_name"] = eatery.eatery_name
+    #         eatery_dict["eatery_import_href"] = eatery.import_href
+    #         eateries.append(eatery_dict)
 
-        return {"eateries": eateries}
-
-
-# class EateryTagVOEncoder(ModelEncoder):
-#     model = EateryTagVO
-#     properties = ["import_href", "tag_name", "eatery_vo"]
-#     encoders = {
-#         "eatery_vo": EateryVOEncoder(),
-#     }
-
-
-#     # def get_extra_data(self, o):
-#     #     return {
-#     #         "eatery": {
-#     #             "eatery_name": o.eatery_vo,
-#     #             "eatery_import_href": o.eatery_vo,
-#     #         }
-#     #     }
+    #     return {"eateries": eateries}
 
 
 class EateryVOEncoder(ModelEncoder):
@@ -163,10 +130,10 @@ class ReviewEncoder(ModelEncoder):
         "description",
         "eatery_vo",
         "skewered_eatery",
-        # "review_images"
+        # "review_images",
     ]
     encoders = {
         "eatery_vo": EateryVOEncoder(),
         "skewered_eatery": SkeweredEateryEncoder(),
-        # "review_images": ReviewImageEncoder()
+        # "review_images": ReviewImageEncoder(),
     }

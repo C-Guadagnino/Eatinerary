@@ -9,7 +9,9 @@
 ## June 17, 2022
 * Today, I:
     * Changed EateryTagVO to have a ManyToMany relationship with EateryVO (instead of ForeignKey), and updated pollers and encoders accordingly
-    * changed __str__ for models
+    * updated __str__ method for Eatery model to show all the categories associated to it
+* poller change + ManyToMany field change for the Eatery-related-VO models
+* ah-ha moment: nesting EateryTagVO, EateryCategoryVO inside the Eatery model when returned as JSONResponse
 
 ## June 16, 2022
 * Today, I worked on:
