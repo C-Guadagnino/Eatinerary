@@ -21,7 +21,7 @@ from foodies_rest.models import (
 def get_eatery_entity_data():
     response = requests.get("http://eateries-api:8000/api/eateries/")
     content = json.loads(response.content)
-    print("This is CONTENT;", content)
+    # print("This is CONTENT;", content)
     for eatery in content["eateries"]:
         EateryVO.objects.update_or_create(
             import_href=eatery["href"],
@@ -50,10 +50,16 @@ def get_eatery_entity_data():
 
         # POLLING EATERYTAG MODEL
         for tag in eatery["tags"]:
-            EateryTagVO.objects.update_or_create(
+            tagvo_obj, created = EateryTagVO.objects.update_or_create(
                 import_href=tag["href"],
-                defaults={"tag_name": tag["tag_name"], "eatery_vo": eateryvo_obj},
+                defaults={"tag_name": tag["tag_name"]},
             )
+            print("TAGVO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", tagvo_obj)
+            # eateryvo_obj.tagsvo.add(tagvo_obj)
+            print("TAGVO!!!!!!!!!!!!!!!!!!!!!!!!!", tagvo_obj)
+            print("TAGVO.ID!!!!!!!!!!!!!!!!!!!!!!!!!", tagvo_obj.id)
+            eateryvo_obj.tagsvo.add(tagvo_obj)
+            print("EATERYVO_OBJ!!!!!!!!!!!!!!!!!!!!!!!!!", eateryvo_obj)
 
         # POLLING EATERYCATEGORY MODEL
         for category in eatery["categories"]:
@@ -96,7 +102,7 @@ def poll():
             get_eatery_entity_data()
         except Exception as e:
             print(e, file=sys.stderr)
-        time.sleep(60)
+        time.sleep(10)
 
 
 if __name__ == "__main__":

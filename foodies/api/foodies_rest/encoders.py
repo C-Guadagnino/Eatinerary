@@ -11,19 +11,6 @@ from .models import (
 )
 
 
-class EateryTagVOEncoder(ModelEncoder):
-    model = EateryTagVO
-    properties = ["import_href", "tag_name"]
-
-    def get_extra_data(self, o):
-        return {
-            "eatery": {
-                "eatery_name": o.eatery_vo.eatery_name,
-                "eatery_import_href": o.eatery_vo.import_href,
-            }
-        }
-
-
 class EateryCategoryVOEncoder(ModelEncoder):
     model = EateryCategoryVO
     properties = ["import_href", "alias", "title"]
@@ -61,6 +48,54 @@ class FoodieEncoder(ModelEncoder):
     ]
 
 
+# class EateryTagVOEncoder(ModelEncoder):
+#     model = EateryTagVO
+#     properties = ["import_href", "tag_name", "eatery_vo"]
+#     encoders = {
+#         "eatery_vo": EateryVOEncoder(),
+#     }
+
+#     # def get_extra_data(self, o):
+#     #     return {
+#     #         "eatery": {
+#     #             "eatery_name": o.eatery_vo,
+#     #             "eatery_import_href": o.eatery_vo,
+#     #         }
+#     #     }
+
+
+class EateryTagVOEncoder(ModelEncoder):
+    model = EateryTagVO
+    properties = ["import_href", "tag_name"]
+
+    def get_extra_data(self, o):
+        eateries = []
+        for eatery in o.eatery_vo.all():
+            eatery_dict = {}
+            eatery_dict["eatery_name"] = eatery.eatery_name
+            eatery_dict["eatery_import_href"] = eatery.import_href
+            eateries.append(eatery_dict)
+
+        return {"eateries": eateries}
+
+
+# class EateryTagVOEncoder(ModelEncoder):
+#     model = EateryTagVO
+#     properties = ["import_href", "tag_name", "eatery_vo"]
+#     encoders = {
+#         "eatery_vo": EateryVOEncoder(),
+#     }
+
+
+#     # def get_extra_data(self, o):
+#     #     return {
+#     #         "eatery": {
+#     #             "eatery_name": o.eatery_vo,
+#     #             "eatery_import_href": o.eatery_vo,
+#     #         }
+#     #     }
+
+
 class EateryVOEncoder(ModelEncoder):
     model = EateryVO
     properties = [
@@ -83,7 +118,13 @@ class EateryVOEncoder(ModelEncoder):
         "location_country",
         "latitude",
         "longitude",
+        "tagsvo",
+        "categoriesvo",
     ]
+    encoders = {
+        "tagsvo": EateryTagVOEncoder(),
+        "categoriesvo": EateryCategoryVOEncoder(),
+    }
 
 
 class SkeweredEateryEncoder(ModelEncoder):

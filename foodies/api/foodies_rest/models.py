@@ -4,14 +4,12 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class EateryTagVO(models.Model):
-    import_href = models.CharField(max_length=200)  
+    import_href = models.CharField(max_length=200)
     tag_name = models.CharField(max_length=40)
-    eatery_vo = models.ForeignKey(
-        "EateryVO", related_name="tagsvo", on_delete=models.CASCADE
-    )
+    eatery_vo = models.ManyToManyField("EateryVO", related_name="tagsvo")
 
     def __str__(self):
-        return "Tag #" + self.tag_name + " for Eatery: " + self.eatery_vo.eatery_name
+        return "Tag #" + self.tag_name
 
 
 class EateryCategoryVO(models.Model):
@@ -23,7 +21,7 @@ class EateryCategoryVO(models.Model):
     )
 
     def __str__(self):
-        return "Category " + self.alias + " for Eatery: " + self.eatery_vo.eatery_name
+        return "Category " + self.alias
 
 
 class EateryImageVO(models.Model):

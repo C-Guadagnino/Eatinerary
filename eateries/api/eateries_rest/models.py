@@ -33,6 +33,17 @@ class Eatery(models.Model):
     def get_api_url(self):
         return reverse("api_eatery", kwargs={"pk": self.pk})
 
+    def __str__(self):
+        return (
+            self.eatery_name
+            + " for <"
+            + str(list(self.categories.all()))
+            + "> in "
+            + str(self.location.city)
+            + ", "
+            + str(self.location.state)
+        )
+
 
 class YelpCategorySearchTerm(models.Model):
     category_term = models.CharField(max_length=100, unique=True)
