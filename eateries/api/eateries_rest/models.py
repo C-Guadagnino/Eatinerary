@@ -34,10 +34,18 @@ class Eatery(models.Model):
         return reverse("api_eatery", kwargs={"pk": self.pk})
 
     def __str__(self):
+        categories_str = ""
+
+        for i, category in enumerate(self.categories.all()):
+            if i == 0:
+                categories_str = categories_str + category.alias
+            else:
+                categories_str = categories_str + ", " + category.alias
+
         return (
             self.eatery_name
             + " for <"
-            + str(list(self.categories.all()))
+            + categories_str
             + "> in "
             + str(self.location.city)
             + ", "

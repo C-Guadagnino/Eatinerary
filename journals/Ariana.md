@@ -6,6 +6,11 @@
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
+## June 17, 2022
+* Today, I:
+    * Changed EateryTagVO to have a ManyToMany relationship with EateryVO (instead of ForeignKey), and updated pollers and encoders accordingly
+    * changed __str__ for models
+
 ## June 16, 2022
 * Today, I worked on:
     * Modifying the view functions in the Foodies that raise a DoesNotExist exception from 400 status to 404
