@@ -16,9 +16,7 @@ class EateryCategoryVO(models.Model):
     import_href = models.CharField(max_length=200)
     alias = models.CharField(max_length=200)
     title = models.CharField(max_length=200)
-    eatery_vo = models.ForeignKey(
-        "EateryVO", related_name="categoriesvo", on_delete=models.CASCADE
-    )
+    eatery_vo = models.ManyToManyField("EateryVO", related_name="categoriesvo")
 
     def __str__(self):
         return "Category " + self.alias

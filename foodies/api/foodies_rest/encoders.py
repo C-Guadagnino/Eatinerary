@@ -15,26 +15,10 @@ class EateryCategoryVOEncoder(ModelEncoder):
     model = EateryCategoryVO
     properties = ["import_href", "alias", "title"]
 
-    def get_extra_data(self, o):
-        return {
-            "eatery": {
-                "eatery_name": o.eatery_vo.eatery_name,
-                "eatery_import_href": o.eatery_vo.import_href,
-            }
-        }
-
 
 class EateryImageVOEncoder(ModelEncoder):
     model = EateryImageVO
     properties = ["import_href", "image_url"]
-
-    def get_extra_data(self, o):
-        return {
-            "eatery": {
-                "eatery_name": o.eatery_vo.eatery_name,
-                "eatery_import_href": o.eatery_vo.import_href,
-            }
-        }
 
 
 class FoodieEncoder(ModelEncoder):
@@ -116,8 +100,8 @@ class ReviewImageEncoder(ModelEncoder):
     model = ReviewImage
     properties = ["id", "image_url"]
 
-    def get_extra_data(self, o):
-        return {"review": {"title": o.review.title, "review_id": o.review.id}}
+    # def get_extra_data(self, o):
+    #     return {"review": {"title": o.review.title, "review_id": o.review.id}}
 
 
 class ReviewEncoder(ModelEncoder):

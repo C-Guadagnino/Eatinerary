@@ -54,23 +54,20 @@ def get_eatery_entity_data():
                 import_href=tag["href"],
                 defaults={"tag_name": tag["tag_name"]},
             )
-            print("TAGVO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", tagvo_obj)
+            # print("TAGVO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", tagvo_obj)
             # eateryvo_obj.tagsvo.add(tagvo_obj)
-            print("TAGVO!!!!!!!!!!!!!!!!!!!!!!!!!", tagvo_obj)
-            print("TAGVO.ID!!!!!!!!!!!!!!!!!!!!!!!!!", tagvo_obj.id)
+            # print("TAGVO!!!!!!!!!!!!!!!!!!!!!!!!!", tagvo_obj)
+            # print("TAGVO.ID!!!!!!!!!!!!!!!!!!!!!!!!!", tagvo_obj.id)
             eateryvo_obj.tagsvo.add(tagvo_obj)
-            print("EATERYVO_OBJ!!!!!!!!!!!!!!!!!!!!!!!!!", eateryvo_obj)
+            # print("EATERYVO_OBJ!!!!!!!!!!!!!!!!!!!!!!!!!", eateryvo_obj)
 
         # POLLING EATERYCATEGORY MODEL
         for category in eatery["categories"]:
-            EateryCategoryVO.objects.update_or_create(
+            categoryvo_obj, created = EateryCategoryVO.objects.update_or_create(
                 import_href=category["href"],
-                defaults={
-                    "alias": category["alias"],
-                    "title": category["title"],
-                    "eatery_vo": eateryvo_obj,
-                },
+                defaults={"alias": category["alias"], "title": category["title"]},
             )
+            eateryvo_obj.categoriesvo.add(categoryvo_obj)
 
         # POLLING EATERYOPENHOURS MODEL
         for openhours_one in eatery["open_hours"]:
@@ -102,7 +99,7 @@ def poll():
             get_eatery_entity_data()
         except Exception as e:
             print(e, file=sys.stderr)
-        time.sleep(10)
+        time.sleep(30)
 
 
 if __name__ == "__main__":
