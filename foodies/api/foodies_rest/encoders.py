@@ -1,5 +1,6 @@
 from common.json import ModelEncoder
 from .models import (
+    EateryOpenHoursVO,
     EateryTagVO,
     EateryCategoryVO,
     EateryImageVO,
@@ -19,6 +20,11 @@ class EateryCategoryVOEncoder(ModelEncoder):
 class EateryImageVOEncoder(ModelEncoder):
     model = EateryImageVO
     properties = ["import_href", "image_url"]
+
+
+class EateryOpenHoursVOEncoder(ModelEncoder):
+    model = EateryOpenHoursVO
+    properties = ["import_href", "weekday", "start_time", "end_time"]
 
 
 class FoodieEncoder(ModelEncoder):
@@ -71,10 +77,14 @@ class EateryVOEncoder(ModelEncoder):
         "longitude",
         "tagsvo",
         "categoriesvo",
+        "eateryimagesvo",
+        "allopenhoursvo",
     ]
     encoders = {
         "tagsvo": EateryTagVOEncoder(),
         "categoriesvo": EateryCategoryVOEncoder(),
+        "eateryimagesvo": EateryImageVOEncoder(),
+        "allopenhoursvo": EateryOpenHoursVOEncoder(),
     }
 
 
