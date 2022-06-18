@@ -12,6 +12,7 @@
     * updated __str__ method for Eatery model to show all the categories associated to it
     * updated all the encoders in the Foodies MS to nest Eatery-Related-VO objects inside of EateryVO JSON response (as desired)
     * updated Tag model in Eateries MS to EateryTag to have consistent naming throughout the project + made necessary changes accordingly
+    * Included a json file for insomnia for the Foodies side so everyone else in the team can use the endpoints -- it may not be complete and may have minor errors, but it will help the team members to at least see the input that the backend endpoints are expecting. Plan on having a master file with all endpoints for all microservices eventually.
 *  Updated EateryCategoryVO and EateryTagVO models relationships to EateryVO model from ForeignKey to ManyToManyField, as well as poller updates accordingly
 * ah-ha moment: nesting EateryTagVO, EateryCategoryVO, and all other Eatery-Related-VO objects inside the EateryVO JSONResponse was possible! Didn't realize this was possible and had previously written function views to access for example: All EateryCategoryVOs related to an EateryVO, All EateryTagVOs related to an EateryVO, All EateryOpenHoursVOs related to an EateryVO, etc.
 
