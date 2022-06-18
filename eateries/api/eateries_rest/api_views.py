@@ -41,6 +41,8 @@ from .acls import get_eateries_from_yelp, get_restaurants, get_details_of_one_ea
 def api_return_list_of_restaurants_given_category_and_location(
     request, location, category
 ):
+    # location = location.lower().replace(" ", "+")
+    # category = category.lower().replace(" ", "+")
     if request.method == "GET":
         # Send request to Yelp API to get a list of eateries given category and location
         try:
