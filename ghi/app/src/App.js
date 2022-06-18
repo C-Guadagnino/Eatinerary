@@ -7,6 +7,7 @@ import Login from "./users/Login"
 import SignUp from "./users/SignUp"
 import Logout from "./users/Logout"
 import HomePage from "./HomePage"
+import MySkeweredList from "./foodies/MySkeweredList"
 // import Footer from "./Footer"
 import './App.css';
 
@@ -27,6 +28,7 @@ function App() {
               element={<SignUp token={token} signup={signup} />}
             />
           </Route>
+              <Route path='skewered' element={<MySkeweredList />} />
         </Routes>
       </div>
     </BrowserRouter>
