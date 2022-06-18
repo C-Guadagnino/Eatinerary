@@ -15,11 +15,12 @@ import {
 function SignUp(props) {
   const {token, signup} = props;
   const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [isFoodie, setIsFoodie] = useState("");
-  const [isOwner, setIsOwner] = useState("");
+  const [isOwner, setIsOwner] = useState(false);
+  const [isFoodie, setIsFoodie] = useState(false);
+  const [error, setError] = useState(null);
 
   if (token) {
     return <Navigate to="/" />;
