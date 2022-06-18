@@ -54,12 +54,7 @@ def get_eatery_entity_data():
                 import_href=tag["href"],
                 defaults={"tag_name": tag["tag_name"]},
             )
-            # print("TAGVO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", tagvo_obj)
-            # eateryvo_obj.tagsvo.add(tagvo_obj)
-            # print("TAGVO!!!!!!!!!!!!!!!!!!!!!!!!!", tagvo_obj)
-            # print("TAGVO.ID!!!!!!!!!!!!!!!!!!!!!!!!!", tagvo_obj.id)
             eateryvo_obj.tagsvo.add(tagvo_obj)
-            # print("EATERYVO_OBJ!!!!!!!!!!!!!!!!!!!!!!!!!", eateryvo_obj)
 
         # POLLING EATERYCATEGORY MODEL
         for category in eatery["categories"]:

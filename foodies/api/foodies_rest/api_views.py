@@ -3,6 +3,8 @@ import json
 from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
+
+# from django.shortcuts import render
 from .encoders import (
     EateryTagVOEncoder,
     EateryCategoryVOEncoder,
@@ -25,7 +27,7 @@ from .models import (
     Review,
     ReviewImage,
 )
-from django.shortcuts import render
+
 
 # List all foodies, create a foodie
 @require_http_methods(["GET", "POST"])

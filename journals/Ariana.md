@@ -10,8 +10,10 @@
 * Today, I:
     * Changed EateryTagVO, EateryCategoryVO to have a ManyToMany relationship with EateryVO (instead of ForeignKey), and updated pollers and encoders accordingly
     * updated __str__ method for Eatery model to show all the categories associated to it
-* poller change + ManyToMany field change for the Eatery-related-VO models
-* ah-ha moment: nesting EateryTagVO, EateryCategoryVO inside the Eatery model when returned as JSONResponse
+    * updated all the encoders in the Foodies MS to nest Eatery-Related-VO objects inside of EateryVO JSON response (as desired)
+    * updated Tag model in Eateries MS to EateryTag to have consistent naming throughout the project + made necessary changes accordingly
+*  Updated EateryCategoryVO and EateryTagVO models relationships to EateryVO model from ForeignKey to ManyToManyField, as well as poller updates accordingly
+* ah-ha moment: nesting EateryTagVO, EateryCategoryVO, and all other Eatery-Related-VO objects inside the EateryVO JSONResponse was possible! Didn't realize this was possible and had previously written function views to access for example: All EateryCategoryVOs related to an EateryVO, All EateryTagVOs related to an EateryVO, All EateryOpenHoursVOs related to an EateryVO, etc.
 
 ## June 16, 2022
 * Today, I worked on:

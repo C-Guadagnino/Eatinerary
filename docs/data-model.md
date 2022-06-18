@@ -1,6 +1,6 @@
 # Data models
 
-![Eatinerary_BoundedContexts_220615](Eatinerary_BoundedContexts_220615.png)
+![Eatinerary_BoundedContexts_220617](Eatinerary_BoundedContexts_220617.png)
 
 ## User (Custom User model based on Django's built-in user model?) ???
 | Name            | Type    | Unique | Optional |
@@ -91,7 +91,7 @@ https://www.yelp.com/developers/documentation/v3/get_started
 | is_active       | bool    | no     | no       |
 | notes           | str/ textfield   | no     | no       |
 
-## Tag (many-to-many relationship between Tag and Eatery. #datenight #brunch, etc. Tags are created by foodies and are visible and searchable by the entire app user-base, so any user can search for #datenight #brospot.
+## EateryTag (many-to-many relationship between EateryTag and Eatery. #datenight #brunch, etc. Tags are created by foodies and are visible and searchable by the entire app user-base, so any user can search for #datenight #brospot.
 * //Discussed// Discuss with Cuisine Coders whether we want the tags to be related to Eateries instead of Skewered Eateries, and for the tags to be visible by everyone instead of just by the foodie that created them. That way the whole RestaurantRepo community can benefit from the tags other people add to Eateries, and can even search/filter by those tags.)
 
 | Name            | Type    | Unique | Optional |

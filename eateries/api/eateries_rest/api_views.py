@@ -11,7 +11,7 @@ from .models import (
     EateryImage,
     EateryLocation,
     Eatery,
-    Tag,
+    EateryTag,
     EateryOpenHours,
     EateryImage,
     WEEKDAYS,
@@ -23,7 +23,7 @@ from .encoders import (
     EateryEncoder,
     EateryLocationEncoder,
     EateryCategoryEncoder,
-    TagEncoder,
+    EateryTagEncoder,
     OpenHoursEncoder,
     EateryImageEncoder,
     YelpLocationSearchTermEncoder,
@@ -336,7 +336,7 @@ def api_eateries(request):
             eatery.categories.add(cat_obj)
 
         for tag_name in tags_list:
-            tag_obj = Tag.objects.get(tag_name=tag_name)
+            tag_obj = EateryTag.objects.get(tag_name=tag_name)
             eatery.tags.add(tag_obj)
 
         return JsonResponse(
@@ -361,7 +361,7 @@ def api_eatery(request, pk):
         tags_list_single_item = content["tags"]
         eatery = Eatery.objects.get(pk=pk)
         for tag_name in tags_list_single_item:
-            tag_obj = Tag.objects.get(tag_name=tag_name)
+            tag_obj = EateryTag.objects.get(tag_name=tag_name)
             eatery.tags.add(tag_obj)
         return JsonResponse(eatery, encoder=EateryEncoder, safe=False)
 
@@ -422,8 +422,8 @@ def api_categories(request):
 def api_tag(request, tag_name):
     if request.method == "GET":
         try:
-            tag = Tag.objects.get(tag_name=tag_name)
-            return JsonResponse(tag, encoder=TagEncoder, safe=False)
+            tag = EateryTag.objects.get(tag_name=tag_name)
+            return JsonResponse(tag, encoder=EateryTagEncoder, safe=False)
         except ObjectDoesNotExist:
             return JsonResponse({"message": "Tag does not exist"})
 
@@ -431,13 +431,13 @@ def api_tag(request, tag_name):
 @require_http_methods(["GET", "POST"])
 def api_tags(request):
     if request.method == "GET":
-        tags = Tag.objects.all()
-        return JsonResponse({"tags": tags}, encoder=TagEncoder)
+        tags = EateryTag.objects.all()
+        return JsonResponse({"tags": tags}, encoder=EateryTagEncoder)
     else:
         try:
             content = json.loads(request.body)
-            tag = Tag.objects.create(**content)
-            return JsonResponse(tag, encoder=TagEncoder, safe=False)
+            tag = EateryTag.objects.create(**content)
+            return JsonResponse(tag, encoder=EateryTagEncoder, safe=False)
         except IntegrityError:
             response = JsonResponse(
                 {"message": "Could not create tag; this tag already exists."}

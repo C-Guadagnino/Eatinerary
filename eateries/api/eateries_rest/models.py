@@ -21,8 +21,8 @@ class Eatery(models.Model):
     average_rating = models.FloatField()
     # "$$"
     price = models.CharField(max_length=4, null=True, blank=True)
-    # should the tag attribute go in the Eatery model??? or eatery = ManyToManyField to Eatery model within Tag model???
-    tags = models.ManyToManyField("Tag", related_name="tags")
+    # should the tag attribute go in the Eatery model??? or eatery = ManyToManyField to Eatery model within EateryTag model???
+    tags = models.ManyToManyField("EateryTag", related_name="tags")
     categories = models.ManyToManyField("EateryCategory", related_name="categories")
     # open_hours has a foreign key to eatery and will be accessible on requests
     # eatery_image has a foreign key to eatery and will be accessible on requests
@@ -81,7 +81,7 @@ class YelpResult(models.Model):
         )
 
 
-class Tag(models.Model):
+class EateryTag(models.Model):
     tag_name = models.CharField(max_length=40, unique=True)
     # eatery = models.ManyToManyField("Eatery", related_name="tags")
 
