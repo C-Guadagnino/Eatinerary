@@ -18,6 +18,8 @@ function SignUp(props) {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [isFoodie, setIsFoodie] = useState("");
+  const [isOwner, setIsOwner] = useState("");
 
   if (token) {
     return <Navigate to="/" />;
@@ -25,8 +27,24 @@ function SignUp(props) {
   return (
     <CardWrapper>
       <CardHeader>
-        <CardHeading>Sign up</CardHeading>
+        <CardHeading>Welcome to Eatinerary!</CardHeading>
       </CardHeader>
+
+      <CardBody>
+        <CardFieldset>
+          <CardBody> Foodie 
+          <CardInput onChange={e => setIsFoodie(e.target.value)} value={isFoodie} placeholder="Foodie?" type="checkbox" required />
+          </CardBody>        
+        </CardFieldset>
+      </CardBody>
+      <CardBody>
+        <CardFieldset>
+          <CardBody> Owner 
+          <CardInput onChange={e => setIsOwner(e.target.value)} value={isOwner} placeholder="Foodie?" type="checkbox" required />
+          </CardBody>        
+        </CardFieldset>
+      </CardBody>
+
       <CardBody>
         <CardFieldset>
           <CardInput onChange={e => setUsername(e.target.value)} value={username} placeholder="Username" type="text" required />
@@ -46,11 +64,11 @@ function SignUp(props) {
         </CardFieldset>
 
         <CardFieldset>
-          <CardButton onClick={() => signup(username, email, phone, password)} type="button">Create account</CardButton>
+          <CardButton onClick={() => signup(username, email, phone, password)} type="button">Become A Member</CardButton>
         </CardFieldset>
         <CardFieldset>
           <NavLink to="/login">
-            <CardLink>I already have an account</CardLink>
+            <CardLink>Sign in Here</CardLink>
           </NavLink>
         </CardFieldset>
       </CardBody>

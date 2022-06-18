@@ -28,16 +28,6 @@ function Login(props) {
               <CardHeading>Sign in</CardHeading>
             </CardHeader>
 
-            <CardFieldset>
-                <CardInput
-                  onChange={e => setPassword(e.target.value)}
-                  value={password}
-                  placeholder='Password'
-                  type='password'
-                  required
-                />
-                <CardIcon className='fa fa-eye' eye small />
-              </CardFieldset>
             <CardBody>
               <CardFieldset>
                 <CardInput
