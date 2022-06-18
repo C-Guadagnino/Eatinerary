@@ -3,12 +3,14 @@ from django.urls import NoReverseMatch
 from django.db.models import QuerySet
 from datetime import datetime, time
 
+
 class TimeEncoder(JSONEncoder):
     def default(self, o):
         if isinstance(o, time):
             return o.isoformat()
         else:
             return super().default(o)
+
 
 class DateEncoder(JSONEncoder):
     def default(self, o):

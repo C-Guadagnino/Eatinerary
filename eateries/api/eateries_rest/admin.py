@@ -5,7 +5,7 @@ from .models import (
     EateryLocation,
     EateryOpenHours,
     EateryImage,
-    Tag,
+    EateryTag,
     YelpCategorySearchTerm,
     YelpLocationSearchTerm,
     YelpResult,
@@ -37,8 +37,8 @@ class EateryImageAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
+@admin.register(EateryTag)
+class EateryTagAdmin(admin.ModelAdmin):
     pass
 
 
