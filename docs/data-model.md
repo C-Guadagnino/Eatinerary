@@ -117,6 +117,16 @@ https://www.yelp.com/developers/documentation/v3/get_started
 | image_url       | media/url? should we require picture_url, or allow Foodie to upload image directly? (Need to look into this, and implications of user experience vs resources taken up for loading app when existing number of images in app increase dramatically)     | yes    | no       |
 
 
+## SpecialDate (one-to-many relationship between foodie and specialdate)
+| Name            | Type    | Unique | Optional |
+|-----------------|---------|--------|----------|
+| special_date    | date    | no     | no       |
+| occasion        | str     | no     | yes      |
+| has_passed      | bool    | no     | no       |
+| repeats         | bool    | no     | no       |
+| frequency       | str     | no     | yes      |
+| foodie          | For.Key | no     | no       |
+
 
 ## Ad_slot (for each continuous time slot)
 | Name            | Type    | Unique | Optional |
