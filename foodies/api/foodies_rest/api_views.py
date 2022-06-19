@@ -6,27 +6,34 @@ from django.http import JsonResponse
 
 # from django.shortcuts import render
 from .encoders import (
-    EateryTagVOEncoder,
-    EateryCategoryVOEncoder,
-    EateryImageVOEncoder,
-    EateryOpenHoursVOEncoder,
     FoodieEncoder,
     EateryVOEncoder,
+    EateryCategoryVOEncoder,
+    EateryTagVOEncoder,
+    EateryOpenHoursVOEncoder,
+    EateryImageVOEncoder,
     SkeweredEateryEncoder,
     ReviewEncoder,
     ReviewImageEncoder,
 )
 from .models import (
-    EateryTagVO,
-    EateryCategoryVO,
-    EateryImageVO,
-    EateryOpenHoursVO,
     Foodie,
     EateryVO,
+    EateryCategoryVO,
+    EateryTagVO,
+    EateryOpenHoursVO,
+    EateryImageVO,
     SkeweredEatery,
     Review,
     ReviewImage,
 )
+
+# Will only let this view function run if there's a JWT
+# in the 'Authorization' header
+@auth.jwt_login_required
+# @require_http_methods(["GET", "POST"])
+def get_foodie_skewers(request):
+    return JsonResponse({"received": request.payload})
 
 
 # List all foodies, create a foodie
@@ -46,14 +53,6 @@ def api_foodies(request):
             encoder=FoodieEncoder,
             safe=False,
         )
-
-
-# Will only let this view function run if there's a JWT
-# in the 'Authorization' header
-@auth.jwt_login_required
-# @require_http_methods(["GET", "POST"])
-def get_foodie_skewers(request):
-    return JsonResponse({"received": request.payload})
 
 
 # List all EateryVOs
@@ -82,28 +81,6 @@ def api_eatery_vo(request, eatery_entity_id):
             return JsonResponse(eatery_vo_obj, encoder=EateryVOEncoder, safe=False)
         except ObjectDoesNotExist:
             return JsonResponse({"message": "Does not exist"}, status=404)
-
-
-# Get all EateryTagsVO
-@require_http_methods(["GET"])
-def api_tags_vo(request):
-    if request.method == "GET":
-        tags = EateryTagVO.objects.all()
-        return JsonResponse({"tags": tags}, encoder=EateryTagVOEncoder)
-
-
-# Get details of an EateryTagVO
-@require_http_methods(["GET"])
-def api_tag_vo(request, tag_name):
-    if request.method == "GET":
-        try:
-            tag = EateryTagVO.objects.get(tag_name=tag_name)
-            return JsonResponse(tag, encoder=EateryTagVOEncoder, safe=False)
-        except ObjectDoesNotExist:
-            return JsonResponse(
-                {"message": "Does not exist"},
-                status=404,
-            )
 
 
 # Get all EateryCategoryVOs
@@ -138,32 +115,21 @@ def api_category_vo(request, alias):
             )
 
 
-# Get all EateryImageVOs
+# Get all EateryTagsVO
 @require_http_methods(["GET"])
-def api_eatery_images_vo(request):
+def api_tags_vo(request):
     if request.method == "GET":
-        try:
-            eatery_images = EateryImageVO.objects.all()
-            return JsonResponse(
-                {"eatery_images": eatery_images},
-                encoder=EateryImageVOEncoder,
-                safe=False,
-            )
-        except ObjectDoesNotExist:
-            return JsonResponse(
-                {"message": "Does not exist"},
-                status=404,
-            )
+        tags = EateryTagVO.objects.all()
+        return JsonResponse({"tags": tags}, encoder=EateryTagVOEncoder)
 
 
-# Get specific EateryImageVO
+# Get details of an EateryTagVO
 @require_http_methods(["GET"])
-def api_eatery_image_vo(request, eatery_image_entity_id):
+def api_tag_vo(request, tag_name):
     if request.method == "GET":
         try:
-            full_import_href = "/api/eateryimages/" + str(eatery_image_entity_id) + "/"
-            eatery_image = EateryImageVO.objects.get(import_href=full_import_href)
-            return JsonResponse(eatery_image, encoder=EateryImageVOEncoder, safe=False)
+            tag = EateryTagVO.objects.get(tag_name=tag_name)
+            return JsonResponse(tag, encoder=EateryTagVOEncoder, safe=False)
         except ObjectDoesNotExist:
             return JsonResponse(
                 {"message": "Does not exist"},
@@ -201,6 +167,39 @@ def api_eatery_openhours_singular_vo(request, eatery_openhours_entity_id):
             return JsonResponse(
                 eatery_openhours_singular, encoder=EateryOpenHoursVOEncoder, safe=False
             )
+        except ObjectDoesNotExist:
+            return JsonResponse(
+                {"message": "Does not exist"},
+                status=404,
+            )
+
+
+# Get all EateryImageVOs
+@require_http_methods(["GET"])
+def api_eatery_images_vo(request):
+    if request.method == "GET":
+        try:
+            eatery_images = EateryImageVO.objects.all()
+            return JsonResponse(
+                {"eatery_images": eatery_images},
+                encoder=EateryImageVOEncoder,
+                safe=False,
+            )
+        except ObjectDoesNotExist:
+            return JsonResponse(
+                {"message": "Does not exist"},
+                status=404,
+            )
+
+
+# Get specific EateryImageVO
+@require_http_methods(["GET"])
+def api_eatery_image_vo(request, eatery_image_entity_id):
+    if request.method == "GET":
+        try:
+            full_import_href = "/api/eateryimages/" + str(eatery_image_entity_id) + "/"
+            eatery_image = EateryImageVO.objects.get(import_href=full_import_href)
+            return JsonResponse(eatery_image, encoder=EateryImageVOEncoder, safe=False)
         except ObjectDoesNotExist:
             return JsonResponse(
                 {"message": "Does not exist"},
@@ -297,9 +296,14 @@ def api_skewered_eatery(request, pk):
 
 # List all foodie reviews, create review
 @require_http_methods(["GET", "POST"])
-def api_reviews(request):
+def api_reviews(request, eatery_entity_id=None):
     if request.method == "GET":
-        reviews = Review.objects.all()
+        if eatery_entity_id == None:
+            reviews = Review.objects.all()
+        else:
+            full_import_href = "/api/eateries/" + str(eatery_entity_id) + "/"
+            eateryvo_obj = EateryVO.objects.get(import_href=full_import_href)
+            reviews = Review.objects.filter(eatery_vo=eateryvo_obj)
         return JsonResponse({"reviews": reviews}, encoder=ReviewEncoder, safe=False)
 
     else:
@@ -397,9 +401,9 @@ def api_review_images(request):
 def api_review_image(request, pk):
     if request.method == "GET":
         try:
-            review = ReviewImage.objects.get(id=pk)
+            review_image = ReviewImage.objects.get(id=pk)
             return JsonResponse(
-                {"review": review}, encoder=ReviewImageEncoder, safe=False
+                {"review_image": review_image}, encoder=ReviewImageEncoder, safe=False
             )
         except ObjectDoesNotExist:
             return JsonResponse(
