@@ -1,19 +1,30 @@
 import styled, { css } from "styled-components";
 
+
+export const ImageWrapper = styled.image`
+
+display: flex;
+max-height: 500px;
+`;
+
+
 export const CardWrapper = styled.div`
   overflow: hidden;
   padding: 0 0 32px;
   margin: 48px auto 0;
-  width: 300px;
+  width: 500px;
+  height: 300px
   font-family: Quicksand, arial, sans-serif;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.05), 0 0px 40px rgba(0, 0, 0, 0.08);
   border-radius: 5px;
-  background-color: steelblue;
+  background-color: transparent;
+  text-align: center;
 `;
 
 export const CardHeader = styled.header`
-  padding-top: 32px;
-  padding-bottom: 32px;
+  text-align: center;
+  padding-top: 12px;
+  padding-bottom: 12px;
 `;
 
 export const CardHeading = styled.h1`
