@@ -387,7 +387,7 @@ def api_locations(request):
 @require_http_methods(["GET"])
 def api_location(request, pk):
     if request.method == "GET":
-        location = EateryLocation.objects.get(pk=pk)
+        location = EateryLocation.objects.get(id=pk)
         print("location IS:", location)
         return JsonResponse(location, encoder=EateryLocationEncoder, safe=False)
 

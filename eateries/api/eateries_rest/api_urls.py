@@ -26,7 +26,7 @@ from .api_views import (
 urlpatterns = [
     path("eateries/", api_eateries, name="api_eateries"),
     path(
-        "eateries/<str:location>/<str:category>/",
+        "eateries/yelp/<str:location>/<str:category>/",
         api_eateries_given_category_and_location,
         name="api_eateries_given_category_and_location",
     ),
