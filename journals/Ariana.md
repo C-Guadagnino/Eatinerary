@@ -10,8 +10,9 @@
 * Today, I:
     * Update SkeweredEateryEncoder and ReviewEncoder in Foodies MS
     * Write new models for SpecialDate is Foodies MS
-    * Updated api_urls.py for Foodies by making the api endpoints consistent with each other
+    * Updated api_urls.py for Foodies MS by making the api endpoints consistent with each other
     * Commented out some code that I don't think we'll need (code that was used to test and we never cleaned up -- commented out for now. If nothing breaks, we'll safely remove them)
+    * Updated api_urls.py for Eateries MS by making the api endpoints consistent with each other, as well as removing references to yelp as much as possible
 * design conversation: decided to not have Google calendar integration for the Foodies side since we scratched the entire idea of letting the foodie book reservations. However, since we still want the Foodie to be able to save special dates, we'll handle that through a separate form in our app.
 
 

@@ -244,7 +244,7 @@ def api_eateries_given_category_and_location(request, location, category="food")
 
 
 @require_http_methods(["GET"])
-def api_yelp_location_search_terms(request):
+def api_location_search_terms(request):
     if request.method == "GET":
         location_search_terms = YelpLocationSearchTerm.objects.all()
         return JsonResponse(
@@ -254,7 +254,7 @@ def api_yelp_location_search_terms(request):
 
 
 @require_http_methods(["GET"])
-def api_yelp_category_search_terms(request):
+def api_category_search_terms(request):
     if request.method == "GET":
         category_search_terms = YelpCategorySearchTerm.objects.all()
         return JsonResponse(
@@ -270,18 +270,18 @@ def api_yelp_results(request):
         return JsonResponse({"yelp_results": yelp_results}, encoder=YelpResultEncoder)
 
 
-@require_http_methods(["GET"])
-def api_get_yelp_with_category_and_location(request, location, category):
-    if request.method == "GET":
-        restaurants = get_eateries_from_yelp(location, category)
-        return JsonResponse({"restaurants": restaurants})
+# @require_http_methods(["GET"])
+# def api_get_yelp_with_category_and_location(request, location, category):
+#     if request.method == "GET":
+#         restaurants = get_eateries_from_yelp(location, category)
+#         return JsonResponse({"restaurants": restaurants})
 
 
-@require_http_methods(["GET"])
-def api_get_yelp_with_location(request, location):
-    if request.method == "GET":
-        restaurants = get_restaurants(location)
-        return JsonResponse({"restaurants": restaurants})
+# @require_http_methods(["GET"])
+# def api_get_yelp_with_location(request, location):
+#     if request.method == "GET":
+#         restaurants = get_restaurants(location)
+#         return JsonResponse({"restaurants": restaurants})
 
 
 # WAS USED TO TEST SMALLER PORTION OF CODE THAT GOES IN THE YELP INTEGRATION FUNCTION
