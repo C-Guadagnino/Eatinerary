@@ -18,6 +18,8 @@ from .api_views import (
     api_review,
     api_review_images,
     api_review_image,
+    api_special_dates,
+    api_special_date,
 )
 
 urlpatterns = [
@@ -75,4 +77,11 @@ urlpatterns = [
         api_review_image,
         name="api_review_image",
     ),
+    path("foodies/specialdates/", api_special_dates, name="api_special_dates"),
+    path(
+        "foodies/<int:foodie_id>/specialdates/",
+        api_special_dates,
+        name="api_special_dates_for_foodie",
+    ),
+    path("foodies/specialdates/<int:pk>/", api_special_date, name="api_special_date"),
 ]

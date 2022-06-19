@@ -15,6 +15,7 @@ from .encoders import (
     SkeweredEateryEncoder,
     ReviewEncoder,
     ReviewImageEncoder,
+    SpecialDateEncoder,
 )
 from .models import (
     Foodie,
@@ -26,6 +27,7 @@ from .models import (
     SkeweredEatery,
     Review,
     ReviewImage,
+    SpecialDate,
 )
 
 # Will only let this view function run if there's a JWT
@@ -268,20 +270,12 @@ def api_skewered_eatery(request, pk):
                 status=404,
             )
     elif request.method == "DELETE":
-        try:
-            skewered_eatery = SkeweredEatery.objects.filter(id=pk).update(
-                is_active=False
-            )
-            return JsonResponse(
-                skewered_eatery,
-                encoder=SkeweredEateryEncoder,
-                safe=False,
-            )
-        except ObjectDoesNotExist:
-            return JsonResponse(
-                {"message": "Does not exist"},
-                status=404,
-            )
+        skewered_eatery = SkeweredEatery.objects.filter(id=pk).update(is_active=False)
+        return JsonResponse(
+            skewered_eatery,
+            encoder=SkeweredEateryEncoder,
+            safe=False,
+        )
     else:
         try:
             content = json.loads(request.body)
@@ -344,19 +338,8 @@ def api_review(request, pk):
                 status=404,
             )
     elif request.method == "DELETE":
-        try:
-            foodie_review = Review.objects.get(id=pk)
-            foodie_review.delete()
-            return JsonResponse(
-                foodie_review,
-                encoder=ReviewEncoder,
-                safe=False,
-            )
-        except ObjectDoesNotExist:
-            return JsonResponse(
-                {"message": "Does not exist"},
-                status=404,
-            )
+        count, _ = Review.objects.filter(id=pk).delete()
+        return JsonResponse({"deleted": count > 0})
     else:
         try:
             content = json.loads(request.body)
@@ -367,7 +350,7 @@ def api_review(request, pk):
         # TO-DO: Figure out what kind of error this throws
         except:
             return JsonResponse(
-                {"message": "Cannot update skewered eatery"}, status=404
+                {"message": "Cannot update skewered eatery"}, status=400
             )
 
 
@@ -411,16 +394,67 @@ def api_review_image(request, pk):
                 status=404,
             )
     else:
+        count, _ = ReviewImage.objects.filter(id=pk).delete()
+        return JsonResponse({"deleted": count > 0})
+
+
+# List all foodie reviews, create review
+@require_http_methods(["GET", "POST"])
+def api_special_dates(request, foodie_id=None):
+    if request.method == "GET":
+        if foodie_id == None:
+            special_dates = SpecialDate.objects.all()
+        else:
+            foodie_obj = Foodie.objects.get(id=foodie_id)
+            special_dates = SpecialDate.objects.filter(foodie=foodie_obj)
+        return JsonResponse(
+            {"special_dates": special_dates}, encoder=SpecialDateEncoder, safe=False
+        )
+
+    else:
         try:
-            review_image = ReviewImage.objects.get(id=pk)
-            review_image.delete()
+            content = json.loads(request.body)
+
+            foodie_id = content["foodie"]
+            foodie_obj = Foodie.objects.get(id=foodie_id)
+            content["foodie"] = foodie_obj
+
+            special_date_obj = SpecialDate.objects.create(**content)
+
             return JsonResponse(
-                review_image,
-                encoder=ReviewImageEncoder,
-                safe=False,
+                special_date_obj, encoder=SpecialDateEncoder, safe=False
+            )
+        except:
+            return JsonResponse(
+                {"message": "Could not create the Special Date"},
+                status=400,
+            )
+
+
+# Get details of a specific review
+@require_http_methods(["GET", "DELETE", "PUT"])
+def api_special_date(request, pk):
+    if request.method == "GET":
+        try:
+            special_date = SpecialDate.objects.get(id=pk)
+            return JsonResponse(
+                {"special_date": special_date}, encoder=SpecialDateEncoder, safe=False
             )
         except ObjectDoesNotExist:
             return JsonResponse(
                 {"message": "Does not exist"},
                 status=404,
             )
+    elif request.method == "DELETE":
+        count, _ = SpecialDate.objects.filter(id=pk).delete()
+        return JsonResponse({"deleted": count > 0})
+    else:
+        try:
+            content = json.loads(request.body)
+
+            SpecialDate.objects.filter(id=pk).update(**content)
+            special_date = SpecialDate.objects.get(id=pk)
+            return JsonResponse(special_date, encoder=SpecialDateEncoder, safe=False)
+        # TO-DO: Figure out what kind of error this throws
+        except:
+            return JsonResponse({"message": "Cannot update special date"}, status=400)

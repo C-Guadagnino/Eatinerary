@@ -6,16 +6,17 @@
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
-## June 17, 2022
+## June 18, 2022
 * Today, I:
     * Update SkeweredEateryEncoder and ReviewEncoder in Foodies MS
     * Write new models for SpecialDate is Foodies MS
     * Updated api_urls.py for Foodies MS by making the api endpoints consistent with each other
     * Commented out some code that I don't think we'll need (code that was used to test and we never cleaned up -- commented out for now. If nothing breaks, we'll safely remove them)
     * Updated api_urls.py for Eateries MS by making the api endpoints consistent with each other, as well as removing references to yelp as much as possible
-* design conversation: decided to not have Google calendar integration for the Foodies side since we scratched the entire idea of letting the foodie book reservations. However, since we still want the Foodie to be able to save special dates, we'll handle that through a separate form in our app.
-
-
+    * Updated ModelEncoder to also inherit from DateEncoder in addition to DateTimeEncoder
+    * Updated the Foodies MS views so the DELETE method doesn't need to catch exceptions
+* design conversation: decided to not have Google calendar integration for the Foodies side since we scratched the entire idea of letting the foodie book reservations. However, since we still want the Foodie to be able to save special dates, we'll handle that through a separate form in our app -- new model called SpecialDate
+* I learned that the DateTimeEncoder can't be used to JSON serialize a Django DateTimeField, since what the DateTimeEncoder serializes is a datetime object. In order to serialize a date object (Django DateField), a separate DateEncoder is needed!
 
 ## June 17, 2022
 * Today, I:

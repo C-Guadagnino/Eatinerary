@@ -1,14 +1,15 @@
 from common.json import ModelEncoder
 from .models import (
-    EateryOpenHoursVO,
-    EateryTagVO,
+    EateryVO,
     EateryCategoryVO,
+    EateryTagVO,
+    EateryOpenHoursVO,
     EateryImageVO,
     Foodie,
-    EateryVO,
-    ReviewImage,
     SkeweredEatery,
     Review,
+    ReviewImage,
+    SpecialDate,
 )
 
 
@@ -17,9 +18,9 @@ class EateryCategoryVOEncoder(ModelEncoder):
     properties = ["import_href", "alias", "title"]
 
 
-class EateryImageVOEncoder(ModelEncoder):
-    model = EateryImageVO
-    properties = ["import_href", "image_url"]
+class EateryTagVOEncoder(ModelEncoder):
+    model = EateryTagVO
+    properties = ["import_href", "tag_name"]
 
 
 class EateryOpenHoursVOEncoder(ModelEncoder):
@@ -27,9 +28,9 @@ class EateryOpenHoursVOEncoder(ModelEncoder):
     properties = ["import_href", "weekday", "start_time", "end_time"]
 
 
-class EateryTagVOEncoder(ModelEncoder):
-    model = EateryTagVO
-    properties = ["import_href", "tag_name"]
+class EateryImageVOEncoder(ModelEncoder):
+    model = EateryImageVO
+    properties = ["import_href", "image_url"]
 
 
 class SkeweredEateryEncoder(ModelEncoder):
@@ -90,10 +91,24 @@ class FoodieEncoder(ModelEncoder):
         "first_name",
         "email",
         "phone",
-        "google_calendar",
+        # "google_calendar",
         "skewered_eateries",
     ]
     encoders = {"skewered_eateries": SkeweredEateryEncoder()}
+
+
+class SpecialDateEncoder(ModelEncoder):
+    model = SpecialDate
+    properties = [
+        "id",
+        "special_date",
+        "occasion",
+        "has_passed",
+        "repeats",
+        "frequency",
+        "foodie",
+    ]
+    encoders = {"foodie": FoodieEncoder()}
 
 
 class EateryVOEncoder(ModelEncoder):
