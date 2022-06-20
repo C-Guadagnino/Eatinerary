@@ -38,6 +38,7 @@ function SignUp(props) {
           </CardBody>        
         </CardFieldset>
       </CardBody>
+      
       <CardBody>
         <CardFieldset>
           <CardBody> Owner 
@@ -52,6 +53,11 @@ function SignUp(props) {
         </CardFieldset>
 
         <CardFieldset>
+          <CardInput onChange={e => setPassword(e.target.value)} value={password} placeholder="Password" type="password" required />
+          <CardIcon className="fa fa-eye" eye small />
+        </CardFieldset>
+
+        <CardFieldset>
           <CardInput onChange={e => setEmail(e.target.value)} value={email} placeholder="Email" type="email" required />
         </CardFieldset>
 
@@ -60,12 +66,7 @@ function SignUp(props) {
         </CardFieldset>
 
         <CardFieldset>
-          <CardInput onChange={e => setPassword(e.target.value)} value={password} placeholder="Password" type="password" required />
-          <CardIcon className="fa fa-eye" eye small />
-        </CardFieldset>
-
-        <CardFieldset>
-          <CardButton onClick={() => signup(username, email, phone, password)} type="button">Become A Member</CardButton>
+          <CardButton onClick={() => signup(username, password, email, phone, )} type="button">Become A Member</CardButton>
         </CardFieldset>
         <CardFieldset>
           <NavLink to="/login">
