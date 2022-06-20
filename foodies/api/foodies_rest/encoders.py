@@ -61,9 +61,9 @@ class SkeweredEateryEncoder(ModelEncoder):
         "has_visited",
         "is_active",
         "notes",
-        "review",
+        #"review",
     ]
-    encoders = {"review": ReviewEncoder()}
+    #encoders = {"review": ReviewEncoder()}
 
     def get_extra_data(self, o):
         eatery_info = {

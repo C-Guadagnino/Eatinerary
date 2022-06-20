@@ -8,6 +8,8 @@ import SignUp from "./users/SignUp"
 import Logout from "./users/Logout"
 import HomePage from "./HomePage"
 import MySkeweredList from "./foodies/MySkeweredList"
+import MySkeweredHistory from "./foodies/MySkeweredHistory"
+import CreateReview from "./foodies/CreateReview"
 // import Footer from "./Footer"
 import './App.css';
 
@@ -28,7 +30,9 @@ function App() {
               element={<SignUp token={token} signup={signup} />}
             />
           </Route>
-              <Route path='skewered' element={<MySkeweredList />} />
+            <Route path='skewered' element={<MySkeweredList />} />
+            <Route path='history' element={<MySkeweredHistory />} />
+            <Route path='review' element={<CreateReview />} />
         </Routes>
       </div>
     </BrowserRouter>

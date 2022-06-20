@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './Foodies.css';
 
-class SkeweredList extends React.Component {
+class SkeweredHistory extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -32,7 +32,7 @@ class SkeweredList extends React.Component {
                         <div className="col-md-6" id="sideNav">
                             <ul className="list-group list-group-flush">
                                 <li className="list-group-item">
-                                    <Link to="/history">My Skewered History</Link>
+                                    <Link to="/skewered">My Skewered List</Link>
                                 </li>
                                 <li className="list-group-item">
                                     <Link to="/Reviews">Reviews</Link>
@@ -42,7 +42,7 @@ class SkeweredList extends React.Component {
                     </div>
 
                 <div className="col-md-6" id="mySkeweredList">
-                        <h1>My Skewered List</h1>
+                        <h1>My Skewered History</h1>
                             <table className="table table-striped">
                                 <thead>
                                     <tr>
@@ -55,14 +55,18 @@ class SkeweredList extends React.Component {
                                 </thead>
                                 <tbody>
                                     {this.state.skeweredEateries.map(skeweredEatery => {
-                                        return (
-                                            <tr key={skeweredEatery.id}>
-                                                <td>{skeweredEatery.eatery.eatery_name}</td>
-                                                <td>{skeweredEatery.eatery.average_rating}</td>
-                                                <td>{skeweredEatery.eatery.price}</td>
-                                                <td>{skeweredEatery.notes}</td>
-                                            </tr>
-                                        )
+
+                                        if(skeweredEatery.has_visited === true){
+                                    
+                                            return (
+                                                <tr key={skeweredEatery.id}>
+                                                    <td >{skeweredEatery.eatery.eatery_name}</td>
+                                                    <td >{skeweredEatery.eatery.average_rating}</td>
+                                                    <td >{skeweredEatery.eatery.price}</td>
+                                                    <td >{skeweredEatery.notes}</td>
+                                                </tr>
+                                            )
+                                        }
                                     })}
                                 </tbody>
                             </table>
@@ -73,6 +77,4 @@ class SkeweredList extends React.Component {
     }
 }
 
-export default SkeweredList;
-
-
+export default SkeweredHistory;

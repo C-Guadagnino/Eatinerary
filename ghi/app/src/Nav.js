@@ -8,6 +8,8 @@ import { useState, useEffect } from "react";
 export const loggedinLinks = [
   // foodies
   { name: "Skewered", path:"/skewered"},
+  { name: "History", path: "/history"},
+  { name: "Review", path: "/review"},
   // owners
   // eateries
   { name: "Logout", path: "/logout"},
