@@ -18,7 +18,7 @@ function Login(props) {
 
 
     if (token) {
-        return <Navigate to='foodies/reviews' />;
+        return <Navigate to='/' />;
     }
 
     return (
@@ -52,7 +52,7 @@ function Login(props) {
               
               <CardFieldset>
                 <CardButton onClick={() => login(username, password)} type='button'>
-                  Sign Up
+                  Login
                 </CardButton>
               </CardFieldset>
             </CardBody>

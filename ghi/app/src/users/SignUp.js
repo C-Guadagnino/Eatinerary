@@ -14,12 +14,12 @@ import {
 
 function SignUp(props) {
   const {token, signup} = props;
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
   const [isOwner, setIsOwner] = useState(false);
   const [isFoodie, setIsFoodie] = useState(false);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
   if (token) {
@@ -34,14 +34,14 @@ function SignUp(props) {
       <CardBody>
         <CardFieldset>
           <CardBody> Foodie 
-          <CardInput onChange={e => setIsFoodie(e.target.value)} value={isFoodie} placeholder="Foodie?" type="checkbox" required />
+          <CardInput onChange={e => setIsFoodie(e.target.checked)} checked={isFoodie} placeholder="Foodie?" type="checkbox" />
           </CardBody>        
         </CardFieldset>
       </CardBody>
       <CardBody>
         <CardFieldset>
           <CardBody> Owner 
-          <CardInput onChange={e => setIsOwner(e.target.value)} value={isOwner} placeholder="Foodie?" type="checkbox" required />
+          <CardInput onChange={e => setIsOwner(e.target.checked)} checked={isOwner} placeholder="Owner?" type="checkbox" />
           </CardBody>        
         </CardFieldset>
       </CardBody>
