@@ -50,21 +50,19 @@ def get_eatery_entity_data():
 
         # POLLING EATERYTAG MODEL
         for tag in eatery["tags"]:
-            EateryTagVO.objects.update_or_create(
+            tagvo_obj, created = EateryTagVO.objects.update_or_create(
                 import_href=tag["href"],
-                defaults={"tag_name": tag["tag_name"], "eatery_vo": eateryvo_obj},
+                defaults={"tag_name": tag["tag_name"]},
             )
+            eateryvo_obj.tagsvo.add(tagvo_obj)
 
         # POLLING EATERYCATEGORY MODEL
         for category in eatery["categories"]:
-            EateryCategoryVO.objects.update_or_create(
+            categoryvo_obj, created = EateryCategoryVO.objects.update_or_create(
                 import_href=category["href"],
-                defaults={
-                    "alias": category["alias"],
-                    "title": category["title"],
-                    "eatery_vo": eateryvo_obj,
-                },
+                defaults={"alias": category["alias"], "title": category["title"]},
             )
+            eateryvo_obj.categoriesvo.add(categoryvo_obj)
 
         # POLLING EATERYOPENHOURS MODEL
         for openhours_one in eatery["open_hours"]:
@@ -96,7 +94,7 @@ def poll():
             get_eatery_entity_data()
         except Exception as e:
             print(e, file=sys.stderr)
-        time.sleep(60)
+        time.sleep(30)
 
 
 if __name__ == "__main__":

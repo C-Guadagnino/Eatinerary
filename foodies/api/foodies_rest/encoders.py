@@ -1,53 +1,87 @@
 from common.json import ModelEncoder
 from .models import (
-    EateryTagVO,
+    EateryVO,
     EateryCategoryVO,
+    EateryTagVO,
+    EateryOpenHoursVO,
     EateryImageVO,
     Foodie,
-    EateryVO,
-    ReviewImage,
     SkeweredEatery,
     Review,
+    ReviewImage,
+    SpecialDate,
 )
-
-
-class EateryTagVOEncoder(ModelEncoder):
-    model = EateryTagVO
-    properties = ["import_href", "tag_name"]
-
-    def get_extra_data(self, o):
-        return {
-            "eatery": {
-                "eatery_name": o.eatery.eatery_name,
-                "eatery_import_href": o.eatery.import_href,
-            }
-        }
 
 
 class EateryCategoryVOEncoder(ModelEncoder):
     model = EateryCategoryVO
     properties = ["import_href", "alias", "title"]
 
-    def get_extra_data(self, o):
-        return {
-            "eatery": {
-                "eatery_name": o.eatery.eatery_name,
-                "eatery_import_href": o.eatery.import_href,
-            }
-        }
+
+class EateryTagVOEncoder(ModelEncoder):
+    model = EateryTagVO
+    properties = ["import_href", "tag_name"]
+
+
+class EateryOpenHoursVOEncoder(ModelEncoder):
+    model = EateryOpenHoursVO
+    properties = ["import_href", "weekday", "start_time", "end_time"]
 
 
 class EateryImageVOEncoder(ModelEncoder):
     model = EateryImageVO
     properties = ["import_href", "image_url"]
 
+
+class SkeweredEateryEncoder(ModelEncoder):
+    model = SkeweredEatery
+    properties = [
+        "id",
+        "created_DateTime",
+        "updated_DateTime",
+        "has_visited",
+        "is_active",
+        "notes",
+        # "review",
+    ]
+    # encoders = {"review": ReviewEncoder()}
+
     def get_extra_data(self, o):
-        return {
-            "eatery": {
-                "eatery_name": o.eatery_vo.eatery_name,
-                "eatery_import_href": o.eatery_vo.import_href,
-            }
+        eatery_info = {
+            "eatery_name": o.eatery_vo.eatery_name,
+            "eatery_import_href": o.eatery_vo.import_href,
         }
+        foodie_info = {
+            "foodie_username": o.foodie.username,
+            "foodie_firstname": o.foodie.first_name,
+            "foodie_lastname": o.foodie.last_name,
+        }
+        return {
+            "eatery": eatery_info,
+            "foodie": foodie_info,
+        }
+
+
+class ReviewImageEncoder(ModelEncoder):
+    model = ReviewImage
+    properties = ["id", "image_url"]
+
+
+class ReviewEncoder(ModelEncoder):
+    model = Review
+    properties = [
+        "id",
+        "title",
+        "rating",
+        "created_DateTime",
+        "description",
+        "review_images",
+        "skewered_eatery",
+    ]
+    encoders = {
+        "review_images": ReviewImageEncoder(),
+        "skewered_eatery": SkeweredEateryEncoder(),
+    }
 
 
 class FoodieEncoder(ModelEncoder):
@@ -57,8 +91,24 @@ class FoodieEncoder(ModelEncoder):
         "first_name",
         "email",
         "phone",
-        "google_calendar",
+        # "google_calendar",
+        "skewered_eateries",
     ]
+    encoders = {"skewered_eateries": SkeweredEateryEncoder()}
+
+
+class SpecialDateEncoder(ModelEncoder):
+    model = SpecialDate
+    properties = [
+        "id",
+        "special_date",
+        "occasion",
+        "has_passed",
+        "repeats",
+        "frequency",
+        "foodie",
+    ]
+    encoders = {"foodie": FoodieEncoder()}
 
 
 class EateryVOEncoder(ModelEncoder):
@@ -83,49 +133,18 @@ class EateryVOEncoder(ModelEncoder):
         "location_country",
         "latitude",
         "longitude",
-    ]
-
-
-class SkeweredEateryEncoder(ModelEncoder):
-    model = SkeweredEatery
-    properties = [
-        "id",
-        "eatery_vo",
-        "foodie",
-        "created_DateTime",
-        "updated_DateTime",
-        "has_visited",
-        "is_active",
-        "notes",
+        "tagsvo",
+        "categoriesvo",
+        "eateryimagesvo",
+        "allopenhoursvo",
+        "reviews",
+        "skewered_eateries",
     ]
     encoders = {
-        "eatery_vo": EateryVOEncoder(),
-        "foodie": FoodieEncoder(),
-    }
-
-
-class ReviewImageEncoder(ModelEncoder):
-    model = ReviewImage
-    properties = ["id", "image_url"]
-
-    def get_extra_data(self, o):
-        return {"review": {"title": o.review.title, "review_id": o.review.id}}
-
-
-class ReviewEncoder(ModelEncoder):
-    model = Review
-    properties = [
-        "id",
-        "title",
-        "rating",
-        "created_DateTime",
-        "description",
-        "eatery_vo",
-        "skewered_eatery",
-        # "review_images"
-    ]
-    encoders = {
-        "eatery_vo": EateryVOEncoder(),
-        "skewered_eatery": SkeweredEateryEncoder(),
-        # "review_images": ReviewImageEncoder()
+        "tagsvo": EateryTagVOEncoder(),
+        "categoriesvo": EateryCategoryVOEncoder(),
+        "eateryimagesvo": EateryImageVOEncoder(),
+        "allopenhoursvo": EateryOpenHoursVOEncoder(),
+        "reviews": ReviewEncoder(),
+        "skewered_eateries": SkeweredEateryEncoder(),
     }

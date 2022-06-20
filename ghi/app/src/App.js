@@ -7,7 +7,7 @@ import Login from "./users/Login"
 import SignUp from "./users/SignUp"
 import Logout from "./users/Logout"
 import HomePage from "./HomePage"
-import Footer from "./Footer"
+// import Footer from "./Footer"
 import './App.css';
 
 function App() {

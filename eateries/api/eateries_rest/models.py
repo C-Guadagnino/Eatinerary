@@ -21,8 +21,8 @@ class Eatery(models.Model):
     average_rating = models.FloatField()
     # "$$"
     price = models.CharField(max_length=4, null=True, blank=True)
-    # should the tag attribute go in the Eatery model??? or eatery = ManyToManyField to Eatery model within Tag model???
-    tags = models.ManyToManyField("Tag", related_name="tags")
+    # should the tag attribute go in the Eatery model??? or eatery = ManyToManyField to Eatery model within EateryTag model???
+    tags = models.ManyToManyField("EateryTag", related_name="tags")
     categories = models.ManyToManyField("EateryCategory", related_name="categories")
     # open_hours has a foreign key to eatery and will be accessible on requests
     # eatery_image has a foreign key to eatery and will be accessible on requests
@@ -32,6 +32,25 @@ class Eatery(models.Model):
 
     def get_api_url(self):
         return reverse("api_eatery", kwargs={"pk": self.pk})
+
+    def __str__(self):
+        categories_str = ""
+
+        for i, category in enumerate(self.categories.all()):
+            if i == 0:
+                categories_str = categories_str + category.alias
+            else:
+                categories_str = categories_str + ", " + category.alias
+
+        return (
+            self.eatery_name
+            + " for <"
+            + categories_str
+            + "> in "
+            + str(self.location.city)
+            + ", "
+            + str(self.location.state)
+        )
 
 
 class YelpCategorySearchTerm(models.Model):
@@ -62,7 +81,7 @@ class YelpResult(models.Model):
         )
 
 
-class Tag(models.Model):
+class EateryTag(models.Model):
     tag_name = models.CharField(max_length=40, unique=True)
     # eatery = models.ManyToManyField("Eatery", related_name="tags")
 
@@ -70,7 +89,7 @@ class Tag(models.Model):
         return self.tag_name
 
     def get_api_url(self):
-        return reverse("api_tag", kwargs={"pk": self.pk})
+        return reverse("api_tag", kwargs={"tag_name": self.tag_name})
 
 
 class EateryCategory(models.Model):
