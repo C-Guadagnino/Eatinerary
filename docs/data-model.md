@@ -1,6 +1,6 @@
 # Data models
 
-![Eatinerary_BoundedContexts_220617](Eatinerary_BoundedContexts_220617.png)
+![Eatinerary_BoundedContexts_220618](Eatinerary_BoundedContexts_220618.png)
 
 ## User (Custom User model based on Django's built-in user model?) ???
 | Name            | Type    | Unique | Optional |
@@ -116,6 +116,16 @@ https://www.yelp.com/developers/documentation/v3/get_started
 | review          | For.Key | no     | yes      |
 | image_url       | media/url? should we require picture_url, or allow Foodie to upload image directly? (Need to look into this, and implications of user experience vs resources taken up for loading app when existing number of images in app increase dramatically)     | yes    | no       |
 
+
+## SpecialDate (one-to-many relationship between foodie and specialdate)
+| Name            | Type    | Unique | Optional |
+|-----------------|---------|--------|----------|
+| special_date    | date    | no     | no       |
+| occasion        | str     | no     | yes      |
+| has_passed      | bool    | no     | no       |
+| repeats         | bool    | no     | no       |
+| frequency       | str     | no     | yes      |
+| foodie          | For.Key | no     | no       |
 
 
 ## Ad_slot (for each continuous time slot)

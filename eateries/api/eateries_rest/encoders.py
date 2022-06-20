@@ -61,7 +61,7 @@ class YelpResultEncoder(ModelEncoder):
         }
 
 
-class OpenHoursEncoder(ModelEncoder):
+class EateryOpenHoursEncoder(ModelEncoder):
     model = EateryOpenHours
     properties = ["id", "start_time", "end_time"]
 
@@ -107,6 +107,6 @@ class EateryEncoder(ModelEncoder):
         "location": EateryLocationEncoder(),
         "categories": EateryCategoryEncoder(),
         "tags": EateryTagEncoder(),
-        "open_hours": OpenHoursEncoder(),
+        "open_hours": EateryOpenHoursEncoder(),
         "eatery_images": EateryImageEncoder(),
     }
