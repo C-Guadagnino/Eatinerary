@@ -28,7 +28,7 @@ function SignUp(props) {
     return <Navigate to="/" />;
   }
   return (
-    <div className="container my-5">
+    <div className="container mt-5 py-5">
       <CardWrapper>
         <CardHeader>
           <CardHeading>Welcome to Eatinerary!</CardHeading>
