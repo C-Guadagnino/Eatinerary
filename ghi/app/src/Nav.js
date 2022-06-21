@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 import "./Nav.css";
 import { useToken } from "./authApi";
 import { useState, useEffect } from "react";
+import App from "./App";
+import skewerednobg from "./images/skewered.png"
 
 
 export const loggedinLinks = [
@@ -28,10 +30,10 @@ function Nav(props) {
       <nav className='navbar navbar-expand-md navbar-dark fixed-top bg-dark'>
         <div className='container-fluid'>
           <NavLink className='text-decoration-none' to='/'>
-            <h1 className='navbar-brand text-uppercase fs-2'>
-              {"Eatinerary"} 
+            <h2 className='navbar-brand text-uppercase fs-2'>
+              <img src={ skewerednobg } height="40" alt="uh-oh"/>
               {/* What this is doing is creating a link back using the Eatinerary Button */}
-            </h1>
+            </h2>
           </NavLink>
           <div className='collapse navbar-collapse' id='navbarCollapse'>
             <ul
@@ -44,7 +46,7 @@ function Nav(props) {
                   </button>
                 </NavLink>
               ))}
-            </ul>
+            </ul> 
           </div>
         </div>
       </nav>
