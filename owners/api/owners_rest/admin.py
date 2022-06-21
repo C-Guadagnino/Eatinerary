@@ -1,10 +1,10 @@
 from django.contrib import admin
 
-from .models import EateryVO, EateryAdSlot, EateryTagVO  # , OwnerVO
+from .models import EateryVO, EateryAdSlot, EateryTagVO  , OwnerVO
 
-# @admin.register(OwnerVO)
-# class OwnerVOAdmin(admin.ModelAdmin):
-#     pass
+@admin.register(OwnerVO)
+class OwnerVOAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(EateryVO)

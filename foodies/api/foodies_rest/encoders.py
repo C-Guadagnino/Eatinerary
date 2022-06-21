@@ -5,7 +5,7 @@ from .models import (
     EateryTagVO,
     EateryOpenHoursVO,
     EateryImageVO,
-    Foodie,
+    FoodieVO,
     SkeweredEatery,
     Review,
     ReviewImage,
@@ -85,7 +85,7 @@ class ReviewEncoder(ModelEncoder):
 
 
 class FoodieEncoder(ModelEncoder):
-    model = Foodie
+    model = FoodieVO
     properties = [
         "username",
         "first_name",

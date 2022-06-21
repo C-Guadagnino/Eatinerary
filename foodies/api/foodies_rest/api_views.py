@@ -18,7 +18,7 @@ from .encoders import (
     SpecialDateEncoder,
 )
 from .models import (
-    Foodie,
+    FoodieVO,
     EateryVO,
     EateryCategoryVO,
     EateryTagVO,
@@ -42,16 +42,16 @@ def get_foodie_skewers(request):
 @require_http_methods(["GET", "POST"])
 def api_foodies(request):
     if request.method == "GET":
-        foodie = Foodie.objects.all()
+        foodie_vo = FoodieVO.objects.all()
         return JsonResponse(
             {"foodies": foodie},
             encoder=FoodieEncoder,
         )
     else:
         content = json.loads(request.body)
-        foodie = Foodie.objects.create(**content)
+        foodie_vo = FoodieVO.objects.create(**content)
         return JsonResponse(
-            foodie,
+            foodie_vo,
             encoder=FoodieEncoder,
             safe=False,
         )
@@ -235,7 +235,7 @@ def api_skewered_eateries(request):
             del content["eateryvo_import_href"]
 
             foodie_username = content["foodie"]
-            foodie_obj = Foodie.objects.get(username=foodie_username)
+            foodie_obj = FoodieVO.objects.get(username=foodie_username)
             content["foodie"] = foodie_obj
 
             content["is_active"] = True
@@ -400,7 +400,7 @@ def api_special_dates(request, foodie_id=None):
         if foodie_id == None:
             special_dates = SpecialDate.objects.all()
         else:
-            foodie_obj = Foodie.objects.get(id=foodie_id)
+            foodie_obj = FoodieVO.objects.get(id=foodie_id)
             special_dates = SpecialDate.objects.filter(foodie=foodie_obj)
         return JsonResponse(
             {"special_dates": special_dates}, encoder=SpecialDateEncoder, safe=False
@@ -411,7 +411,7 @@ def api_special_dates(request, foodie_id=None):
             content = json.loads(request.body)
 
             foodie_id = content["foodie"]
-            foodie_obj = Foodie.objects.get(id=foodie_id)
+            foodie_obj = FoodieVO.objects.get(id=foodie_id)
             content["foodie"] = foodie_obj
 
             special_date_obj = SpecialDate.objects.create(**content)

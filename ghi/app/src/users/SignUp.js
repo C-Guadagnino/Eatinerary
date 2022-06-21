@@ -15,6 +15,8 @@ import {
 function SignUp(props) {
   const {token, signup} = props;
   const [username, setUsername] = useState('');
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -33,6 +35,14 @@ function SignUp(props) {
         </CardFieldset>
 
         <CardFieldset>
+          <CardInput onChange={e => setFirstName(e.target.value)} value={first_name} placeholder="First Name" type="text" required />
+        </CardFieldset>
+
+        <CardFieldset>
+          <CardInput onChange={e => setLastName(e.target.value)} value={last_name} placeholder="Last Name" type="text" required />
+        </CardFieldset>
+
+        <CardFieldset>
           <CardInput onChange={e => setEmail(e.target.value)} value={email} placeholder="Email" type="email" required />
         </CardFieldset>
 
@@ -46,7 +56,7 @@ function SignUp(props) {
         </CardFieldset>
 
         <CardFieldset>
-          <CardButton onClick={() => signup(username, email, phone, password)} type="button">Create account</CardButton>
+          <CardButton onClick={() => signup(username, email, phone, password, first_name, last_name)} type="button">Create account</CardButton>
         </CardFieldset>
         <CardFieldset>
           <NavLink to="/login">

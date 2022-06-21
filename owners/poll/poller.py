@@ -15,7 +15,24 @@ from owners_rest.models import (
     EateryCategoryVO,
     EateryOpenHoursVO,
     EateryImageVO,
+    OwnerVO
 )
+
+def get_user_entity_data():
+    response = requests.get("http://users-api:8000/api/users/all/")
+    content = json.loads(response.content)
+    print("OWNER - USER CONTENT",content)
+    for user in content["users"]:
+        OwnerVO.objects.update_or_create(
+            import_href=user["href"],
+            defaults = {
+                "username": user["username"],
+                "email": user["email"],
+                "phone": user["phone"],
+                "first_name": user["first_name"],
+                "last_name": user["last_name"]
+            }
+        )
 
 
 def get_eatery_entity_data():
@@ -97,6 +114,11 @@ def poll():
         except Exception as e:
             print(e, file=sys.stderr)
         time.sleep(60)
+        try:
+            get_user_entity_data()
+        except Exception as e:
+            print(e, file=sys.stderr)
+        time.sleep(10)
 
 
 if __name__ == "__main__":
