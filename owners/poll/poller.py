@@ -19,7 +19,7 @@ from owners_rest.models import (
 )
 
 def get_user_entity_data():
-    response = requests.get("http://users-api:8000/api/users/all/")
+    response = requests.get(f"{os.environ['USERS_API']}/api/users/all/")
     content = json.loads(response.content)
     print("OWNER - USER CONTENT",content)
     for user in content["users"]:
@@ -36,7 +36,7 @@ def get_user_entity_data():
 
 
 def get_eatery_entity_data():
-    response = requests.get("http://eateries-api:8000/api/eateries/")
+    response = requests.get(f"{os.environ['EATERIES_API']}/api/eateries/")
     content = json.loads(response.content)
     # print("This is CONTENT;", content)
     for eatery in content["eateries"]:

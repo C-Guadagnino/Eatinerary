@@ -70,6 +70,7 @@ services:
       - database
       - foodies-api
     environment:
+      EATERIES_API: http://eateries-api:8000
       USERS_API: http://users-api:8000
       DATABASE_URL: postgres://foodies:password@database:5432/foodies
       WAIT_HOSTS: database:5432,foodies-api:8000
@@ -135,6 +136,8 @@ services:
       - database
       - owners-api
     environment:
+      EATERIES_API: http://eateries-api:8000
+      USERS_API: http://users-api:8000
       DATABASE_URL: postgres://owners:password@database:5432/owners
       WAIT_HOSTS: database:5432,owners-api:8000
       WAIT_TIMEOUT: 240
