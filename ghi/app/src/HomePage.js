@@ -18,7 +18,7 @@ function HomePage() {
   //creating IP state
   const [ip, setIP] = useState('');
   const [eateries, setEateries] = useState([]);
-  const [eateryColumns, setColumns] = useState([[],[],[]]);
+  const [eateryColumns, setColumns] = useState([[], [], []]);
   //creating function to load ip address from the API
   const getData = async () => {
     const res = await axios.get('http://ip-api.com/json/')
@@ -40,19 +40,19 @@ function HomePage() {
       eateries.push(eatery_dict)
     }
     setEateries(eateries)
-    const eateryColumns = [[],[],[]]
+    const eateryColumns = [[], [], []]
     let i = 0
-    for (let eatery of eateries){
+    for (let eatery of eateries) {
       eateryColumns[i].push(eatery);
       i = i + 1;
       if (i > 2) {
-          i = 0;
+        i = 0;
       }
     }
     setColumns(eateryColumns)
     console.log("EATERY Columns", eateryColumns)
   }
-  
+
 
   // function EateryColumn(eateries) {
   //   return (
@@ -83,72 +83,251 @@ function HomePage() {
     getData()
   }, [])
 
-    return (
+  return (
       <>
-      <CardHeader>
-      <div className='p-5 text-center bg-light'>
-        <h1 className='mb-3'>Heading</h1>
-        <h2 className='mb-3'>Subheading</h2>
-        {/* <div className="form">
+      <div className="container">
+        <div className="row p-3">
+          <div className="col-md-6" id="sideNav">
+          <h1>Eateries Near Me</h1>
+                            <table className="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Eatery Name</th>
+                                        <th>Address</th>
+                                        <th>City</th>
+                                        <th>State</th>
+                                        <th> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {eateryColumns[0].map(eatery => {
+                                            return (
+                                                <tr key={eatery.id}>
+                                                    <td >{eatery.name}</td>
+                                                    <td >{eatery.address1}</td>
+                                                    <td >{eatery.city}</td>
+                                                    <td >{eatery.state}</td>
+                                                </tr>
+                                            )
+                                    })}
+                                </tbody>
+                            </table>
+          </div>
+          <div className="col-md-6" id="mySkeweredList">
+          <h1>Eateries Near Me</h1>
+                            <table className="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Eatery Name</th>
+                                        <th>Address</th>
+                                        <th>City</th>
+                                        <th>State</th>
+                                        <th> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {eateryColumns[1].map(eatery => {
+                                            return (
+                                                <tr key={eatery.id}>
+                                                    <td >{eatery.name}</td>
+                                                    <td >{eatery.address1}</td>
+                                                    <td >{eatery.city}</td>
+                                                    <td >{eatery.state}</td>
+                                                </tr>
+                                            )
+                                    })}
+                                </tbody>
+                            </table>
+          </div>
+          <div className="col-md-6" id="sideNav">
+          <h1>Eateries Near Me</h1>
+                            <table className="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Eatery Name</th>
+                                        <th>Address</th>
+                                        <th>City</th>
+                                        <th>State</th>
+                                        <th> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {eateryColumns[2].map(eatery => {
+                                            return (
+                                                <tr key={eatery.id}>
+                                                    <td >{eatery.name}</td>
+                                                    <td >{eatery.address1}</td>
+                                                    <td >{eatery.city}</td>
+                                                    <td >{eatery.state}</td>
+                                                </tr>
+                                            )
+                                    })}
+                                </tbody>
+                            </table>
+          </div>
+
+        {/* <div className="col-md-6" id="mySkeweredList">
+          {eateryColumns[1].map(eatery => {
+            return (
+              <CardWrapper>
+                <div key={eatery.id} className="card mb-3 shadow">
+
+                  <ImageWrapper>
+                    <img src={eatery.image_url} className="card-img-top" />
+                  </ImageWrapper>
+                  <div className="card-body">
+                    <CardHeader>
+                      <h2 className="card-title">{eatery.name}</h2>
+
+                    </CardHeader>
+                    <h4 className="card-subtitle mb-2 text-muted">
+                      {eatery.address1}, {eatery.city}, {eatery.state}, {eatery.zip_code}
+                    </h4>
+                  </div>
+                </div>
+              </CardWrapper>
+            );
+          })}
+        </div>
+        <div className="col-md-6" id="mySkeweredList">
+          {eateryColumns[2].map(eatery => {
+            return (
+              <CardWrapper>
+                <div key={eatery.id} className="card mb-3 shadow">
+
+                  <ImageWrapper>
+                    <img src={eatery.image_url} className="card-img-top" />
+                  </ImageWrapper>
+                  <div className="card-body">
+                    <CardHeader>
+                      <h2 className="card-title">{eatery.name}</h2>
+
+                    </CardHeader>
+                    <h4 className="card-subtitle mb-2 text-muted">
+                      {eatery.address1}, {eatery.city}, {eatery.state}, {eatery.zip_code}
+                    </h4>
+                  </div>
+                </div>
+              </CardWrapper>
+            );
+          })}
+        </div> */}
+      </div>
+      </div>
+        {/* <CardHeader>
+        <div className='p-5 text-center bg-light'>
+          <h1 className='mb-3'>Heading</h1>
+          <h2 className='mb-3'>Subheading</h2>
+          <div className="form">
             <i className="fa fa-search"></i>
             <input onChange={this.handleSearch} type="text" className="form-control form-input" placeholder="Search by VIN#"/>
             <span className="left-pan"><i className="fa fa-microphone"></i></span>
-            </div> */}
-        <a className='btn btn-primary' href='' role='button'>
-          Call to action
-        </a>
-      </div>
+            </div>
+          <a className='btn btn-primary' href='' role='button'>
+            Call to action
+          </a>
+        </div>
       </CardHeader>
-      <div className = "container text-light mt-4">
-      <div className = "card-columns">
-      {eateries.map(eatery => {
-        return (
-          <CardWrapper>
-         <div key={eatery.id} className="card mb-3 shadow">
+      <div className="container">
+        <div className="row p-3">
+          <div className="col-md-6">
+            {eateryColumns[0].map(eatery => {
+              return (
+                <CardWrapper>
+                  <div key={eatery.id} className="card mb-3 shadow">
 
-         <ImageWrapper>
-      <img src={eatery.image_url} className="card-img-top" />
-      </ImageWrapper>
-      <div className="card-body">
-      <CardHeader>
-          <h2 className="card-title">{eatery.name}</h2>
-  
-          </CardHeader>
-          <h4 className="card-subtitle mb-2 text-muted">
-              {eatery.address1}, {eatery.city}, {eatery.state}, {eatery.zip_code}
-          </h4>
-      </div>
-  </div>
-      </CardWrapper>
-          );
-        })}
-      </div>
-      </div>
-</>
+                    <ImageWrapper>
+                      <img src={eatery.image_url} className="card-img-top" />
+                    </ImageWrapper>
+                    <div className="card-body">
+                      <CardHeader>
+                        <h2 className="card-title">{eatery.name}</h2>
 
-      // <div className='App'> 
-      //   <div className="row">
-      //     <div className = "column">
-      //         {eateries.map(eatery => {
-      //       return (
-      //         <CardWrapper>
-      //         <CardHeader>
-      //         <CardHeading>
-      //         <p>
-      //           {eatery.name}
-      //         </p>
-      //         </CardHeading>
-      //       </CardHeader>
-      //       <CardBody>
-      //         {eatery.address1}, {eatery.city}, {eatery.state} {eatery.zip_code}
-      //       </CardBody>
-      //     </CardWrapper>
-      //         );
-      //       })}
-      //       </div>
-      //     </div>
-      //   </div>
-    );
+                      </CardHeader>
+                      <h4 className="card-subtitle mb-2 text-muted">
+                        {eatery.address1}, {eatery.city}, {eatery.state}, {eatery.zip_code}
+                      </h4>
+                    </div>
+                  </div>
+                </CardWrapper>
+              );
+            })}
+          </div>
+        </div>
+        <div className="col-md-6">
+            {eateryColumns[1].map(eatery => {
+              return (
+                <CardWrapper>
+                  <div key={eatery.id} className="card mb-3 shadow">
+
+                    <ImageWrapper>
+                      <img src={eatery.image_url} className="card-img-top" />
+                    </ImageWrapper>
+                    <div className="card-body">
+                      <CardHeader>
+                        <h2 className="card-title">{eatery.name}</h2>
+
+                      </CardHeader>
+                      <h4 className="card-subtitle mb-2 text-muted">
+                        {eatery.address1}, {eatery.city}, {eatery.state}, {eatery.zip_code}
+                      </h4>
+                    </div>
+                  </div>
+                </CardWrapper>
+              );
+            })}
+          </div>
+
+        <div className="col-md-6">
+            {eateryColumns[2].map(eatery => {
+              return (
+                <CardWrapper>
+                  <div key={eatery.id} className="card mb-3 shadow">
+
+                    <ImageWrapper>
+                      <img src={eatery.image_url} className="card-img-top" />
+                    </ImageWrapper>
+                    <div className="card-body">
+                      <CardHeader>
+                        <h2 className="card-title">{eatery.name}</h2>
+
+                      </CardHeader>
+                      <h4 className="card-subtitle mb-2 text-muted">
+                        {eatery.address1}, {eatery.city}, {eatery.state}, {eatery.zip_code}
+                      </h4>
+                    </div>
+                  </div>
+                </CardWrapper>
+              );
+            })}
+          </div>
+        </div> */}
+      </>
+
+);
+      {/* <div className='App'>
+        <div className="row">
+          <div className="column">
+             {eateries.map(eatery => {
+
+            return (
+              <CardWrapper>
+              <CardHeader>
+              <CardHeading>
+              <p>
+                {eatery.name}
+              </p>
+              </CardHeading>
+            </CardHeader>
+            <CardBody>
+              {eatery.address1}, {eatery.city}, {eatery.state} {eatery.zip_code}
+            </CardBody>
+          </CardWrapper>
+              );
+            })}
+            </div>
+          </div>
+        </div> */}
   }
 
-  export default HomePage;
+      export default HomePage;
