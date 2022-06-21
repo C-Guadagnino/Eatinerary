@@ -5,7 +5,7 @@ from .models import (
     EateryTagVO,
     EateryOpenHoursVO,
     EateryImageVO,
-    Foodie,
+    FoodieVO,
     SkeweredEatery,
     Review,
     ReviewImage,
@@ -41,7 +41,7 @@ class EateryImageVOAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Foodie)
+@admin.register(FoodieVO)
 class FoodieAdmin(admin.ModelAdmin):
     pass
 

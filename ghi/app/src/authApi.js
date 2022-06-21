@@ -54,6 +54,8 @@ export function useToken() {
     if (token) {
       const url = `${process.env.REACT_APP_ACCOUNT_API}/api/token/refresh/logout/`;
       await fetch(url, {method: 'delete', credentials: 'include'});
+      // For some reason, unknown right now, when we try to logout, 
+      // the token is not being deleted form cookies in local storage
       internalToken = null;
       setToken(null);
     }
@@ -78,11 +80,11 @@ export function useToken() {
     return handleErrorMessage(error);
   }
 
-  async function signup(username, password, email, phone, is_owner, is_foodie) {
+  async function signup(username, password, email, phone, first_name, last_name, is_owner, is_foodie) {
     const url = `${process.env.REACT_APP_ACCOUNT_API}/api/users/`;
     const response = await fetch(url, {
       method: 'post',
-      body: JSON.stringify({username, password, email, phone, is_owner, is_foodie}),
+      body: JSON.stringify({username, password, email, first_name, last_name, phone, is_owner, is_foodie}),
       headers: {
         'Content-Type': 'application/json',
       }

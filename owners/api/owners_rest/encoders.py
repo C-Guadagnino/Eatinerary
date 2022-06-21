@@ -29,7 +29,7 @@ class EateryCategoryVOEncoder(ModelEncoder):
 
 class EateryImageVOEncoder(ModelEncoder):
     model = EateryImageVO
-    properties = ["image_url"]
+    properties = ["import_href", "image_url"]
 
     def get_extra_data(self, o):
         return {

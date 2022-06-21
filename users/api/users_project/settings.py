@@ -54,7 +54,7 @@ MIDDLEWARE = [
 
 AUTH_USER_MODEL = "users_rest.User"
 
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = ["localhost", "users-api"]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000/",

@@ -51,15 +51,17 @@ class EateryOpenHoursVO(models.Model):
             "Open Hours for Eatery " + self.eatery.eatery_name + " on " + self.weekday
         )
 
-# class OwnerVO(models.Model):
-#     username = models.CharField(max_length=200)
-#     first_name = models.CharField(max_length=200)
-#     last_name = models.CharField(max_length=200)
-#     email = models.CharField(max_length=200)
-#     phone = models.CharField(max_length=20)
+class OwnerVO(models.Model):
+    import_href = models.CharField(max_length=200)
+    username = models.CharField(max_length=200)
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    phone = models.CharField(max_length=20)
+    # google_calendar = models.URLField(blank=True, null=True)
 
-    # def __str__(self):
-    #     return self.username
+    def __str__(self):
+        return self.username
 
 
 class EateryVO(models.Model):

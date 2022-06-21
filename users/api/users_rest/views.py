@@ -7,17 +7,20 @@ import json
 
 from .models import User, Foodie, Owner
 
-# Create your views here.
+# Get all users
 @require_http_methods(["GET", "POST"])
 def api_users(request):
     if request.method == "POST":
         try:
             content = json.loads(request.body)
+            print(content)
             user = User.objects.create_user(
                 username=content["username"],
                 password=content["password"],
                 email=content["email"],
                 phone=content["phone"],
+                first_name =content["first_name"],
+                last_name =content["last_name"]
             )
             if content.get("is_foodie") and content["is_foodie"]:
                 Foodie.objects.create(user=user)
@@ -33,6 +36,7 @@ def api_users(request):
             )
             response.status_code = 409
             return response
+
 
 #Get specific user by their id
 @require_http_methods(["GET"])
@@ -56,6 +60,8 @@ class UserEncoder(ModelEncoder):
         "username",
         "email",
         "phone",
+        "first_name",
+        "last_name"
     ]
 
 @require_http_methods(["GET"])
