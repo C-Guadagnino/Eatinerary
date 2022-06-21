@@ -27,11 +27,11 @@ const classesIfNotLoggedIn = "navbar-nav";
 function Nav(props) {
     const links = props.token ? loggedinLinks : loggedoutLinks;
     return (
-      <nav className='navbar navbar-expand-md navbar-dark fixed-top bg-dark'>
+      <nav className='navbar navbar-expand-md fixed-top bg-color-nav'>
         <div className='container-fluid'>
           <NavLink className='text-decoration-none' to='/'>
             <h2 className='navbar-brand text-uppercase fs-2'>
-              <img src={ skewerednobg } height="40" alt="uh-oh"/>
+              <img src={ skewerednobg } height="60" alt="uh-oh"/>
               {/* What this is doing is creating a link back using the Eatinerary Button */}
             </h2>
           </NavLink>
@@ -41,7 +41,7 @@ function Nav(props) {
             >
               {links.map((link, index) => (
                 <NavLink key={index} to={link.path}>
-                  <button className='btn btn-outline-primary me-4'>
+                  <button className='btn button-39 me-3'>
                     {link.name}
                   </button>
                 </NavLink>
