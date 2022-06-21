@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 
 export const loggedinLinks = [
   // foodies
+  { name: "Skewered Eateries!", path: "/skewered"},
   // owners
   // eateries
   { name: "Logout", path: "/logout"},

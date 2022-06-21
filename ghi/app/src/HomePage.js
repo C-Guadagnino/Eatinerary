@@ -14,7 +14,6 @@ import {
 } from "./Card";
 
 
-
 function HomePage() {
   //creating IP state
   const [ip, setIP] = useState('');
@@ -25,7 +24,7 @@ function HomePage() {
     const res = await axios.get('http://ip-api.com/json/')
     console.log(res.data);
     setIP(res.data.city)
-    const data = await axios.get(`http://localhost:8090/api/eateries/yelp/${res.data.city}/food/`)
+    const data = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/yelp/${res.data.city}/food/`)
     //Limit this request to 9 results because it takes a long time to populate the page
     console.log("DATA.DATA", data.data);
     let eateries = []

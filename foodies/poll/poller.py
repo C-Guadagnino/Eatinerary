@@ -19,7 +19,8 @@ from foodies_rest.models import (
 )
 
 def get_user_entity_data():
-    response = requests.get("http://users-api:8000/api/users/all/")
+    # response = requests.get("http://users-api:8000/api/users/all/")
+    response = requests.get(f"{os.environ['USERS_API']}/api/users/all/")
     content = json.loads(response.content)
     print("USER CONTENT",content)
     for user in content["users"]:
