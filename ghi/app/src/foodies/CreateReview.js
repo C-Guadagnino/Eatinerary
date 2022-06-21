@@ -7,6 +7,7 @@ class CreateReview extends React.Component {
         super(props)
         this.state = {
             "skeweredEateries": [],
+            "reviews": [],
             "reviewTitle": '',
             "reviewRating": '',
             "reviewDescription": '',
@@ -30,6 +31,7 @@ class CreateReview extends React.Component {
         data.description = data.reviewDescription;
         delete data.reviewDescription;
 
+        //Get all foodie reviews
         const reviewUrl = 'http://localhost:8100/api/foodies/eateries/reviews/';
         const fetchConfig = {
             method: "post",
@@ -95,10 +97,10 @@ class CreateReview extends React.Component {
                         <div className="col-md-6" id="sideNav">
                             <ul className="list-group list-group-flush">
                                 <li className="list-group-item">
-                                    <Link to="/skewered">My Skewered List</Link>
+                                    <Link to="/mySkewered">My Skewered List</Link>
                                 </li>
                                 <li className="list-group-item">
-                                    <Link to="/history">My Skewered History</Link>
+                                    <Link to="/mySkeweredHistory">My Skewered History</Link>
                                 </li>
                                 <li className="list-group-item">
                                     <Link to="/review">Reviews</Link>

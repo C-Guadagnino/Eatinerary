@@ -42,14 +42,20 @@ class SkeweredEateryEncoder(ModelEncoder):
         "has_visited",
         "is_active",
         "notes",
-        # "review",
+        #"review",
     ]
-    # encoders = {"review": ReviewEncoder()}
+    #encoders = {"review": ReviewEncoder()}
 
     def get_extra_data(self, o):
         eatery_info = {
             "eatery_name": o.eatery_vo.eatery_name,
             "eatery_import_href": o.eatery_vo.import_href,
+            "eatery_price": o.eatery_vo.price,
+            "eatery_average_rating": o.eatery_vo.average_rating,
+            "eatery_location_city": o.eatery_vo.location_city,
+            "eatery_location_state": o.eatery_vo.location_state,
+            "eatery_latitude": o.eatery_vo.latitude,
+            "eatery_longitude": o.eatery_vo.longitude,
         }
         foodie_info = {
             "foodie_username": o.foodie.username,

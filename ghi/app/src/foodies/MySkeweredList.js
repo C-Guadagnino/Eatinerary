@@ -43,10 +43,10 @@ class SkeweredList extends React.Component {
                         <div className="col-md-6" id="sideNav">
                             <ul className="list-group list-group-flush">
                                 <li className="list-group-item">
-                                    <Link to="/history">My Skewered History</Link>
+                                    <Link to="/mySkeweredHistory">My Skewered History</Link>
                                 </li>
                                 <li className="list-group-item">
-                                    <Link to="/Reviews">Reviews</Link>
+                                    <Link to="/review">Reviews</Link>
                                 </li>
                             </ul>
                         </div>
@@ -66,11 +66,13 @@ class SkeweredList extends React.Component {
                                     </thead>
                                     <tbody>
                                         {this.state.skeweredEateries.map(skeweredEatery => {
+
                                             return (
+
                                                 <tr key={skeweredEatery.id}>
                                                     <td>{skeweredEatery.eatery.eatery_name}</td>
-                                                    <td>{skeweredEatery.eatery.average_rating}</td>
-                                                    <td>{skeweredEatery.eatery.price}</td>
+                                                    <td>{skeweredEatery.eatery.eatery_average_rating}</td>
+                                                    <td>{skeweredEatery.eatery.eatery_price}</td>
                                                     <td>{skeweredEatery.notes}</td>
                                                 </tr>
                                             )

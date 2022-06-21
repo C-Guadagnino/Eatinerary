@@ -1,14 +1,17 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import './Foodies.css';
+import Iframe from './GoogleMaps.js';
 
 class SkeweredHistory extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             "skeweredEateries": [],
+
         };
         //this.handleSkeweredList = this.handleSkeweredListChange.bind(this);
+        this.selectEatery = this.selectEatery.bind(this);
     }
 
     async componentDidMount() {
@@ -23,6 +26,13 @@ class SkeweredHistory extends React.Component {
         }
     }
 
+    selectEatery(eatery) {
+        console.log("is this selectEatery:", eatery);
+        this.setState({
+            "selected": eatery,
+        })
+    }
+
     render() {
         return (
             <>
@@ -32,10 +42,10 @@ class SkeweredHistory extends React.Component {
                         <div className="col-md-6" id="sideNav">
                             <ul className="list-group list-group-flush">
                                 <li className="list-group-item">
-                                    <Link to="/skewered">My Skewered List</Link>
+                                    <Link to="/mySkewered">My Skewered List</Link>
                                 </li>
                                 <li className="list-group-item">
-                                    <Link to="/Reviews">Reviews</Link>
+                                    <Link to="/review">Reviews</Link>
                                 </li>
                             </ul>
                         </div>
@@ -59,7 +69,7 @@ class SkeweredHistory extends React.Component {
                                         if(skeweredEatery.has_visited === true){
                                     
                                             return (
-                                                <tr key={skeweredEatery.id}>
+                                                <tr onClick={() => this.selectEatery(skeweredEatery)} key={skeweredEatery.id}>
                                                     <td >{skeweredEatery.eatery.eatery_name}</td>
                                                     <td >{skeweredEatery.eatery.average_rating}</td>
                                                     <td >{skeweredEatery.eatery.price}</td>
@@ -67,10 +77,41 @@ class SkeweredHistory extends React.Component {
                                                 </tr>
                                             )
                                         }
+                                        return null
                                     })}
                                 </tbody>
                             </table>
                         </div>
+
+                        <div className="row p-3">
+                            <div className="col-md-12" id="maps">
+                                
+                            { this.state.selected?
+                                <Iframe name={this.state.selected.eatery.eatery_name} city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
+                                 :null}
+
+                                {/* { this.state.selected?
+                                <Iframe name={this.state.selected.eatery.eatery_name} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
+                                 :null} */}
+                    
+                                {/* { this.state.selected?
+                                <Iframe city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} />
+                                 :null} */}
+
+                                {/* {this.state.skeweredEateries.map(skeweredEatery => {
+                                    if(skeweredEatery.has_visited === true){
+
+                                    return(
+                                        <div className="myClassName" id="myId">
+                                            <Iframe city={skeweredEatery.eatery.location_city} state={skeweredEatery.eatery.location_state} />
+                                        </div>
+                                    )
+                                    }
+                                })} */}
+                            </div>
+                        </div>
+
+
                     </div>
             </>
         );
