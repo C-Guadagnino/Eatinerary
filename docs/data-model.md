@@ -1,7 +1,6 @@
 # Data models
 
 ![Eatinerary_BoundedContexts_220618](Eatinerary_BoundedContexts_220618.png)
-![Skewer_Logo_Blue](skewer_logo_blue.png)
 
 ## User (Custom User model based on Django's built-in user model?) ???
 | Name            | Type    | Unique | Optional |
