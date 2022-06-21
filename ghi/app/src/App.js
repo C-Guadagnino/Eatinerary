@@ -30,8 +30,8 @@ function App() {
               element={<SignUp token={token} signup={signup} />}
             />
           </Route>
-            <Route path='skewered' element={<MySkeweredList />} />
-            <Route path='history' element={<MySkeweredHistory />} />
+            <Route path='mySkewered' element={<MySkeweredList />} />
+            <Route path='mySkeweredHistory' element={<MySkeweredHistory />} />
             <Route path='review' element={<CreateReview />} />
         </Routes>
       </div>

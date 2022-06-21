@@ -13,7 +13,7 @@ class SkeweredHistory extends React.Component {
 
     async componentDidMount() {
         //list all skewered eateries endpoint
-        const skeweredEateriesUrl = 'http://localhost:8100/api/skewered/';
+        const skeweredEateriesUrl = 'http://localhost:8100/api/foodies/eateries/skewered/';
         const skeweredEateriesResponse = await fetch(skeweredEateriesUrl);
 
         if(skeweredEateriesResponse.ok){

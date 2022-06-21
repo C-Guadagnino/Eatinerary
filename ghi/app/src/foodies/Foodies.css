@@ -75,6 +75,19 @@ a {
     position: absolute; left: 1100px; top: 255px;
 }
 
+/* Special Dates */
+
+#specialDates{
+    margin-top: 225px;
+    position: absolute; right: 470px;
+    width: 40rem;
+}
+
+#specialDatesTable{
+    width: 30rem;
+    height: 5rem;
+    background-color: lightblue;
+}
 
 
 

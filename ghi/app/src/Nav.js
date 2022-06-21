@@ -7,8 +7,8 @@ import { useState, useEffect } from "react";
 
 export const loggedinLinks = [
   // foodies
-  { name: "Skewered", path:"/skewered"},
-  { name: "History", path: "/history"},
+  { name: "Skewered", path:"/mySkewered"},
+  { name: "History", path: "/mySkeweredHistory"},
   { name: "Review", path: "/review"},
   // owners
   // eateries
