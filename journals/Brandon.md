@@ -7,6 +7,16 @@
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
+## June 20, 2022
+* Today I worked on implementing the poller from the User microservice to the Foodie and Owner microservices. I still need to finish the Owner poller but it will be almost identical to the function in the Foodie poller, and should not take long to implement.
+* Ariana and I discussed about if we should have two separate poller files in each service for both pulling eateries and users, or if we should call two functions in the while loop of one poller file. We chose to put both in one file in the same while loop. We thought the other way would add un necessary complexity.
+* an AHA moment I had today was getting the foodieVO to pull the user data. However a HAH moment because i couldn't get the OwnerVO to pull the user data
+
+## June 18, 2022
+* Today I worked on creating Cards in the homepage that houses our data, and introducing a header to the page. 
+* I had to make some design choices when it came to how I was going to structure this page. Im using a function component so ill be using hooks to manage the state. I am still not sure how I want to do it, but currently I am using Styled Components and mapping each eatery into a CardBody. I now want to make columns on the page but im not sure how.
+* an AHA moment I had today was I learned the benefits of Styled Components by getting the cards to house the data and adjust each field how I wanted.
+
 ## June 16, 2022
 * Today I worked on researching grabbing user location from IP address. I created the HomePage and was able to receive the location object but currently working on using a different API because the response did not contain the location information I needed.
 * Our team discussed how we wanted to handle the functionality of our HomePage. We decided that we were going to gather user location information on page load that would send an api request to return a location object so we can pre populate the home page with eateries in their area.

@@ -38,7 +38,6 @@ def get_user_entity_data():
 def get_eatery_entity_data():
     response = requests.get("http://eateries-api:8000/api/eateries/")
     content = json.loads(response.content)
-    print("EATERY CONTENT;", content)
     for eatery in content["eateries"]:
         EateryVO.objects.update_or_create(
             import_href=eatery["href"],
