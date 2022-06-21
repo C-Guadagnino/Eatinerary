@@ -6,6 +6,7 @@ import Nav from "./Nav"
 import Login from "./users/Login"
 import SignUp from "./users/SignUp"
 import Logout from "./users/Logout"
+import EateryDetailPage from "./EateryDetailPage"
 import HomePageWithCards from "./homePageComponents/HomePageWithCards"
 // import Footer from "./Footer"
 import './App.css';
@@ -18,6 +19,7 @@ function App() {
       <Nav token={token} />
       <div className='container-fluid p-0'>
         <Routes>
+          <Route path="/eatery" element={<EateryDetailPage />} />
           <Route path="/" element={<HomePageWithCards />} />
           <Route Path='users'>
             <Route path='login' element={<Login token={token} login={login} />} />
