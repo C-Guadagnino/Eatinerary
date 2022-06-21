@@ -77,12 +77,13 @@ class EateryOpenHoursVO(models.Model):
         )
 
 
-class Foodie(models.Model):
-    username = models.CharField(max_length=50, unique=True)
+class FoodieVO(models.Model):
+    import_href = models.CharField(max_length=200)
+    username = models.CharField(max_length=50)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    email = models.EmailField(max_length=254, unique=True)
-    phone = models.CharField(max_length=13, unique=True)
+    email = models.CharField(max_length=100)
+    phone = models.CharField(max_length=13)
     # google_calendar = models.URLField(blank=True, null=True)
 
     def __str__(self):
@@ -95,8 +96,8 @@ class SkeweredEatery(models.Model):
         related_name="skewered_eateries",
         on_delete=models.CASCADE,
     )
-    foodie = models.ForeignKey(
-        Foodie,
+    foodie_vo = models.ForeignKey(
+        FoodieVO,
         related_name="skewered_eateries",
         on_delete=models.CASCADE,
     )
@@ -159,8 +160,8 @@ class SpecialDate(models.Model):
     frequency = models.CharField(
         max_length=50, choices=FREQUENCIES, blank=True, null=True
     )
-    foodie = models.ForeignKey(
-        "Foodie", related_name="special_dates", on_delete=models.CASCADE
+    foodie_vo = models.ForeignKey(
+        "FoodieVO", related_name="special_dates", on_delete=models.CASCADE
     )
 
     def __str__(self):

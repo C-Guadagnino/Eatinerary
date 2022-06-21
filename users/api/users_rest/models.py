@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
 
 # BELOW IMPORT IS FOR HAVING CUSTOM USER MODEL
 # We used AbstractUser in FearlessFrontend, but we Django Docs recommend AbstractBaseUser ???
@@ -19,7 +20,9 @@ class User(AbstractUser):
     phone = models.CharField(max_length=200, unique=True)
     google_calendar = models.URLField(unique=True, blank=True, null=True)
 
-
+    def get_api_url(self):
+        return reverse("api_users", kwargs={"pk": self.pk})
+        
 # class Foodie(User):
 class Foodie(models.Model):
     user = models.OneToOneField(

@@ -17,9 +17,11 @@ function SignUp(props) {
   const [isOwner, setIsOwner] = useState(false);
   const [isFoodie, setIsFoodie] = useState(false);
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
   const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   const [error, setError] = useState(null);
 
   if (token) {
@@ -51,10 +53,18 @@ function SignUp(props) {
         <CardFieldset>
           <CardInput onChange={e => setUsername(e.target.value)} value={username} placeholder="Username" type="text" required />
         </CardFieldset>
-
+        
         <CardFieldset>
           <CardInput onChange={e => setPassword(e.target.value)} value={password} placeholder="Password" type="password" required />
           <CardIcon className="fa fa-eye" eye small />
+        </CardFieldset>
+
+        <CardFieldset>
+          <CardInput onChange={e => setFirstName(e.target.value)} value={first_name} placeholder="First Name" type="text" required />
+        </CardFieldset>
+
+        <CardFieldset>
+          <CardInput onChange={e => setLastName(e.target.value)} value={last_name} placeholder="Last Name" type="text" required />
         </CardFieldset>
 
         <CardFieldset>
@@ -62,11 +72,11 @@ function SignUp(props) {
         </CardFieldset>
 
         <CardFieldset>
-          <CardInput onChange={e => setPhone(e.target.value)} value={phone} placeholder="Phone" type="int" required />
+          <CardInput onChange={e => setPhone(e.target.value)} value={phone} placeholder="Phone" type="text" required />
         </CardFieldset>
 
         <CardFieldset>
-          <CardButton onClick={() => signup(username, password, email, phone, )} type="button">Become A Member</CardButton>
+          <CardButton onClick={() => signup(username, password, first_name, last_name, email, phone )} type="button">Become A Member</CardButton>
         </CardFieldset>
         <CardFieldset>
           <NavLink to="/login">
