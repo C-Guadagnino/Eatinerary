@@ -36,7 +36,7 @@ class SkeweredHistory extends React.Component {
     render() {
         return (
             <>
-                <div className="container">
+                <div className="container mt-5 py-5">
 
                     <div className="row p-3">
                         <div className="col-md-6" id="historyNav">
