@@ -2,6 +2,7 @@ from django.urls import path
 
 from .api_views import (
     api_foodies,
+    api_foodie,
     api_eateries_vo,
     api_eatery_vo,
     api_categories_vo,
@@ -25,6 +26,7 @@ from .api_views import (
 
 urlpatterns = [
     path("foodies/", api_foodies, name="api_foodies"),
+    path("foodies/<str:username>/", api_foodie, name="api_foodie"),
     path("foodies/eateries/", api_eateries_vo, name="api_eateries_vo"),
     path(
         "foodies/eateries/<int:eatery_entity_id>/", api_eatery_vo, name="api_eatery_vo"
@@ -83,5 +85,6 @@ urlpatterns = [
     path(
         "foodies/eateries/skeweredtest/<str:username>/",
         api_show_skeweredeateries_for_specific_foodie,
-        name="api_skewered_eatery_for_user"),
+        name="api_skewered_eatery_for_user",
+    ),
 ]

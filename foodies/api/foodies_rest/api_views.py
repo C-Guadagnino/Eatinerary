@@ -57,6 +57,16 @@ def api_foodies(request):
         )
 
 
+@require_http_methods(["GET"])
+def api_foodie(request, username):
+    if request.method == "GET":
+        try:
+            foodie_vo_obj = FoodieVO.objects.get(username=username)
+            return JsonResponse(foodie_vo_obj, encoder=FoodieEncoder, safe=False)
+        except ObjectDoesNotExist:
+            return JsonResponse({"message": "Does not exist"}, status=404)
+
+
 # List all EateryVOs
 @require_http_methods(["GET"])
 def api_eateries_vo(request):
@@ -286,7 +296,10 @@ def api_skewered_eatery(request, pk):
             )
         except ObjectDoesNotExist:
             return JsonResponse({"message": "Does not exist"}, status=404)
-#======================================
+
+
+# ======================================
+
 
 @require_http_methods(["GET"])
 def api_show_skeweredeateries_for_specific_foodie(request, username):
@@ -295,16 +308,17 @@ def api_show_skeweredeateries_for_specific_foodie(request, username):
             foodie_vo_obj = FoodieVO.objects.get(username=username)
             skewered_eateries = SkeweredEatery.objects.filter(foodie_vo=foodie_vo_obj)
             return JsonResponse(
-                {"skewered_eateries":skewered_eateries},
+                {"skewered_eateries": skewered_eateries},
                 encoder=SkeweredEateryEncoder,
-                safe=False
+                safe=False,
             )
         except SkeweredEatery.DoesNotExist:
             response = JsonResponse({"message": "Does not exist"})
             response.status_code = 404
             return response
 
-#======================================
+
+# ======================================
 
 # List all foodie reviews, create review
 @require_http_methods(["GET", "POST"])
