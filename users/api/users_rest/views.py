@@ -61,7 +61,7 @@ class UserEncoder(ModelEncoder):
         "email",
         "phone",
         "first_name",
-        "last_name"
+        "last_name",
     ]
 
 @require_http_methods(["GET"])

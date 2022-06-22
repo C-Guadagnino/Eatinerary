@@ -3,6 +3,9 @@ import "./Box.css";
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Card } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
+import EateryDetailPage from "../eatery-components/EateryDetailPage";
 
 const HomePageWithCards = () => {
     //creating IP state
@@ -35,20 +38,24 @@ const HomePageWithCards = () => {
     //if we get IP data send location to Yelp API
     getData()
   }, [])
-    
+  // const getDetailPage = props => {
+  //   const [eateryIdentifier, setEateryIdentifier] = useState(props)
+  // }
   const renderCard = (card, index) => {
         return(
-            <Card style={{ width: '18rem' }} key={index} className="box">
+            <Card border="success" style={{ width: '17rem' }} key={index} className="box">
                 <Card.Img variant="top" src={card.image_url} />
                 <Card.Body>
                     <Card.Title>{card.name}</Card.Title>
                     <Card.Text>
                         {card.address1}, {card.city}, {card.state}, {card.zip_code}
                     </Card.Text>
-                    {/* <Button variant="primary">Go somewhere</Button> */}
+                    {/* <EateryDetailPage eateryId={card.id}/> */}
+                    {/* <NavLink className='text-decoration-none' to='/eatery'>
+                    <Button onClick={(setEateryIdentifier(card.id))} variant="primary">Details</Button>
+                    </NavLink> */}
                 </Card.Body>
             </Card>
-
         )
   }
 

@@ -234,9 +234,9 @@ def api_skewered_eateries(request):
             content["eatery_vo"] = eateryvo_obj
             del content["eateryvo_import_href"]
 
-            foodie_username = content["foodie"]
+            foodie_username = content["foodie_vo"]
             foodie_obj = FoodieVO.objects.get(username=foodie_username)
-            content["foodie"] = foodie_obj
+            content["foodie_vo"] = foodie_obj
 
             content["is_active"] = True
             content["has_visited"] = False
@@ -453,3 +453,4 @@ def api_special_date(request, pk):
         # TO-DO: Figure out what kind of error this throws
         except:
             return JsonResponse({"message": "Cannot update special date"}, status=400)
+

@@ -6,7 +6,7 @@ import Nav from "./Nav"
 import Login from "./users/Login"
 import SignUp from "./users/SignUp"
 import Logout from "./users/Logout"
-import EateryDetailPage from "./EateryDetailPage"
+import EateryDetailPage from "./eatery-components/EateryDetailPage"
 import HomePageWithCards from "./homePageComponents/HomePageWithCards"
 // import Footer from "./Footer"
 import './App.css';
@@ -19,6 +19,8 @@ function App() {
       <Nav token={token} />
       <div className='container-fluid p-0'>
         <Routes>
+          {/* eatery detail page url will need to be dynamic and accept an eatery id value
+          path = /eatery/1 */}
           <Route path="/eatery" element={<EateryDetailPage />} />
           <Route path="/" element={<HomePageWithCards />} />
           <Route Path='users'>

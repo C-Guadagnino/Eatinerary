@@ -7,6 +7,11 @@
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
+## June 21, 2022
+* Today I worked on finally refactored the home page to have dynamic card columns and fit the information nicely on the screen. I started on the EateryDetail page and with the data object that Ariana had already brought to the front end, I began creating cards and headers for this page. David and I worked on google map integration, foodie skewered list view, and tried to access the User object to extract the bollean field that tells us "if foodie" or "if owner"
+* Ariana and I discussed about the design choices for the eateryDetail page after considering a few alternatives based on the remainding timeline. David and I discussed about design choice for the Google Maps integration. We have the pin drop for selected eateries but not for the current locaiton of the user which we decided we are okay with due to time purposes. 
+* an AHA moment I had today was getting finally figuring out a clean and uniform  way to structure the cards for the homePage. Also <"str:username"> took an integer id yesterday and AHA I do not understand the URL pathing as well as I thought...why did this work? Will ask tomorrow.
+
 ## June 20, 2022
 * Today I worked on implementing the poller from the User microservice to the Foodie and Owner microservices. I still need to finish the Owner poller but it will be almost identical to the function in the Foodie poller, and should not take long to implement.
 * Ariana and I discussed about if we should have two separate poller files in each service for both pulling eateries and users, or if we should call two functions in the while loop of one poller file. We chose to put both in one file in the same while loop. We thought the other way would add un necessary complexity.

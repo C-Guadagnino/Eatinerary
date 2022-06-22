@@ -1,4 +1,9 @@
 import React from 'react';
+import { Card } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
+// import Iframe from './GoogleMapsEatery.js';
+
+
 
 class EateryDetailPage extends React.Component {
   constructor(props) {
@@ -10,7 +15,7 @@ class EateryDetailPage extends React.Component {
   }
 
   async componentDidMount() {
-    const eateryUrl = 'http://localhost:8090/api/eateries/1/';
+    const eateryUrl = "http://localhost:8090/api/eateries/1/";
     const eateryResponse = await fetch(eateryUrl);
 
     if (eateryResponse.ok) {
@@ -21,6 +26,8 @@ class EateryDetailPage extends React.Component {
   }
 
   render() {
+
+
     let categories_html = ''
     if (this.state.eateryData.categories) {
       categories_html = this.state.eateryData.categories.map(category => {
@@ -64,16 +71,43 @@ class EateryDetailPage extends React.Component {
         )
       })
     }
-
+    
+    let image_address = ''
+    if (this.state.eateryData.eatery_images) {
+      image_address = this.state.eateryData.eatery_images[0].image_url
+    }
     return (
+      <div className="container my-5">
       <div className="container">
+      
+      <Card className="bg-dark text-light">
+        <Card.Img className="img-rounded" height="300" src={image_address} alt="Card image" />
+          <Card.ImgOverlay>
+            <li></li>
+            <h1>{this.state.eateryData.eatery_name}</h1>
+            <h3 >
+            {address_line1} {address_line2}
+            </h3>
+          <Card.Text>
+            {this.state.eateryData.price} - {this.state.eateryData.average_rating} STARS
+            {categories_html}
+            TAGS # {tags_html}
+            </Card.Text>
+        </Card.ImgOverlay>
+      </Card>
+
+        {/* <h1>{this.state.eateryData.eatery_name}</h1> */}
+        {/* <p>{this.state.eateryData.average_rating} Stars, {this.state.eateryData.review_count} reviews</p>
+        <p>{this.state.eateryData.price}</p> */}
 
 
-        <h1>{this.state.eateryData.eatery_name}</h1>
-        <p>{this.state.eateryData.average_rating} Stars, {this.state.eateryData.review_count} reviews</p>
-        <p>{this.state.eateryData.price}</p>
+        {/* <div className="col-md-6" id="skeweredMaps">
+              <Iframe name={this.state.eateryData.eatery_name} city={this.state.eateryData.eatery.location_city} state={this.state.eateryData.eatery.location_state} latitude={this.state.eateryData.eatery.eatery_latitude} longitude={this.state.eateryData.eatery.eatery_longitude} />    
+        </div> */}
 
-        <p>Categories</p>
+
+
+        {/* <p>Categories</p>
         <ul>
           {categories_html}
         </ul>
@@ -85,14 +119,18 @@ class EateryDetailPage extends React.Component {
 
         <p>Address</p>
         {address_line1}
-        {address_line2}
-
-        <table>
-          {openhours_html}
-        </table>
+        {address_line2} */}
 
 
+        <Card style={{ width: '18rem' }}>
+          <ListGroup variant="flush">
+            <ListGroup.Item>{openhours_html}</ListGroup.Item>
+          </ListGroup>
+        </Card>
 
+
+
+      </div>
       </div>
     );
   }

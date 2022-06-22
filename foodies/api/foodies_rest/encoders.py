@@ -52,9 +52,9 @@ class SkeweredEateryEncoder(ModelEncoder):
             "eatery_import_href": o.eatery_vo.import_href,
         }
         foodie_info = {
-            "foodie_username": o.foodie.username,
-            "foodie_firstname": o.foodie.first_name,
-            "foodie_lastname": o.foodie.last_name,
+            "foodie_username": o.foodie_vo.username,
+            "foodie_firstname": o.foodie_vo.first_name,
+            "foodie_lastname": o.foodie_vo.last_name,
         }
         return {
             "eatery": eatery_info,
@@ -106,9 +106,9 @@ class SpecialDateEncoder(ModelEncoder):
         "has_passed",
         "repeats",
         "frequency",
-        "foodie",
+        "foodie_vo",
     ]
-    encoders = {"foodie": FoodieEncoder()}
+    encoders = {"foodie_vo": FoodieEncoder()}
 
 
 class EateryVOEncoder(ModelEncoder):
