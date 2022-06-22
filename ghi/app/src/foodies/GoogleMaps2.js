@@ -12,10 +12,10 @@ class GoogleMaps extends React.Component {
 
 
                 <Iframe url={`https://www.google.com/maps/embed/v1/place?key=&q=${this.props.name}+${this.props.city}+${this.props.state}&center=${this.props.latitude},${this.props.longitude}`}
-                        width="900px"
-                        height="450px"
-                        id="myId"
-                        className="myClassname"
+                        width="700px"
+                        height="350px"
+                        id="mySkewered"
+                        className="myClassName"
                         display="initial"
                         position="relative"
                         

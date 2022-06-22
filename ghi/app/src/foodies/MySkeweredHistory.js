@@ -39,7 +39,7 @@ class SkeweredHistory extends React.Component {
                 <div className="container">
 
                     <div className="row p-3">
-                        <div className="col-md-6" id="sideNav">
+                        <div className="col-md-6" id="historyNav">
                             <ul className="list-group list-group-flush">
                                 <li className="list-group-item">
                                     <Link to="/mySkewered">My Skewered List</Link>
@@ -51,8 +51,8 @@ class SkeweredHistory extends React.Component {
                         </div>
                     </div>
 
-                <div className="col-md-6" id="mySkeweredList">
-                        <h1>My Skewered History</h1>
+                <div className="col-md-6" id="mySkeweredHistory">
+                        <p id="skeweredHeading">My Skewered History</p>
                             <table className="table table-striped">
                                 <thead>
                                     <tr>
@@ -70,9 +70,9 @@ class SkeweredHistory extends React.Component {
                                     
                                             return (
                                                 <tr onClick={() => this.selectEatery(skeweredEatery)} key={skeweredEatery.id}>
-                                                    <td >{skeweredEatery.eatery.eatery_name}</td>
-                                                    <td >{skeweredEatery.eatery.average_rating}</td>
-                                                    <td >{skeweredEatery.eatery.price}</td>
+                                                    <td ><button className='btn button-39'>{skeweredEatery.eatery.eatery_name}</button></td>
+                                                    <td >{skeweredEatery.eatery.eatery_average_rating}</td>
+                                                    <td >{skeweredEatery.eatery.eatery_price}</td>
                                                     <td >{skeweredEatery.notes}</td>
                                                 </tr>
                                             )

@@ -6,32 +6,29 @@ class CreateReview extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            "title": '',
+            "rating": '',
+            "description": '',
+            "skeweredEatery": '',
             "skeweredEateries": [],
-            "reviews": [],
-            "reviewTitle": '',
-            "reviewRating": '',
-            "reviewDescription": '',
         };
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleRatingChange = this.handleRatingChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+        this.handleSkeweredEateryChange = this.handleSkeweredEateryChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     async handleSubmit(event){
         event.preventDefault();
-        const data = {...this.state };
 
-        data.title = data.reviewTitle;
-        delete data.reviewTitle;
+        const data = {...this.state};
 
-        data.rating = data.reviewRating;
-        delete data.reviewRating;
+        data.skewered_eatery = data.skeweredEatery; 
+        delete data.skeweredEatery;
+        delete data.skeweredEateries;
 
-        data.description = data.reviewDescription;
-        delete data.reviewDescription;
-
-        //Get all foodie reviews
+        //POST url for foodie creates a review
         const reviewUrl = 'http://localhost:8100/api/foodies/eateries/reviews/';
         const fetchConfig = {
             method: "post",
@@ -40,40 +37,41 @@ class CreateReview extends React.Component {
                 'Content-type': 'application/json',
             },
         };
+        const response = await fetch(reviewUrl, fetchConfig);
 
-        const reviewPostResponse = await fetch(reviewUrl, fetchConfig);
-        if(reviewPostResponse.ok){
-            const newReview = await reviewPostResponse.json();
+        if(response.ok){
+            const newReview = await response.json();
             console.log("newReview is: ",newReview);
         
             const cleared = {
-                reviewTitle: '',
-                reviewRating: '',
-                reviewDescription: '',
+                title: '',
+                rating: '',
+                description: '',
+                skeweredEateries: [],
             };
             this.setState(cleared);
         }
     }
 
     handleTitleChange(event) {
-        const titleValue = event.target.value;
-        this.setState({ reviewTitle: titleValue });
+        const value = event.target.value;
+        this.setState({ title: value });
     }
 
     handleRatingChange(event) {
-        const ratingValue = event.target.value;
-        this.setState({ reviewRating: ratingValue });
+        const value = event.target.value;
+        this.setState({ rating: value });
     }
 
     handleDescriptionChange(event) {
-        const descriptionValue = event.target.value;
-        this.setState({ reviewDescription: descriptionValue });
+        const value = event.target.value;
+        this.setState({ description: value });
     }
 
-
-
-
-
+    handleSkeweredEateryChange(event) {
+        const value = event.target.value;
+        this.setState({ skeweredEatery: value });
+    }
 
     async componentDidMount() {
         //list all skewered eateries endpoint
@@ -82,6 +80,7 @@ class CreateReview extends React.Component {
 
         if(skeweredEateriesResponse.ok){
             const skeweredEateriesData = await skeweredEateriesResponse.json();
+            console.log(skeweredEateriesData);
 
             this.setState({skeweredEateries: skeweredEateriesData.skewered_eateries})
         }
@@ -109,38 +108,40 @@ class CreateReview extends React.Component {
                         </div>
                     </div>
                    
-                <div className="col-md-3" id="reviews">
-                    
-                    <div className="list-group">
-                                    {this.state.skeweredEateries.map(skeweredEatery => {
-                                            return (
-                                                <button key={skeweredEatery.id} type="button" className="list-group-item list-group-item-action" id="reviewbuttons">{skeweredEatery.eatery.eatery_name}</button>
-                                            )
-                                    })}
-                            </div>
-                        </div>
+
 
                     <div className="col-md-3" id="reviewForm">
-                        <p>I am a column for the create/show review form</p>
-
                         <div className="shadow p-4 mt-4">
                             <h1>Leave a Review</h1>
                             <form onSubmit={this.handleSubmit} id="create-review-form">
+
                                 <div className="form-floating mb-3">
-                                    <input onChange={this.handleTitleChange} value={this.state.reviewTitle} placeholder="Title" required type="text" name="reviewTitle" id="reviewTitle" className="form-control" />
-                                    <label htmlFor="reviewTitle">Title</label>
+                                    <input onChange={this.handleTitleChange} value={this.state.title} placeholder="title" required type="text" name="title" id="title" className="form-control" />
+                                    <label htmlFor="title">Title</label>
                                 </div>
                                 <div className="form-floating mb-3">
-                                    <input onChange={this.handleRatingChange} value={this.state.reviewRating} placeholder="Review Rating" required type="text" name="reviewRating" id="reviewRating" className="form-control" />
-                                    <label htmlFor="reviewRating">Rating</label>
+                                    <input onChange={this.handleRatingChange} value={this.state.rating} placeholder="rating" required type="text" name="rating" id="rating" className="form-control" />
+                                    <label htmlFor="rating">Rating</label>
                                 </div>
                                 <div className="form-floating mb-3">
-                                    <input onChange={this.handleDescriptionChange} value={this.state.reviewDescription} placeholder="Review Description" required type="text" name="reviewDescription" id="reviewDescription" className="form-control" />
-                                    <label htmlFor="reviewDescription">Description</label>
+                                    <input onChange={this.handleDescriptionChange} value={this.state.description} placeholder="description" required type="text" name="description" id="description" className="form-control" />
+                                    <label htmlFor="description">Description</label>
                                 </div>
-                                <button className="btn btn-primary">Submit Review</button>
+
+                                <div className="mb-3">
+                                    <select onChange={this.handleSkeweredEateryChange} value={this.state.skeweredEatery} required name="skewered_eatery" id="skewered_eatery" className="form-select">
+                                        <option value="">Choose a Skewered Eatery</option>
+                                        {this.state.skeweredEateries.map(skeweredEatery => {
+                                            return (
+                                                <option key={skeweredEatery.id} value={skeweredEatery.id}>{skeweredEatery.eatery.eatery_name}</option>
+                                            );
+                                        })}
+                                    </select>
+                                </div>
+
+                                <button className="button-39" id="submitReviewBtn">Submit Review</button>
                             </form>
-                            </div>
+                        </div>
 
                     </div>
                 </div>

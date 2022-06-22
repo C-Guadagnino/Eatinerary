@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import Iframe from './GoogleMaps2.js';
 import './Foodies.css';
 
 class SkeweredList extends React.Component {
@@ -9,10 +10,12 @@ class SkeweredList extends React.Component {
             "skeweredEateries": [],
             "specialDates": [],
         };
-        //this.handleSkeweredList = this.handleSkeweredListChange.bind(this);
+        this.selectEatery = this.selectEatery.bind(this);
     }
 
     async componentDidMount() {
+        //use this for "get all skewered eateries for specific user"
+        //const skeweredEateriesUrl = 'http://localhost:8100/api/foodies/eateries/skeweredtest/2/';
         //list all skewered eateries endpoint
         const skeweredEateriesUrl = 'http://localhost:8100/api/foodies/eateries/skewered/';
         const skeweredEateriesResponse = await fetch(skeweredEateriesUrl);
@@ -34,11 +37,16 @@ class SkeweredList extends React.Component {
         }
     }
 
+    selectEatery(eatery) {
+        console.log("is this selectEatery:", eatery);
+        this.setState({
+            "selected": eatery,
+        })
+    }
+
     render() {
         return (
             <>
-                <div className="container">
-
                     <div className="row p-3">
                         <div className="col-md-6" id="sideNav">
                             <ul className="list-group list-group-flush">
@@ -53,7 +61,7 @@ class SkeweredList extends React.Component {
                     </div>
 
                     <div className="col-md-6" id="mySkeweredList">
-                            <h1>My Skewered List</h1>
+                            <p id="skeweredHeading">My Skewered List</p>
                                 <table className="table table-striped">
                                     <thead>
                                         <tr>
@@ -69,8 +77,8 @@ class SkeweredList extends React.Component {
 
                                             return (
 
-                                                <tr key={skeweredEatery.id}>
-                                                    <td>{skeweredEatery.eatery.eatery_name}</td>
+                                                <tr onClick={() => this.selectEatery(skeweredEatery)} key={skeweredEatery.id}>
+                                                    <td><button className='btn button-39'>{skeweredEatery.eatery.eatery_name}</button></td>
                                                     <td>{skeweredEatery.eatery.eatery_average_rating}</td>
                                                     <td>{skeweredEatery.eatery.eatery_price}</td>
                                                     <td>{skeweredEatery.notes}</td>
@@ -82,8 +90,15 @@ class SkeweredList extends React.Component {
                         </div>
                         
                         <div className="row p-3">
+                            <div className="col-md-6" id="skeweredMaps">
+                            { this.state.selected?
+                                <Iframe name={this.state.selected.eatery.eatery_name} city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
+                                 :null}
+                            </div>
+
                             <div className="col-md-6" id="specialDates">
-                                <table className="table" id="specialDatesTable">
+                                <p id="skeweredHeading">Special Dates</p>
+                                <table className="table table-striped" id="specialDatesTable">
                                         <thead>
                                             <tr>
                                                 <th>Occasion</th>
@@ -120,7 +135,6 @@ class SkeweredList extends React.Component {
                             </div>
                         </div>
 
-                </div>
             </>
         );
     }

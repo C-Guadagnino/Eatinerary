@@ -44,7 +44,7 @@ def api_foodies(request):
     if request.method == "GET":
         foodie_vo = FoodieVO.objects.all()
         return JsonResponse(
-            {"foodies": foodie},
+            {"foodies": foodie_vo},
             encoder=FoodieEncoder,
         )
     else:
@@ -234,9 +234,9 @@ def api_skewered_eateries(request):
             content["eatery_vo"] = eateryvo_obj
             del content["eateryvo_import_href"]
 
-            foodie_username = content["foodie"]
+            foodie_username = content["foodie_vo"]
             foodie_obj = FoodieVO.objects.get(username=foodie_username)
-            content["foodie"] = foodie_obj
+            content["foodie_vo"] = foodie_obj
 
             content["is_active"] = True
             content["has_visited"] = False
@@ -286,9 +286,24 @@ def api_skewered_eatery(request, pk):
             )
         except ObjectDoesNotExist:
             return JsonResponse({"message": "Does not exist"}, status=404)
+#======================================
 
+@require_http_methods(["GET"])
+def api_show_skeweredeateries_for_specific_foodie(request, username):
+    if request.method == "GET":
+        try:
+            foodie = SkeweredEatery.objects.filter(foodie_vo=username)
+            return JsonResponse(
+                {"skewered_eateries":foodie},
+                encoder=SkeweredEateryEncoder,
+                safe=False
+            )
+        except SkeweredEatery.DoesNotExist:
+            response = JsonResponse({"message": "Does not exist"})
+            response.status_code = 404
+            return response
 
-
+#======================================
 
 # List all foodie reviews, create review
 @require_http_methods(["GET", "POST"])
@@ -412,9 +427,9 @@ def api_special_dates(request, foodie_id=None):
         try:
             content = json.loads(request.body)
 
-            foodie_id = content["foodie"]
+            foodie_id = content["foodie_vo"]
             foodie_obj = FoodieVO.objects.get(id=foodie_id)
-            content["foodie"] = foodie_obj
+            content["foodie_vo"] = foodie_obj
 
             special_date_obj = SpecialDate.objects.create(**content)
 
