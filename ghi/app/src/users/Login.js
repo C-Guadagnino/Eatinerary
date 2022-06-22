@@ -27,7 +27,7 @@ function Login(props) {
       props.setUN(e.target.value)
     }
     return (
-        <div className='App'>
+        <div className='container mt-5 py-5'>
           <CardWrapper>
             <CardHeader>
               <CardHeading>Sign in</CardHeading>

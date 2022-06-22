@@ -1,10 +1,6 @@
 volumes:
   eatinerary-data:
     external: true
-  eatinerary-maps-data:
-    external: true
-  eatinerary-yelp-data:
-    external: true
   # [name of DB here]:
   #   external: true (this value determines if it can be accessed 'externally')
   # I assume we will need a DB for each of the API groupings of information i.e Maps, eateries, as well as the Application-data

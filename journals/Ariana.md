@@ -6,6 +6,11 @@
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
+## June 20, 2022
+* Today I:
+    * put together a graphic for our skewered logo
+    * started building the EateryDetailPage.js on front end
+
 ## June 18, 2022
 * Today, I:
     * Update SkeweredEateryEncoder and ReviewEncoder in Foodies MS
