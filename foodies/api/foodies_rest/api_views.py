@@ -44,7 +44,7 @@ def api_foodies(request):
     if request.method == "GET":
         foodie_vo = FoodieVO.objects.all()
         return JsonResponse(
-            {"foodies": foodie},
+            {"foodies": foodie_vo},
             encoder=FoodieEncoder,
         )
     else:
