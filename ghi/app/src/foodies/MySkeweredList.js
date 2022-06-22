@@ -70,7 +70,7 @@ class SkeweredList extends React.Component {
     render() {
         return (
             <>
-                    <div className="row p-3">
+                    <div className="row p-3 mt-5 py-5">
                         <div className="col-md-6" id="sideNav">
                             <ul className="list-group list-group-flush">
                                 <li className="list-group-item">
@@ -84,7 +84,6 @@ class SkeweredList extends React.Component {
                                 </li>
                             </ul>
                         </div>
-                    </div>
 
                     <div className="col-md-6" id="mySkeweredList">
                             <p id="skeweredHeading">My Skewered List</p>
@@ -100,9 +99,9 @@ class SkeweredList extends React.Component {
                                     </thead>
                                     <tbody>
                                         {this.state.skeweredEateries.map(skeweredEatery => {
-
+                                            
                                             return (
-
+                                                
                                                 <tr onClick={() => this.selectEatery(skeweredEatery)} key={skeweredEatery.id}>
                                                     <td><button className='btn button-39'>{skeweredEatery.eatery.eatery_name}</button></td>
                                                     <td>{skeweredEatery.eatery.eatery_average_rating}</td>
@@ -114,17 +113,18 @@ class SkeweredList extends React.Component {
                                     </tbody>
                                 </table>
                         </div>
+                        </div>
                         
-                        <div className="row p-3">
-                            <div className="col-md-6" id="skeweredMaps">
+                        <div className="row p-3 mt-5 py-5">
+                        <div className="col-md-4">
+                            <p>map will show up here delete later</p>
                             { this.state.selected?
                                 <Iframe name={this.state.selected.eatery.eatery_name} city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
                                  :null}
-                            </div>
+                        </div>
 
-                            <div className="col-md-6" id="specialDates">
-                                <p id="skeweredHeading">Special Dates</p>
-                                <table className="table table-striped" id="specialDatesTable">
+                    <div className="col-md-4">
+                    <table className="table table-striped" id="specialDatesTable">
                                         <thead>
                                             <tr>
                                                 <th>Occasion</th>
@@ -158,7 +158,8 @@ class SkeweredList extends React.Component {
                                             })}
                                         </tbody>
                                 </table>
-                            </div>
+
+                        </div>
                         </div>
 
             </>
@@ -167,5 +168,4 @@ class SkeweredList extends React.Component {
 }
 
 export default SkeweredList;
-
 
