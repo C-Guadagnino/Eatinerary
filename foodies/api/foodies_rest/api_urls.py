@@ -20,6 +20,7 @@ from .api_views import (
     api_review_image,
     api_special_dates,
     api_special_date,
+    api_show_skeweredeateries_for_specific_foodie,
 )
 
 urlpatterns = [
@@ -79,4 +80,8 @@ urlpatterns = [
         name="api_special_dates_for_foodie",
     ),
     path("foodies/specialdates/<int:pk>/", api_special_date, name="api_special_date"),
+    path(
+        "foodies/eateries/skeweredtest/<str:username>/",
+        api_show_skeweredeateries_for_specific_foodie,
+        name="api_skewered_eatery_for_user"),
 ]

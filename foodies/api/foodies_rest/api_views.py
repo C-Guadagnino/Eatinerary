@@ -286,7 +286,25 @@ def api_skewered_eatery(request, pk):
             )
         except ObjectDoesNotExist:
             return JsonResponse({"message": "Does not exist"}, status=404)
+#======================================
 
+@require_http_methods(["GET"])
+def api_show_skeweredeateries_for_specific_foodie(request, username):
+    if request.method == "GET":
+        try:
+            foodie_vo_obj = FoodieVO.objects.get(username=username)
+            skewered_eateries = SkeweredEatery.objects.filter(foodie_vo=foodie_vo_obj)
+            return JsonResponse(
+                {"skewered_eateries":skewered_eateries},
+                encoder=SkeweredEateryEncoder,
+                safe=False
+            )
+        except SkeweredEatery.DoesNotExist:
+            response = JsonResponse({"message": "Does not exist"})
+            response.status_code = 404
+            return response
+
+#======================================
 
 # List all foodie reviews, create review
 @require_http_methods(["GET", "POST"])
@@ -410,9 +428,9 @@ def api_special_dates(request, foodie_id=None):
         try:
             content = json.loads(request.body)
 
-            foodie_id = content["foodie"]
+            foodie_id = content["foodie_vo"]
             foodie_obj = FoodieVO.objects.get(id=foodie_id)
-            content["foodie"] = foodie_obj
+            content["foodie_vo"] = foodie_obj
 
             special_date_obj = SpecialDate.objects.create(**content)
 
