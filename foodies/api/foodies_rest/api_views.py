@@ -292,9 +292,10 @@ def api_skewered_eatery(request, pk):
 def api_show_skeweredeateries_for_specific_foodie(request, username):
     if request.method == "GET":
         try:
-            foodie = SkeweredEatery.objects.filter(foodie_vo=username)
+            foodie_vo_obj = FoodieVO.objects.get(username=username)
+            skewered_eateries = SkeweredEatery.objects.filter(foodie_vo=foodie_vo_obj)
             return JsonResponse(
-                {"skewered_eateries":foodie},
+                {"skewered_eateries":skewered_eateries},
                 encoder=SkeweredEateryEncoder,
                 safe=False
             )

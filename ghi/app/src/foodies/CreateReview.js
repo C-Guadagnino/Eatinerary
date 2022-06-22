@@ -11,11 +11,13 @@ class CreateReview extends React.Component {
             "description": '',
             "skeweredEatery": '',
             "skeweredEateries": [],
+            "reviewImage": '',
         };
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleRatingChange = this.handleRatingChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
         this.handleSkeweredEateryChange = this.handleSkeweredEateryChange.bind(this);
+        this.handleReviewImageChange = this.handleReviewImageChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -28,6 +30,10 @@ class CreateReview extends React.Component {
         delete data.skeweredEatery;
         delete data.skeweredEateries;
 
+        const dataForReviewImage = {};
+        dataForReviewImage.image_url = data.reviewImage;
+        delete data.reviewImage;
+
         //POST url for foodie creates a review
         const reviewUrl = 'http://localhost:8100/api/foodies/eateries/reviews/';
         const fetchConfig = {
@@ -38,19 +44,47 @@ class CreateReview extends React.Component {
             },
         };
         const response = await fetch(reviewUrl, fetchConfig);
-
+        let newReview;
         if(response.ok){
-            const newReview = await response.json();
+            newReview = await response.json();
             console.log("newReview is: ",newReview);
+        
+            // const cleared = {
+            //     title: '',
+            //     rating: '',
+            //     description: '',
+            //     skeweredEateries: [],
+            // };
+            // this.setState(cleared);
+        }
+
+        dataForReviewImage.review = newReview.id;
+        // //This will be for review images
+        const reviewImageUrl = 'http://localhost:8100/api/foodies/eateries/reviews/images/';
+        const imageFetchConfig = {
+            method: "post",
+            body: JSON.stringify(dataForReviewImage),
+            headers: {
+                'Content-type': 'application/json',
+            },
+        };
+        const imageResponse = await fetch(reviewImageUrl, imageFetchConfig);
+
+        if(imageResponse.ok){
+            const newReviewImage = await imageResponse.json();
+            console.log("newReviewImage is: ",newReviewImage);
         
             const cleared = {
                 title: '',
                 rating: '',
                 description: '',
                 skeweredEateries: [],
+                reviewImage: '',
             };
             this.setState(cleared);
         }
+
+
     }
 
     handleTitleChange(event) {
@@ -71,6 +105,11 @@ class CreateReview extends React.Component {
     handleSkeweredEateryChange(event) {
         const value = event.target.value;
         this.setState({ skeweredEatery: value });
+    }
+
+    handleReviewImageChange(event) {
+        const value = event.target.value;
+        this.setState({ reviewImage: value });
     }
 
     async componentDidMount() {
@@ -102,16 +141,14 @@ class CreateReview extends React.Component {
                                     <Link to="/mySkeweredHistory">My Skewered History</Link>
                                 </li>
                                 <li className="list-group-item">
-                                    <Link to="/review">Reviews</Link>
+                                    <Link to="/showreview">My Reviews</Link>
                                 </li>
                             </ul>
                         </div>
                     </div>
                    
-
-
                     <div className="col-md-3" id="reviewForm">
-                        <div className="shadow p-4 mt-4">
+                        <div className="p-4 mt-4" id="innerForm">
                             <h1>Leave a Review</h1>
                             <form onSubmit={this.handleSubmit} id="create-review-form">
 
@@ -138,6 +175,12 @@ class CreateReview extends React.Component {
                                         })}
                                     </select>
                                 </div>
+                                
+                                <div className="form-floating mb-3">
+                                    <input onChange={this.handleReviewImageChange} value={this.state.reviewImage} placeholder="review_image" type="text" name="review_image" id="review_image" className="form-control" />
+                                    <label htmlFor="reviewImage">Review Image</label>
+                                </div>
+
 
                                 <button className="button-39" id="submitReviewBtn">Submit Review</button>
                             </form>

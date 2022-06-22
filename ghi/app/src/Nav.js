@@ -12,6 +12,7 @@ export const loggedinLinks = [
   { name: "Skewered", path:"/mySkewered"},
   { name: "History", path: "/mySkeweredHistory"},
   { name: "Review", path: "/review"},
+  { name: "ShowReview", path: "/showreview"},
   { name: "Skewered Eateries!", path: "/skewered"},
   // owners
   // eateries

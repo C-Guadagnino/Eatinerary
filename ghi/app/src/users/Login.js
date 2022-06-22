@@ -20,7 +20,12 @@ function Login(props) {
     if (token) {
         return <Navigate to='/' />;
     }
-
+    var handleUserName = function(e){
+      const value = e.target.value;
+      console.log("value is:", value);
+      setUsername(e.target.value)
+      props.setUN(e.target.value)
+    }
     return (
         <div className='App'>
           <CardWrapper>
@@ -31,7 +36,8 @@ function Login(props) {
             <CardBody>
               <CardFieldset>
                 <CardInput
-                  onChange={e => setUsername(e.target.value)}
+                 // onChange={e => setUsername(e.target.value)}
+                  onChange={handleUserName}
                   value={username}
                   placeholder='Username'
                   type='text'

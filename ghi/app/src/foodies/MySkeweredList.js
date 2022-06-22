@@ -1,4 +1,5 @@
 import React from 'react';
+import * as jose from 'jose';
 import {Link} from 'react-router-dom';
 import Iframe from './GoogleMaps2.js';
 import './Foodies.css';
@@ -25,6 +26,28 @@ class SkeweredList extends React.Component {
 
             this.setState({skeweredEateries: skeweredEateriesData.skewered_eateries})
         }
+
+        console.log("props are:", this.props);
+        //const secretKey = `${process.env.REACT_APP_DJWTO_SIGNING_KEY}`;
+        //console.log("secret key is:", secretKey);
+        //console.log("token is:", this.props.token);
+        //const { payload, protectedHeader } = await jose.jwtDecrypt(this.props.token, secretKey)
+
+        //     //{
+        // //issuer: 'urn:example:issuer',
+        // //audience: 'urn:example:audience'
+        // }) 
+
+        //const jwe = 'eyJhbGciOiJSU0EtT0FFUC0yNTYiLCJlbmMiOiJBMjU2R0NNIn0.nyQ19eq9ogh9wA7fFtnI2oouzy5_8b5DeLkoRMfi2yijgfTs2zEnayCEofz_qhnL-nwszabd9qUeHv0-IwvhhJJS7GUJOU3ikiIe42qcIAFme1A_Fo9CTxw4XTOy-I5qanl8So91u6hwfyN1VxAqVLsSE7_23EC-gfGEg_5znew9PyXXsOIE-K_HH7IQowRrlZ1X_bM_Liu53RzDpLDvRz59mp3S8L56YqpM8FexFGTGpEaoTcEIst375qncYt3-79IVR7gZN1RWsWgjPatfvVbnh74PglQcATSf3UUhaW0OAKn6q7r3PDx6DIKQ35bgHQg5QopuN00eIfLQL2trGw.W3grIVj5HVuAb76X.6PcuDe5D6ttWFYyv0oqqdDXfI2R8wBg1F2Q80UUA_Gv8eEimNWfxIWdLxrjzgQGSvIhxmFKuLM0.a93_Ug3uZHuczj70Zavx8Q'
+
+        //const { plaintext, protectedHeader } = await jose.compactDecrypt(this.props.token, secretKey)
+
+        //console.log(protectedHeader)
+        //console.log(new TextDecoder().decode(plaintext))
+
+        //console.log(protectedHeader)
+        //console.log(payload)
+
 
         //list all special dates endpoint
         const specialDatesUrl = 'http://localhost:8100/api/foodies/specialdates/';
@@ -54,7 +77,10 @@ class SkeweredList extends React.Component {
                                     <Link to="/mySkeweredHistory">My Skewered History</Link>
                                 </li>
                                 <li className="list-group-item">
-                                    <Link to="/review">Reviews</Link>
+                                    <Link to="/review">Leave a Review</Link>
+                                </li>
+                                <li className="list-group-item">
+                                    <Link to="/showreview">My Reviews</Link>
                                 </li>
                             </ul>
                         </div>

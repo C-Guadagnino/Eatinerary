@@ -45,7 +45,10 @@ class SkeweredHistory extends React.Component {
                                     <Link to="/mySkewered">My Skewered List</Link>
                                 </li>
                                 <li className="list-group-item">
-                                    <Link to="/review">Reviews</Link>
+                                    <Link to="/review">Leave a Review</Link>
+                                </li>
+                                <li className="list-group-item">
+                                    <Link to="/showreview">My Reviews</Link>
                                 </li>
                             </ul>
                         </div>
