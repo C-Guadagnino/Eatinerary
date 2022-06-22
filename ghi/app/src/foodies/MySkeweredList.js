@@ -117,7 +117,7 @@ class SkeweredList extends React.Component {
                         
                         <div className="row p-3 mt-5 py-5">
                         <div className="col-md-4">
-                            <p>map will show up here delete later</p>
+                            <p>map will show up here </p>
                             { this.state.selected?
                                 <Iframe name={this.state.selected.eatery.eatery_name} city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
                                  :null}
