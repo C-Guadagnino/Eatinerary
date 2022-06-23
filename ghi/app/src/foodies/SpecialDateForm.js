@@ -86,18 +86,6 @@ class SpecialDateForm extends React.Component {
     }
 
 
-    async componentDidMount() {
-
-        const url = 'http://localhost:8100/api/foodies/';
-        const response = await fetch(url);
-
-        if (response.ok) {
-            const data = await response.json();
-            // console.log("data is: ", data);
-          
-        }
-    }
-
     render() {
         return(
             <div className="row" style={{textAlign: 'left'}}>

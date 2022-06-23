@@ -16,6 +16,8 @@ import SpecialDateForm from "./foodies/SpecialDateForm"
 // import Footer from "./Footer"
 import './App.css';
 
+
+
 function App() {
   const [token, login, logout, signup, user] = useToken();
   const [userName, setUserName] = useState('');
@@ -33,7 +35,7 @@ function App() {
         <Routes>
           {/* eatery detail page url will need to be dynamic and accept an eatery id value
           path = /eatery/1 */}
-          <Route path="/eatery" element={<EateryDetailPage />} />
+          <Route path="/eatery/:eateryID" element={<EateryDetailPage />} />
           <Route path="/" element={<HomePageWithCards />} />
           <Route Path='users'>
             <Route path='login' element={<Login token={token} login={login} setUN={setUserName} />} />
