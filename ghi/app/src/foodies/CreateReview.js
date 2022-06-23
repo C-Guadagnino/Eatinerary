@@ -144,8 +144,8 @@ class CreateReview extends React.Component {
                             </ul>
                         </div>
                    
-                    <div className="col-md-4" id="reviewForm">
-                        <div className="p-4 mt-4" id="innerForm">
+                    <div className="col-md-4 mx-3" id="reviewForm">
+                        {/* <div className="p-4 mt-4" id="innerForm"> */}
                             <h1>Leave a Review</h1>
                             <form onSubmit={this.handleSubmit} id="create-review-form">
 
@@ -181,7 +181,7 @@ class CreateReview extends React.Component {
 
                                 <button className="button-39" id="submitReviewBtn">Submit Review</button>
                             </form>
-                        </div>
+                        {/* </div> */}
 
                     </div>
                     </div>
