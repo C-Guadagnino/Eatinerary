@@ -133,7 +133,8 @@ const HomePageWithCards = () => {
           {eateries.map(renderCard)}
           </div>
       </div>
-      <form>
+
+      {/* <form>
         <div className="innerform">
           <div className="input-field first-wrap">
             <input onChange={handleCategoryChange}id="search" type="text" placeholder="What type of cuisine are you looking for?"/>
@@ -143,10 +144,12 @@ const HomePageWithCards = () => {
           </div>
           <div className="input-field third-wrap">
             <button className="btn-search" type="button">Search</button>
-            {/* onClick={() => handleSearch()} */}
+            onClick={() => handleSearch()}
           </div>
         </div>
-        </form>
+        </form> */}
+
+
         <div className="grid">
         {eateries.map(renderCard)}
         </div>
