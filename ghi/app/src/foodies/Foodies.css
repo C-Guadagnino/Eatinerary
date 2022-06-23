@@ -5,14 +5,13 @@
 } */
 
 /* MySkeweredList & MySkeweredHistory */
-
-
 #sideNav {
     background-color: #b6d6a9;
     width: 25rem;
     height: 15rem;
     margin-left: 150px;
     border-radius: 10px;
+    margin-top: 100px;
     
 }
 
@@ -164,10 +163,10 @@ margin-top: 120px;
 /* Button */
 .button-39 {
     /*background-color: #ffffff;*/
-    border: 1px solid rgb(255, 255, 255);
+    border: 0px solid rgb(255, 255, 255);
     border-radius: .5rem; 
     box-sizing: border-box;
-    color: #111827;
+    color: #f492be;
     font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     font-size: .875rem;
     font-weight: 600;
@@ -182,6 +181,7 @@ margin-top: 120px;
     -webkit-user-select: none;
     touch-action: manipulation;
     outline: none;
+    background-color: transparent;
   }
   
   .button-39:hover {
@@ -236,11 +236,7 @@ margin-top: 120px;
   }
 
 
-
-
-
- 
-
+/* checkmark */
 
 
 

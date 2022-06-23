@@ -3,6 +3,8 @@ import * as jose from 'jose';
 import { Link } from 'react-router-dom';
 import Iframe from './GoogleMaps2.js';
 import './Foodies.css';
+import { FaHeart } from "react-icons/fa";
+
 
 class SkeweredList extends React.Component {
     constructor(props) {
@@ -146,12 +148,12 @@ class SkeweredList extends React.Component {
                                     return (
 
                                         <tr onClick={() => this.selectEatery(skeweredEatery)} key={skeweredEatery.id}>
-                                            <td className={hasVisited}><button className='btn button-39'>{skeweredEatery.eatery.eatery_name}</button></td>
+                                            <td className={hasVisited}>{skeweredEatery.eatery.eatery_name}</td>
                                             <td className={hasVisited}>{skeweredEatery.eatery.eatery_average_rating}</td>
                                             <td className={hasVisited}>{skeweredEatery.eatery.eatery_price}</td>
                                             <td className={hasVisited}>{skeweredEatery.notes}</td>
                                             <td className={hasVisited}>
-                                                <button onClick={() => this.hasVisited(skeweredEatery.id)} type="button" className="button-39">I've been here</button>
+                                                <button onClick={() => this.hasVisited(skeweredEatery.id)} type="button" className='button-39' > <FaHeart size="1.5em" /> </button>
                                             </td>
                                         </tr>
                                     )
