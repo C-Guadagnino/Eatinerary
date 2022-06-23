@@ -55,14 +55,14 @@ class ShowReview extends React.Component {
                     <div className="row mt-5 py-5">
                         <div className="col-md-6" id="sideNav">
                             <ul className="list-group list-group-flush">
-                                <li className="list-item">
-                                    <Link to="/mySkewered">My Skewered List</Link>
+                                <li className="list-nav-item">
+                                    <Link className='link' to="/mySkewered">My Skewered List</Link>
                                 </li>
-                                <li className="list-item">
-                                    <Link to="/mySkeweredHistory">My Skewered History</Link>
+                                <li className="list-nav-item">
+                                    <Link className='link' to="/mySkeweredHistory">My Skewered History</Link>
                                 </li>
-                                <li className="list-item">
-                                    <Link to="/review">Leave a Review</Link>
+                                <li className="list-nav-item">
+                                    <Link className='link' to="/review">Leave a Review</Link>
                                 </li>
                             </ul>
                         </div>
