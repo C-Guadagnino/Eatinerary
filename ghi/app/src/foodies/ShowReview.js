@@ -34,9 +34,7 @@ class ShowReview extends React.Component {
     render() {
         return (
             <>
-                <div className="container">
-                    <h1 id="reviewsheader">Reviews</h1>
-                    <div className="row p-3">
+                    <div className="row mt-5 py-5">
 
                         <div className="col-md-6" id="sideNav">
                             <ul className="list-group list-group-flush">
@@ -51,10 +49,11 @@ class ShowReview extends React.Component {
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    
 
                     <div className="col-md-3" id="reviewsList">
                         <div className="list-group" id="reviewsList2">
+                            <p>review will show up here</p>
                                         {this.state.reviews.map(review => {
                                                 return (
                                                     <button onClick={() => this.selectReview(review)} key={review.skewered_eatery.id} type="button" className="list-group-item list-group-item-action" id="reviewbuttons">{review.skewered_eatery.eatery.eatery_name}</button>
@@ -62,15 +61,15 @@ class ShowReview extends React.Component {
                                         })}
                         </div>
                     </div>
-
+                    </div>
                     <div className="row p-3">
                         <div className="col-md-6" id="skeweredMaps">
+                            <p>map will show up here</p>
                             { this.state.selected?
                                 <ReviewDetails title={this.state.selected.title} rating={this.state.selected.rating} description={this.state.selected.description} eatery={this.state.selected.skewered_eatery.eatery.eatery_name} images={this.state.selected.review_images}/>
                                  :null}
                         </div>
                     </div>
-                </div>
             </>
         );
     }
