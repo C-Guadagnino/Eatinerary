@@ -2,12 +2,13 @@ import React, {useState, useEffect} from 'react';
 import { Card } from "react-bootstrap";
 import { ListGroup } from "react-bootstrap";
 import {useParams} from 'react-router-dom';
+import axios from 'axios'
 // import Iframe from './GoogleMapsEatery.js';
 
-function EateryDetailPage(){
+function EateryDetailPage(props){
   const [eateryData, setEateryData] = useState({});
   let { eateryID } = useParams();
-  console.log("EATERY DATA", eateryID)
+  // console.log("EATERY DATA", eateryID)
   async function getEateryDetails(){
     const eateryUrl = `http://localhost:8090/api/eateries/${eateryID}/`;
     const eateryResponse = await fetch(eateryUrl);
@@ -15,12 +16,14 @@ function EateryDetailPage(){
     if (eateryResponse.ok) {
       const eateryDataResponse = await eateryResponse.json();
       setEateryData(eateryDataResponse);
-      console.log("eateryData", eateryDataResponse)
+      // console.log("eateryData", eateryDataResponse)
     }
   }
   useEffect(() => {
     getEateryDetails()
   },[])
+
+  console.log("EATERIES", eateryData)
 
   let categories_html = ''
   if (eateryData.categories) {
@@ -65,18 +68,21 @@ function EateryDetailPage(){
       )
     })
   }
+  console.log("OPEN HOURS",openhours_html)
   
   let image_address = ''
   if (eateryData.eatery_images) {
     image_address = eateryData.eatery_images[0].image_url
   }
-
-  // const skewerEatery = async () => {
-  //   await axios.post("http://localhost:8100/api/foodies/eateries/skewered/",
-  //   {
-
-  //   })
-  // }
+  console.log("EateryID",eateryID, "PROPS.USERNSME", props.username)
+  const skewerEatery = async () => {
+    await axios.post("http://localhost:8100/api/foodies/eateries/skewered/",
+    {
+    eateryvo_import_href: `/api/eateries/${eateryID}/`,
+    foodie_vo: `${props.username}`,
+    notes: ""
+    })
+  }
   return (
     <div className="container mt-5 py-5">
     
@@ -95,6 +101,7 @@ function EateryDetailPage(){
       </Card.ImgOverlay>
     </Card>
 
+    <button onClick={() => skewerEatery()}>BUTTON</button>
       {/* <h1>{this.state.eateryData.eatery_name}</h1> */}
       {/* <p>{this.state.eateryData.average_rating} Stars, {this.state.eateryData.review_count} reviews</p>
       <p>{this.state.eateryData.price}</p> */}
@@ -123,6 +130,7 @@ function EateryDetailPage(){
 
       <Card className='card border-0'>
         <ListGroup id="sideNav">
+          <ListGroup.Item>{eateryData.phone}</ListGroup.Item>
           <h3 className='mx-4'> Hours of Operation </h3>
           <ListGroup.Item>{openhours_html}</ListGroup.Item>
         </ListGroup>

@@ -35,7 +35,7 @@ function App() {
         <Routes>
           {/* eatery detail page url will need to be dynamic and accept an eatery id value
           path = /eatery/1 */}
-          <Route path="/eatery/:eateryID" element={<EateryDetailPage />} />
+          <Route path="/eatery/:eateryID" element={<EateryDetailPage username={userName}/>} />
           <Route path="/" element={<HomePageWithCards />} />
           <Route Path='users'>
             <Route path='login' element={<Login token={token} login={login} setUN={setUserName} />} />

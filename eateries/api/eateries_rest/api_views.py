@@ -506,14 +506,14 @@ def api_eatery_image(request, pk):
         eatery_image = EateryImage.objects.get(pk=pk)
         return JsonResponse(eatery_image, encoder=EateryImageEncoder, safe=False)
 
-# @require_http_methods(["GET"])
-# def api_filtered_eateries(request, city, alias):
-#     if request.method == "GET":
-#         filtered_eateries = Eatery.objects.filter(
-#                     location["city"]=city
-#                     ).filter(categories=alias)
-#         return JsonResponse(filtered_eateries, encoder=EateryEncoder, safe=False)
+@require_http_methods(["GET"])
+def api_filtered_eateries(request, city, alias):
+    if request.method == "GET":
+        filtered_eateries_by_category_and_location = Eatery.objects.filter(location__city__iexact=city, categories__alias__iexact=alias)
+        return JsonResponse(filtered_eateries_by_category_and_location, encoder=EateryEncoder, safe=False)
 
-# yelp_results_list = YelpResult.objects.filter(
-#                     location_term=location_obj
-#                 ).filter(category_term=category_obj)
+@require_http_methods(["GET"])
+def api_filtered_eateries_by_location(request, city):
+    if request.method == "GET":
+        filtered_eateries_by_location = Eatery.objects.filter(location__city__iexact=city)
+        return JsonResponse(filtered_eateries_by_location, encoder=EateryEncoder, safe=False)
