@@ -70,6 +70,13 @@ function EateryDetailPage(){
   if (eateryData.eatery_images) {
     image_address = eateryData.eatery_images[0].image_url
   }
+
+  // const skewerEatery = async () => {
+  //   await axios.post("http://localhost:8100/api/foodies/eateries/skewered/",
+  //   {
+
+  //   })
+  // }
   return (
     <div className="container my-5">
     <div className="container">

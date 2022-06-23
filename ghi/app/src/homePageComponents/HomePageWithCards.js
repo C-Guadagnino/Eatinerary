@@ -12,10 +12,11 @@ const HomePageWithCards = () => {
   const navigate = useNavigate()
   const [ip, setIP] = useState('');
   const [eateries, setEateries] = useState([]);
+  // const [searchEateries, setFilteredResults] = useState([]);
   //creating function to load ip address from the API
   const getData = async () => {
     const res = await axios.get('http://ip-api.com/json/')
-    // console.log(res.data);
+    console.log("fsdfas", res.data);
     setIP(res.data.city)
     const data = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/yelp/${res.data.city}/food/`)
     //Limit this request to 9 results because it takes a long time to populate the page
@@ -23,7 +24,7 @@ const HomePageWithCards = () => {
     // console.log("DATABASE EATERIES", realEateries.data);
     let eateries = []
     for (let eatery of realEateries.data.eateries) {
-      console.log("EATERIES", eatery)
+      // console.log("EATERIES", eatery)
       let eatery_dict = {
         "id": eatery.id,
         "name": eatery.name,
@@ -49,6 +50,50 @@ const HomePageWithCards = () => {
     const eateryID = eatery.id
     navigate(`/eatery/${eateryID}`)
   }
+
+  const [locationState, setLocation] = useState('')
+  const [categoryState, setCategory] = useState('')
+  const [searchInput, setSearchInput] = useState('');
+
+  const handleLocationChange = (e) => {
+    e.preventDefault();
+    setLocation(e.target.value);
+  };
+
+  const handleCategoryChange = (e) => {
+    e.preventDefault();
+    setCategory(e.target.value);
+  };
+
+  // async function handleSearch() {
+  //   const searchData = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/yelp/${locationState}/${categoryState}/`)
+  //   // console.log("SEARCH DATA:", searchData.data.eateries.businesses)
+  //   const allEateries = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries`)
+  //   console.log("SEARCH DATA:", allEateries.data.eateries)
+  //   // if (allEateries.data.eateries.length > 0) {
+  //   //   const searchEateries = allEateries.data.eateries.filter((eatery) => {
+  //   //   return eatery.name.match(locationState) ;
+  //   // });
+  //   // }
+  //   // setFilteredResults(searchEateries)
+  //   let eateries = []
+  //   for (let eatery of allEateries.data.eateries) {
+  //     // console.log("EATERIES", eatery)
+  //     let eatery_dict = {
+  //       "id": eatery.id,
+  //       "name": eatery.name,
+  //       "image_url": eatery.eatery_images[0].image_url,
+  //       "address1": eatery.location.address1,
+  //       "city": eatery.location.city,
+  //       "state": eatery.location.state,
+  //       "zip_code": eatery.location.zip_code
+  //     }
+  //     eateries.push(eatery_dict)
+  //   }
+  //   setEateries(eateries)
+  //   // setState({filteredAppointments: searchData})  
+  // }
+
   const renderCard = (card, index) => {
     // console.log("CARD", card)
         return(
@@ -76,10 +121,23 @@ const HomePageWithCards = () => {
           <h4 className='mb-3'>Local Eateries</h4>
         </div>
       </div>
+      <form>
+        <div className="innerform">
+          <div className="input-field first-wrap">
+            <input onChange={handleCategoryChange}id="search" type="text" placeholder="What type of cuisine are you looking for?"/>
+          </div>
+          <div className="input-field second-wrap">
+            <input onChange={handleLocationChange}id="search" type="text" placeholder="What city are you looking in?"/>
+          </div>
+          <div className="input-field third-wrap">
+            <button className="btn-search" type="button">Search</button>
+            {/* onClick={() => handleSearch()} */}
+          </div>
+        </div>
+        </form>
         <div className="grid">
         {eateries.map(renderCard)}
         </div>
-
         </>
   )
 }
