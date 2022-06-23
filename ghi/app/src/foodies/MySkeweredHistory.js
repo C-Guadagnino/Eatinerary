@@ -36,20 +36,20 @@ class SkeweredHistory extends React.Component {
     render() {
         return (
             <>
-                    <div className="row mt-5 py-5">
+                <div className="row mt-5 py-5">
                     <div className="col-md-6" id="sideNav">
-                            <ul className="list-group list-group-flush">
-                                <li className="list-group-item">
-                                    <Link to="/mySkewered">My Skewered List</Link>
-                                </li>
-                                <li className="list-group-item">
-                                    <Link to="/review">Leave a Review</Link>
-                                </li>
-                                <li className="list-group-item">
-                                    <Link to="/showreview">My Reviews</Link>
-                                </li>
-                            </ul>
-                        </div>
+                        <ul className="list-group list-group-flush">
+                            <li className="list-item">
+                                <Link to="/mySkeweredHistory">My Skewered History</Link>
+                            </li>
+                            <li className="list-item">
+                                <Link to="/review">Leave a Review</Link>
+                            </li>
+                            <li className="list-item">
+                                <Link to="/showreview">My Reviews</Link>
+                            </li>
+                        </ul>
+                    </div>
 
                 <div className="col-md-4 m-5" id="mySkeweredHistory">
                         <p id="skeweredHeading">My Skewered History</p>
