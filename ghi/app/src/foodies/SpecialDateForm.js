@@ -88,6 +88,7 @@ class SpecialDateForm extends React.Component {
 
     render() {
         return(
+            <div className='container mt-5 py-5'>
             <div className="row" style={{textAlign: 'left'}}>
                     <div className="offset-3 col-6">
                         <div className="shadow p-4 mt-4">
@@ -121,6 +122,7 @@ class SpecialDateForm extends React.Component {
                         </div>
                     </div>
                 </div>
+            </div>
         );
     }
 }

@@ -39,14 +39,14 @@ class SkeweredHistory extends React.Component {
                 <div className="row mt-5 py-5">
                     <div className="col-md-6" id="sideNav">
                         <ul className="list-group list-group-flush">
-                            <li className="list-item">
-                                <Link to="/mySkewered">My Skewered Eateries</Link>
+                            <li className="list-nav-item">
+                                <Link className='link' to="/mySkewered">My Skewered Eateries</Link>
                             </li>
-                            <li className="list-item">
-                                <Link to="/review">Leave a Review</Link>
+                            <li className="list-nav-item">
+                                <Link className='link' to="/review">Leave a Review</Link>
                             </li>
-                            <li className="list-item">
-                                <Link to="/showreview">My Reviews</Link>
+                            <li className="list-nav-item">
+                                <Link className='link' to="/showreview">My Reviews</Link>
                             </li>
                         </ul>
                     </div>

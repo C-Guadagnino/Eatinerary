@@ -9,7 +9,7 @@
     background-color: #e5f9dd;
     width: 25rem;
     height: 15rem;
-    margin-left: 150px;
+    margin-left: 120px;
     border-radius: 10px;
     margin-top: 50px;
     
@@ -76,6 +76,25 @@ td {
     padding: 8px;
     margin-top: 1px;
 }
+.list-nav-item {
+    background-color: #d3eac9;
+    list-style-type: none;
+    padding: 8px;
+    margin-top: 1px;
+    color: white;
+}
+.list-nav-item:hover {
+    background-color: #edffe5;
+}
+
+.link {
+    color: #111827;
+    text-decoration: none;
+  }
+  
+.link:hover {
+    color: rgb(46, 87, 43);
+  }
 
 .row {
     margin-top: 100px;
@@ -137,11 +156,13 @@ margin-top: 120px;
 /* Special Dates */
 
 #specialDates{
-    margin-top: 120px;
-    position: absolute; right: 200px;
-    width: 45rem;
-    background-color: #b6d6a9;
+    background-color: #e5f9dd;
+    width: 25rem;
+    height: 15rem;
+    margin-left: 0px;
+    margin-right: 50px;
     border-radius: 10px;
+    margin-top: 120px;
     overflow-y: auto;
     max-height: 500px;
     
