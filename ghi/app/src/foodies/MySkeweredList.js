@@ -92,7 +92,7 @@ class SkeweredList extends React.Component {
     render() {
         return (
             <>
-                <div className="row p-3">
+                <div className="row mt-5 py-5">
                     <div className="col-md-6" id="sideNav">
                         <ul className="list-group list-group-flush">
                             <li className="list-group-item">
@@ -106,46 +106,47 @@ class SkeweredList extends React.Component {
                             </li>
                         </ul>
                     </div>
-                </div>
 
-                <div className="col-md-6" id="mySkeweredList">
+
+                <div className="col-md-6 m-5" id="mySkeweredList">
                     <p id="skeweredHeading">My Skewered List</p>
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Eatery Name</th>
-                                <th>Average Rating</th>
-                                <th>Price</th>
-                                <th>Notes</th>
-                                <th> </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.skeweredEateries.map(skeweredEatery => {
+                        <table className="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Eatery Name</th>
+                                    <th>Average Rating</th>
+                                    <th>Price</th>
+                                    <th>Notes</th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.state.skeweredEateries.map(skeweredEatery => {
 
-                                return (
+                                    return (
 
-                                    <tr onClick={() => this.selectEatery(skeweredEatery)} key={skeweredEatery.id}>
-                                        <td><button className='btn button-39'>{skeweredEatery.eatery.eatery_name}</button></td>
-                                        <td>{skeweredEatery.eatery.eatery_average_rating}</td>
-                                        <td>{skeweredEatery.eatery.eatery_price}</td>
-                                        <td>{skeweredEatery.notes}</td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
+                                        <tr onClick={() => this.selectEatery(skeweredEatery)} key={skeweredEatery.id}>
+                                            <td><button className='btn button-39'>{skeweredEatery.eatery.eatery_name}</button></td>
+                                            <td>{skeweredEatery.eatery.eatery_average_rating}</td>
+                                            <td>{skeweredEatery.eatery.eatery_price}</td>
+                                            <td>{skeweredEatery.notes}</td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                </div>
                 </div>
 
-                <div className="row p-3">
-                    <div className="col-md-6" id="skeweredMaps">
+                <div className="row p-3 mt-5 py-5">
+                <div className="col-md-4">
                         {this.state.selected ?
                             <Iframe name={this.state.selected.eatery.eatery_name} city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
                             : null}
-                    </div>
+                </div>
 
-                    <div className="col-md-6" id="specialDates">
-                        <p id="skeweredHeading">Special Dates</p>
+                    <div className="col-md-4">
+                        <p>special dates do later</p>
                         <table className="table table-striped" id="specialDatesTable">
                             <thead>
                                 <tr>

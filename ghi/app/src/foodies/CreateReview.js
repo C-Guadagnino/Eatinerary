@@ -143,10 +143,9 @@ class CreateReview extends React.Component {
                                 </li>
                             </ul>
                         </div>
-                    </div>
 
-                    <div className="col-md-3" id="reviewForm">
-                        <div className="p-4 mt-4" id="innerForm">
+
+                    <div className="col-md-4 mx-3" id="reviewForm">
                             <h1>Leave a Review</h1>
                             <form onSubmit={this.handleSubmit} id="create-review-form">
                                 <div className="mb-3">
