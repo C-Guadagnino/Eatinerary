@@ -22,3 +22,11 @@
 .grid > div{
     flex-basis: calc(33.3333333%-40px);
 }
+
+.roomfac {
+    display: flex;
+    width: 100%;
+    max-width: 60%;
+    margin: 0 auto;
+    justify-content: center;
+}
