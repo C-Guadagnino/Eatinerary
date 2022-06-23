@@ -12,6 +12,7 @@ import MySkeweredHistory from "./foodies/MySkeweredHistory"
 import CreateReview from "./foodies/CreateReview"
 import ShowReview from "./foodies/ShowReview"
 import HomePageWithCards from "./homePageComponents/HomePageWithCards"
+import SpecialDateForm from "./foodies/SpecialDateForm"
 // import Footer from "./Footer"
 import './App.css';
 
@@ -37,11 +38,9 @@ function App() {
           <Route Path='users'>
             <Route path='login' element={<Login token={token} login={login} setUN={setUserName} />} />
             <Route path='logout' element={<Logout logout={logout} />} />
-            <Route
-              path='signup'
-              element={<SignUp token={token} signup={signup} />}
-            />
+            <Route path='signup' element={<SignUp token={token} signup={signup} />}/>
           </Route>
+          <Route path='specialDateForm' element={<SpecialDateForm username={userName} />} />
           <Route path='mySkewered' element={<MySkeweredList username={userName} />} />
           <Route path='mySkeweredHistory' element={<MySkeweredHistory />} />
           <Route path='review' element={<CreateReview />} />
