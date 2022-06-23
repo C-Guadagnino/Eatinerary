@@ -10,13 +10,29 @@ class SkeweredHistory extends React.Component {
             "skeweredEateries": [],
 
         };
-        //this.handleSkeweredList = this.handleSkeweredListChange.bind(this);
         this.selectEatery = this.selectEatery.bind(this);
     }
 
     async componentDidMount() {
+        this.getFoodieData()
+    }
+
+    componentDidUpdate(prevProps) {
+        // if old username is not the same as the current username
+        if (prevProps.username !== this.props.username) {
+            this.getFoodieData()
+        }
+    }
+
+    async getFoodieData() {
+        const foodie_username = this.props.username
+
+        if (!foodie_username) {
+            return
+        }
+
         //list all skewered eateries endpoint
-        const skeweredEateriesUrl = 'http://localhost:8100/api/foodies/eateries/skewered/';
+        const skeweredEateriesUrl = `http://localhost:8100/api/foodies/user/${foodie_username}/eateries/skewered/`;
         const skeweredEateriesResponse = await fetch(skeweredEateriesUrl);
 
         if(skeweredEateriesResponse.ok){
@@ -25,6 +41,7 @@ class SkeweredHistory extends React.Component {
             this.setState({skeweredEateries: skeweredEateriesData.skewered_eateries})
         }
     }
+
 
     selectEatery(eatery) {
         console.log("is this selectEatery:", eatery);
@@ -89,25 +106,6 @@ class SkeweredHistory extends React.Component {
                             { this.state.selected?
                                 <Iframe name={this.state.selected.eatery.eatery_name} city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
                                  :null}
-
-                                {/* { this.state.selected?
-                                <Iframe name={this.state.selected.eatery.eatery_name} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
-                                 :null} */}
-                    
-                                {/* { this.state.selected?
-                                <Iframe city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} />
-                                 :null} */}
-
-                                {/* {this.state.skeweredEateries.map(skeweredEatery => {
-                                    if(skeweredEatery.has_visited === true){
-
-                                    return(
-                                        <div className="myClassName" id="myId">
-                                            <Iframe city={skeweredEatery.eatery.location_city} state={skeweredEatery.eatery.location_state} />
-                                        </div>
-                                    )
-                                    }
-                                })} */}
                             </div>
                         </div>
             </>
