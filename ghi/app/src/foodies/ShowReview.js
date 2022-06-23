@@ -63,7 +63,6 @@ class ShowReview extends React.Component {
                     </div>
                     <div className="row p-3">
                         <div className="col-md-6" id="skeweredMaps">
-                            <p>map will show up here</p>
                             { this.state.selected?
                                 <ReviewDetails title={this.state.selected.title} rating={this.state.selected.rating} description={this.state.selected.description} eatery={this.state.selected.skewered_eatery.eatery.eatery_name} images={this.state.selected.review_images}/>
                                  :null}

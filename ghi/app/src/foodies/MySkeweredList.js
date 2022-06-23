@@ -127,7 +127,7 @@ class SkeweredList extends React.Component {
 
                 <div className="col-md-6 m-5" id="mySkeweredList">
                     <p id="skeweredHeading">My Skewered List</p>
-                        <table className="table table-striped">
+                        <table className="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Eatery Name</th>
@@ -163,8 +163,8 @@ class SkeweredList extends React.Component {
                 </div>
                 </div>
 
-                <div className="row p-3 mt-5 py-5">
-                <div className="col-md-4">
+                <div className="row p-3 py-5">
+                <div className="col-md-4 mx-5 mt-0">
                         {this.state.selected ?
                             <Iframe name={this.state.selected.eatery.eatery_name} city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
                             : null}
@@ -172,7 +172,7 @@ class SkeweredList extends React.Component {
 
                     <div className="col-md-4">
                         <p>special dates do later</p>
-                        <table className="table table-striped" id="specialDatesTable">
+                        <table className="table" id="specialDatesTable">
                             <thead>
                                 <tr>
                                     <th>Occasion</th>

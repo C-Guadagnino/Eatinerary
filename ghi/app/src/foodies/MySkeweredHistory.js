@@ -40,7 +40,7 @@ class SkeweredHistory extends React.Component {
                     <div className="col-md-6" id="sideNav">
                         <ul className="list-group list-group-flush">
                             <li className="list-item">
-                                <Link to="/mySkeweredHistory">My Skewered History</Link>
+                                <Link to="/mySkewered">My Skewered Eateries</Link>
                             </li>
                             <li className="list-item">
                                 <Link to="/review">Leave a Review</Link>
@@ -53,7 +53,7 @@ class SkeweredHistory extends React.Component {
 
                 <div className="col-md-4 m-5" id="mySkeweredHistory">
                         <p id="skeweredHeading">My Skewered History</p>
-                            <table className="table table-striped">
+                            <table className="table table-hover">
                                 <thead>
                                     <tr>
                                         <th>Eatery Name</th>
@@ -70,7 +70,7 @@ class SkeweredHistory extends React.Component {
                                             
                                             return (
                                                 <tr onClick={() => this.selectEatery(skeweredEatery)} key={skeweredEatery.id}>
-                                                    <td ><button className='btn button-39'>{skeweredEatery.eatery.eatery_name}</button></td>
+                                                    <td >{skeweredEatery.eatery.eatery_name}</td>
                                                     <td >{skeweredEatery.eatery.eatery_average_rating}</td>
                                                     <td >{skeweredEatery.eatery.eatery_price}</td>
                                                     <td >{skeweredEatery.notes}</td>
@@ -86,7 +86,6 @@ class SkeweredHistory extends React.Component {
 
                         <div className="row p-3">
                             <div className="col-md-12" id="maps">
-                                <p>Map will show up here</p>
                             { this.state.selected?
                                 <Iframe name={this.state.selected.eatery.eatery_name} city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
                                  :null}

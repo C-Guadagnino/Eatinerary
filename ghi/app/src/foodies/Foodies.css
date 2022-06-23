@@ -6,17 +6,17 @@
 
 /* MySkeweredList & MySkeweredHistory */
 #sideNav {
-    background-color: #b6d6a9;
+    background-color: #e5f9dd;
     width: 25rem;
     height: 15rem;
     margin-left: 150px;
     border-radius: 10px;
-    margin-top: 200px;
+    margin-top: 50px;
     
 }
 
 #mySkeweredList{
-    background-color: #b6d6a9;
+    background-color: #e5f9dd;
     /*background-color: rgba(182,214,169,0.8);*/
     border-radius: 10px;
     width: 50rem; 
@@ -26,7 +26,7 @@
 }
 
 #mySkeweredHistory{
-    background-color: #b6d6a9;
+    background-color: #e5f9dd;
     /*background-color: rgba(182,214,169,0.8);*/
     border-radius: 10px;
     width: 50rem; 
@@ -130,6 +130,7 @@ margin-top: 120px;
     width: 40rem;
     height: 30rem;
     text-align: center;
+    border-radius: 10px;
     /* position: absolute; left: 1100px; top: 255px; */
 }
 
@@ -242,6 +243,45 @@ margin-top: 120px;
 /* checkmark */
 
 
+.neg-margin{
+    margin-top: -1rem;
+}
 
 
-
+.button-38 {
+    /*background-color: #ffffff;*/
+    border: 0px solid rgb(255, 255, 255);
+    border-radius: .5rem; 
+    box-sizing: border-box;
+    color: #000000;
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: .875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    padding: .75rem 1rem;
+    text-align: center;
+    text-decoration: none #D1D5DB solid;
+    text-decoration-thickness: auto;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    outline: none;
+    background-color: transparent;
+  }
+  
+  .button-38:hover {
+    background-color: rgba(194, 251, 205, 0.421);
+  }
+  
+  .button-38:focus {
+    outline: none !important;
+    box-shadow: none;
+    background-color: rgba(194, 251, 205, 0.421);
+  }
+  .button-38:focus-visible {
+    outline: none;
+    box-shadow: none;
+    background-color: rgba(194, 251, 205, 0.421);
+  }
