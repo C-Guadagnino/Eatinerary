@@ -80,7 +80,7 @@ function EateryDetailPage(props){
     {
     eateryvo_import_href: `/api/eateries/${eateryID}/`,
     foodie_vo: `${props.username}`,
-    notes: "LSDKFHDLJF"
+    notes: ""
     })
   }
   return (

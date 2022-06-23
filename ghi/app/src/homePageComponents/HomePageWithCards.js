@@ -56,7 +56,7 @@ const HomePageWithCards = () => {
   }
 
   const [locationState, setLocation] = useState('')
-  const [categoryState, setCategory] = useState('')
+  const [categoryState, setCategory] = useState('food')
   const [searchInput, setSearchInput] = useState('');
 
   const handleLocationChange = (e) => {
@@ -70,9 +70,11 @@ const HomePageWithCards = () => {
   };
 
   async function handleSearch() {
+    console.log("!!!!!", locationState)
+    console.log("!!!!!", categoryState)
     const searchData = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/yelp/${locationState}/${categoryState}/`)
     // console.log("SEARCH DATA:", searchData.data.eateries.businesses)
-    const allEateries = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/filtered/${locationState}/${categoryState}`)
+    const allEateries = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/filtered/${locationState}/${categoryState}/`)
     // console.log("SEARCH DATA:", allEateries.data.eateries)
     // if (allEateries.data.eateries.length > 0) {
     //   const searchEateries = allEateries.data.eateries.filter((eatery) => {
@@ -85,7 +87,7 @@ const HomePageWithCards = () => {
       // console.log("EATERIES", eatery)
       let eatery_dict = {
         "id": eatery.id,
-        "name": eatery.eatery_name,
+        "eatery_name": eatery.eatery_name,
         "image_url": eatery.eatery_images[0].image_url,
         "address1": eatery.location.address1,
         "city": eatery.location.city,
