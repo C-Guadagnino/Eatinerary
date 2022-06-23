@@ -37,25 +37,25 @@ class ShowReview extends React.Component {
                     <div className="row mt-5 py-5">
                         <div className="col-md-6" id="sideNav">
                             <ul className="list-group list-group-flush">
-                                <li className="list-group-item">
+                                <li className="list-item">
                                     <Link to="/mySkewered">My Skewered List</Link>
                                 </li>
-                                <li className="list-group-item">
+                                <li className="list-item">
                                     <Link to="/mySkeweredHistory">My Skewered History</Link>
                                 </li>
-                                <li className="list-group-item">
+                                <li className="list-item">
                                     <Link to="/review">Leave a Review</Link>
                                 </li>
                             </ul>
                         </div>
                     
 
-                    <div className="col-md-3" id="reviewsList">
+                    <div className="col-md-3 mt-5" id="reviewsList">
                         <h2> Reviews </h2>
                         <div className="list-group" id="reviewsList2">
                                         {this.state.reviews.map(review => {
                                                 return (
-                                                    <button onClick={() => this.selectReview(review)} key={review.skewered_eatery.id} type="button" className="list-group-item list-group-item-action" id="reviewbuttons">{review.skewered_eatery.eatery.eatery_name}</button>
+                                                    <button onClick={() => this.selectReview(review)} key={review.skewered_eatery.id} type="button" className="button-38" id="reviewbuttons">{review.skewered_eatery.eatery.eatery_name}</button>
                                                 )
                                         })}
                         </div>
@@ -63,7 +63,6 @@ class ShowReview extends React.Component {
                     </div>
                     <div className="row p-3">
                         <div className="col-md-6" id="skeweredMaps">
-                            <p>map will show up here</p>
                             { this.state.selected?
                                 <ReviewDetails title={this.state.selected.title} rating={this.state.selected.rating} description={this.state.selected.description} eatery={this.state.selected.skewered_eatery.eatery.eatery_name} images={this.state.selected.review_images}/>
                                  :null}

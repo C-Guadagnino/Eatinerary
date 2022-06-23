@@ -16,7 +16,7 @@ class GoogleMaps extends React.Component {
                         height="450px"
                         id="mySkewered"
                         className="myClassName"
-                        display="initial"
+                        display="block"
                         position="relative"
                         
                         />

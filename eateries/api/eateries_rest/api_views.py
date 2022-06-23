@@ -505,3 +505,15 @@ def api_eatery_image(request, pk):
     if request.method == "GET":
         eatery_image = EateryImage.objects.get(pk=pk)
         return JsonResponse(eatery_image, encoder=EateryImageEncoder, safe=False)
+
+# @require_http_methods(["GET"])
+# def api_filtered_eateries(request, city, alias):
+#     if request.method == "GET":
+#         filtered_eateries = Eatery.objects.filter(
+#                     location["city"]=city
+#                     ).filter(categories=alias)
+#         return JsonResponse(filtered_eateries, encoder=EateryEncoder, safe=False)
+
+# yelp_results_list = YelpResult.objects.filter(
+#                     location_term=location_obj
+#                 ).filter(category_term=category_obj)

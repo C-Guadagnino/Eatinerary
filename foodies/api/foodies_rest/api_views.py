@@ -452,3 +452,4 @@ def api_special_date(request, pk):
         # TO-DO: Figure out what kind of error this throws
         except:
             return JsonResponse({"message": "Cannot update special date"}, status=400)
+

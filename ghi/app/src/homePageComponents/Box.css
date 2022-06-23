@@ -1,4 +1,4 @@
-.box1, .box2, .box3, .box4, .box5, .box6, .box6, .box8, .box9, .box10, .box11, .box12{
+/* .box1, .box2, .box3, .box4, .box5, .box6, .box6, .box8, .box9, .box10, .box11, .box12{
     background-color: #ffffff;
     border-radius: 10px 10px 10px 10px;
     overflow: hidden;
@@ -6,10 +6,10 @@
     max-height: 35vh;
     -webkit-box-shadow: 0px 12px 18px -6px rgba(0,0,0,0.3);
     box-shadow: 0px 12px 18px -6px rgba(0,0,0,0.3)
-}
+} */
 
 .box{
-    margin: 20px
+    margin: 20px;
 }
 
 .grid{
@@ -29,4 +29,17 @@
     max-width: 60%;
     margin: 0 auto;
     justify-content: center;
+}
+
+
+.image-container {
+    height: 25vh;
+    width: 25vw;
+    max-width: 267px;
+    max-height: 262px;
+}
+
+.card_container {
+    width: 23vw;
+    height: 23vh;
 }

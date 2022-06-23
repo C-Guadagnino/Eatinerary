@@ -132,20 +132,20 @@ class CreateReview extends React.Component {
 
                         <div className="col-md-4" id="sideNav">
                             <ul className="list-group list-group-flush">
-                                <li className="list-group-item">
+                                <li className="list-item">
                                     <Link to="/mySkewered">My Skewered List</Link>
                                 </li>
-                                <li className="list-group-item">
+                                <li className="list-item">
                                     <Link to="/mySkeweredHistory">My Skewered History</Link>
                                 </li>
-                                <li className="list-group-item">
+                                <li className="list-item">
                                     <Link to="/showreview">My Reviews</Link>
                                 </li>
                             </ul>
                         </div>
 
 
-                    <div className="col-md-4 mx-3" id="reviewForm">
+                    <div className="col-md-4 mx-3 mt-5" id="reviewForm">
                             <h1>Leave a Review</h1>
                             <form onSubmit={this.handleSubmit} id="create-review-form">
                                 <div className="mb-3">
@@ -180,7 +180,7 @@ class CreateReview extends React.Component {
                                     <input onChange={this.handleReviewImageChange} value={this.state.reviewImage} placeholder="review_image" type="text" name="review_image" id="review_image" className="form-control" />
                                     <label htmlFor="reviewImage">Review Image URL</label>
                                 </div>
-                                <button className="button-39" id="submitReviewBtn">Submit Review</button>
+                                <button className="button-38" id="submitReviewBtn">Submit Review</button>
                             </form>
                         </div>
                     </div>
