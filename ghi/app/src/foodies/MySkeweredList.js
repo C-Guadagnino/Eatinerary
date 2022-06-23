@@ -163,7 +163,7 @@ class SkeweredList extends React.Component {
                 </div>
                 </div>
 
-                <div className="row p-3 py-5">
+                <div className="row p-3 py-5 justify-content-md-left">
                 <div className="col-md-4 mx-5 mt-0">
                         {this.state.selected ?
                             <Iframe name={this.state.selected.eatery.eatery_name} city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
