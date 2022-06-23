@@ -31,7 +31,7 @@ const classesIfNotLoggedIn = "navbar-nav";
 function Nav(props) {
     const links = props.token ? loggedinLinks : loggedoutLinks;
     return (
-      <nav className='navbar navbar-expand-md fixed-top bg-color-nav'>
+      <nav className='navbar navbar-expand-md fixed-top color-nav'>
         <div className='container-fluid'>
           <NavLink className='text-decoration-none' to='/'>
             <h2 className='navbar-brand text-uppercase fs-2'>
