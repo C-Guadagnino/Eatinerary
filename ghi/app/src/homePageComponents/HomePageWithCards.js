@@ -103,7 +103,7 @@ const HomePageWithCards = () => {
 
             // <Card border="success" style={{ width: '17rem' }} key={index} className="box">
             <Card style={{ width: '18rem' }} key={index} className="container mt-4 mb-4 mx-3">
-                <Card.Img variant="top" src={card.image_url} />
+                <Card.Img className="image-container mt-3" src={card.image_url} />
 
 
                 <Card.Body>

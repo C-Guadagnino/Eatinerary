@@ -78,7 +78,7 @@ function EateryDetailPage(){
   //   })
   // }
   return (
-    <div className="container my-5">
+    <div className="container mt-5 py-5">
     <div className="container">
     
     <Card className="bg-dark text-light">
