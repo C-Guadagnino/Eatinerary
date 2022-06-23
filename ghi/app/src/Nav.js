@@ -5,6 +5,7 @@ import { useToken } from "./authApi";
 import { useState, useEffect } from "react";
 import App from "./App";
 import skewerednobg from "./images/skewered.png"
+import SpecialDateForm from "./foodies/SpecialDateForm";
 
 export const loggedinLinks = [
   // foodies
@@ -14,6 +15,7 @@ export const loggedinLinks = [
   { name: "My Reviews", path: "/showreview"},
   // owners
   // eateries
+  { name: "Create a Date", path: "/SpecialDateForm"},
   { name: "Logout", path: "/logout"},
 ]
 

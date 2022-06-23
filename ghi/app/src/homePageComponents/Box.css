@@ -43,3 +43,42 @@
     width: 23vw;
     height: 23vh;
 }
+
+.button-38 {
+    /*background-color: #ffffff;*/
+    border: 0px solid rgb(255, 255, 255);
+    border-radius: .5rem; 
+    box-sizing: border-box;
+    color: #000000;
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: .875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    padding: .75rem 1rem;
+    text-align: center;
+    text-decoration: none #D1D5DB solid;
+    text-decoration-thickness: auto;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.597);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    outline: none;
+    background-color: #e5f9dd;
+    margin: 1px;
+  }
+  
+  .button-38:hover {
+    background-color: rgba(93, 138, 102, 0.978);
+  }
+  
+  .button-38:focus {
+    outline: none !important;
+    box-shadow: none;
+    background-color: rgba(194, 251, 205, 0.421);
+  }
+  .button-38:focus-visible {
+    outline: none;
+    box-shadow: none;
+    background-color: rgba(194, 251, 205, 0.421);
+  }

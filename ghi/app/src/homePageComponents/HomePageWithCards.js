@@ -112,7 +112,7 @@ const HomePageWithCards = () => {
                         {card.address1}, {card.city}, {card.state}, {card.zip_code}
                     </Card.Text>
       
-                    <Button onClick={detailOnClick.bind(this,card)}variant="primary">Details</Button>
+                    <Button className="button-38" onClick={detailOnClick.bind(this,card)}>More Info</Button>
                     {/* Revisit and look into bind documentation for more details - ANOTHER ALTERNATIVE:
                     () => detailOnClick(card) */}
                 </Card.Body>
