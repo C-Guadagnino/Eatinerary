@@ -6,6 +6,14 @@
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
+## June 23, 2022
+Today I:
+    *
+
+## June 22, 2022
+Today I:
+    *
+
 ## June 21, 2022
 Today I:
     *
