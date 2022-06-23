@@ -45,7 +45,7 @@ function App() {
           <Route path='specialDateForm' element={<SpecialDateForm username={userName} />} />
           <Route path='mySkewered' element={<MySkeweredList username={userName} />} />
           <Route path='mySkeweredHistory' element={<MySkeweredHistory username={userName} />} />
-          <Route path='review' element={<CreateReview />} />
+          <Route path='review' element={<CreateReview username={userName} />} />
           <Route path='showreview' element={<ShowReview username={userName} />} />
         </Routes>
       </div>

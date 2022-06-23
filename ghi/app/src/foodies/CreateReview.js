@@ -21,6 +21,36 @@ class CreateReview extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    async componentDidMount() {
+        this.getFoodieData()
+    }
+
+    componentDidUpdate(prevProps) {
+        // if old username is not the same as the current username
+        if (prevProps.username !== this.props.username) {
+            this.getFoodieData()
+        }
+    }
+
+    async getFoodieData() {
+
+        const foodie_username = this.props.username
+
+        if (!foodie_username) {
+            return
+        }
+        //list all skewered eateries endpoint
+        const skeweredEateriesUrl = `http://localhost:8100/api/foodies/user/${foodie_username}/eateries/skewered/`;
+        const skeweredEateriesResponse = await fetch(skeweredEateriesUrl);
+
+        if (skeweredEateriesResponse.ok) {
+            const skeweredEateriesData = await skeweredEateriesResponse.json();
+            console.log(skeweredEateriesData);
+
+            this.setState({ skeweredEateries: skeweredEateriesData.skewered_eateries })
+        }
+    }
+
     async handleSubmit(event) {
         event.preventDefault();
 
@@ -110,19 +140,6 @@ class CreateReview extends React.Component {
     handleReviewImageChange(event) {
         const value = event.target.value;
         this.setState({ reviewImage: value });
-    }
-
-    async componentDidMount() {
-        //list all skewered eateries endpoint
-        const skeweredEateriesUrl = 'http://localhost:8100/api/foodies/eateries/skewered/';
-        const skeweredEateriesResponse = await fetch(skeweredEateriesUrl);
-
-        if (skeweredEateriesResponse.ok) {
-            const skeweredEateriesData = await skeweredEateriesResponse.json();
-            console.log(skeweredEateriesData);
-
-            this.setState({ skeweredEateries: skeweredEateriesData.skewered_eateries })
-        }
     }
 
     render() {
