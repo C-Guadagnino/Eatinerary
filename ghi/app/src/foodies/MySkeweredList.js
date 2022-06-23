@@ -172,7 +172,6 @@ class SkeweredList extends React.Component {
                                 <tr>
                                     <th>Occasion</th>
                                     <th>Special Date</th>
-                                    <th>Has Passed</th>
                                     <th> </th>
                                 </tr>
                             </thead>
@@ -182,20 +181,10 @@ class SkeweredList extends React.Component {
                                     let date = Date.parse(specialDate.special_date)
                                     const d = new Date(date)
 
-                                    let hasPassed = "";
-
-                                    if (specialDate.has_passed === false) {
-                                        hasPassed = "No";
-                                    } else {
-                                        hasPassed = "Yes";
-                                    }
-
-
                                     return (
                                         <tr key={specialDate.id}>
                                             <td>{specialDate.occasion}</td>
                                             <td>{d.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</td>
-                                            <td>{hasPassed}</td>
                                         </tr>
                                     )
                                 })}

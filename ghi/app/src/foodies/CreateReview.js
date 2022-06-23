@@ -10,7 +10,7 @@ class CreateReview extends React.Component {
             "rating": '',
             "description": '',
             "skeweredEatery": '',
-            "skeweredEateries": [],
+            "skeweredEateriesWithoutReview": [],
             "reviewImage": '',
         };
         this.handleTitleChange = this.handleTitleChange.bind(this);
@@ -45,9 +45,36 @@ class CreateReview extends React.Component {
 
         if (skeweredEateriesResponse.ok) {
             const skeweredEateriesData = await skeweredEateriesResponse.json();
-            console.log(skeweredEateriesData);
+            console.log("skeweredEateriesData.skewered_eateries", skeweredEateriesData.skewered_eateries);
+            const skeweredEateriesList = skeweredEateriesData.skewered_eateries;
+            //this.setState({ skeweredEateries: skeweredEateriesData.skewered_eateries })
 
-            this.setState({ skeweredEateries: skeweredEateriesData.skewered_eateries })
+            const reviewsUrl = `http://localhost:8100/api/foodies/${foodie_username}/eateries/reviews/`;
+            const reviewsResponse = await fetch(reviewsUrl);
+            if (reviewsResponse.ok){
+                const reviewsData = await reviewsResponse.json();
+                console.log("reviewsData.reviews",reviewsData.reviews);
+                const reviewsList = reviewsData.reviews;
+                const eateriesWithoutReview = []
+    
+                for (const skeweredEatery of skeweredEateriesList){
+                    //console.log("$$$$$$$$$ rL.s_e.id:", reviewsList.skewered_eatery.id)
+                    console.log("$$$$$$$$$ sE id:", skeweredEatery.id)
+                    let eateryHasReview = false
+                    for (const review of reviewsList){
+                       // eateryHasReview = false
+                        if (review.skewered_eatery.id === skeweredEatery.id){
+                            eateryHasReview = true
+                        }
+                    }
+                    if(!eateryHasReview){
+                        eateriesWithoutReview.push(skeweredEatery)
+                    }
+                }
+                console.log("eateriesWithoutReview",eateriesWithoutReview);
+                this.setState({ skeweredEateriesWithoutReview: eateriesWithoutReview })
+            }
+           
         }
     }
 
@@ -55,10 +82,10 @@ class CreateReview extends React.Component {
         event.preventDefault();
 
         const data = { ...this.state };
-
+        console.log("$$$$DATA IS$$$$$:", data)
         data.skewered_eatery = data.skeweredEatery;
         delete data.skeweredEatery;
-        delete data.skeweredEateries;
+        delete data.skeweredEateriesWithoutReview;
 
         const dataForReviewImage = {};
         dataForReviewImage.image_url = data.reviewImage;
@@ -79,42 +106,32 @@ class CreateReview extends React.Component {
             newReview = await response.json();
             console.log("newReview is: ", newReview);
 
-            // const cleared = {
-            //     title: '',
-            //     rating: '',
-            //     description: '',
-            //     skeweredEateries: [],
-            // };
-            // this.setState(cleared);
-        }
-
-        dataForReviewImage.review = newReview.id;
-        // //This will be for review images
-        const reviewImageUrl = 'http://localhost:8100/api/foodies/eateries/reviews/images/';
-        const imageFetchConfig = {
-            method: "post",
-            body: JSON.stringify(dataForReviewImage),
-            headers: {
-                'Content-type': 'application/json',
-            },
-        };
-        const imageResponse = await fetch(reviewImageUrl, imageFetchConfig);
-
-        if (imageResponse.ok) {
-            const newReviewImage = await imageResponse.json();
-            console.log("newReviewImage is: ", newReviewImage);
-
-            const cleared = {
-                title: '',
-                rating: '',
-                description: '',
-                skeweredEateries: [],
-                reviewImage: '',
+            dataForReviewImage.review = newReview.id;
+            // //This will be for review images
+            const reviewImageUrl = 'http://localhost:8100/api/foodies/eateries/reviews/images/';
+            const imageFetchConfig = {
+                method: "post",
+                body: JSON.stringify(dataForReviewImage),
+                headers: {
+                    'Content-type': 'application/json',
+                },
             };
-            this.setState(cleared);
+            const imageResponse = await fetch(reviewImageUrl, imageFetchConfig);
+    
+            if (imageResponse.ok) {
+                const newReviewImage = await imageResponse.json();
+                console.log("newReviewImage is: ", newReviewImage);
+    
+                const cleared = {
+                    title: '',
+                    rating: '',
+                    description: '',
+                    skeweredEateriesWithoutReview: [],
+                    reviewImage: '',
+                };
+                this.setState(cleared);
+            }
         }
-
-
     }
 
     handleTitleChange(event) {
@@ -168,7 +185,7 @@ class CreateReview extends React.Component {
                                 <div className="mb-3">
                                     <select onChange={this.handleSkeweredEateryChange} value={this.state.skeweredEatery} required name="skewered_eatery" id="skewered_eatery" className="form-select">
                                         <option value="">Choose a Skewered Eatery</option>
-                                        {this.state.skeweredEateries.map(skeweredEatery => {
+                                        {this.state.skeweredEateriesWithoutReview.map(skeweredEatery => {
                                             return (
                                                 <option key={skeweredEatery.id} value={skeweredEatery.id}>{skeweredEatery.eatery.eatery_name}</option>
                                             );
