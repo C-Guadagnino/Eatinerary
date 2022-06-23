@@ -89,6 +89,21 @@ class SkeweredList extends React.Component {
         })
     }
 
+    async hasVisited(id){
+        const putURL = `http://localhost:8100/api/foodies/eateries/skewered/${id}/`;
+        const fetchConfig = {
+            method: "put",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({has_visited: true})
+        };
+
+        const response = await fetch(putURL, fetchConfig);
+        if (response.ok) {
+            window.location.reload();
+        }
+    };
+
+
     render() {
         return (
             <>
@@ -117,19 +132,27 @@ class SkeweredList extends React.Component {
                                     <th>Average Rating</th>
                                     <th>Price</th>
                                     <th>Notes</th>
+                                    <th>Has visited</th>
                                     <th> </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {this.state.skeweredEateries.map(skeweredEatery => {
 
+                                    let hasVisited = ''
+                                    if (skeweredEatery.has_visited === true) {
+                                        hasVisited = 'd-none'
+                                    }
                                     return (
 
                                         <tr onClick={() => this.selectEatery(skeweredEatery)} key={skeweredEatery.id}>
-                                            <td><button className='btn button-39'>{skeweredEatery.eatery.eatery_name}</button></td>
-                                            <td>{skeweredEatery.eatery.eatery_average_rating}</td>
-                                            <td>{skeweredEatery.eatery.eatery_price}</td>
-                                            <td>{skeweredEatery.notes}</td>
+                                            <td className={hasVisited}><button className='btn button-39'>{skeweredEatery.eatery.eatery_name}</button></td>
+                                            <td className={hasVisited}>{skeweredEatery.eatery.eatery_average_rating}</td>
+                                            <td className={hasVisited}>{skeweredEatery.eatery.eatery_price}</td>
+                                            <td className={hasVisited}>{skeweredEatery.notes}</td>
+                                            <td className={hasVisited}>
+                                                <button onClick={() => this.hasVisited(skeweredEatery.id)} type="button" className="button-39">I've been here</button>
+                                            </td>
                                         </tr>
                                     )
                                 })}
