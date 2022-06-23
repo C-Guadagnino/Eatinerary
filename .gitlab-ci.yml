@@ -14,7 +14,9 @@ api-unit-test-job:
   image: python:3-bullseye
   stage: test
   script:
-    - cd eateries/api
+    - cd eateries/api/eateries_rest
+    - echo "YELP_API_KEY='$TEST_YELP_API_KEY'" > keys.py
+    - cd ..
     - pip install -r requirements.txt
     - python manage.py test  # Run unit tests
     - cd ../../foodies/api
@@ -61,7 +63,9 @@ build-back-end-job:
   services:
     - docker:20.10.16-dind
   script:
-    - cd eateries/api
+    - cd eateries/api/eateries_rest
+    - echo "YELP_API_KEY='$STAGING_YELP_API_KEY'" > keys.py
+    - cd ..
     - docker build -t ${CI_REGISTRY_IMAGE}/eateries-api:latest .
     - docker tag ${CI_REGISTRY_IMAGE}/app:latest ${CI_REGISTRY_IMAGE}/eateries-api:$CI_JOB_ID
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
