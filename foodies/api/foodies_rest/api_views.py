@@ -57,20 +57,22 @@ def api_foodies(request):
         )
 
 
+@require_http_methods(["GET"])
+def api_foodie(request, username):
+    if request.method == "GET":
+        try:
+            foodie_vo_obj = FoodieVO.objects.get(username=username)
+            return JsonResponse(foodie_vo_obj, encoder=FoodieEncoder, safe=False)
+        except ObjectDoesNotExist:
+            return JsonResponse({"message": "Foodie does not exist"}, status=404)
+
+
 # List all EateryVOs
 @require_http_methods(["GET"])
 def api_eateries_vo(request):
     if request.method == "GET":
-        try:
-            eateries = EateryVO.objects.all()
-            return JsonResponse(
-                {"eateries": eateries}, encoder=EateryVOEncoder, safe=False
-            )
-        except ObjectDoesNotExist:
-            return JsonResponse(
-                {"message": "Does not exist"},
-                status=404,
-            )
+        eateries = EateryVO.objects.all()
+        return JsonResponse({"eateries": eateries}, encoder=EateryVOEncoder, safe=False)
 
 
 # Get details of an EateryVO
@@ -89,18 +91,12 @@ def api_eatery_vo(request, eatery_entity_id):
 @require_http_methods(["GET"])
 def api_categories_vo(request):
     if request.method == "GET":
-        try:
-            eatery_categories = EateryCategoryVO.objects.all()
-            return JsonResponse(
-                {"eatery_categories": eatery_categories},
-                encoder=EateryCategoryVOEncoder,
-                safe=False,
-            )
-        except ObjectDoesNotExist:
-            return JsonResponse(
-                {"message": "Does not exist"},
-                status=404,
-            )
+        eatery_categories = EateryCategoryVO.objects.all()
+        return JsonResponse(
+            {"eatery_categories": eatery_categories},
+            encoder=EateryCategoryVOEncoder,
+            safe=False,
+        )
 
 
 # Get a specific details of a EateryCategoryVO
@@ -143,18 +139,12 @@ def api_tag_vo(request, tag_name):
 @require_http_methods(["GET"])
 def api_eatery_openhours_plural_vo(request):
     if request.method == "GET":
-        try:
-            eatery_openhours_plural = EateryOpenHoursVO.objects.all()
-            return JsonResponse(
-                {"eatery_open_hours_all": eatery_openhours_plural},
-                encoder=EateryOpenHoursVOEncoder,
-                safe=False,
-            )
-        except ObjectDoesNotExist:
-            return JsonResponse(
-                {"message": "Does not exist"},
-                status=404,
-            )
+        eatery_openhours_plural = EateryOpenHoursVO.objects.all()
+        return JsonResponse(
+            {"eatery_open_hours_all": eatery_openhours_plural},
+            encoder=EateryOpenHoursVOEncoder,
+            safe=False,
+        )
 
 
 # Get specific OpenHoursVO
@@ -180,18 +170,12 @@ def api_eatery_openhours_singular_vo(request, eatery_openhours_entity_id):
 @require_http_methods(["GET"])
 def api_eatery_images_vo(request):
     if request.method == "GET":
-        try:
-            eatery_images = EateryImageVO.objects.all()
-            return JsonResponse(
-                {"eatery_images": eatery_images},
-                encoder=EateryImageVOEncoder,
-                safe=False,
-            )
-        except ObjectDoesNotExist:
-            return JsonResponse(
-                {"message": "Does not exist"},
-                status=404,
-            )
+        eatery_images = EateryImageVO.objects.all()
+        return JsonResponse(
+            {"eatery_images": eatery_images},
+            encoder=EateryImageVOEncoder,
+            safe=False,
+        )
 
 
 # Get specific EateryImageVO
@@ -213,18 +197,12 @@ def api_eatery_image_vo(request, eatery_image_entity_id):
 @require_http_methods(["GET", "POST"])
 def api_skewered_eateries(request):
     if request.method == "GET":
-        try:
-            skewered_eateries = SkeweredEatery.objects.all()
-            return JsonResponse(
-                {"skewered_eateries": skewered_eateries},
-                encoder=SkeweredEateryEncoder,
-                safe=False,
-            )
-        except ObjectDoesNotExist:
-            return JsonResponse(
-                {"message": "Does not exist"},
-                status=404,
-            )
+        skewered_eateries = SkeweredEatery.objects.all()
+        return JsonResponse(
+            {"skewered_eateries": skewered_eateries},
+            encoder=SkeweredEateryEncoder,
+            safe=False,
+        )
     else:
         try:
             content = json.loads(request.body)
@@ -286,25 +264,29 @@ def api_skewered_eatery(request, pk):
             )
         except ObjectDoesNotExist:
             return JsonResponse({"message": "Does not exist"}, status=404)
-#======================================
+
+
+# ======================================
+
 
 @require_http_methods(["GET"])
-def api_show_skeweredeateries_for_specific_foodie(request, username):
+def api_skewered_eateries_for_foodie(request, username):
     if request.method == "GET":
         try:
             foodie_vo_obj = FoodieVO.objects.get(username=username)
             skewered_eateries = SkeweredEatery.objects.filter(foodie_vo=foodie_vo_obj)
             return JsonResponse(
-                {"skewered_eateries":skewered_eateries},
+                {"skewered_eateries": skewered_eateries},
                 encoder=SkeweredEateryEncoder,
-                safe=False
+                safe=False,
             )
         except SkeweredEatery.DoesNotExist:
             response = JsonResponse({"message": "Does not exist"})
             response.status_code = 404
             return response
 
-#======================================
+
+# ======================================
 
 # List all foodie reviews, create review
 @require_http_methods(["GET", "POST"])
@@ -312,7 +294,6 @@ def api_reviews(request):
     if request.method == "GET":
         reviews = Review.objects.all()
         return JsonResponse({"reviews": reviews}, encoder=ReviewEncoder, safe=False)
-
     else:
         try:
             content = json.loads(request.body)
@@ -413,13 +394,13 @@ def api_review_image(request, pk):
 
 # List all foodie reviews, create review
 @require_http_methods(["GET", "POST"])
-def api_special_dates(request, foodie_id=None):
+def api_special_dates(request, foodie_username=None):
     if request.method == "GET":
-        if foodie_id == None:
+        if foodie_username == None:
             special_dates = SpecialDate.objects.all()
         else:
-            foodie_obj = FoodieVO.objects.get(id=foodie_id)
-            special_dates = SpecialDate.objects.filter(foodie=foodie_obj)
+            foodie_obj = FoodieVO.objects.get(username=foodie_username)
+            special_dates = SpecialDate.objects.filter(foodie_vo=foodie_obj)
         return JsonResponse(
             {"special_dates": special_dates}, encoder=SpecialDateEncoder, safe=False
         )
@@ -428,8 +409,8 @@ def api_special_dates(request, foodie_id=None):
         try:
             content = json.loads(request.body)
 
-            foodie_id = content["foodie_vo"]
-            foodie_obj = FoodieVO.objects.get(id=foodie_id)
+            foodie_username = content["foodie_vo"]
+            foodie_obj = FoodieVO.objects.get(username=foodie_username)
             content["foodie_vo"] = foodie_obj
 
             special_date_obj = SpecialDate.objects.create(**content)

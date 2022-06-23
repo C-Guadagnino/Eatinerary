@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 //import './Foodies.css';
 
 class CreateReview extends React.Component {
@@ -21,12 +21,12 @@ class CreateReview extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    async handleSubmit(event){
+    async handleSubmit(event) {
         event.preventDefault();
 
-        const data = {...this.state};
+        const data = { ...this.state };
 
-        data.skewered_eatery = data.skeweredEatery; 
+        data.skewered_eatery = data.skeweredEatery;
         delete data.skeweredEatery;
         delete data.skeweredEateries;
 
@@ -45,10 +45,10 @@ class CreateReview extends React.Component {
         };
         const response = await fetch(reviewUrl, fetchConfig);
         let newReview;
-        if(response.ok){
+        if (response.ok) {
             newReview = await response.json();
-            console.log("newReview is: ",newReview);
-        
+            console.log("newReview is: ", newReview);
+
             // const cleared = {
             //     title: '',
             //     rating: '',
@@ -70,10 +70,10 @@ class CreateReview extends React.Component {
         };
         const imageResponse = await fetch(reviewImageUrl, imageFetchConfig);
 
-        if(imageResponse.ok){
+        if (imageResponse.ok) {
             const newReviewImage = await imageResponse.json();
-            console.log("newReviewImage is: ",newReviewImage);
-        
+            console.log("newReviewImage is: ", newReviewImage);
+
             const cleared = {
                 title: '',
                 rating: '',
@@ -117,22 +117,20 @@ class CreateReview extends React.Component {
         const skeweredEateriesUrl = 'http://localhost:8100/api/foodies/eateries/skewered/';
         const skeweredEateriesResponse = await fetch(skeweredEateriesUrl);
 
-        if(skeweredEateriesResponse.ok){
+        if (skeweredEateriesResponse.ok) {
             const skeweredEateriesData = await skeweredEateriesResponse.json();
             console.log(skeweredEateriesData);
 
-            this.setState({skeweredEateries: skeweredEateriesData.skewered_eateries})
+            this.setState({ skeweredEateries: skeweredEateriesData.skewered_eateries })
         }
     }
 
     render() {
         return (
             <>
-                <div className="container">
-                    <h1 id="reviewsheader">Reviews</h1>
-                    <div className="row p-3">
+                    <div className="row mt-5 py-5">
 
-                        <div className="col-md-6" id="sideNav">
+                        <div className="col-md-4" id="sideNav">
                             <ul className="list-group list-group-flush">
                                 <li className="list-group-item">
                                     <Link to="/mySkewered">My Skewered List</Link>
@@ -145,26 +143,11 @@ class CreateReview extends React.Component {
                                 </li>
                             </ul>
                         </div>
-                    </div>
-                   
-                    <div className="col-md-3" id="reviewForm">
-                        <div className="p-4 mt-4" id="innerForm">
+
+
+                    <div className="col-md-4 mx-3" id="reviewForm">
                             <h1>Leave a Review</h1>
                             <form onSubmit={this.handleSubmit} id="create-review-form">
-
-                                <div className="form-floating mb-3">
-                                    <input onChange={this.handleTitleChange} value={this.state.title} placeholder="title" required type="text" name="title" id="title" className="form-control" />
-                                    <label htmlFor="title">Title</label>
-                                </div>
-                                <div className="form-floating mb-3">
-                                    <input onChange={this.handleRatingChange} value={this.state.rating} placeholder="rating" required type="text" name="rating" id="rating" className="form-control" />
-                                    <label htmlFor="rating">Rating</label>
-                                </div>
-                                <div className="form-floating mb-3">
-                                    <input onChange={this.handleDescriptionChange} value={this.state.description} placeholder="description" required type="text" name="description" id="description" className="form-control" />
-                                    <label htmlFor="description">Description</label>
-                                </div>
-
                                 <div className="mb-3">
                                     <select onChange={this.handleSkeweredEateryChange} value={this.state.skeweredEatery} required name="skewered_eatery" id="skewered_eatery" className="form-select">
                                         <option value="">Choose a Skewered Eatery</option>
@@ -175,19 +158,32 @@ class CreateReview extends React.Component {
                                         })}
                                     </select>
                                 </div>
-                                
+                                <div className="form-floating mb-3">
+                                    <input onChange={this.handleTitleChange} value={this.state.title} placeholder="title" required type="text" name="title" id="title" className="form-control" />
+                                    <label htmlFor="title">Title</label>
+                                </div>
+                                <div className="mb-3">
+                                    <select onChange={this.handleRatingChange} value={this.state.rating} required name="rating" id="rating" className="form-select">
+                                        <option value="">Choose a Rating</option>
+                                        <option key={1} value={1}>{1}</option>
+                                        <option key={2} value={2}>{2}</option>
+                                        <option key={3} value={3}>{3}</option>
+                                        <option key={4} value={4}>{4}</option>
+                                        <option key={5} value={5}>{5}</option>
+                                    </select>
+                                </div>
+                                <div className="form-floating mb-3">
+                                    <input onChange={this.handleDescriptionChange} value={this.state.description} placeholder="description" required type="text" name="description" id="description" className="form-control" />
+                                    <label htmlFor="description">Description</label>
+                                </div>
                                 <div className="form-floating mb-3">
                                     <input onChange={this.handleReviewImageChange} value={this.state.reviewImage} placeholder="review_image" type="text" name="review_image" id="review_image" className="form-control" />
-                                    <label htmlFor="reviewImage">Review Image</label>
+                                    <label htmlFor="reviewImage">Review Image URL</label>
                                 </div>
-
-
                                 <button className="button-39" id="submitReviewBtn">Submit Review</button>
                             </form>
                         </div>
-
                     </div>
-                </div>
             </>
         );
     }

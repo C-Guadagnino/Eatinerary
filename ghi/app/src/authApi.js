@@ -16,9 +16,25 @@ async function getTokenInternal() {
       internalToken = data.token;
       return internalToken;
     }
-  } catch (e) {}
+  } catch (e) { }
   return false;
 }
+
+
+async function getCurrentUser() {
+  const url = `${process.env.REACT_APP_ACCOUNT_API}/api/users/me/`;
+  try {
+    const response = await fetch(url, {
+      credentials: 'include',
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
+  } catch (e) { }
+  return false;
+}
+
 
 function handleErrorMessage(error) {
   if ("error" in error) {
@@ -28,11 +44,11 @@ function handleErrorMessage(error) {
       if ("__all__" in error) {
         error = error.__all__
       }
-    } catch {}
+    } catch { }
   }
   if (Array.isArray(error)) {
     error = error.join("<br>");
-  } else if (typeof(error) === "object") {
+  } else if (typeof (error) === "object") {
     error = Object.entries(error).reduce((acc, x) => `${acc}<br>${x[0]}: ${x[1]}`, '');
   }
   return error;
@@ -40,10 +56,13 @@ function handleErrorMessage(error) {
 
 export function useToken() {
   const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
   useEffect(() => {
     async function fetchToken() {
       const token = await getTokenInternal();
       setToken(token);
+      const userData = await getCurrentUser();
+      setUser(userData);
     }
     if (!token) {
       fetchToken();
@@ -53,8 +72,8 @@ export function useToken() {
   async function logout() {
     if (token) {
       const url = `${process.env.REACT_APP_ACCOUNT_API}/api/token/refresh/logout/`;
-      await fetch(url, {method: 'delete', credentials: 'include'});
-      // For some reason, unknown right now, when we try to logout, 
+      await fetch(url, { method: 'delete', credentials: 'include' });
+      // For some reason, unknown right now, when we try to logout,
       // the token is not being deleted form cookies in local storage
       internalToken = null;
       setToken(null);
@@ -84,7 +103,7 @@ export function useToken() {
     const url = `${process.env.REACT_APP_ACCOUNT_API}/api/users/`;
     const response = await fetch(url, {
       method: 'post',
-      body: JSON.stringify({username, password, email, first_name, last_name, phone, is_owner, is_foodie}),
+      body: JSON.stringify({ username, password, email, first_name, last_name, phone, is_owner, is_foodie }),
       headers: {
         'Content-Type': 'application/json',
       }
@@ -95,5 +114,5 @@ export function useToken() {
     return handleErrorMessage(await response.json());
   }
 
-  return [token, login, logout, signup];
+  return [token, login, logout, signup, user];
 }

@@ -42,9 +42,9 @@ class SkeweredEateryEncoder(ModelEncoder):
         "has_visited",
         "is_active",
         "notes",
-        #"review",
+        # "review",
     ]
-    #encoders = {"review": ReviewEncoder()}
+    # encoders = {"review": ReviewEncoder()}
 
     def get_extra_data(self, o):
         eatery_info = {
@@ -90,19 +90,6 @@ class ReviewEncoder(ModelEncoder):
     }
 
 
-class FoodieEncoder(ModelEncoder):
-    model = FoodieVO
-    properties = [
-        "username",
-        "first_name",
-        "email",
-        "phone",
-        # "google_calendar",
-        "skewered_eateries",
-    ]
-    encoders = {"skewered_eateries": SkeweredEateryEncoder()}
-
-
 class SpecialDateEncoder(ModelEncoder):
     model = SpecialDate
     properties = [
@@ -112,9 +99,26 @@ class SpecialDateEncoder(ModelEncoder):
         "has_passed",
         "repeats",
         "frequency",
-        "foodie_vo",
+        # "foodie",
     ]
-    encoders = {"foodie_vo": FoodieEncoder()}
+    # encoders = {"foodie": FoodieEncoder()}
+
+
+class FoodieEncoder(ModelEncoder):
+    model = FoodieVO
+    properties = [
+        "username",
+        "first_name",
+        "email",
+        "phone",
+        # "google_calendar",
+        "skewered_eateries",
+        "special_dates",
+    ]
+    encoders = {
+        "skewered_eateries": SkeweredEateryEncoder(),
+        "special_dates": SpecialDateEncoder(),
+    }
 
 
 class EateryVOEncoder(ModelEncoder):

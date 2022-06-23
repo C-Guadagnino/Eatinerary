@@ -20,7 +20,6 @@ services:
       HOST: "0.0.0.0"
       REACT_APP_ACCOUNT_API: http://localhost:8070
       REACT_APP_EATERIES_API: http://localhost:8090
-      REACT_APP_DJWTO_SIGNING_KEY: 13fcc604df0deed641c6db316ffd027f5bb8120e7ac40a948562e829f0adf5a4
   database:
     image: postgres:14.2-bullseye
     volumes:
