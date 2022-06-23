@@ -35,5 +35,6 @@
 .image-container {
     height: 22vh;
     width: 22vw;
-    font-size: 1vmax;
+    max-width: 267px;
+    max-height: 262px;
 }
