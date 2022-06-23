@@ -75,9 +75,8 @@ function EateryDetailPage(){
     <div className="container">
     
     <Card className="bg-dark text-light">
-      <Card.Img className="img-rounded" height="300" src={image_address} alt="Card image" />
+      <Card.Img style={{objectFit: "cover"}} className="img-rounded" height="300" src={image_address} alt="Card image" />
         <Card.ImgOverlay>
-          <li></li>
           <h1>{eateryData.eatery_name}</h1>
           <h3 >
           {address_line1} {address_line2}

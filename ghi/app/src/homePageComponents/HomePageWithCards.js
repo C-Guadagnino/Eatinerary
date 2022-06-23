@@ -4,26 +4,30 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Card } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import EateryDetailPage from "../eatery-components/EateryDetailPage";
 
 const HomePageWithCards = () => {
     //creating IP state
+  const navigate = useNavigate()
   const [ip, setIP] = useState('');
   const [eateries, setEateries] = useState([]);
   //creating function to load ip address from the API
   const getData = async () => {
     const res = await axios.get('http://ip-api.com/json/')
-    console.log(res.data);
+    // console.log(res.data);
     setIP(res.data.city)
     const data = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/yelp/${res.data.city}/food/`)
     //Limit this request to 9 results because it takes a long time to populate the page
-    console.log("DATA.DATA", data.data);
+    const realEateries = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries`)
+    // console.log("DATABASE EATERIES", realEateries.data);
     let eateries = []
-    for (let eatery of data.data.eateries.businesses) {
+    for (let eatery of realEateries.data.eateries) {
+      console.log("EATERIES", eatery)
       let eatery_dict = {
+        "id": eatery.id,
         "name": eatery.name,
-        "image_url": eatery.image_url,
+        "image_url": eatery.eatery_images[0].image_url,
         "address1": eatery.location.address1,
         "city": eatery.location.city,
         "state": eatery.location.state,
@@ -41,7 +45,12 @@ const HomePageWithCards = () => {
   // const getDetailPage = props => {
   //   const [eateryIdentifier, setEateryIdentifier] = useState(props)
   // }
+  function detailOnClick(eatery) {
+    const eateryID = eatery.id
+    navigate(`/eatery/${eateryID}`)
+  }
   const renderCard = (card, index) => {
+    // console.log("CARD", card)
         return(
             <Card border="success" style={{ width: '17rem' }} key={index} className="box">
                 <Card.Img variant="top" src={card.image_url} />
@@ -50,10 +59,10 @@ const HomePageWithCards = () => {
                     <Card.Text>
                         {card.address1}, {card.city}, {card.state}, {card.zip_code}
                     </Card.Text>
-                    {/* <EateryDetailPage eateryId={card.id}/> */}
-                    {/* <NavLink className='text-decoration-none' to='/eatery'>
-                    <Button onClick={(setEateryIdentifier(card.id))} variant="primary">Details</Button>
-                    </NavLink> */}
+      
+                    <Button onClick={detailOnClick.bind(this,card)}variant="primary">Details</Button>
+                    {/* Revisit and look into bind documentation for more details - ANOTHER ALTERNATIVE:
+                    () => detailOnClick(card) */}
                 </Card.Body>
             </Card>
         )
