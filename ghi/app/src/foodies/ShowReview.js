@@ -52,8 +52,8 @@ class ShowReview extends React.Component {
                     
 
                     <div className="col-md-3" id="reviewsList">
+                        <h2> Reviews </h2>
                         <div className="list-group" id="reviewsList2">
-                            <p>review will show up here</p>
                                         {this.state.reviews.map(review => {
                                                 return (
                                                     <button onClick={() => this.selectReview(review)} key={review.skewered_eatery.id} type="button" className="list-group-item list-group-item-action" id="reviewbuttons">{review.skewered_eatery.eatery.eatery_name}</button>
