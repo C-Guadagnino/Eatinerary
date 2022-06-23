@@ -11,14 +11,32 @@ class ShowReview extends React.Component {
         };
         this.selectReview = this.selectReview.bind(this);
     }
+
     async componentDidMount() {
-        //list all reviews endpoint
-        const reviewsUrl = 'http://localhost:8100/api/foodies/eateries/reviews/';
+        this.getReviewData()
+    }
+
+    componentDidUpdate(prevProps) {
+        // if old username is not the same as the current username
+        if (prevProps.username !== this.props.username) {
+            this.getReviewData()
+        }
+    }
+
+    async getReviewData() {
+        const foodie_username = this.props.username
+
+        if (!foodie_username) {
+            return
+        }
+
+        //list all reviews for a foodie endpoint
+        const reviewsUrl = `http://localhost:8100/api/foodies/${foodie_username}/eateries/reviews/`;
         const reviewsResponse = await fetch(reviewsUrl);
 
         if(reviewsResponse.ok){
             const reviewsData = await reviewsResponse.json();
-            console.log(reviewsData);
+            //console.log(reviewsData);
 
             this.setState({reviews: reviewsData.reviews})
         }

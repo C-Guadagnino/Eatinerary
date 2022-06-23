@@ -46,7 +46,7 @@ function App() {
           <Route path='mySkewered' element={<MySkeweredList username={userName} />} />
           <Route path='mySkeweredHistory' element={<MySkeweredHistory />} />
           <Route path='review' element={<CreateReview />} />
-          <Route path='showreview' element={<ShowReview />} />
+          <Route path='showreview' element={<ShowReview username={userName} />} />
         </Routes>
       </div>
     </BrowserRouter>

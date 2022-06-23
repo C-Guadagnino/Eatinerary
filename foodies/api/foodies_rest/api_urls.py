@@ -71,6 +71,7 @@ urlpatterns = [
         name="api_skewered_eatery",
     ),
     path("foodies/eateries/reviews/", api_reviews, name="api_reviews"),
+    path("foodies/<str:username>/eateries/reviews/", api_reviews, name="api_reviews_for_foodie"),
     path("foodies/eateries/reviews/<int:pk>/", api_review, name="api_review"),
     path(
         "foodies/eateries/reviews/images/", api_review_images, name="api_review_images"

@@ -290,10 +290,20 @@ def api_skewered_eateries_for_foodie(request, username):
 
 # List all foodie reviews, create review
 @require_http_methods(["GET", "POST"])
-def api_reviews(request):
+def api_reviews(request, username=None):
     if request.method == "GET":
-        reviews = Review.objects.all()
-        return JsonResponse({"reviews": reviews}, encoder=ReviewEncoder, safe=False)
+        if username == None:
+            reviews = Review.objects.all()
+        else:
+            foodie_obj = FoodieVO.objects.get(username=username)
+            skewered_eatery_objs = SkeweredEatery.objects.filter(foodie_vo=foodie_obj)
+            reviews_list = []
+            for skewered_eatery_obj in skewered_eatery_objs:
+                reviews = Review.objects.filter(skewered_eatery=skewered_eatery_obj)
+                for review in reviews:
+                    reviews_list.append(review)
+                    print("REVIEWS ARE:", review)
+        return JsonResponse({"reviews": reviews_list}, encoder=ReviewEncoder, safe=False)
     else:
         try:
             content = json.loads(request.body)
