@@ -34,35 +34,33 @@ class ShowReview extends React.Component {
     render() {
         return (
             <>
-                <div className="container">
-                    <h1 id="reviewsheader">Reviews</h1>
-                    <div className="row p-3">
-
+                    <div className="row mt-5 py-5">
                         <div className="col-md-6" id="sideNav">
                             <ul className="list-group list-group-flush">
-                                <li className="list-group-item">
+                                <li className="list-item">
                                     <Link to="/mySkewered">My Skewered List</Link>
                                 </li>
-                                <li className="list-group-item">
+                                <li className="list-item">
                                     <Link to="/mySkeweredHistory">My Skewered History</Link>
                                 </li>
-                                <li className="list-group-item">
+                                <li className="list-item">
                                     <Link to="/review">Leave a Review</Link>
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    
 
-                    <div className="col-md-3" id="reviewsList">
+                    <div className="col-md-3 mt-5" id="reviewsList">
+                        <h2> Reviews </h2>
                         <div className="list-group" id="reviewsList2">
                                         {this.state.reviews.map(review => {
                                                 return (
-                                                    <button onClick={() => this.selectReview(review)} key={review.skewered_eatery.id} type="button" className="list-group-item list-group-item-action" id="reviewbuttons">{review.skewered_eatery.eatery.eatery_name}</button>
+                                                    <button onClick={() => this.selectReview(review)} key={review.skewered_eatery.id} type="button" className="button-38" id="reviewbuttons">{review.skewered_eatery.eatery.eatery_name}</button>
                                                 )
                                         })}
                         </div>
                     </div>
-
+                    </div>
                     <div className="row p-3">
                         <div className="col-md-6" id="skeweredMaps">
                             { this.state.selected?
@@ -70,7 +68,6 @@ class ShowReview extends React.Component {
                                  :null}
                         </div>
                     </div>
-                </div>
             </>
         );
     }

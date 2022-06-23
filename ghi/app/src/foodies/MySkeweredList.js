@@ -3,6 +3,8 @@ import * as jose from 'jose';
 import { Link } from 'react-router-dom';
 import Iframe from './GoogleMaps2.js';
 import './Foodies.css';
+import { FaHeart } from "react-icons/fa";
+
 
 class SkeweredList extends React.Component {
     constructor(props) {
@@ -89,64 +91,88 @@ class SkeweredList extends React.Component {
         })
     }
 
+    async hasVisited(id){
+        const putURL = `http://localhost:8100/api/foodies/eateries/skewered/${id}/`;
+        const fetchConfig = {
+            method: "put",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({has_visited: true})
+        };
+
+        const response = await fetch(putURL, fetchConfig);
+        if (response.ok) {
+            window.location.reload();
+        }
+    };
+
+
     render() {
         return (
             <>
-                <div className="row p-3">
+                <div className="row mt-5 py-5">
                     <div className="col-md-6" id="sideNav">
                         <ul className="list-group list-group-flush">
-                            <li className="list-group-item">
+                            <li className="list-item">
                                 <Link to="/mySkeweredHistory">My Skewered History</Link>
                             </li>
-                            <li className="list-group-item">
+                            <li className="list-item">
                                 <Link to="/review">Leave a Review</Link>
                             </li>
-                            <li className="list-group-item">
+                            <li className="list-item">
                                 <Link to="/showreview">My Reviews</Link>
                             </li>
                         </ul>
                     </div>
-                </div>
+                    
 
-                <div className="col-md-6" id="mySkeweredList">
+                <div className="col-md-6 m-5" id="mySkeweredList">
                     <p id="skeweredHeading">My Skewered List</p>
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Eatery Name</th>
-                                <th>Average Rating</th>
-                                <th>Price</th>
-                                <th>Notes</th>
-                                <th> </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.skeweredEateries.map(skeweredEatery => {
+                        <table className="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Eatery Name</th>
+                                    <th>Average Rating</th>
+                                    <th>Price</th>
+                                    <th>Notes</th>
+                                    <th>Has visited</th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.state.skeweredEateries.map(skeweredEatery => {
 
-                                return (
+                                    let hasVisited = ''
+                                    if (skeweredEatery.has_visited === true) {
+                                        hasVisited = 'd-none'
+                                    }
+                                    return (
 
-                                    <tr onClick={() => this.selectEatery(skeweredEatery)} key={skeweredEatery.id}>
-                                        <td><button className='btn button-39'>{skeweredEatery.eatery.eatery_name}</button></td>
-                                        <td>{skeweredEatery.eatery.eatery_average_rating}</td>
-                                        <td>{skeweredEatery.eatery.eatery_price}</td>
-                                        <td>{skeweredEatery.notes}</td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
+                                        <tr onClick={() => this.selectEatery(skeweredEatery)} key={skeweredEatery.id}>
+                                            <td className={hasVisited}>{skeweredEatery.eatery.eatery_name}</td>
+                                            <td className={hasVisited}>{skeweredEatery.eatery.eatery_average_rating}</td>
+                                            <td className={hasVisited}>{skeweredEatery.eatery.eatery_price}</td>
+                                            <td className={hasVisited}>{skeweredEatery.notes}</td>
+                                            <td className={hasVisited}>
+                                                <button onClick={() => this.hasVisited(skeweredEatery.id)} type="button" className='button-39' > <FaHeart size="1.5em" /> </button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                </div>
                 </div>
 
-                <div className="row p-3">
-                    <div className="col-md-6" id="skeweredMaps">
+                <div className="row p-3 py-5 justify-content-md-left">
+                <div className="col-md-4 mx-5 mt-0">
                         {this.state.selected ?
                             <Iframe name={this.state.selected.eatery.eatery_name} city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
                             : null}
-                    </div>
+                </div>
 
-                    <div className="col-md-6" id="specialDates">
-                        <p id="skeweredHeading">Special Dates</p>
-                        <table className="table table-striped" id="specialDatesTable">
+                    <div className="col-md-4">
+                        <p>special dates do later</p>
+                        <table className="table" id="specialDatesTable">
                             <thead>
                                 <tr>
                                     <th>Occasion</th>
@@ -189,5 +215,4 @@ class SkeweredList extends React.Component {
 }
 
 export default SkeweredList;
-
 

@@ -6,6 +6,9 @@ import { Card } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import EateryDetailPage from "../eatery-components/EateryDetailPage";
+import eatineraryheader from "./images/eatineraryheader.png"
+import localeateries from "./images/localeateries.png"
+
 
 const HomePageWithCards = () => {
     //creating IP state
@@ -97,8 +100,12 @@ const HomePageWithCards = () => {
   const renderCard = (card, index) => {
     // console.log("CARD", card)
         return(
-            <Card border="success" style={{ width: '17rem' }} key={index} className="box">
+
+            // <Card border="success" style={{ width: '17rem' }} key={index} className="box">
+            <Card style={{ width: '18rem' }} key={index} className="container mt-4 mb-4 mx-3">
                 <Card.Img variant="top" src={card.image_url} />
+
+
                 <Card.Body>
                     <Card.Title>{card.name}</Card.Title>
                     <Card.Text>
@@ -115,11 +122,16 @@ const HomePageWithCards = () => {
 
   return (
     <>
-    <div className="container my-5">
-      <div className='p-5 text-center '>
-          <h1 className='mb-3'>Eatinerary</h1>
-          <h4 className='mb-3'>Local Eateries</h4>
+      <div className="container my-5 py-3">
+        <div className='p-5 text-center'>
+        <h1><img src={ eatineraryheader } height="140" alt="uh-oh"/></h1>
+          <img src={ localeateries } height="35" alt="uh-oh"/>
+          </div>
         </div>
+        <div className="container">
+          <div className="row justify-content-md-center m-5">
+          {eateries.map(renderCard)}
+          </div>
       </div>
       <form>
         <div className="innerform">

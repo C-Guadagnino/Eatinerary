@@ -22,3 +22,24 @@
 .grid > div{
     flex-basis: calc(33.3333333%-40px);
 }
+
+.roomfac {
+    display: flex;
+    width: 100%;
+    max-width: 60%;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+
+.image-container {
+    height: 22vh;
+    width: 22vw;
+    max-width: 267px;
+    max-height: 262px;
+}
+
+.card_container {
+    width: 23vw;
+    height: 23vh;
+}

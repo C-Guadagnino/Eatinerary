@@ -6,14 +6,12 @@ import { useState, useEffect } from "react";
 import App from "./App";
 import skewerednobg from "./images/skewered.png"
 
-
 export const loggedinLinks = [
   // foodies
-  { name: "Skewered", path:"/mySkewered"},
-  { name: "History", path: "/mySkeweredHistory"},
-  { name: "Review", path: "/review"},
-  { name: "ShowReview", path: "/showreview"},
-  { name: "Skewered Eateries!", path: "/skewered"},
+  { name: "My Skewered Eateries", path:"/mySkewered"},
+  // { name: "History", path: "/mySkeweredHistory"},
+  { name: "Write a Review", path: "/review"},
+  { name: "Reviewed Eateries", path: "/showreview"},
   // owners
   // eateries
   { name: "Logout", path: "/logout"},
@@ -31,11 +29,11 @@ const classesIfNotLoggedIn = "navbar-nav";
 function Nav(props) {
     const links = props.token ? loggedinLinks : loggedoutLinks;
     return (
-      <nav className='navbar navbar-expand-md fixed-top bg-color-nav'>
+      <nav className='navbar navbar-expand-md fixed-top color-nav'>
         <div className='container-fluid'>
           <NavLink className='text-decoration-none' to='/'>
             <h2 className='navbar-brand text-uppercase fs-2'>
-              <img src={ skewerednobg } height="60" alt="uh-oh"/>
+              <img src={ skewerednobg } height="50" alt="uh-oh"/>
               {/* What this is doing is creating a link back using the Eatinerary Button */}
             </h2>
           </NavLink>
@@ -45,7 +43,7 @@ function Nav(props) {
             >
               {links.map((link, index) => (
                 <NavLink key={index} to={link.path}>
-                  <button className='btn button-39 me-3'>
+                  <button className='btn button-39 mx-5'>
                     {link.name}
                   </button>
                 </NavLink>
