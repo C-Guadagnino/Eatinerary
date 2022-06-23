@@ -10,8 +10,8 @@ export const loggedinLinks = [
   // foodies
   { name: "My Skewered Eateries", path:"/mySkewered"},
   // { name: "History", path: "/mySkeweredHistory"},
-  { name: "Write a Review", path: "/review"},
-  { name: "Reviewed Eateries", path: "/showreview"},
+  // { name: "Write a Review", path: "/review"},
+  { name: "My Reviews", path: "/showreview"},
   // owners
   // eateries
   { name: "Logout", path: "/logout"},

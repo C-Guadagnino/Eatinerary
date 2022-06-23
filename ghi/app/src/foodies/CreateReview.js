@@ -132,14 +132,14 @@ class CreateReview extends React.Component {
 
                         <div className="col-md-4" id="sideNav">
                             <ul className="list-group list-group-flush">
-                                <li className="list-item">
-                                    <Link to="/mySkewered">My Skewered List</Link>
+                                <li className="list-nav-item">
+                                    <Link className='link' to="/mySkewered">My Skewered List</Link>
                                 </li>
-                                <li className="list-item">
-                                    <Link to="/mySkeweredHistory">My Skewered History</Link>
+                                <li className="list-nav-item">
+                                    <Link className='link' to="/mySkeweredHistory">My Skewered History</Link>
                                 </li>
-                                <li className="list-item">
-                                    <Link to="/showreview">My Reviews</Link>
+                                <li className="list-nav-item">
+                                    <Link className='link' to="/showreview">My Reviews</Link>
                                 </li>
                             </ul>
                         </div>

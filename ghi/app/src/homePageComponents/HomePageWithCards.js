@@ -126,6 +126,8 @@ const HomePageWithCards = () => {
         <div className='p-5 text-center'>
         <h1><img src={ eatineraryheader } height="140" alt="uh-oh"/></h1>
           <img src={ localeateries } height="35" alt="uh-oh"/>
+            <p>  </p>
+            <p> Search bar here </p>
           </div>
         </div>
         <div className="container">
