@@ -38,3 +38,8 @@
     max-width: 267px;
     max-height: 262px;
 }
+
+.card_container {
+    width: 23vw;
+    height: 23vh;
+}

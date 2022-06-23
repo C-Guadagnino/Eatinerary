@@ -40,8 +40,8 @@ const HomePageWithCards = () => {
     
   const renderCard = (card, index) => {
         return(
-            <Card style={{ width: '18rem' }} key={index} className="box">
-                <Card.Img className="image-container" src={card.image_url} />
+            <Card style={{ width: '18rem' }} key={index} className="container mt-4 mb-4 mx-3">
+                <Card.Img className="image-container mt-3" src={card.image_url} />
                 <Card.Body>
                     <Card.Title>{card.name}</Card.Title>
                     <Card.Text>
