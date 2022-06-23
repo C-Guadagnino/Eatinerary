@@ -6,10 +6,16 @@
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
+## June 21, 2022
+Today I:
+    *
+
 ## June 20, 2022
 * Today I:
-    * put together a graphic for our skewered logo
+    * put together an icon for our skewered logo
     * started building the EateryDetailPage.js on front end
+*
+* I learned that in the front end, when there are undefined variables, React will just ignore them (without throwing an error). But if i'm trying to call a method (for example .map) to a variable and that variable happens to be undefined at some point, then it will throw an error.
 
 ## June 18, 2022
 * Today, I:

@@ -16,9 +16,15 @@ import HomePageWithCards from "./homePageComponents/HomePageWithCards"
 import './App.css';
 
 function App() {
-  const [token, login, logout, signup] = useToken();
+  const [token, login, logout, signup, user] = useToken();
   const [userName, setUserName] = useState('');
+
+  if (user && !userName) {
+    setUserName(user.username)
+  }
+
   console.log("userName is:", userName);
+  console.log("user is:", user)
   return (
     <BrowserRouter>
       <Nav token={token} />
@@ -36,10 +42,10 @@ function App() {
               element={<SignUp token={token} signup={signup} />}
             />
           </Route>
-            <Route path='mySkewered' element={<MySkeweredList username={userName}/>} />
-            <Route path='mySkeweredHistory' element={<MySkeweredHistory />} />
-            <Route path='review' element={<CreateReview />} />
-            <Route path='showreview' element={<ShowReview />} />
+          <Route path='mySkewered' element={<MySkeweredList username={userName} />} />
+          <Route path='mySkeweredHistory' element={<MySkeweredHistory />} />
+          <Route path='review' element={<CreateReview />} />
+          <Route path='showreview' element={<ShowReview />} />
         </Routes>
       </div>
     </BrowserRouter>

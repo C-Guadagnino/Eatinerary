@@ -19,8 +19,8 @@ def api_users(request):
                 password=content["password"],
                 email=content["email"],
                 phone=content["phone"],
-                first_name =content["first_name"],
-                last_name =content["last_name"]
+                first_name=content["first_name"],
+                last_name=content["last_name"],
             )
             if content.get("is_foodie") and content["is_foodie"]:
                 Foodie.objects.create(user=user)
@@ -28,7 +28,7 @@ def api_users(request):
                 Owner.objects.create(user=user)
             return JsonResponse(
                 {"users": user},
-                encoder = UserEncoder,
+                encoder=UserEncoder,
             )
         except IntegrityError:
             response = JsonResponse(
@@ -38,20 +38,20 @@ def api_users(request):
             return response
 
 
-#Get specific user by their id
+# Get specific user by their id
 @require_http_methods(["GET"])
 def api_get_specific_user(request, pk):
     if request.method == "GET":
-        #content = json.loads(request.body)
+        # content = json.loads(request.body)
         user = User.objects.get(id=pk)
-        return JsonResponse (
+        return JsonResponse(
             {
                 "id": user.id,
                 "username": user.username,
                 "email": user.email,
-                
             }
         )
+
 
 class UserEncoder(ModelEncoder):
     model = User
@@ -61,18 +61,20 @@ class UserEncoder(ModelEncoder):
         "email",
         "phone",
         "first_name",
-        "last_name",
+        "last_name"
     ]
+
 
 @require_http_methods(["GET"])
 def api_list_users(request):
     if request.method == "GET":
-        #content = json.loads(request.body)
+        # content = json.loads(request.body)
         user = User.objects.all()
         return JsonResponse(
             {"users": user},
             encoder=UserEncoder,
         )
+
 
 @require_http_methods(["GET"])
 def api_user_token(request):
@@ -91,7 +93,7 @@ def api_get_current_user(request):
 
     return JsonResponse(
         {
-            "id": request.user.id,
-            "username": request.user.username,
+            "id": request.payload["user"]["id"],
+            "username": request.payload["user"]["username"],
         }
     )
