@@ -3,6 +3,7 @@ import "./Box.css";
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Card } from "react-bootstrap";
+import eatineraryheader from "./images/eatineraryheader.png"
 
 const HomePageWithCards = () => {
     //creating IP state
@@ -56,7 +57,7 @@ const HomePageWithCards = () => {
     <>
       <div className="container my-5 py-3">
         <div className='p-5 text-center'>
-            <h1 className='mb-3'>Eatinerary</h1>
+        <img src={ eatineraryheader } height="90" alt="uh-oh"/>
             <h4 className='mb-3'>Local Eateries</h4>
           </div>
         </div>
