@@ -35,7 +35,6 @@ class ShowReview extends React.Component {
         return (
             <>
                     <div className="row mt-5 py-5">
-
                         <div className="col-md-6" id="sideNav">
                             <ul className="list-group list-group-flush">
                                 <li className="list-group-item">

@@ -92,7 +92,6 @@ class SkeweredList extends React.Component {
     render() {
         return (
             <>
-<<<<<<< HEAD
                 <div className="row p-3">
                     <div className="col-md-6" id="sideNav">
                         <ul className="list-group list-group-flush">
@@ -183,99 +182,6 @@ class SkeweredList extends React.Component {
                         </table>
                     </div>
                 </div>
-=======
-                    <div className="row mt-5 py-5">
-                        <div className="col-md-6" id="sideNav">
-                            <ul className="list-group list-group-flush">
-                                <li className="list-group-item">
-                                    <Link to="/mySkeweredHistory">My Skewered History</Link>
-                                </li>
-                                <li className="list-group-item">
-                                    <Link to="/review">Leave a Review</Link>
-                                </li>
-                                <li className="list-group-item">
-                                    <Link to="/showreview">My Reviews</Link>
-                                </li>
-                            </ul>
-                        </div>
-
-                    <div className="col-md-6 m-5"id="mySkeweredList">
-                            <p id="skeweredHeading">My Skewered List</p>
-                                <table className="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Eatery Name</th>
-                                            <th>Average Rating</th>
-                                            <th>Price</th>
-                                            <th>Notes</th>
-                                            <th> </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {this.state.skeweredEateries.map(skeweredEatery => {
-                                            
-                                            return (
-                                                
-                                                <tr onClick={() => this.selectEatery(skeweredEatery)} key={skeweredEatery.id}>
-                                                    <td><button className='btn button-39'>{skeweredEatery.eatery.eatery_name}</button></td>
-                                                    <td>{skeweredEatery.eatery.eatery_average_rating}</td>
-                                                    <td>{skeweredEatery.eatery.eatery_price}</td>
-                                                    <td>{skeweredEatery.notes}</td>
-                                                </tr>
-                                            )
-                                        })}
-                                    </tbody>
-                                </table>
-                        </div>
-                        </div>
-                        
-                        <div className="row p-3 mt-5 py-5">
-                        <div className="col-md-4">
-                            <p>map will show up here </p>
-                            { this.state.selected?
-                                <Iframe name={this.state.selected.eatery.eatery_name} city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
-                                 :null}
-                        </div>
-
-                    <div className="col-md-4">
-                    <table className="table table-striped" id="specialDatesTable">
-                                        <thead>
-                                            <tr>
-                                                <th>Occasion</th>
-                                                <th>Special Date</th>
-                                                <th>Has Passed</th>
-                                                <th> </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {this.state.specialDates.map(specialDate => {
-                                                
-                                                let date = Date.parse(specialDate.special_date)
-                                                const d = new Date(date)
-
-                                                let hasPassed = "";
-                                                
-                                                if (specialDate.has_passed === false){
-                                                    hasPassed = "No";
-                                                } else {
-                                                    hasPassed = "Yes";
-                                                }
-                                                
-
-                                                return (
-                                                    <tr key={specialDate.id}>
-                                                        <td>{specialDate.occasion}</td>
-                                                        <td>{d.toLocaleString('en-US', {month:'long', day:'numeric', year:'numeric'})}</td>
-                                                        <td>{hasPassed}</td>
-                                                    </tr>
-                                                )
-                                            })}
-                                        </tbody>
-                                </table>
-
-                        </div>
-                        </div>
->>>>>>> Cameron
 
             </>
         );
