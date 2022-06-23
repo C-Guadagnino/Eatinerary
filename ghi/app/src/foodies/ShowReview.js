@@ -50,7 +50,7 @@ class ShowReview extends React.Component {
                         </div>
                     
 
-                    <div className="col-md-3" id="reviewsList">
+                    <div className="col-md-3 mt-5" id="reviewsList">
                         <h2> Reviews </h2>
                         <div className="list-group" id="reviewsList2">
                                         {this.state.reviews.map(review => {
