@@ -20,8 +20,8 @@
     background-color: #b6d6a9;
     /*background-color: rgba(182,214,169,0.8);*/
     border-radius: 10px;
-    width: 70rem; 
-    position: absolute; left: 700px; top: 110px;
+    width: 50rem; 
+    /* position: absolute; left: 700px; top: 110px; */
     overflow-y: auto;
     max-height: 400px;
 }
@@ -30,8 +30,8 @@
     background-color: #b6d6a9;
     /*background-color: rgba(182,214,169,0.8);*/
     border-radius: 10px;
-    width: 70rem; 
-    position: absolute; left: 700px; top: 110px;
+    width: 50rem; 
+    /* position: absolute; left: 700px; top: 110px; */
     overflow-y: auto;
     max-height: 400px;
 }

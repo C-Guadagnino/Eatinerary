@@ -70,7 +70,7 @@ class SkeweredList extends React.Component {
     render() {
         return (
             <>
-                    <div className="row p-3 mt-5 py-5">
+                    <div className="row mt-5 py-5">
                         <div className="col-md-6" id="sideNav">
                             <ul className="list-group list-group-flush">
                                 <li className="list-group-item">
@@ -85,7 +85,7 @@ class SkeweredList extends React.Component {
                             </ul>
                         </div>
 
-                    <div className="col-md-6" id="mySkeweredList">
+                    <div className="col-md-6 m-5"id="mySkeweredList">
                             <p id="skeweredHeading">My Skewered List</p>
                                 <table className="table table-striped">
                                     <thead>

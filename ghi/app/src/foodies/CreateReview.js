@@ -128,11 +128,9 @@ class CreateReview extends React.Component {
     render() {
         return (
             <>
-                <div className="container">
-                    <h1 id="reviewsheader">Reviews</h1>
-                    <div className="row p-3">
+                    <div className="row mt-5 py-5">
 
-                        <div className="col-md-6" id="sideNav">
+                        <div className="col-md-4" id="sideNav">
                             <ul className="list-group list-group-flush">
                                 <li className="list-group-item">
                                     <Link to="/mySkewered">My Skewered List</Link>
@@ -145,9 +143,8 @@ class CreateReview extends React.Component {
                                 </li>
                             </ul>
                         </div>
-                    </div>
                    
-                    <div className="col-md-3" id="reviewForm">
+                    <div className="col-md-4" id="reviewForm">
                         <div className="p-4 mt-4" id="innerForm">
                             <h1>Leave a Review</h1>
                             <form onSubmit={this.handleSubmit} id="create-review-form">
@@ -187,7 +184,7 @@ class CreateReview extends React.Component {
                         </div>
 
                     </div>
-                </div>
+                    </div>
             </>
         );
     }

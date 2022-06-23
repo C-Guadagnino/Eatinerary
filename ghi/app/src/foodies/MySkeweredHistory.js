@@ -51,7 +51,7 @@ class SkeweredHistory extends React.Component {
                             </ul>
                         </div>
 
-                <div className="col-md-4" id="mySkeweredHistory">
+                <div className="col-md-4 m-5" id="mySkeweredHistory">
                         <p id="skeweredHeading">My Skewered History</p>
                             <table className="table table-striped">
                                 <thead>
