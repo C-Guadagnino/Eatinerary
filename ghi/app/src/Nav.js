@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import App from "./App";
 import skewerednobg from "./images/skewered.png"
 
-
 export const loggedinLinks = [
   // foodies
   { name: "Skewered", path:"/mySkewered"},
@@ -35,7 +34,7 @@ function Nav(props) {
         <div className='container-fluid'>
           <NavLink className='text-decoration-none' to='/'>
             <h2 className='navbar-brand text-uppercase fs-2'>
-              <img src={ skewerednobg } height="60" alt="uh-oh"/>
+              <img src={ skewerednobg } height="50" alt="uh-oh"/>
               {/* What this is doing is creating a link back using the Eatinerary Button */}
             </h2>
           </NavLink>
