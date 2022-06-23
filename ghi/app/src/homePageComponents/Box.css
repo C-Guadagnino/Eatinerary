@@ -30,3 +30,10 @@
     margin: 0 auto;
     justify-content: center;
 }
+
+
+.image-container {
+    height: 22vh;
+    width: 22vw;
+    font-size: 1vmax;
+}
