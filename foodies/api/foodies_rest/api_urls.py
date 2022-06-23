@@ -21,12 +21,17 @@ from .api_views import (
     api_review_image,
     api_special_dates,
     api_special_date,
-    api_show_skeweredeateries_for_specific_foodie,
+    api_skewered_eateries_for_foodie,
 )
 
 urlpatterns = [
     path("foodies/", api_foodies, name="api_foodies"),
-    path("foodies/<str:username>/", api_foodie, name="api_foodie"),
+    path("foodies/user/<str:username>/", api_foodie, name="api_foodie"),
+    path(
+        "foodies/user/<str:username>/eateries/skewered/",
+        api_skewered_eateries_for_foodie,
+        name="api_skewered_eateries_for_foodie",
+    ),
     path("foodies/eateries/", api_eateries_vo, name="api_eateries_vo"),
     path(
         "foodies/eateries/<int:eatery_entity_id>/", api_eatery_vo, name="api_eatery_vo"
@@ -77,14 +82,9 @@ urlpatterns = [
     ),
     path("foodies/specialdates/", api_special_dates, name="api_special_dates"),
     path(
-        "foodies/<int:foodie_id>/specialdates/",
+        "foodies/<str:foodie_username>/specialdates/",
         api_special_dates,
         name="api_special_dates_for_foodie",
     ),
     path("foodies/specialdates/<int:pk>/", api_special_date, name="api_special_date"),
-    path(
-        "foodies/eateries/skeweredtest/<str:username>/",
-        api_show_skeweredeateries_for_specific_foodie,
-        name="api_skewered_eatery_for_user",
-    ),
 ]
