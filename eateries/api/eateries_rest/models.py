@@ -56,9 +56,15 @@ class Eatery(models.Model):
 class YelpCategorySearchTerm(models.Model):
     category_term = models.CharField(max_length=100, unique=True)
 
+    def __str__(self):
+        return self.category_term
+
 
 class YelpLocationSearchTerm(models.Model):
     location_term = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.location_term
 
 
 # business data
@@ -79,6 +85,9 @@ class YelpResult(models.Model):
             "location_term",
             "eatery",
         )
+
+    def __str__(self):
+        return "CATEGORY: " + self.category_term.category_term + " LOCATION: " + self.location_term.location_term + " - " + self.eatery.eatery_name
 
 
 class EateryTag(models.Model):

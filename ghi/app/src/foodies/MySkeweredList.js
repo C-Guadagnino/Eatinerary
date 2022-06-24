@@ -172,7 +172,6 @@ class SkeweredList extends React.Component {
                                 <tr>
                                     <th>Occasion</th>
                                     <th>Special Date</th>
-                                    <th>Has Passed</th>
                                     <th> </th>
                                 </tr>
                             </thead>
@@ -182,20 +181,10 @@ class SkeweredList extends React.Component {
                                     let date = Date.parse(specialDate.special_date)
                                     const d = new Date(date)
 
-                                    let hasPassed = "";
-
-                                    if (specialDate.has_passed === false) {
-                                        hasPassed = "No";
-                                    } else {
-                                        hasPassed = "Yes";
-                                    }
-
-
                                     return (
                                         <tr key={specialDate.id}>
                                             <td>{specialDate.occasion}</td>
                                             <td>{d.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</td>
-                                            <td>{hasPassed}</td>
                                         </tr>
                                     )
                                 })}
@@ -204,7 +193,7 @@ class SkeweredList extends React.Component {
                     </div>
                 <div className="col-md-4 mx-5 mt-0">
                         {this.state.selected ?
-                            <Iframe name={this.state.selected.eatery.eatery_name} city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
+                            <Iframe name={this.state.selected.eatery.eatery_name.replaceAll('&', ' ')} city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
                             : null}
                 </div>
                 

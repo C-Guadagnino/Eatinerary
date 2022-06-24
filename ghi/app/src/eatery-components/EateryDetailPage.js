@@ -6,10 +6,11 @@ import {useParams} from 'react-router-dom';
 import axios from 'axios'
 import { GiCupidonArrow } from "react-icons/gi";
 import forlater from "./images/forlater.png"
+import Iframe from './GoogleMaps3.js';
 // import Iframe from './GoogleMapsEatery.js';
 
 function EateryDetailPage(props){
-  const [eateryData, setEateryData] = useState({});
+  const [eateryData, setEateryData] = useState({eatery_name:'',location:{}});
   let { eateryID } = useParams();
   // console.log("EATERY DATA", eateryID)
   async function getEateryDetails(){
@@ -138,6 +139,10 @@ function EateryDetailPage(props){
           <ListGroup.Item>{openhours_html}</ListGroup.Item>
         </ListGroup>
       </Card>
+
+        <div>
+        <Iframe name={eateryData.eatery_name.replaceAll('&', ' ')} city={eateryData.location.city} state={eateryData.location.state} latitude={eateryData.latitude} longitude={eateryData.longitude} />
+        </div>
 
 
 
