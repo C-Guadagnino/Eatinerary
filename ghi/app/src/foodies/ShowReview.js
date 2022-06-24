@@ -31,7 +31,7 @@ class ShowReview extends React.Component {
         }
 
         //list all reviews for a foodie endpoint
-        const reviewsUrl = `http://localhost:8100/api/foodies/${foodie_username}/eateries/reviews/`;
+        const reviewsUrl = `${process.env.REACT_APP_FOODIES_API}/api/foodies/${foodie_username}/eateries/reviews/`;
         const reviewsResponse = await fetch(reviewsUrl);
 
         if(reviewsResponse.ok){

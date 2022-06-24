@@ -18,7 +18,7 @@ function Login(props) {
 
 
     if (token) {
-        return <Navigate to='/' />;
+      return <Navigate to='/' />;
     }
     var handleUserName = function(e){
       const value = e.target.value;

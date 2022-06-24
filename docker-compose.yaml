@@ -18,8 +18,11 @@ services:
       HOST_OS: ${OS}
       NODE_ENV: development
       HOST: "0.0.0.0"
+      # (`${process.env.REACT_APP_EATERIES_API}
+      # (`${process.env.REACT_APP_FOODIES_API}
       REACT_APP_ACCOUNT_API: http://localhost:8070
       REACT_APP_EATERIES_API: http://localhost:8090
+      REACT_APP_FOODIES_API: http://localhost:8100
   database:
     image: postgres:14.2-bullseye
     volumes:

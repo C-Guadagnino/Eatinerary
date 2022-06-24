@@ -13,7 +13,7 @@ function EateryDetailPage(props){
   let { eateryID } = useParams();
   // console.log("EATERY DATA", eateryID)
   async function getEateryDetails(){
-    const eateryUrl = `http://localhost:8090/api/eateries/${eateryID}/`;
+    const eateryUrl = `${process.env.REACT_APP_EATERIES_API}/api/eateries/${eateryID}/`;
     const eateryResponse = await fetch(eateryUrl);
 
     if (eateryResponse.ok) {
@@ -79,7 +79,7 @@ function EateryDetailPage(props){
   }
   console.log("EateryID",eateryID, "PROPS.USERNSME", props.username)
   const skewerEatery = async () => {
-    await axios.post("http://localhost:8100/api/foodies/eateries/skewered/",
+    await axios.post(`${process.env.REACT_APP_FOODIES_API}/api/foodies/eateries/skewered/`,
     {
     eateryvo_import_href: `/api/eateries/${eateryID}/`,
     foodie_vo: `${props.username}`,

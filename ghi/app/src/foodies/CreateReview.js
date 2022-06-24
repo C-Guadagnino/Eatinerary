@@ -40,7 +40,7 @@ class CreateReview extends React.Component {
             return
         }
         //list all skewered eateries endpoint
-        const skeweredEateriesUrl = `http://localhost:8100/api/foodies/user/${foodie_username}/eateries/skewered/`;
+        const skeweredEateriesUrl = `${process.env.REACT_APP_FOODIES_API}/api/foodies/user/${foodie_username}/eateries/skewered/`;
         const skeweredEateriesResponse = await fetch(skeweredEateriesUrl);
 
         if (skeweredEateriesResponse.ok) {
@@ -49,7 +49,7 @@ class CreateReview extends React.Component {
             const skeweredEateriesList = skeweredEateriesData.skewered_eateries;
             //this.setState({ skeweredEateries: skeweredEateriesData.skewered_eateries })
 
-            const reviewsUrl = `http://localhost:8100/api/foodies/${foodie_username}/eateries/reviews/`;
+            const reviewsUrl = `${process.env.REACT_APP_FOODIES_API}/api/foodies/${foodie_username}/eateries/reviews/`;
             const reviewsResponse = await fetch(reviewsUrl);
             if (reviewsResponse.ok){
                 const reviewsData = await reviewsResponse.json();
@@ -92,7 +92,7 @@ class CreateReview extends React.Component {
         delete data.reviewImage;
 
         //POST url for foodie creates a review
-        const reviewUrl = 'http://localhost:8100/api/foodies/eateries/reviews/';
+        const reviewUrl = `${process.env.REACT_APP_FOODIES_API}/api/foodies/eateries/reviews/`;
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(data),
@@ -105,32 +105,31 @@ class CreateReview extends React.Component {
         if (response.ok) {
             newReview = await response.json();
             console.log("newReview is: ", newReview);
-
-            dataForReviewImage.review = newReview.id;
-            // //This will be for review images
-            const reviewImageUrl = 'http://localhost:8100/api/foodies/eateries/reviews/images/';
-            const imageFetchConfig = {
-                method: "post",
-                body: JSON.stringify(dataForReviewImage),
-                headers: {
-                    'Content-type': 'application/json',
-                },
-            };
-            const imageResponse = await fetch(reviewImageUrl, imageFetchConfig);
-    
-            if (imageResponse.ok) {
-                const newReviewImage = await imageResponse.json();
-                console.log("newReviewImage is: ", newReviewImage);
-    
-                const cleared = {
-                    title: '',
-                    rating: '',
-                    description: '',
-                    skeweredEateriesWithoutReview: [],
-                    reviewImage: '',
+            if (this.state.reviewImage){
+                dataForReviewImage.review = newReview.id;
+                // //This will be for review images
+                const reviewImageUrl = `${process.env.REACT_APP_FOODIES_API}/api/foodies/eateries/reviews/images/`;
+                const imageFetchConfig = {
+                    method: "post",
+                    body: JSON.stringify(dataForReviewImage),
+                    headers: {
+                        'Content-type': 'application/json',
+                    },
                 };
-                this.setState(cleared);
+                const imageResponse = await fetch(reviewImageUrl, imageFetchConfig);
+                if (imageResponse.ok) {
+                    const newReviewImage = await imageResponse.json();
+                    console.log("newReviewImage is: ", newReviewImage);
+                }
             }
+            const cleared = {
+                title: '',
+                rating: '',
+                description: '',
+                reviewImage: '',
+            };
+            this.setState(cleared);
+            this.getFoodieData()
         }
     }
 
