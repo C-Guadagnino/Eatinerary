@@ -156,7 +156,7 @@ pages:
   needs:
     - build-front-end-job
   script:
-    - mv ghi/build public
+    - mv ghi/app/build/ public
   artifacts:
     paths:
       - public
