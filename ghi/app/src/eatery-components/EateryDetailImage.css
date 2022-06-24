@@ -1,9 +1,6 @@
 /* object-fit: cover
 this is for our images on both the home page and detail page */
 
-.overlay {
-background-color: rgb(79, 4, 4);
-}
 
 #sideNav {
   background-color: #e5f9dd;
@@ -15,9 +12,13 @@ background-color: rgb(79, 4, 4);
   
 }
 
-.card-style {
-    border: 10px solid #48ff00;
-}
+.overlay{
+  width:100%;
+  position:absolute; /*You may also use fixed depending on your needs.*/
+  left:0;
+  top:0; /*If you want it at the bottom you probably want bottom:0 instead*/
+  z-index: 999;
+  }
 
 #button-38 {
   /*background-color: #ffffff;*/

@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-# Create your models here.
+
 class Eatery(models.Model):
     eatery_name = models.CharField(max_length=200)
     email = models.CharField(max_length=200, null=True, blank=True)
@@ -10,22 +10,12 @@ class Eatery(models.Model):
         "EateryLocation", related_name="eatery", on_delete=models.CASCADE
     )
     website = models.URLField(max_length=500)
-    # YELP_ID IS NOT UNIQUE, BECAUSE ONLY THE EATERIES THAT GET IMPORTED FROM YELP WILL HAVE AN ID.
-    # EATERIES THAT OWNERS IN OUR APP CREATE (AKA THAT DO NOT COME FROM YELP) WILL NOT HAVE A YELP ID
-    # -- which means more than 1 eatery will have "" for yelp_id, which makes this attribute NOT unique
     yelp_id = models.CharField(max_length=200, blank=True, null=True)
-    # yelp_id = models.CharField(max_length=200, unique=True)
-    # what was href for??? Need to refresh memory
-    # href = models.URLField(max_length=200, unique=True)
     review_count = models.PositiveIntegerField(default=0)
     average_rating = models.FloatField()
-    # "$$"
     price = models.CharField(max_length=4, null=True, blank=True)
-    # should the tag attribute go in the Eatery model??? or eatery = ManyToManyField to Eatery model within EateryTag model???
     tags = models.ManyToManyField("EateryTag", related_name="tags")
     categories = models.ManyToManyField("EateryCategory", related_name="categories")
-    # open_hours has a foreign key to eatery and will be accessible on requests
-    # eatery_image has a foreign key to eatery and will be accessible on requests
     from_yelp = models.BooleanField(default=False)
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
@@ -67,7 +57,6 @@ class YelpLocationSearchTerm(models.Model):
         return self.location_term
 
 
-# business data
 class YelpResult(models.Model):
     category_term = models.ForeignKey(
         YelpCategorySearchTerm, on_delete=models.CASCADE, related_name="results"
@@ -99,7 +88,6 @@ class YelpResult(models.Model):
 
 class EateryTag(models.Model):
     tag_name = models.CharField(max_length=40, unique=True)
-    # eatery = models.ManyToManyField("Eatery", related_name="tags")
 
     def __str__(self):
         return self.tag_name
@@ -111,9 +99,6 @@ class EateryTag(models.Model):
 class EateryCategory(models.Model):
     alias = models.CharField(max_length=200, unique=True)
     title = models.CharField(max_length=200)
-    # should this eatery attribute live inside the EateryCategory model or
-    # should the categories attribute live inside the Eatery model?????????????????
-    # eatery = models.ManyToManyField("Eatery", related_name="categories")
 
     def __str__(self):
         return self.alias + " " + self.title
@@ -181,7 +166,7 @@ STATES = [
     ("WY", "Wyoming"),
 ]
 
-# NEEDS REVIEW BASED ON CURTIS' FEEDBACK
+
 class EateryLocation(models.Model):
     address1 = models.CharField(max_length=200)
     address2 = models.CharField(max_length=200, null=True, blank=True)
@@ -193,17 +178,6 @@ class EateryLocation(models.Model):
 
     def get_api_url(self):
         return reverse("api_location", kwargs={"pk": self.pk})
-
-    # class Meta:
-    #     unique_together = (
-    #         "address1",
-    #         "address2",
-    #         "address3",
-    #         "city",
-    #         "state",
-    #         "zip_code",
-    #         "country",
-    #     )
 
     def __str__(self):
         return (
@@ -249,13 +223,6 @@ class EateryOpenHours(models.Model):
         ordering = ("weekday", "start_time")
         unique_together = ("weekday", "start_time", "end_time", "eatery")
 
-    # def __unicode__(self):
-    #     return "%s: %s - %s" % (
-    #         self.get_weekday_display(),
-    #         self.start_time,
-    #         self.end_time,
-    #     )
-
     def __str__(self):
         return "%s: %s - %s" % (
             self.get_weekday_display(),
@@ -265,7 +232,6 @@ class EateryOpenHours(models.Model):
 
 
 class EateryImage(models.Model):
-    # not unique because an owner should be able to upload the same picture to location1 and location2
     image_url = models.TextField()
     eatery = models.ForeignKey(
         "Eatery", related_name="eatery_images", on_delete=models.CASCADE

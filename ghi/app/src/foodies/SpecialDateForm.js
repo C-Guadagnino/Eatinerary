@@ -1,4 +1,5 @@
 import React from 'react';
+import "./Foodies.css"
 
 class SpecialDateForm extends React.Component {
     constructor(props) {
@@ -6,7 +7,7 @@ class SpecialDateForm extends React.Component {
         this.state = {
             specialDate: '',
             occasion: '',
-            repeats: '',
+            repeats: false,
             frequency: ''
         };
 
@@ -29,7 +30,6 @@ class SpecialDateForm extends React.Component {
 
 
     handleRepeatsChange(event) {
-        console.log("$$$$$$$$$$$$$$$$$", event)
         const value = event.target.checked;
         this.setState({ repeats: value })
     }
@@ -47,11 +47,8 @@ class SpecialDateForm extends React.Component {
         data.foodie_vo = this.props.username
         delete data.specialDate
         data.has_passed = false
-        console.log("DATA", data)
 
-
-
-        const appointmentUrl = `http://localhost:8100/api/foodies/${this.props.username}/specialdates/`;
+        const appointmentUrl = `${process.env.REACT_APP_FOODIES_API}/api/foodies/${this.props.username}/specialdates/`;
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(data),
@@ -65,15 +62,6 @@ class SpecialDateForm extends React.Component {
 
         if (response.ok) {
             const newAppointment = await response.json();
-
-            //         {
-            //     "special_date": "2022-08-07",
-            //     "occasion": "Anniversary3",
-            //     "has_passed": false,
-            //     "repeats": true,
-            //     "frequency": "Yearly",
-            //     "foodie_vo": "frank001"
-            // }
 
             const cleared = {
                 specialDate: '',
@@ -102,27 +90,23 @@ class SpecialDateForm extends React.Component {
                                     <input onChange={this.handleOccasionChange} value={this.state.occasion} placeholder="occasion" required type="text" name="occasion" id="occasion" className="form-control" />
                                     <label htmlFor="occasion">Occasion</label>
                                 </div>
-                                {/* <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                                </div> */}
                                 <div className="form-check">
                                     <input onChange={this.handleRepeatsChange} value={this.state.repeats} placeholder="repeats" type="checkbox" name="repeats" id="repeats" className="form-check-input" />
                                     <label htmlFor="repeats" className="form-check-label" >Does this occasion repeat?</label>
                                 </div>
                                 <div className="mb-3">
                                     <select onChange={this.handleFrequencyChange} value={this.state.frequency} id="frequency" name="frequency" className="form-select">
-                                        <option value="">How often does this occasion repeat?</option>
+                                        <option value="">How often?</option>
                                         <option key="0" value="Monthly">Monthly</option>
                                         <option key="1" value="Yearly">Yearly</option>
                                     </select>
                                 </div>
-                                <button className="btn btn-primary">Create</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                <button className="button-38">Create</button>
+                            </form >
+                        </div >
+                    </div >
+                </div >
+            </div >
         );
     }
 }

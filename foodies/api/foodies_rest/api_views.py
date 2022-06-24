@@ -4,7 +4,6 @@ from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 
-# from django.shortcuts import render
 from .encoders import (
     FoodieEncoder,
     EateryVOEncoder,
@@ -33,7 +32,6 @@ from .models import (
 # Will only let this view function run if there's a JWT
 # in the 'Authorization' header
 @auth.jwt_login_required
-# @require_http_methods(["GET", "POST"])
 def get_foodie_skewers(request):
     return JsonResponse({"received": request.payload})
 
@@ -57,6 +55,7 @@ def api_foodies(request):
         )
 
 
+# Get details for one Foodie
 @require_http_methods(["GET"])
 def api_foodie(request, username):
     if request.method == "GET":
@@ -266,9 +265,7 @@ def api_skewered_eatery(request, pk):
             return JsonResponse({"message": "Does not exist"}, status=404)
 
 
-# ======================================
-
-
+# Get skewered eateries for specific foodie
 @require_http_methods(["GET"])
 def api_skewered_eateries_for_foodie(request, username):
     if request.method == "GET":
@@ -286,8 +283,6 @@ def api_skewered_eateries_for_foodie(request, username):
             return response
 
 
-# ======================================
-
 # List all foodie reviews, create review
 @require_http_methods(["GET", "POST"])
 def api_reviews(request, username=None):
@@ -303,7 +298,9 @@ def api_reviews(request, username=None):
                 for review in reviews:
                     reviews_list.append(review)
                     print("REVIEWS ARE:", review)
-        return JsonResponse({"reviews": reviews_list}, encoder=ReviewEncoder, safe=False)
+        return JsonResponse(
+            {"reviews": reviews_list}, encoder=ReviewEncoder, safe=False
+        )
     else:
         try:
             content = json.loads(request.body)
@@ -351,7 +348,6 @@ def api_review(request, pk):
             Review.objects.filter(id=pk).update(**content)
             foodie_review = Review.objects.get(id=pk)
             return JsonResponse(foodie_review, encoder=ReviewEncoder, safe=False)
-        # TO-DO: Figure out what kind of error this throws
         except:
             return JsonResponse(
                 {"message": "Cannot update skewered eatery"}, status=400
@@ -459,7 +455,5 @@ def api_special_date(request, pk):
             SpecialDate.objects.filter(id=pk).update(**content)
             special_date = SpecialDate.objects.get(id=pk)
             return JsonResponse(special_date, encoder=SpecialDateEncoder, safe=False)
-        # TO-DO: Figure out what kind of error this throws
         except:
             return JsonResponse({"message": "Cannot update special date"}, status=400)
-

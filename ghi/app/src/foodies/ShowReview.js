@@ -30,20 +30,18 @@ class ShowReview extends React.Component {
             return
         }
 
-        //list all reviews for a foodie endpoint
-        const reviewsUrl = `http://localhost:8100/api/foodies/${foodie_username}/eateries/reviews/`;
+        // list all reviews for a foodie endpoint
+        const reviewsUrl = `${process.env.REACT_APP_FOODIES_API}/api/foodies/${foodie_username}/eateries/reviews/`;
         const reviewsResponse = await fetch(reviewsUrl);
 
         if (reviewsResponse.ok) {
             const reviewsData = await reviewsResponse.json();
-            //console.log(reviewsData);
 
             this.setState({ reviews: reviewsData.reviews })
         }
     }
 
     selectReview(review) {
-        console.log("is this selectReview:", review);
         this.setState({
             "selected": review,
         })
@@ -56,16 +54,17 @@ class ShowReview extends React.Component {
                     <div className="col-md-6" id="sideNav">
                         <ul className="list-group list-group-flush">
                             <li className="list-nav-item">
-                                <Link className='link' to="/mySkewered">My Skewered List</Link>
+                                <Link className='link' to="/myskewered">My Skewered List</Link>
                             </li>
                             <li className="list-nav-item">
-                                <Link className='link' to="/mySkeweredHistory">My Skewered History</Link>
+                                <Link className='link' to="/myskeweredhistory">My Skewered History</Link>
                             </li>
                             <li className="list-nav-item">
                                 <Link className='link' to="/review">Leave a Review</Link>
                             </li>
                         </ul>
                     </div>
+
                     <div className="col-md-3 mt-5" id="reviewsList">
                         <h2> Reviews </h2>
                         <div className="list-group" id="reviewsList2">
