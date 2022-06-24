@@ -8,6 +8,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import EateryDetailPage from "../eatery-components/EateryDetailPage";
 import eatineraryheader from "./images/eatineraryheader.png"
 import localeateries from "./images/localeateries.png"
+import { FaInfo } from "react-icons/fa";
+import { GiCupidonArrow } from "react-icons/gi";
 
 
 const HomePageWithCards = () => {
@@ -56,23 +58,25 @@ const HomePageWithCards = () => {
   }
 
   const [locationState, setLocation] = useState('')
-  const [categoryState, setCategory] = useState('')
+  const [categoryState, setCategory] = useState('food')
   const [searchInput, setSearchInput] = useState('');
 
   const handleLocationChange = (e) => {
     e.preventDefault();
-    setLocation(e.target.value);
+    setLocation(e.target.value.replaceAll(" ","+"));
   };
 
   const handleCategoryChange = (e) => {
     e.preventDefault();
-    setCategory(e.target.value);
+    setCategory(e.target.value.replaceAll(" ","+"));
   };
 
   async function handleSearch() {
+    console.log("!!!!!", locationState)
+    console.log("!!!!!", categoryState)
     const searchData = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/yelp/${locationState}/${categoryState}/`)
     // console.log("SEARCH DATA:", searchData.data.eateries.businesses)
-    const allEateries = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/filtered/${locationState}/${categoryState}`)
+    const allEateries = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/filtered/${locationState}/${categoryState}/`)
     // console.log("SEARCH DATA:", allEateries.data.eateries)
     // if (allEateries.data.eateries.length > 0) {
     //   const searchEateries = allEateries.data.eateries.filter((eatery) => {
@@ -85,7 +89,7 @@ const HomePageWithCards = () => {
       // console.log("EATERIES", eatery)
       let eatery_dict = {
         "id": eatery.id,
-        "name": eatery.eatery_name,
+        "eatery_name": eatery.eatery_name,
         "image_url": eatery.eatery_images[0].image_url,
         "address1": eatery.location.address1,
         "city": eatery.location.city,
@@ -103,8 +107,8 @@ const HomePageWithCards = () => {
         return(
 
             // <Card border="success" style={{ width: '17rem' }} key={index} className="box">
-            <Card style={{ width: '18rem' }} key={index} className="container mt-4 mb-4 mx-3">
-                <Card.Img className="image-container mt-3" src={card.image_url} />
+            <Card style={{ width: '18rem' }} key={index} className="container mt-4 mb-4 mx-3 border-0">
+                <Card.Img className="image-container mt-3" style={{objectFit: "cover"}} src={card.image_url} />
 
 
                 <Card.Body>
@@ -113,7 +117,7 @@ const HomePageWithCards = () => {
                         {card.address1}, {card.city}, {card.state}, {card.zip_code}
                     </Card.Text>
       
-                    <Button className="button-38" onClick={detailOnClick.bind(this,card)}>More Info</Button>
+                    <Button id="button-38" onClick={detailOnClick.bind(this,card)}> <FaInfo size="1.5em" /> </Button><Button id="button-38" onClick={detailOnClick.bind(this,card)}> <GiCupidonArrow size="1.5em" /> </Button>
                     {/* Revisit and look into bind documentation for more details - ANOTHER ALTERNATIVE:
                     () => detailOnClick(card) */}
                 </Card.Body>
