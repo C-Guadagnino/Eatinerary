@@ -1,12 +1,15 @@
 import React, {useState, useEffect} from 'react';
+import {Button} from "react-bootstrap"
 import { Card } from "react-bootstrap";
 import { ListGroup } from "react-bootstrap";
 import {useParams} from 'react-router-dom';
 import axios from 'axios'
-// import Iframe from './GoogleMapsEatery.js';
+import { GiCupidonArrow } from "react-icons/gi";
+import forlater from "./images/forlater.png"
+import Iframe from './GoogleMaps3.js';
 
 function EateryDetailPage(props){
-  const [eateryData, setEateryData] = useState({});
+  const [eateryData, setEateryData] = useState({eatery_name:'',location:{}});
   let { eateryID } = useParams();
   // console.log("EATERY DATA", eateryID)
   async function getEateryDetails(){
@@ -100,8 +103,8 @@ function EateryDetailPage(props){
           </Card.Text>
       </Card.ImgOverlay>
     </Card>
-
-    <button onClick={() => skewerEatery()}>BUTTON</button>
+    <h6><img className='mt-3' src={ forlater } height="100" alt="uh-oh"/></h6>
+    <Button id="button-38" onClick={() => skewerEatery()}><GiCupidonArrow size="4.5em" /></Button>
       {/* <h1>{this.state.eateryData.eatery_name}</h1> */}
       {/* <p>{this.state.eateryData.average_rating} Stars, {this.state.eateryData.review_count} reviews</p>
       <p>{this.state.eateryData.price}</p> */}
@@ -135,6 +138,10 @@ function EateryDetailPage(props){
           <ListGroup.Item>{openhours_html}</ListGroup.Item>
         </ListGroup>
       </Card>
+
+        <div>
+        <Iframe name={eateryData.eatery_name.replaceAll('&', ' ')} city={eateryData.location.city} state={eateryData.location.state} latitude={eateryData.latitude} longitude={eateryData.longitude} />
+        </div>
 
 
 

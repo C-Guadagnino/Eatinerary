@@ -36,7 +36,7 @@ function App() {
           {/* eatery detail page url will need to be dynamic and accept an eatery id value
           path = /eatery/1 */}
           <Route path="/eatery/:eateryID" element={<EateryDetailPage username={userName}/>} />
-          <Route path="/" element={<HomePageWithCards />} />
+          <Route path="/" element={<HomePageWithCards username={userName}/>} />
           <Route Path='users'>
             <Route path='login' element={<Login token={token} login={login} setUN={setUserName} />} />
             <Route path='logout' element={<Logout logout={logout} />} />
@@ -44,9 +44,9 @@ function App() {
           </Route>
           <Route path='specialDateForm' element={<SpecialDateForm username={userName} />} />
           <Route path='mySkewered' element={<MySkeweredList username={userName} />} />
-          <Route path='mySkeweredHistory' element={<MySkeweredHistory />} />
-          <Route path='review' element={<CreateReview />} />
-          <Route path='showreview' element={<ShowReview />} />
+          <Route path='mySkeweredHistory' element={<MySkeweredHistory username={userName} />} />
+          <Route path='review' element={<CreateReview username={userName} />} />
+          <Route path='showreview' element={<ShowReview username={userName} />} />
         </Routes>
       </div>
     </BrowserRouter>
