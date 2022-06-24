@@ -7,7 +7,6 @@ import axios from 'axios'
 import { GiCupidonArrow } from "react-icons/gi";
 import forlater from "./images/forlater.png"
 import Iframe from './GoogleMaps3.js';
-// import Iframe from './GoogleMapsEatery.js';
 
 function EateryDetailPage(props){
   const [eateryData, setEateryData] = useState({eatery_name:'',location:{}});

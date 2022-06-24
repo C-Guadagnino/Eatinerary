@@ -173,10 +173,16 @@ const HomePageWithCards = (props) => {
       image_address = eateryData.eatery_images[0].image_url
     }
     console.log("EateryID",eateryID, "PROPS.USERNSME", props.username)
-    const skewerEatery = async () => {
+
+    const [eateryHomePage, setEateryHomePage] = useState('');
+
+    const skewerEatery = async (card) => {
+      const currentID = card.id  
+      console.log(currentID)
+      console.log(props.username)
       await axios.post("http://localhost:8100/api/foodies/eateries/skewered/",
       {
-      eateryvo_import_href: `/api/eateries/${eateryID}/`,
+      eateryvo_import_href: `/api/eateries/${currentID}/`,
       foodie_vo: `${props.username}`,
       notes: ""
       })
@@ -198,7 +204,7 @@ const HomePageWithCards = (props) => {
                         {card.address1}, {card.city}, {card.state}, {card.zip_code}
                     </Card.Text>
       
-                    <Button id="button-38" onClick={detailOnClick.bind(this,card)}> <FaInfo size="1.5em" /> </Button><Button id="button-38" onClick={skewerEatery(this,card)}> <GiCupidonArrow size="1.5em" /> </Button>
+                    <Button id="button-38" onClick={detailOnClick.bind(this,card)}> <FaInfo size="1.5em" /> </Button> <Button id="button-38" onClick={skewerEatery.bind(this,card)}> <GiCupidonArrow size="1.5em" /> </Button>
                     {/* Revisit and look into bind documentation for more details - ANOTHER ALTERNATIVE:
                     () => detailOnClick(card) */}
                 </Card.Body>
