@@ -61,7 +61,7 @@ const HomePageWithCards = (props) => {
 
   const [locationState, setLocation] = useState('')
   const [categoryState, setCategory] = useState('food')
-  const [searchInput, setSearchInput] = useState('');
+  // const [searchInput, setSearchInput] = useState('');
 
   const handleLocationChange = (e) => {
     e.preventDefault();

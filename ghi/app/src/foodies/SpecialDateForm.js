@@ -6,7 +6,7 @@ class SpecialDateForm extends React.Component {
         this.state = {
             specialDate: '',
             occasion: '',
-            repeats: '',
+            repeats: false,
             frequency: ''
         };
 
@@ -102,18 +102,22 @@ class SpecialDateForm extends React.Component {
                                     <input onChange={this.handleOccasionChange} value={this.state.occasion} placeholder="occasion" required type="text" name="occasion" id="occasion" className="form-control" />
                                     <label htmlFor="occasion">Occasion</label>                     
                                 </div>
+                                <div className="form-check">
+                                    <input onChange={this.handleRepeatsChange} value={this.state.repeats} placeholder="repeats" type="checkbox" name="repeats" id="repeats" className="form-check-input" />
+                                    <label htmlFor="repeats" className="form-check-label" >Does this occasion repeat?</label>
+                                </div>
                                 {/* <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                     <label class="form-check-label" for="exampleCheck1">Check me out</label>
                                 </div> */}
-                                <div className="form-check form-check-inline">                  
+                                {/* <div className="form-check form-check-inline">                  
                                     <input onChange={this.handleRepeatsChange} value={this.state.repeats} placeholder="repeats" required type="radio" name="inlineRadioOptions" id="inlineRadio1" className="form-check-input"  />
                                     <label htmlFor="inlineRadio1" className="form-check-label" >This event repeats</label> 
                                 </div>
                                 <div className="form-check form-check-inline">                  
                                     <input onChange={this.handleRepeatsChange} value={this.state.repeats} placeholder="repeats" required type="radio" name="inlineRadioOptions" id="inlineRadio2" className="form-check-input"  />
                                     <label htmlFor="inlineRadio2" className="form-check-label" >This event does NOT repeats</label> 
-                                </div>
+                                </div> */}
                                 <div className="mb-3">
                                     <select onChange={this.handleFrequencyChange} value={this.state.frequency} id="frequency" name="frequency" className="form-select">
                                         <option value="">How often does this occasion repeat?</option>

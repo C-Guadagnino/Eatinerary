@@ -42,7 +42,7 @@ from .acls import get_eateries_from_yelp, get_details_of_one_eatery
 def api_eateries_given_category_and_location(request, location, category="food"):
     if request.method == "GET":
         try:
-            EateryCategory.objects.create(alias="food",title="Food")
+            EateryCategory.objects.create(alias="food", title="Food")
         except:
             pass
         # Send request to Yelp API to get a list of eateries given category and location
@@ -511,14 +511,26 @@ def api_eatery_image(request, pk):
         eatery_image = EateryImage.objects.get(pk=pk)
         return JsonResponse(eatery_image, encoder=EateryImageEncoder, safe=False)
 
+
 @require_http_methods(["GET"])
 def api_filtered_eateries(request, city, alias):
     if request.method == "GET":
-        filtered_eateries_by_category_and_location = Eatery.objects.filter(location__city__iexact=city, categories__alias__iexact=alias)
-        return JsonResponse(filtered_eateries_by_category_and_location, encoder=EateryEncoder, safe=False)
+        filtered_eateries_by_category_and_location = Eatery.objects.filter(
+            location__city__iexact=city, categories__alias__iexact=alias
+        )
+        return JsonResponse(
+            filtered_eateries_by_category_and_location,
+            encoder=EateryEncoder,
+            safe=False,
+        )
+
 
 @require_http_methods(["GET"])
 def api_filtered_eateries_by_location(request, city):
     if request.method == "GET":
-        filtered_eateries_by_location = Eatery.objects.filter(location__city__iexact=city)
-        return JsonResponse(filtered_eateries_by_location, encoder=EateryEncoder, safe=False)
+        filtered_eateries_by_location = Eatery.objects.filter(
+            location__city__iexact=city
+        )
+        return JsonResponse(
+            filtered_eateries_by_location, encoder=EateryEncoder, safe=False
+        )
