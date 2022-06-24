@@ -1,9 +1,6 @@
 import React from 'react';
 
 class ReviewDetails extends React.Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         return (
             <div>
@@ -26,7 +23,7 @@ class ReviewDetails extends React.Component {
                                 <td>
                                     {this.props.images.map(image => {
                                         return (
-                                            <img src={image.image_url} key={image.id} height="150"></img>
+                                            <img alt="User-uploaded review" src={image.image_url} key={image.id} height="150"></img>
                                         )
                                     })}
                                 </td>

@@ -18,13 +18,11 @@ import { BsArrow90DegUp } from "react-icons/bs";
 const HomePageWithCards = (props) => {
   const navigate = useNavigate()
   //creating IP state
-  const [ip, setIP] = useState('');
   const [eateries, setEateries] = useState([]);
   //creating function to load ip address from the API
   const getData = async () => {
     const res = await axios.get('http://ip-api.com/json/')
-    setIP(res.data.city)
-    const data = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/yelp/${res.data.city}/food/`)
+    await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/yelp/${res.data.city}/food/`)
     const realEateries = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/city/filter/${res.data.city}/`)
     let eateries = []
     for (let eatery of realEateries.data) {
@@ -62,7 +60,7 @@ const HomePageWithCards = (props) => {
 
   const handleCategoryChange = (e) => {
     e.preventDefault();
-    if (e.target.value == "") {
+    if (e.target.value === "") {
       setCategory("food")
     } else {
       setCategory(e.target.value.replaceAll(" ", "").toLowerCase());
@@ -73,7 +71,7 @@ const HomePageWithCards = (props) => {
     // Keeping these consol.logs to keep track of these variables state
     console.log("State of the Location ----", locationState)
     console.log("State of the Category ----", categoryState)
-    const searchData = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/yelp/${locationState}/${categoryState}/`)
+    await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/yelp/${locationState}/${categoryState}/`)
     const allEateries = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/filtered/${locationState}/${categoryState}/`)
     let eateries = []
     for (let eatery of allEateries.data) {

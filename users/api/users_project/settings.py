@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from datetime import timedelta
 import dj_database_url
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,9 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = (
-    "django-insecure--@c2c%0i1_d7g7p@kds-vujbgh&6fx+2$y9_0ko2_*_hn3r*v("
-)
+SECRET_KEY = "django-insecure--@c2c%0i1_d7g7p@kds-vujbgh&6fx+2$y9_0ko2_*_hn3r*v("
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -56,15 +55,18 @@ MIDDLEWARE = [
 
 AUTH_USER_MODEL = "users_rest.User"
 
-ALLOWED_HOSTS = ["localhost", "users-api"]
-
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000/",
+ALLOWED_HOSTS = [
+    "localhost",
+    "users-api",
+    os.environ.get("HOST_NAME", "127.0.0.1"),
 ]
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000/"]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:8000",
+    os.environ.get("CORS_HOST", "http://localhost:3001"),
 ]
 CORS_ALLOW_CREDENTIALS = True
 
