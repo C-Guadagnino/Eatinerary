@@ -14,14 +14,11 @@ from .api_views import (
     api_open_hours_singular,
     api_eatery_images,
     api_eatery_image,
-    # api_get_yelp_with_location,
     api_location_search_terms,
     api_category_search_terms,
     api_yelp_results,
-    # api_filtered_eateries
-    # api_get_yelp_one_eatery,
-    # api_get_yelp_with_category_and_location,
-    # api_yelp_results_from_db
+    api_filtered_eateries,
+    api_filtered_eateries_by_location
 )
 
 urlpatterns = [
@@ -61,24 +58,14 @@ urlpatterns = [
         api_yelp_results,
         name="api_yelp_results",
     ),
-    # path(
-    #     "eateries/<str:city>/<str:alias>/",
-    #     api_filtered_eateries,
-    #     name="api_filtered_eateries",
-    # ),
-    # path(
-    #     "eateries/yelp/<str:location>/",
-    #     api_get_yelp_with_location,
-    #     name="api_get_yelp_with_location",
-    # ),
-    # path(
-    #     "yelpdb/<str:location>/<str:category>/",
-    #     api_yelp_results_from_db,
-    #     name="api_yelp_results_from_db",
-    # ),
-    # path(
-    #     "yelp/one/<str:yelp_id>/",
-    #     api_get_yelp_one_eatery,
-    #     name="api_get_yelp_one_eatery",
-    # ),
+    path(
+        "eateries/filtered/<str:city>/<str:alias>/",
+        api_filtered_eateries,
+        name="api_filtered_eateries",
+    ),
+    path(
+        "eateries/city/filter/<str:city>/",
+        api_filtered_eateries_by_location,
+        name="api_filtered_eateries_by_location",
+    ),
 ]

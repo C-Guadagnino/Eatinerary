@@ -50,7 +50,6 @@ class EateryTagVO(models.Model):
 class EateryImageVO(models.Model):
     import_href = models.CharField(max_length=200)
     image_url = models.CharField(max_length=200)
-    # image_url2 = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=100, unique=True)
     eatery_vo = models.ForeignKey(
         "EateryVO", related_name="eateryimagesvo", on_delete=models.CASCADE
     )
@@ -84,7 +83,6 @@ class FoodieVO(models.Model):
     last_name = models.CharField(max_length=50)
     email = models.CharField(max_length=100)
     phone = models.CharField(max_length=13)
-    # google_calendar = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.username
@@ -105,10 +103,13 @@ class SkeweredEatery(models.Model):
     updated_DateTime = models.DateTimeField(auto_now=True)
     has_visited = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    notes = models.TextField()
+    notes = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.eatery_vo.eatery_name
+
+    class Meta:
+        unique_together = ("eatery_vo", "foodie_vo")
 
 
 class Review(models.Model):

@@ -73,8 +73,6 @@ export function useToken() {
     if (token) {
       const url = `${process.env.REACT_APP_ACCOUNT_API}/api/token/refresh/logout/`;
       await fetch(url, { method: 'delete', credentials: 'include' });
-      // For some reason, unknown right now, when we try to logout,
-      // the token is not being deleted form cookies in local storage
       internalToken = null;
       setToken(null);
     }
