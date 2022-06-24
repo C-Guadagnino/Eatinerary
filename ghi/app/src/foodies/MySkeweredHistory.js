@@ -104,7 +104,7 @@ class SkeweredHistory extends React.Component {
                         <div className="row p-3">
                             <div className="col-md-12" id="maps">
                             { this.state.selected?
-                                <Iframe name={this.state.selected.eatery.eatery_name} city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
+                                <Iframe name={this.state.selected.eatery.eatery_name.replaceAll('&', ' ')} city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
                                  :null}
                             </div>
                         </div>

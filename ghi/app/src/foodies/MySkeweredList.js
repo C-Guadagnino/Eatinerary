@@ -193,7 +193,7 @@ class SkeweredList extends React.Component {
                     </div>
                 <div className="col-md-4 mx-5 mt-0">
                         {this.state.selected ?
-                            <Iframe name={this.state.selected.eatery.eatery_name} city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
+                            <Iframe name={this.state.selected.eatery.eatery_name.replaceAll('&', ' ')} city={this.state.selected.eatery.location_city} state={this.state.selected.eatery.location_state} latitude={this.state.selected.eatery.eatery_latitude} longitude={this.state.selected.eatery.eatery_longitude} />
                             : null}
                 </div>
                 
