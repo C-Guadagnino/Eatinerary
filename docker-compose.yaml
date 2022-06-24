@@ -40,6 +40,7 @@ services:
     depends_on:
       - database
     environment:
+      DEBUG: "True"
       DATABASE_URL: postgres://foodies:password@database:5432/foodies
       WAIT_HOSTS: database:5432
       WAIT_TIMEOUT: 240
@@ -57,6 +58,7 @@ services:
       - database
       - foodies-api
     environment:
+      DEBUG: "True"
       EATERIES_API: http://eateries-api:8000
       USERS_API: http://users-api:8000
       DATABASE_URL: postgres://foodies:password@database:5432/foodies
@@ -74,6 +76,7 @@ services:
     depends_on:
       - database
     environment:
+      DEBUG: "True"
       DATABASE_URL: postgres://eateries:password@database:5432/eateries
       WAIT_HOSTS: database:5432
       WAIT_TIMEOUT: 240
@@ -92,6 +95,7 @@ services:
     depends_on:
       - database
     environment:
+      DEBUG: "True"
       DATABASE_URL: postgres://owners:password@database:5432/owners
       WAIT_HOSTS: database:5432
       WAIT_TIMEOUT: 240
@@ -109,6 +113,7 @@ services:
       - database
       - owners-api
     environment:
+      DEBUG: "True"
       EATERIES_API: http://eateries-api:8000
       USERS_API: http://users-api:8000
       DATABASE_URL: postgres://owners:password@database:5432/owners
