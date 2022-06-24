@@ -133,7 +133,7 @@ const HomePageWithCards = (props) => {
         )
   }
   // console.log("EATERIES",eateries)
-  // if (eateries.length!=0){
+  if (eateries.length!=0){
   return (
     <>
       <div className="container my-5 py-3">
@@ -164,19 +164,19 @@ const HomePageWithCards = (props) => {
       </div>
         </>
     )
-  // } else {
-  //   return (
-  //     <>
-  //     <li></li>
-  //     <li></li>
-  //     <li></li>
-  //     <li></li>
-  //     <div className="alert alert-success" role="alert"> 
-  //     OOOPS! please go back and check to see if a search term is mis spelt. If not, then it isn't a valid category
-  //     </div>
-  //     </>
-  //   )
-  // }
+  } else {
+    return (
+      <>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <div className="alert alert-success" role="alert"> 
+      OOOPS! ^ Please refresh the page the search terms are not a valid category
+      </div>
+      </>
+    )
+  }
 }
 
 export default HomePageWithCards;

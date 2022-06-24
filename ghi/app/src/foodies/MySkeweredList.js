@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Iframe from './GoogleMaps2.js';
 import './Foodies.css';
 import { FaHeart } from "react-icons/fa";
-
+import googlemap from './images/googlemap.png'
 
 class SkeweredList extends React.Component {
     constructor(props) {
@@ -134,7 +134,6 @@ class SkeweredList extends React.Component {
                                     <th>Average Rating</th>
                                     <th>Price</th>
                                     <th>I've Been Here</th>
-                                    <th> </th>
                                 </tr>
                             </thead>
                             <tbody>
