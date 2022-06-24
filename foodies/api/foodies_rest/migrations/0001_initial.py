@@ -24,13 +24,19 @@ class Migration(migrations.Migration):
                 ),
                 ("import_href", models.CharField(max_length=200)),
                 ("eatery_name", models.CharField(max_length=200)),
-                ("email", models.CharField(blank=True, max_length=200, null=True)),
+                (
+                    "email",
+                    models.CharField(blank=True, max_length=200, null=True),
+                ),
                 ("phone", models.CharField(max_length=200)),
                 ("website", models.URLField(max_length=500)),
                 ("yelp_id", models.CharField(max_length=200)),
                 ("review_count", models.PositiveIntegerField(default=0)),
                 ("average_rating", models.FloatField()),
-                ("price", models.CharField(blank=True, max_length=4, null=True)),
+                (
+                    "price",
+                    models.CharField(blank=True, max_length=4, null=True),
+                ),
                 ("from_yelp", models.BooleanField()),
                 (
                     "location_address1",
@@ -60,8 +66,14 @@ class Migration(migrations.Migration):
                     "location_country",
                     models.CharField(blank=True, max_length=200, null=True),
                 ),
-                ("latitude", models.CharField(blank=True, max_length=200, null=True)),
-                ("longitude", models.CharField(blank=True, max_length=200, null=True)),
+                (
+                    "latitude",
+                    models.CharField(blank=True, max_length=200, null=True),
+                ),
+                (
+                    "longitude",
+                    models.CharField(blank=True, max_length=200, null=True),
+                ),
             ],
         ),
         migrations.CreateModel(

@@ -6,23 +6,26 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('foodies_rest', '0002_rename_eatery_eateryopenhoursvo_eatery_vo_and_more'),
+        (
+            "foodies_rest",
+            "0002_rename_eatery_eateryopenhoursvo_eatery_vo_and_more",
+        ),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='eaterycategoryvo',
-            old_name='eatery',
-            new_name='eatery_vo',
+            model_name="eaterycategoryvo",
+            old_name="eatery",
+            new_name="eatery_vo",
         ),
         migrations.RenameField(
-            model_name='eateryimagevo',
-            old_name='eatery',
-            new_name='eatery_vo',
+            model_name="eateryimagevo",
+            old_name="eatery",
+            new_name="eatery_vo",
         ),
         migrations.RenameField(
-            model_name='eaterytagvo',
-            old_name='eatery',
-            new_name='eatery_vo',
+            model_name="eaterytagvo",
+            old_name="eatery",
+            new_name="eatery_vo",
         ),
     ]

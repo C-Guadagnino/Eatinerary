@@ -6,17 +6,27 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('eateries_rest', '0005_alter_eatery_email'),
+        ("eateries_rest", "0005_alter_eatery_email"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='eaterylocation',
-            old_name='zip',
-            new_name='zip_code',
+            model_name="eaterylocation",
+            old_name="zip",
+            new_name="zip_code",
         ),
         migrations.AlterUniqueTogether(
-            name='eaterylocation',
-            unique_together={('address1', 'address2', 'address3', 'city', 'state', 'zip_code', 'country')},
+            name="eaterylocation",
+            unique_together={
+                (
+                    "address1",
+                    "address2",
+                    "address3",
+                    "city",
+                    "state",
+                    "zip_code",
+                    "country",
+                )
+            },
         ),
     ]

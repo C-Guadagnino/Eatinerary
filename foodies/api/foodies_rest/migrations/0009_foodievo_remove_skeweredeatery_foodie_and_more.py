@@ -7,43 +7,61 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('foodies_rest', '0008_alter_specialdate_special_date'),
+        ("foodies_rest", "0008_alter_specialdate_special_date"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='FoodieVO',
+            name="FoodieVO",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('import_href', models.CharField(max_length=200)),
-                ('username', models.CharField(max_length=50)),
-                ('first_name', models.CharField(max_length=50)),
-                ('last_name', models.CharField(max_length=50)),
-                ('email', models.CharField(max_length=100)),
-                ('phone', models.CharField(max_length=13)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("import_href", models.CharField(max_length=200)),
+                ("username", models.CharField(max_length=50)),
+                ("first_name", models.CharField(max_length=50)),
+                ("last_name", models.CharField(max_length=50)),
+                ("email", models.CharField(max_length=100)),
+                ("phone", models.CharField(max_length=13)),
             ],
         ),
         migrations.RemoveField(
-            model_name='skeweredeatery',
-            name='foodie',
+            model_name="skeweredeatery",
+            name="foodie",
         ),
         migrations.RemoveField(
-            model_name='specialdate',
-            name='foodie',
+            model_name="specialdate",
+            name="foodie",
         ),
         migrations.DeleteModel(
-            name='Foodie',
+            name="Foodie",
         ),
         migrations.AddField(
-            model_name='skeweredeatery',
-            name='foodie_vo',
-            field=models.ForeignKey(default=88, on_delete=django.db.models.deletion.CASCADE, related_name='skewered_eateries', to='foodies_rest.foodievo'),
+            model_name="skeweredeatery",
+            name="foodie_vo",
+            field=models.ForeignKey(
+                default=88,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="skewered_eateries",
+                to="foodies_rest.foodievo",
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='specialdate',
-            name='foodie_vo',
-            field=models.ForeignKey(default=88, on_delete=django.db.models.deletion.CASCADE, related_name='special_dates', to='foodies_rest.foodievo'),
+            model_name="specialdate",
+            name="foodie_vo",
+            field=models.ForeignKey(
+                default=88,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="special_dates",
+                to="foodies_rest.foodievo",
+            ),
             preserve_default=False,
         ),
     ]

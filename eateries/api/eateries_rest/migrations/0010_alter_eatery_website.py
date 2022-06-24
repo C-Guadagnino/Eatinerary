@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('eateries_rest', '0009_eatery_latitude_eatery_longitude_and_more'),
+        ("eateries_rest", "0009_eatery_latitude_eatery_longitude_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='eatery',
-            name='website',
+            model_name="eatery",
+            name="website",
             field=models.URLField(),
         ),
     ]

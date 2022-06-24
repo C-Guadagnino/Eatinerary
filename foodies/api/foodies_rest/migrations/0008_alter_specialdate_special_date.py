@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('foodies_rest', '0007_remove_foodie_google_calendar_specialdate'),
+        ("foodies_rest", "0007_remove_foodie_google_calendar_specialdate"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='specialdate',
-            name='special_date',
+            model_name="specialdate",
+            name="special_date",
             field=models.DateField(),
         ),
     ]

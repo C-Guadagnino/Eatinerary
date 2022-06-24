@@ -57,7 +57,10 @@ class YelpResultEncoder(ModelEncoder):
 
     def get_extra_data(self, o):
         return {
-            "eatery": {"eatery_name": o.eatery.eatery_name, "eatery_id": o.eatery.id},
+            "eatery": {
+                "eatery_name": o.eatery.eatery_name,
+                "eatery_id": o.eatery.id,
+            },
         }
 
 
@@ -68,7 +71,10 @@ class EateryOpenHoursEncoder(ModelEncoder):
     def get_extra_data(self, o):
         return {
             "weekday": WEEKDAYS[o.weekday - 1][1],
-            "eatery": {"eatery_name": o.eatery.eatery_name, "eatery_id": o.eatery.id},
+            "eatery": {
+                "eatery_name": o.eatery.eatery_name,
+                "eatery_id": o.eatery.id,
+            },
         }
 
 
@@ -78,7 +84,10 @@ class EateryImageEncoder(ModelEncoder):
 
     def get_extra_data(self, o):
         return {
-            "eatery": {"eatery_name": o.eatery.eatery_name, "eatery_id": o.eatery.id}
+            "eatery": {
+                "eatery_name": o.eatery.eatery_name,
+                "eatery_id": o.eatery.id,
+            }
         }
 
 

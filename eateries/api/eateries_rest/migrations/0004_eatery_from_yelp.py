@@ -6,13 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('eateries_rest', '0003_rename_category_terms_yelpresult_category_term_and_more'),
+        (
+            "eateries_rest",
+            "0003_rename_category_terms_yelpresult_category_term_and_more",
+        ),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='eatery',
-            name='from_yelp',
+            model_name="eatery",
+            name="from_yelp",
             field=models.BooleanField(default=False),
         ),
     ]

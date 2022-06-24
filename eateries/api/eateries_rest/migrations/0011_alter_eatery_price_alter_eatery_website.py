@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('eateries_rest', '0010_alter_eatery_website'),
+        ("eateries_rest", "0010_alter_eatery_website"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='eatery',
-            name='price',
+            model_name="eatery",
+            name="price",
             field=models.CharField(blank=True, max_length=4, null=True),
         ),
         migrations.AlterField(
-            model_name='eatery',
-            name='website',
+            model_name="eatery",
+            name="website",
             field=models.URLField(max_length=500),
         ),
     ]
