@@ -66,46 +66,32 @@ build-back-end-job:
     - cd eateries/api/eateries_rest
     - echo "YELP_API_KEY='$STAGING_YELP_API_KEY'" > keys.py
     - cd ..
-    - docker build -t ${CI_REGISTRY_IMAGE}/eateries-api:latest .
-    - docker tag ${CI_REGISTRY_IMAGE}/app:latest ${CI_REGISTRY_IMAGE}/eateries-api:$CI_JOB_ID
+    - docker build -t ${CI_REGISTRY_IMAGE}/eateries_api:latest .
+    - docker tag ${CI_REGISTRY_IMAGE}/eateries_api:latest ${CI_REGISTRY_IMAGE}/eateries_api:$CI_JOB_ID
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push ${CI_REGISTRY_IMAGE}/eateries-api:$CI_JOB_ID
-    - docker push ${CI_REGISTRY_IMAGE}/eateries-api:latest
+    - docker push ${CI_REGISTRY_IMAGE}/eateries_api:$CI_JOB_ID
+    - docker push ${CI_REGISTRY_IMAGE}/eateries_api:latest
 
     - cd ../../foodies/api
-    - docker build -t ${CI_REGISTRY_IMAGE}/foodies-api:latest .
-    - docker tag ${CI_REGISTRY_IMAGE}/app:latest ${CI_REGISTRY_IMAGE}/foodies-api:$CI_JOB_ID
+    - docker build -t ${CI_REGISTRY_IMAGE}/foodies_api:latest .
+    - docker tag ${CI_REGISTRY_IMAGE}/foodies_api:latest ${CI_REGISTRY_IMAGE}/foodies_api:$CI_JOB_ID
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push ${CI_REGISTRY_IMAGE}/foodies-api:$CI_JOB_ID
-    - docker push ${CI_REGISTRY_IMAGE}/foodies-api:latest
+    - docker push ${CI_REGISTRY_IMAGE}/foodies_api:$CI_JOB_ID
+    - docker push ${CI_REGISTRY_IMAGE}/foodies_api:latest
 
-    - cd ../poller
-    - docker build -t ${CI_REGISTRY_IMAGE}/foodies-poller:latest .
-    - docker tag ${CI_REGISTRY_IMAGE}/app:latest ${CI_REGISTRY_IMAGE}/foodies-poller:$CI_JOB_ID
+    - cd ../
+    - docker build -t ${CI_REGISTRY_IMAGE}/foodies_poller:latest .
+    - docker tag ${CI_REGISTRY_IMAGE}/foodies_poller:latest ${CI_REGISTRY_IMAGE}/foodies_poller:$CI_JOB_ID
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push ${CI_REGISTRY_IMAGE}/foodies-poller:$CI_JOB_ID
-    - docker push ${CI_REGISTRY_IMAGE}/foodies-poller:latest
-
-    - cd ../../owners/api
-    - docker build -t ${CI_REGISTRY_IMAGE}/owners-api:latest .
-    - docker tag ${CI_REGISTRY_IMAGE}/app:latest ${CI_REGISTRY_IMAGE}/owners-api:$CI_JOB_ID
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push ${CI_REGISTRY_IMAGE}/owners-api:$CI_JOB_ID
-    - docker push ${CI_REGISTRY_IMAGE}/owners-api:latest
-
-    - cd ../poller
-    - docker build -t ${CI_REGISTRY_IMAGE}/owners-poller:latest .
-    - docker tag ${CI_REGISTRY_IMAGE}/app:latest ${CI_REGISTRY_IMAGE}/owners-poller:$CI_JOB_ID
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push ${CI_REGISTRY_IMAGE}/owners-poller:$CI_JOB_ID
-    - docker push ${CI_REGISTRY_IMAGE}/owners-poller:latest
+    - docker push ${CI_REGISTRY_IMAGE}/foodies_poller:$CI_JOB_ID
+    - docker push ${CI_REGISTRY_IMAGE}/foodies_poller:latest
 
     - cd ../../users/api
-    - docker build -t ${CI_REGISTRY_IMAGE}/users-api:latest .
-    - docker tag ${CI_REGISTRY_IMAGE}/app:latest ${CI_REGISTRY_IMAGE}/users-api:$CI_JOB_ID
+    - docker build -t ${CI_REGISTRY_IMAGE}/users_api:latest .
+    - docker tag ${CI_REGISTRY_IMAGE}/users_api:latest ${CI_REGISTRY_IMAGE}/users_api:$CI_JOB_ID
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push ${CI_REGISTRY_IMAGE}/users-api:$CI_JOB_ID
-    - docker push ${CI_REGISTRY_IMAGE}/users-api:latest
+    - docker push ${CI_REGISTRY_IMAGE}/users_api:$CI_JOB_ID
+    - docker push ${CI_REGISTRY_IMAGE}/users_api:latest
 
 # deploy-back-end-job-heroku:
 #   rules:
