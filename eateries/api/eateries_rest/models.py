@@ -87,7 +87,14 @@ class YelpResult(models.Model):
         )
 
     def __str__(self):
-        return "CATEGORY: " + self.category_term.category_term + " LOCATION: " + self.location_term.location_term + " - " + self.eatery.eatery_name
+        return (
+            "CATEGORY: "
+            + self.category_term.category_term
+            + " LOCATION: "
+            + self.location_term.location_term
+            + " - "
+            + self.eatery.eatery_name
+        )
 
 
 class EateryTag(models.Model):
