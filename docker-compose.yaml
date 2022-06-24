@@ -91,55 +91,55 @@ services:
       WAIT_TIMEOUT: 240
       DJWTO_SIGNING_KEY: 13fcc604df0deed641c6db316ffd027f5bb8120e7ac40a948562e829f0adf5a4
 
-  eateries-poller:
-    build:
-      context: ./eateries/api
-      dockerfile: ./Dockerfile.dev
-    volumes:
-      - ./eateries/poll:/app
-      - ./eateries/api/eateries_project:/app/eateries_project
-      - ./eateries/api/eateries_rest:/app/eateries_rest
-    depends_on:
-      - database
-      - eateries-api
-    environment:
-      DATABASE_URL: postgres://eateries:password@database:5432/eateries
-      WAIT_HOSTS: database:5432,eateries-api:8000
-      WAIT_TIMEOUT: 240
+  # eateries-poller:
+  #   build:
+  #     context: ./eateries/api
+  #     dockerfile: ./Dockerfile.dev
+  #   volumes:
+  #     - ./eateries/poll:/app
+  #     - ./eateries/api/eateries_project:/app/eateries_project
+  #     - ./eateries/api/eateries_rest:/app/eateries_rest
+  #   depends_on:
+  #     - database
+  #     - eateries-api
+  #   environment:
+  #     DATABASE_URL: postgres://eateries:password@database:5432/eateries
+  #     WAIT_HOSTS: database:5432,eateries-api:8000
+  #     WAIT_TIMEOUT: 240
 
-  owners-api:
-    build:
-      context: ./owners/api
-      dockerfile: ./Dockerfile.dev
-    ports:
-      - "8080:8000"
-    volumes:
-      - ./owners/api:/app
-    depends_on:
-      - database
-    environment:
-      DATABASE_URL: postgres://owners:password@database:5432/owners
-      WAIT_HOSTS: database:5432
-      WAIT_TIMEOUT: 240
-      DJWTO_SIGNING_KEY: 13fcc604df0deed641c6db316ffd027f5bb8120e7ac40a948562e829f0adf5a4
+  # owners-api:
+  #   build:
+  #     context: ./owners/api
+  #     dockerfile: ./Dockerfile.dev
+  #   ports:
+  #     - "8080:8000"
+  #   volumes:
+  #     - ./owners/api:/app
+  #   depends_on:
+  #     - database
+  #   environment:
+  #     DATABASE_URL: postgres://owners:password@database:5432/owners
+  #     WAIT_HOSTS: database:5432
+  #     WAIT_TIMEOUT: 240
+  #     DJWTO_SIGNING_KEY: 13fcc604df0deed641c6db316ffd027f5bb8120e7ac40a948562e829f0adf5a4
 
-  owners-poller:
-    build:
-      context: ./owners/poll
-      dockerfile: ./Dockerfile.dev
-    volumes:
-      - ./owners/poll:/app
-      - ./owners/api/owners_project:/app/owners_project
-      - ./owners/api/owners_rest:/app/owners_rest
-    depends_on:
-      - database
-      - owners-api
-    environment:
-      EATERIES_API: http://eateries-api:8000
-      USERS_API: http://users-api:8000
-      DATABASE_URL: postgres://owners:password@database:5432/owners
-      WAIT_HOSTS: database:5432,owners-api:8000
-      WAIT_TIMEOUT: 240
+  # owners-poller:
+  #   build:
+  #     context: ./owners/poll
+  #     dockerfile: ./Dockerfile.dev
+  #   volumes:
+  #     - ./owners/poll:/app
+  #     - ./owners/api/owners_project:/app/owners_project
+  #     - ./owners/api/owners_rest:/app/owners_rest
+  #   depends_on:
+  #     - database
+  #     - owners-api
+  #   environment:
+  #     EATERIES_API: http://eateries-api:8000
+  #     USERS_API: http://users-api:8000
+  #     DATABASE_URL: postgres://owners:password@database:5432/owners
+  #     WAIT_HOSTS: database:5432,owners-api:8000
+  #     WAIT_TIMEOUT: 240
 
   users-api:
     build:

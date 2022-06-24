@@ -7,11 +7,11 @@ import axios from 'axios'
 import { GiCupidonArrow } from "react-icons/gi";
 import forlater from "./images/forlater.png"
 import Iframe from './GoogleMaps3.js';
+import "./EateryDetailImage.css"
 
 function EateryDetailPage(props){
   const [eateryData, setEateryData] = useState({eatery_name:'',location:{}});
   let { eateryID } = useParams();
-  // console.log("EATERY DATA", eateryID)
   async function getEateryDetails(){
     const eateryUrl = `${process.env.REACT_APP_EATERIES_API}/api/eateries/${eateryID}/`;
     const eateryResponse = await fetch(eateryUrl);
@@ -19,7 +19,6 @@ function EateryDetailPage(props){
     if (eateryResponse.ok) {
       const eateryDataResponse = await eateryResponse.json();
       setEateryData(eateryDataResponse);
-      // console.log("eateryData", eateryDataResponse)
     }
   }
   useEffect(() => {
@@ -31,7 +30,6 @@ function EateryDetailPage(props){
   let categories_html = ''
   if (eateryData.categories) {
     categories_html = eateryData.categories.map(category => {
-      // console.log(category.title)
       return (
         <li>{category.title}</li>
       )
@@ -89,7 +87,7 @@ function EateryDetailPage(props){
   return (
     <div className="container mt-5 py-5">
     
-    <Card className="text-dark">
+    <Card className="text-light">
       <Card.Img className="card-style" style={{objectFit: "cover"}} height="300" src={image_address} alt="Card image" />
         <Card.ImgOverlay>
           <h1>{eateryData.eatery_name}</h1>
@@ -99,7 +97,7 @@ function EateryDetailPage(props){
         <Card.Text>
           {eateryData.price} - {eateryData.average_rating} STARS
           {categories_html}
-          TAGS # {tags_html}
+          {/* TAGS: {tags_html} */}
           </Card.Text>
       </Card.ImgOverlay>
     </Card>

@@ -14,7 +14,6 @@ import {
 
 function SignUp(props) {
   const {token, signup} = props;
-  const [isOwner, setIsOwner] = useState(false);
   const [isFoodie, setIsFoodie] = useState(false);
   const [username, setUsername] = useState('');
   const [first_name, setFirstName] = useState('');
@@ -48,14 +47,6 @@ function SignUp(props) {
           </CardFieldset>
         </CardBody>
         
-        <CardBody>
-          <CardFieldset>
-            <CardBody> Owner 
-            <CardInput onChange={e => setIsOwner(e.target.checked)} checked={isOwner} placeholder="Owner?" type="checkbox" />
-            </CardBody>        
-          </CardFieldset>
-        </CardBody>
-
         <CardBody>
           <CardFieldset>
             <CardInput onChange={handleUserName} value={username} placeholder="Username" type="text" required />
