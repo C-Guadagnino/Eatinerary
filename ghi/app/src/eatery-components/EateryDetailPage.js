@@ -85,11 +85,10 @@ function EateryDetailPage(props){
   }
   return (
     <div className="container mt-5 py-5">
-    <div className="container">
     
-    <Card className="bg-dark text-light">
-      <Card.Img style={{objectFit: "cover"}} className="img-rounded" height="300" src={image_address} alt="Card image" />
-        <Card.ImgOverlay className="" >
+    <Card className="text-dark">
+      <Card.Img className="card-style" style={{objectFit: "cover"}} height="300" src={image_address} alt="Card image" />
+        <Card.ImgOverlay>
           <h1>{eateryData.eatery_name}</h1>
           <h3 >
           {address_line1} {address_line2}
@@ -129,16 +128,16 @@ function EateryDetailPage(props){
       {address_line2} */}
 
 
-      <Card style={{ width: '18rem' }}>
-        <ListGroup variant="flush">
+      <Card className='card border-0'>
+        <ListGroup id="sideNav">
           <ListGroup.Item>{eateryData.phone}</ListGroup.Item>
+          <h3 className='mx-4'> Hours of Operation </h3>
           <ListGroup.Item>{openhours_html}</ListGroup.Item>
         </ListGroup>
       </Card>
 
 
 
-    </div>
     </div>
   );
 }
