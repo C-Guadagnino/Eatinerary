@@ -1,4 +1,6 @@
 import React from 'react';
+import {Button} from "react-bootstrap"
+import "./Foodies.css"
 
 class SpecialDateForm extends React.Component {
     constructor(props) {
@@ -125,7 +127,7 @@ class SpecialDateForm extends React.Component {
                                         <option key="1" value="Yearly">Yearly</option>
                                     </select>
                                 </div>                             
-                                <button className="btn btn-primary">Create</button>
+                                <button className="button-38">Create</button>
                             </form>
                         </div>
                     </div>
