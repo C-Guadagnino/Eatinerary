@@ -76,7 +76,6 @@ class SkeweredHistory extends React.Component {
                                         <th>Eatery Name</th>
                                         <th>Average Rating</th>
                                         <th>Price</th>
-                                        <th>Notes</th>
                                         <th> </th>
                                     </tr>
                                 </thead>
@@ -90,7 +89,6 @@ class SkeweredHistory extends React.Component {
                                                     <td >{skeweredEatery.eatery.eatery_name}</td>
                                                     <td >{skeweredEatery.eatery.eatery_average_rating}</td>
                                                     <td >{skeweredEatery.eatery.eatery_price}</td>
-                                                    <td >{skeweredEatery.notes}</td>
                                                 </tr>
                                             )
                                         }

@@ -40,7 +40,7 @@ function App() {
           <Route Path='users'>
             <Route path='login' element={<Login token={token} login={login} setUN={setUserName} />} />
             <Route path='logout' element={<Logout logout={logout} />} />
-            <Route path='signup' element={<SignUp token={token} signup={signup} />}/>
+            <Route path='signup' element={<SignUp token={token} signup={signup} setUN={setUserName} />}/>
           </Route>
           <Route path='specialDateForm' element={<SpecialDateForm username={userName} />} />
           <Route path='mySkewered' element={<MySkeweredList username={userName} />} />

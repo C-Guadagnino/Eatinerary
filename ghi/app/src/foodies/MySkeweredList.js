@@ -133,8 +133,7 @@ class SkeweredList extends React.Component {
                                     <th>Eatery Name</th>
                                     <th>Average Rating</th>
                                     <th>Price</th>
-                                    <th>Notes</th>
-                                    <th>Has visited</th>
+                                    <th>I've Been Here</th>
                                     <th> </th>
                                 </tr>
                             </thead>
@@ -151,7 +150,6 @@ class SkeweredList extends React.Component {
                                             <td className={hasVisited}>{skeweredEatery.eatery.eatery_name}</td>
                                             <td className={hasVisited}>{skeweredEatery.eatery.eatery_average_rating}</td>
                                             <td className={hasVisited}>{skeweredEatery.eatery.eatery_price}</td>
-                                            <td className={hasVisited}>{skeweredEatery.notes}</td>
                                             <td className={hasVisited}>
                                                 <button onClick={() => this.hasVisited(skeweredEatery.id)} type="button" className='button-39' > <FaHeart size="1.5em" /> </button>
                                             </td>
