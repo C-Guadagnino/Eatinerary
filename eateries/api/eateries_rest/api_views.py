@@ -1,9 +1,6 @@
-from turtle import title
-from django.shortcuts import render
 import json
 from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
-from django.shortcuts import render
 from django.db import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 from .models import (
@@ -31,13 +28,7 @@ from .encoders import (
 )
 from .acls import get_eateries_from_yelp, get_details_of_one_eatery
 
-# from .acls import get_restaurants
 
-# THERE ARE MANY VARIABLES IN THIS VIEW THAT ARE INITIALIZED BUT NEVER USED.
-# LEAVING THEM FOR NOW IN CASE WE NEED TO PRINT THEM -- BUT WILL NEED TO REMOVE BEFORE SUBMITTING PROJECT
-
-# Where will the view be called, what are we returning, what are we creating,
-# do we need to split anything into another view?
 @require_http_methods(["GET"])
 def api_eateries_given_category_and_location(request, location, category="food"):
     if request.method == "GET":
@@ -55,16 +46,12 @@ def api_eateries_given_category_and_location(request, location, category="food")
             else:
                 # Create location search term object if it doesn't already exist
                 try:
-                    location_searchterm_obj = YelpLocationSearchTerm.objects.create(
-                        location_term=location
-                    )
+                    YelpLocationSearchTerm.objects.create(location_term=location)
                 except IntegrityError:
                     pass
                 # Create category search term object if it doesn't already exist
                 try:
-                    category_searchterm_obj = YelpCategorySearchTerm.objects.create(
-                        category_term=category
-                    )
+                    YelpCategorySearchTerm.objects.create(category_term=category)
                 except IntegrityError:
                     pass
 
@@ -141,7 +128,7 @@ def api_eateries_given_category_and_location(request, location, category="food")
                         EateryImage.objects.create(
                             image_url=image_url, eatery=eatery_obj
                         )
-                        image_obj = EateryImage.objects.get(image_url=image_url)
+                        EateryImage.objects.get(image_url=image_url)
 
                         # Send request to yelp api with function call to get the details of the current eatery
                         # to specifically access the open hours
@@ -173,10 +160,9 @@ def api_eateries_given_category_and_location(request, location, category="food")
                                     "end_time": end_time,
                                 }
 
-                                open_hours_singular_obj = (
-                                    EateryOpenHours.objects.create(**open_hours_dict)
-                                )
-                        # when eatery from yelp doesnt have open hours
+                                EateryOpenHours.objects.create(**open_hours_dict)
+
+                        # when eatery from yelp doesn't have open hours
                         except KeyError:
                             pass
 
@@ -191,7 +177,8 @@ def api_eateries_given_category_and_location(request, location, category="food")
                             ),
                             "eatery": Eatery.objects.get(yelp_id=eatery["id"]),
                         }
-                        yelp_result_obj = YelpResult.objects.create(**yelp_result_dict)
+                        YelpResult.objects.create(**yelp_result_dict)
+
                     except IntegrityError:
                         pass
                 return JsonResponse({"eateries": eateries_dictionary})
@@ -230,24 +217,6 @@ def api_eateries_given_category_and_location(request, location, category="food")
                 )
 
 
-# WAS USED TO TEST SMALLER PORTION OF CODE THAT GOES IN THE YELP INTEGRATION FUNCTION
-# @require_http_methods(["GET"])
-# def api_yelp_results_from_db(request, location, category):
-#     if request.method == "GET":
-#         location_obj = YelpLocationSearchTerm.objects.get(location_term=location)
-#         category_obj = YelpCategorySearchTerm.objects.get(category_term=category)
-#         yelp_results_list = YelpResult.objects.filter(
-#             location_term=location_obj
-#         ).filter(category_term=category_obj)
-#         eateries_from_yelp_results_list = []
-#         for yelp_result in yelp_results_list:
-#             eatery_from_yelp_result = Eatery.objects.get(id=yelp_result.eatery.id)
-#             eateries_from_yelp_results_list.append(eatery_from_yelp_result)
-#         return JsonResponse(
-#             {"eateries": eateries_from_yelp_results_list}, encoder=EateryEncoder
-#         )
-
-
 @require_http_methods(["GET"])
 def api_location_search_terms(request):
     if request.method == "GET":
@@ -275,42 +244,6 @@ def api_yelp_results(request):
         return JsonResponse({"yelp_results": yelp_results}, encoder=YelpResultEncoder)
 
 
-# @require_http_methods(["GET"])
-# def api_get_yelp_with_category_and_location(request, location, category):
-#     if request.method == "GET":
-#         restaurants = get_eateries_from_yelp(location, category)
-#         return JsonResponse({"restaurants": restaurants})
-
-
-# @require_http_methods(["GET"])
-# def api_get_yelp_with_location(request, location):
-#     if request.method == "GET":
-#         restaurants = get_restaurants(location)
-#         return JsonResponse({"restaurants": restaurants})
-
-
-# WAS USED TO TEST SMALLER PORTION OF CODE THAT GOES IN THE YELP INTEGRATION FUNCTION
-# @require_http_methods(["GET"])
-# def api_get_yelp_one_eatery(request, yelp_id):
-#     if request.method == "GET":
-#         eatery_details_dict = get_details_of_one_eatery(yelp_id)
-#         print("Eatery Dictionary", eatery_details_dict)
-#         open_hours_list = eatery_details_dict["hours"][0]["open"]
-#         for open_hours_singular in open_hours_list:
-#             raw_start_time = open_hours_singular["start"]
-#             start_time = raw_start_time[:2:] + ":" + raw_start_time[2::]
-
-#             raw_end_time = open_hours_singular["end"]
-#             end_time = raw_end_time[:2:] + ":" + raw_end_time[2::]
-
-#             raw_day = open_hours_singular["day"]
-#             weekday = raw_day + 1
-
-#             print("Week Day Index", weekday)
-#         return JsonResponse({"eatery_details_dic": eatery_details_dict})
-
-
-# For some reason the POST method creates an instance of Eatery even though the request returns a 400 error.
 @require_http_methods(["GET", "POST"])
 def api_eateries(request):
     if request.method == "GET":
@@ -318,40 +251,37 @@ def api_eateries(request):
         return JsonResponse({"eateries": eateries}, encoder=EateryEncoder)
 
     else:
-        # try:
-        content = json.loads(request.body)
-        categories_list = content["categories"]
-        tags_list = content["tags"]
+        try:
+            content = json.loads(request.body)
+            categories_list = content["categories"]
+            tags_list = content["tags"]
 
-        del content["categories"]
-        del content["tags"]
+            del content["categories"]
+            del content["tags"]
 
-        location_id = content["location"]
-        location = EateryLocation.objects.get(id=location_id)
-        content["location"] = location
+            location_id = content["location"]
+            location = EateryLocation.objects.get(id=location_id)
+            content["location"] = location
 
-        # eatery = Eatery(**content)
-        # eatery.save()
+            eatery = Eatery.objects.create(**content)
 
-        eatery = Eatery.objects.create(**content)
+            for cat_alias in categories_list:
+                cat_obj = EateryCategory.objects.get(alias=cat_alias)
+                eatery.categories.add(cat_obj)
 
-        for cat_alias in categories_list:
-            cat_obj = EateryCategory.objects.get(alias=cat_alias)
-            eatery.categories.add(cat_obj)
+            for tag_name in tags_list:
+                tag_obj = EateryTag.objects.get(tag_name=tag_name)
+                eatery.tags.add(tag_obj)
 
-        for tag_name in tags_list:
-            tag_obj = EateryTag.objects.get(tag_name=tag_name)
-            eatery.tags.add(tag_obj)
-
-        return JsonResponse(
-            eatery,
-            encoder=EateryEncoder,
-            safe=False,
-        )
-        # except:
-        #     response = JsonResponse({"message": "Could not create eatery"})
-        #     response.status_code = 400
-        #     return response
+            return JsonResponse(
+                eatery,
+                encoder=EateryEncoder,
+                safe=False,
+            )
+        except:
+            response = JsonResponse({"message": "Could not create eatery"})
+            response.status_code = 400
+            return response
 
 
 @require_http_methods(["GET", "PUT"])

@@ -15,24 +15,23 @@ from foodies_rest.models import (
     EateryCategoryVO,
     EateryOpenHoursVO,
     EateryImageVO,
-    FoodieVO
+    FoodieVO,
 )
 
+
 def get_user_entity_data():
-    # response = requests.get("http://users-api:8000/api/users/all/")
     response = requests.get(f"{os.environ['USERS_API']}/api/users/all/")
     content = json.loads(response.content)
-    print("USER CONTENT",content)
     for user in content["users"]:
         FoodieVO.objects.update_or_create(
             import_href=user["href"],
-            defaults = {
+            defaults={
                 "username": user["username"],
                 "email": user["email"],
                 "phone": user["phone"],
                 "first_name": user["first_name"],
-                "last_name": user["last_name"]
-            }
+                "last_name": user["last_name"],
+            },
         )
 
 
