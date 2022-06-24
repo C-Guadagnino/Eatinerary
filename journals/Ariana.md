@@ -7,22 +7,32 @@
 4) At least one ah-ha! moment that you had during your coding, however small
 
 ## June 23, 2022
-Today I:
-    *
+* Today I:
+    * Update the ReviewForm on front end so that the list of skewered eateries only shows those for which a review hasn't been written yet
+    * Updated SkewerEatery model in Foodies MS so a foodie can skewer an eatery once
+    * Got "skewer an eatery" feature implemented from the home page - Cameron, Brandon and I
+* Decided to create a "food" category so that a foodie can search just by location instead of location and category. When category is not specified, the default will be food (when searched on Yelp), and every eatery will also have the "food" category related to it.
+* Keep forgetting that React keeps reloading/rendering all the time/at any time, so it doesn't like it when operations/functions are called on variables that are undefined at some point. Plain variables that are undefined will be ignored, but the moment that either an operation/function is called (or even trying to access by bracket or dot notation), it'll throw an error. So those variables need to be defined at the top.
 
 ## June 22, 2022
-Today I:
-    *
+* Today I:
+    * Got the foodie username data to our children components (as props)
+    * Updated the EateryDetailPage component from a class component to a functional component with Mitch's help - Brandon and I
+    * Got "skewer an eatery" feature implemented from Eatery Detail page - Brandon and I
+* Design discussions on how to pass in the foodie username data throughout our app. Jeff helped us pass in the foodie username from Login to the other children components. Later Curtis also helped us understand we could've also done it by pulling the user from the authApi.js and passing it as props in App.js
+* Learned some React Hooks thanks to Mitch. Learn about useEffect and useNavigate. useEffect is what is used in functional components instead of ComponentDidMount in class components -- not a full replacement, but a basic-level understanding I'm starting to build.
 
 ## June 21, 2022
-Today I:
-    *
+* Today I:
+    * Continued working on the EateryDetailPage.js on the front end - Brandon and I
+* David and I discussed how the Google Maps API key was exposed from the front end, and how we should move the code to the backend to protect the API key so it's no longer exposed (just how we did with the Yelp API key).
+* Later, we learned thanks to Curtis, that the Google Maps API key must be "exposed" in the front end -- that's the only way it will work.
 
 ## June 20, 2022
 * Today I:
     * put together an icon for our skewered logo
     * started building the EateryDetailPage.js on front end
-*
+* I briefly dicussed with Brandon whether we should make the EateryDetailPage a class or functional component. Since I am not as comfortable with functional components and Hooks, we decided we'd go with a class component.
 * I learned that in the front end, when there are undefined variables, React will just ignore them (without throwing an error). But if i'm trying to call a method (for example .map) to a variable and that variable happens to be undefined at some point, then it will throw an error.
 
 ## June 18, 2022

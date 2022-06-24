@@ -105,10 +105,13 @@ class SkeweredEatery(models.Model):
     updated_DateTime = models.DateTimeField(auto_now=True)
     has_visited = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    notes = models.TextField()
+    notes = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.eatery_vo.eatery_name
+
+    class Meta:
+        unique_together = ("eatery_vo", "foodie_vo")
 
 
 class Review(models.Model):
