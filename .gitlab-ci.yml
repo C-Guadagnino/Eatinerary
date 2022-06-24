@@ -50,6 +50,8 @@ build-front-end-job:
     - cd ghi/app
     - npm install
     - npm run build  # Build the React application
+  variables:
+    PUBLIC_URL: https://cuisine-coders.gitlab.io/eatinerary
   artifacts:
     paths:
       - ghi/app/build/  # Save all of the files in the build path
