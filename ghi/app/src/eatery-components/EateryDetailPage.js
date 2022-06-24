@@ -130,22 +130,26 @@ function EateryDetailPage(props){
       {address_line1}
       {address_line2} */}
 
-
-      <Card className='card border-0'>
-        <ListGroup id="sideNav">
-          <ListGroup.Item>{eateryData.phone}</ListGroup.Item>
-          <h3 className='mx-4'> Hours of Operation </h3>
-          <ListGroup.Item>{openhours_html}</ListGroup.Item>
-        </ListGroup>
-      </Card>
-
-        <div>
-        <Iframe name={eateryData.eatery_name.replaceAll('&', ' ')} city={eateryData.location.city} state={eateryData.location.state} latitude={eateryData.latitude} longitude={eateryData.longitude} />
+      <div className='container mb-5'>
+        <div className='row'>
+        <Card className='card border-0'>
+          <ListGroup>
+            <ListGroup.Item>{eateryData.phone}</ListGroup.Item>
+            <h3 className='mx-4'> Hours of Operation </h3>
+            <ListGroup.Item>{openhours_html}</ListGroup.Item>
+          </ListGroup>
+        </Card>
+      </div>
+      </div>
+      
+      <div className='containter mt-5'>
+        <div className='row'>
+          <div>
+          <Iframe name={eateryData.eatery_name.replaceAll('&', ' ')} city={eateryData.location.city} state={eateryData.location.state} latitude={eateryData.latitude} longitude={eateryData.longitude} />
+          </div>
         </div>
-
-
-
-    </div>
+      </div> 
+      </div>
   );
 }
 
