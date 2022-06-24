@@ -63,12 +63,12 @@ const HomePageWithCards = () => {
 
   const handleLocationChange = (e) => {
     e.preventDefault();
-    setLocation(e.target.value.replaceAll(" ","+"));
+    setLocation(e.target.value);
   };
-
+  // .replaceAll(" ","+")
   const handleCategoryChange = (e) => {
     e.preventDefault();
-    setCategory(e.target.value.replaceAll(" ","+"));
+    setCategory(e.target.value.replaceAll(" ",""));
   };
 
   async function handleSearch() {
