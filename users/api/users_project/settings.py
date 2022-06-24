@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure--@c2c%0i1_d7g7p@kds-vujbgh&6fx+2$y9_0ko2_*_hn3r*v("
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 
 # Application definition
@@ -73,7 +73,7 @@ CORS_ALLOW_CREDENTIALS = True
 DJWTO_MODE = "TWO-COOKIES"
 DJWTO_CSRF = False
 DJWTO_ACCESS_TOKEN_LIFETIME = timedelta(days=1)
-
+DJWTO_SAME_SITE = "Lax" if DEBUG else "None"
 
 ROOT_URLCONF = "users_project.urls"
 

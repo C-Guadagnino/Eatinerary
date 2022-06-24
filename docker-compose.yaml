@@ -126,6 +126,7 @@ services:
     depends_on:
       - database
     environment:
+      DEBUG: "True"
       DATABASE_URL: postgres://users:password@database:5432/users
       WAIT_HOSTS: database:5432
       WAIT_TIMEOUT: 240
