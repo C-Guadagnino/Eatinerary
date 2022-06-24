@@ -51,7 +51,7 @@ class SpecialDateForm extends React.Component {
         
         
         
-        const appointmentUrl = `http://localhost:8100/api/foodies/${this.props.username}/specialdates/`;
+        const appointmentUrl = `${process.env.REACT_APP_FOODIES_API}/api/foodies/${this.props.username}/specialdates/`;
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(data),

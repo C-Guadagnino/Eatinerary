@@ -105,7 +105,7 @@ const HomePageWithCards = (props) => {
     const currentID = card.id  
     console.log(currentID)
     console.log(props.username)
-    await axios.post("http://localhost:8100/api/foodies/eateries/skewered/",
+    await axios.post(`${process.env.REACT_APP_FOODIES_API}/api/foodies/eateries/skewered/`,
     {
     eateryvo_import_href: `/api/eateries/${currentID}/`,
     foodie_vo: `${props.username}`,
@@ -132,7 +132,8 @@ const HomePageWithCards = (props) => {
             </Card>
         )
   }
-
+  // console.log("EATERIES",eateries)
+  // if (eateries.length!=0){
   return (
     <>
       <div className="container my-5 py-3">
@@ -162,7 +163,20 @@ const HomePageWithCards = (props) => {
           </div>
       </div>
         </>
-  )
+    )
+  // } else {
+  //   return (
+  //     <>
+  //     <li></li>
+  //     <li></li>
+  //     <li></li>
+  //     <li></li>
+  //     <div className="alert alert-success" role="alert"> 
+  //     OOOPS! please go back and check to see if a search term is mis spelt. If not, then it isn't a valid category
+  //     </div>
+  //     </>
+  //   )
+  // }
 }
 
 export default HomePageWithCards;

@@ -39,7 +39,7 @@ class SkeweredList extends React.Component {
         console.log("FOODIE_USERNAME", foodie_username)
 
         //list all skewered eateries endpoint
-        const skeweredEateriesUrl = `http://localhost:8100/api/foodies/user/${foodie_username}/eateries/skewered/`;
+        const skeweredEateriesUrl = `${process.env.REACT_APP_FOODIES_API}/api/foodies/user/${foodie_username}/eateries/skewered/`;
         const skeweredEateriesResponse = await fetch(skeweredEateriesUrl);
 
         if (skeweredEateriesResponse.ok) {
@@ -74,7 +74,7 @@ class SkeweredList extends React.Component {
 
 
         //list all special dates endpoint
-        const specialDatesUrl = `http://localhost:8100/api/foodies/${foodie_username}/specialdates/`;
+        const specialDatesUrl = `${process.env.REACT_APP_FOODIES_API}/api/foodies/${foodie_username}/specialdates/`;
         const specialDatesResponse = await fetch(specialDatesUrl);
 
         if (specialDatesResponse.ok) {
@@ -92,7 +92,7 @@ class SkeweredList extends React.Component {
     }
 
     async hasVisited(id){
-        const putURL = `http://localhost:8100/api/foodies/eateries/skewered/${id}/`;
+        const putURL = `${process.env.REACT_APP_FOODIES_API}/api/foodies/eateries/skewered/${id}/`;
         const fetchConfig = {
             method: "put",
             headers: {'Content-Type': 'application/json'},
