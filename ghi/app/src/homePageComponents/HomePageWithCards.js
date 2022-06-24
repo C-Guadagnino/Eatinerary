@@ -10,9 +10,11 @@ import eatineraryheader from "./images/eatineraryheader.png"
 import localeateries from "./images/localeateries.png"
 import { FaInfo } from "react-icons/fa";
 import { GiCupidonArrow } from "react-icons/gi";
+import { GiMagnifyingGlass } from "react-icons/gi";
+import {useParams} from 'react-router-dom';
 
 
-const HomePageWithCards = () => {
+const HomePageWithCards = (props) => {
     //creating IP state
   const navigate = useNavigate()
   const [ip, setIP] = useState('');
@@ -99,7 +101,86 @@ const HomePageWithCards = () => {
     setEateries(eateries)
     // setState({filteredAppointments: searchData})  
   }
-
+  // PUTTING IN DETAIL PAGE HERE
+    const [eateryData, setEateryData] = useState({});
+    let { eateryID } = useParams();
+    // console.log("EATERY DATA", eateryID)
+    async function getEateryDetails(){
+      const eateryUrl = `http://localhost:8090/api/eateries/${eateryID}/`;
+      const eateryResponse = await fetch(eateryUrl);
+  
+      if (eateryResponse.ok) {
+        const eateryDataResponse = await eateryResponse.json();
+        setEateryData(eateryDataResponse);
+        // console.log("eateryData", eateryDataResponse)
+      }
+    }
+    useEffect(() => {
+      getEateryDetails()
+    },[])
+  
+    console.log("EATERIES", eateryData)
+  
+    let categories_html = ''
+    if (eateryData.categories) {
+      categories_html = eateryData.categories.map(category => {
+        // console.log(category.title)
+        return (
+          <li>{category.title}</li>
+        )
+      })
+    }
+  
+    let tags_html = ''
+    if (eateryData.tags) {
+      tags_html = eateryData.tags.map(tag => {
+        // console.log(tag.tag_name)
+        return (
+          <li>{tag.tag_name}</li>
+        )
+      })
+    }
+  
+    let address_line1 = ''
+    let address_line2 = ''
+    if (eateryData.location) {
+      address_line1 = <p>
+        {eateryData.location.address1} {eateryData.location.address2} {eateryData.location.address3}
+      </p>
+      address_line2 = <p>
+        {eateryData.location.city}, {eateryData.location.state} {eateryData.location.zip_code}
+      </p>
+    }
+  
+    let openhours_html = ''
+    if (eateryData.open_hours) {
+      openhours_html = eateryData.open_hours.map(openhours => {
+        return (
+          <tr>
+            <td>{openhours.weekday}</td>
+            <td>{openhours.start_time}</td>
+            <td>{openhours.end_time}</td>
+          </tr>
+        )
+      })
+    }
+    console.log("OPEN HOURS",openhours_html)
+    
+    let image_address = ''
+    if (eateryData.eatery_images) {
+      image_address = eateryData.eatery_images[0].image_url
+    }
+    console.log("EateryID",eateryID, "PROPS.USERNSME", props.username)
+    const skewerEatery = async () => {
+      await axios.post("http://localhost:8100/api/foodies/eateries/skewered/",
+      {
+      eateryvo_import_href: `/api/eateries/${eateryID}/`,
+      foodie_vo: `${props.username}`,
+      notes: ""
+      })
+    }
+  // TO HERE
+  
   const renderCard = (card, index) => {
     // console.log("CARD", card)
         return(
@@ -115,7 +196,7 @@ const HomePageWithCards = () => {
                         {card.address1}, {card.city}, {card.state}, {card.zip_code}
                     </Card.Text>
       
-                    <Button id="button-38" onClick={detailOnClick.bind(this,card)}> <FaInfo size="1.5em" /> </Button><Button id="button-38" onClick={detailOnClick.bind(this,card)}> <GiCupidonArrow size="1.5em" /> </Button>
+                    <Button id="button-38" onClick={detailOnClick.bind(this,card)}> <FaInfo size="1.5em" /> </Button><Button id="button-38" onClick={skewerEatery(this,card)}> <GiCupidonArrow size="1.5em" /> </Button>
                     {/* Revisit and look into bind documentation for more details - ANOTHER ALTERNATIVE:
                     () => detailOnClick(card) */}
                 </Card.Body>
@@ -129,8 +210,21 @@ const HomePageWithCards = () => {
         <div className='p-5 text-center'>
         <h1><img src={ eatineraryheader } height="140" alt="uh-oh"/></h1>
           <img src={ localeateries } height="35" alt="uh-oh"/>
-            <p>  </p>
-            <p> Search bar here </p>
+            <div className="mt-3">
+            <form>
+              <div className="innerform">
+                <div className="input-field">
+                  <input className='m-1 mt-3 w-50' onChange={handleCategoryChange}id="search" type="text" placeholder="What are you hungry for?"/>
+                </div>
+                <div className="input-field">
+                  <input className='m-1 w-50' onChange={handleLocationChange}id="search" type="text" placeholder="What city are you in?"/>
+                </div>
+                <div className="input-field third-wrap">
+                  <Button id="button-40" onClick={() => handleSearch()}>< GiMagnifyingGlass size="1em" /> </Button>
+                </div>
+              </div>
+            </form>
+            </div>
           </div>
         </div>
         <div className="container">
@@ -138,20 +232,6 @@ const HomePageWithCards = () => {
           {eateries.map(renderCard)}
           </div>
       </div>
-
-      <form>
-        <div className="innerform">
-          <div className="input-field first-wrap">
-            <input onChange={handleCategoryChange}id="search" type="text" placeholder="What type of cuisine are you looking for?"/>
-          </div>
-          <div className="input-field second-wrap">
-            <input onChange={handleLocationChange}id="search" type="text" placeholder="What city are you looking in?"/>
-          </div>
-          <div className="input-field third-wrap">
-            <button onClick={() => handleSearch()} className="btn-search" type="button">Search</button>
-          </div>
-        </div>
-        </form>
         </>
   )
 }
