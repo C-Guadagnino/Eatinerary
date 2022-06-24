@@ -109,19 +109,19 @@ deploy-back-end-job-heroku:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
 
-    - docker pull $CI_REGISTRY_IMAGE:latest
+    - docker pull $CI_REGISTRY_IMAGE/eateries_api:latest
     - docker tag ${CI_REGISTRY_IMAGE}/eateries_api:latest registry.heroku.com/$HEROKU_EATERIES_APP/web:latest
     - docker push registry.heroku.com/$HEROKU_EATERIES_APP/web:latest
 
-    - docker pull $CI_REGISTRY_IMAGE:latest
+    - docker pull $CI_REGISTRY_IMAGE/foodies_api:latest
     - docker tag ${CI_REGISTRY_IMAGE}/foodies_api:latest registry.heroku.com/$HEROKU_FOODIES_APP/web:latest
     - docker push registry.heroku.com/$HEROKU_FOODIES_APP/web:latest
 
-    - docker pull $CI_REGISTRY_IMAGE:latest
+    - docker pull $CI_REGISTRY_IMAGE/foodies_poller:latest
     - docker tag ${CI_REGISTRY_IMAGE}/foodies_poller:latest registry.heroku.com/$HEROKU_FOODIES_POLLER/web:latest
     - docker push registry.heroku.com/$HEROKU_FOODIES_POLLER/web:latest
 
-    - docker pull $CI_REGISTRY_IMAGE:latest
+    - docker pull $CI_REGISTRY_IMAGE/users_api:latest
     - docker tag ${CI_REGISTRY_IMAGE}/users_api:latest registry.heroku.com/$HEROKU_USERS_APP/web:latest
     - docker push registry.heroku.com/$HEROKU_USERS_APP/web:latest
 
