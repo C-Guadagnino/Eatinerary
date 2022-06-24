@@ -126,10 +126,10 @@ class CreateReview extends React.Component {
                     title: '',
                     rating: '',
                     description: '',
-                    skeweredEateriesWithoutReview: [],
                     reviewImage: '',
                 };
                 this.setState(cleared);
+                this.getFoodieData()
             }
         }
     }
