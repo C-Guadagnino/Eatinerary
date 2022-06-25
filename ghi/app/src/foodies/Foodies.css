@@ -12,7 +12,8 @@
 #mySkeweredList {
     background-color: #e5f9dd;
     border-radius: 10px;
-    width: 45rem;
+    width: 40rem; 
+    /* position: absolute; left: 700px; top: 110px; */
     overflow-y: auto;
     max-height: 400px;
 }
@@ -20,7 +21,8 @@
 #mySkeweredHistory {
     background-color: #e5f9dd;
     border-radius: 10px;
-    width: 45rem;
+    width: 40rem; 
+    /* position: absolute; left: 700px; top: 110px; */
     overflow-y: auto;
     max-height: 400px;
 }

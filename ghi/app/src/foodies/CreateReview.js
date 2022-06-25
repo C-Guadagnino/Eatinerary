@@ -95,7 +95,7 @@ class CreateReview extends React.Component {
         let newReview;
         if (response.ok) {
             newReview = await response.json();
-            // The below handles the creation of a review image object and relates it to the 
+            // The below handles the creation of a review image object and relates it to the
             // review object just created if an image url was provided
             if (this.state.reviewImage) {
                 dataForReviewImage.review = newReview.id;
@@ -109,7 +109,7 @@ class CreateReview extends React.Component {
                 };
                 const imageResponse = await fetch(reviewImageUrl, imageFetchConfig);
                 if (imageResponse.ok) {
-                    const newReviewImage = await imageResponse.json();
+                    await imageResponse.json();
                 }
             }
             const cleared = {

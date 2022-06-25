@@ -7,14 +7,19 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('eateries_rest', '0001_initial'),
+        ("eateries_rest", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='yelpresult',
-            name='eatery',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='eatery_yelpresults', to='eateries_rest.eatery'),
+            model_name="yelpresult",
+            name="eatery",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="eatery_yelpresults",
+                to="eateries_rest.eatery",
+            ),
             preserve_default=False,
         ),
     ]

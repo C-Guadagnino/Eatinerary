@@ -18,7 +18,7 @@ from .api_views import (
     api_category_search_terms,
     api_yelp_results,
     api_filtered_eateries,
-    api_filtered_eateries_by_location
+    api_filtered_eateries_by_location,
 )
 
 urlpatterns = [
@@ -35,14 +35,24 @@ urlpatterns = [
     path("eateries/category/<int:pk>/", api_category, name="api_category"),
     path("eateries/tags/", api_tags, name="api_tags"),
     path("eateries/tags/<str:tag_name>/", api_tag, name="api_tag"),
-    path("eateries/openhours/", api_open_hours_plural, name="api_open_hours_plural"),
+    path(
+        "eateries/openhours/",
+        api_open_hours_plural,
+        name="api_open_hours_plural",
+    ),
     path(
         "eateries/openhours/<int:pk>/",
         api_open_hours_singular,
         name="api_open_hours_singular",
     ),
-    path("eateries/eateryimages/", api_eatery_images, name="api_eatery_images"),
-    path("eateries/eateryimages/<int:pk>/", api_eatery_image, name="api_eatery_image"),
+    path(
+        "eateries/eateryimages/", api_eatery_images, name="api_eatery_images"
+    ),
+    path(
+        "eateries/eateryimages/<int:pk>/",
+        api_eatery_image,
+        name="api_eatery_image",
+    ),
     path(
         "eateries/locationsearchterms/",
         api_location_search_terms,

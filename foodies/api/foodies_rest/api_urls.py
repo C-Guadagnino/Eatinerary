@@ -34,16 +34,24 @@ urlpatterns = [
     ),
     path("foodies/eateries/", api_eateries_vo, name="api_eateries_vo"),
     path(
-        "foodies/eateries/<int:eatery_entity_id>/", api_eatery_vo, name="api_eatery_vo"
+        "foodies/eateries/<int:eatery_entity_id>/",
+        api_eatery_vo,
+        name="api_eatery_vo",
     ),
-    path("foodies/eateries/categories/", api_categories_vo, name="api_categories_vo"),
+    path(
+        "foodies/eateries/categories/",
+        api_categories_vo,
+        name="api_categories_vo",
+    ),
     path(
         "foodies/eateries/categories/<str:alias>/",
         api_category_vo,
         name="api_category_vo",
     ),
     path("foodies/eateries/tags/", api_tags_vo, name="api_tags_vo"),
-    path("foodies/eateries/tags/<str:tag_name>/", api_tag_vo, name="api_tag_vo"),
+    path(
+        "foodies/eateries/tags/<str:tag_name>/", api_tag_vo, name="api_tag_vo"
+    ),
     path(
         "foodies/eateries/openhours/",
         api_eatery_openhours_plural_vo,
@@ -54,7 +62,11 @@ urlpatterns = [
         api_eatery_openhours_singular_vo,
         name="api_eatery_openhours_singular_vo",
     ),
-    path("foodies/eateries/images/", api_eatery_images_vo, name="api_eatery_images_vo"),
+    path(
+        "foodies/eateries/images/",
+        api_eatery_images_vo,
+        name="api_eatery_images_vo",
+    ),
     path(
         "foodies/eateries/images/<int:eatery_image_entity_id>/",
         api_eatery_image_vo,
@@ -71,10 +83,16 @@ urlpatterns = [
         name="api_skewered_eatery",
     ),
     path("foodies/eateries/reviews/", api_reviews, name="api_reviews"),
-    path("foodies/<str:username>/eateries/reviews/", api_reviews, name="api_reviews_for_foodie"),
+    path(
+        "foodies/<str:username>/eateries/reviews/",
+        api_reviews,
+        name="api_reviews_for_foodie",
+    ),
     path("foodies/eateries/reviews/<int:pk>/", api_review, name="api_review"),
     path(
-        "foodies/eateries/reviews/images/", api_review_images, name="api_review_images"
+        "foodies/eateries/reviews/images/",
+        api_review_images,
+        name="api_review_images",
     ),
     path(
         "foodies/eateries/reviews/images/<int:pk>/",
@@ -87,5 +105,9 @@ urlpatterns = [
         api_special_dates,
         name="api_special_dates_for_foodie",
     ),
-    path("foodies/specialdates/<int:pk>/", api_special_date, name="api_special_date"),
+    path(
+        "foodies/specialdates/<int:pk>/",
+        api_special_date,
+        name="api_special_date",
+    ),
 ]

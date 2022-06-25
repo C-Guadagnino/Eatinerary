@@ -1,0 +1,163 @@
+stages:
+  - test   # Run tests first
+  - build  # Run build after tests
+  - deploy # Run deploy after build
+
+services:
+  - postgres:14.2-bullseye
+
+variables:
+  POSTGRES_PASSWORD: test
+  DATABASE_URL: postgresql://postgres:test@postgres:5432/postgres
+
+api-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+    - cd eateries/api/eateries_rest
+    - echo "YELP_API_KEY='$TEST_YELP_API_KEY'" > keys.py
+    - cd ..
+    - pip install -r requirements.txt
+    - python manage.py test  # Run unit tests
+    - cd ../../foodies/api
+    - pip install -r requirements.txt
+    - python manage.py test  # Run unit tests
+    - cd ../../owners/api
+    - pip install -r requirements.txt
+    - python manage.py test  # Run unit tests
+    - cd ../../users/api
+    - pip install -r requirements.txt
+    - python manage.py test  # Run unit tests
+
+lint-test-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+    - pip install flake8
+    # Run flake8 on Python project to check for code quality
+    - flake8 eateries foodies owners users
+
+build-front-end-job:
+  rules:
+    # Only run if the commit is on the main branch
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  stage: build
+  image: node:lts-bullseye
+  needs:
+    - api-unit-test-job  # These two jobs must succeed for
+    - lint-test-job      # this build-job to run
+  script:
+    - cd ghi/app
+    - npm install
+    - npm run build  # Build the React application
+  variables:
+    PUBLIC_URL: https://cuisine-coders.gitlab.io/eatinerary
+  artifacts:
+    paths:
+      - ghi/app/build/  # Save all of the files in the build path
+
+build-back-end-job:
+  rules:
+    # Only run if the commit is on the main branch
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  stage: build
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  script:
+    - cd eateries/api/eateries_rest
+    - echo "YELP_API_KEY='$STAGING_YELP_API_KEY'" > keys.py
+    - cd ..
+    - docker build -t ${CI_REGISTRY_IMAGE}/eateries_api:latest .
+    - docker tag ${CI_REGISTRY_IMAGE}/eateries_api:latest ${CI_REGISTRY_IMAGE}/eateries_api:$CI_JOB_ID
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push ${CI_REGISTRY_IMAGE}/eateries_api:$CI_JOB_ID
+    - docker push ${CI_REGISTRY_IMAGE}/eateries_api:latest
+
+    - cd ../../foodies/api
+    - docker build -t ${CI_REGISTRY_IMAGE}/foodies_api:latest .
+    - docker tag ${CI_REGISTRY_IMAGE}/foodies_api:latest ${CI_REGISTRY_IMAGE}/foodies_api:$CI_JOB_ID
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push ${CI_REGISTRY_IMAGE}/foodies_api:$CI_JOB_ID
+    - docker push ${CI_REGISTRY_IMAGE}/foodies_api:latest
+
+    - cd ../
+    - docker build -t ${CI_REGISTRY_IMAGE}/foodies_poller:latest .
+    - docker tag ${CI_REGISTRY_IMAGE}/foodies_poller:latest ${CI_REGISTRY_IMAGE}/foodies_poller:$CI_JOB_ID
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push ${CI_REGISTRY_IMAGE}/foodies_poller:$CI_JOB_ID
+    - docker push ${CI_REGISTRY_IMAGE}/foodies_poller:latest
+
+    - cd ../users/api
+    - docker build -t ${CI_REGISTRY_IMAGE}/users_api:latest .
+    - docker tag ${CI_REGISTRY_IMAGE}/users_api:latest ${CI_REGISTRY_IMAGE}/users_api:$CI_JOB_ID
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push ${CI_REGISTRY_IMAGE}/users_api:$CI_JOB_ID
+    - docker push ${CI_REGISTRY_IMAGE}/users_api:latest
+
+deploy-back-end-job-heroku:
+  rules:
+    # Only run if the commit is on the main branch
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  stage: deploy
+  needs:
+    - build-back-end-job
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+
+    - docker pull $CI_REGISTRY_IMAGE/eateries_api:latest
+    - docker tag ${CI_REGISTRY_IMAGE}/eateries_api:latest registry.heroku.com/$HEROKU_EATERIES_APP/web:latest
+    - docker push registry.heroku.com/$HEROKU_EATERIES_APP/web:latest
+
+    - docker pull $CI_REGISTRY_IMAGE/foodies_api:latest
+    - docker tag ${CI_REGISTRY_IMAGE}/foodies_api:latest registry.heroku.com/$HEROKU_FOODIES_APP/web:latest
+    - docker push registry.heroku.com/$HEROKU_FOODIES_APP/web:latest
+
+    - docker pull $CI_REGISTRY_IMAGE/foodies_poller:latest
+    - docker tag ${CI_REGISTRY_IMAGE}/foodies_poller:latest registry.heroku.com/$HEROKU_FOODIES_POLLER/web:latest
+    - docker push registry.heroku.com/$HEROKU_FOODIES_POLLER/web:latest
+
+    - docker pull $CI_REGISTRY_IMAGE/users_api:latest
+    - docker tag ${CI_REGISTRY_IMAGE}/users_api:latest registry.heroku.com/$HEROKU_USERS_APP/web:latest
+    - docker push registry.heroku.com/$HEROKU_USERS_APP/web:latest
+
+heroku-release:
+  stage: deploy
+  image: node:10.17-alpine
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  needs:
+    - deploy-back-end-job-heroku
+  before_script:
+    - apk add curl bash
+    - curl https://cli-assets.heroku.com/install.sh | sh
+  script:
+    # You're going to need to do this for each of your heroku apps
+    # Create a different $HEROKU_ variable for each
+    - heroku container:release web --app $HEROKU_EATERIES_APP
+    - heroku container:release web --app $HEROKU_FOODIES_APP
+    - heroku container:release web --app $HEROKU_FOODIES_POLLER
+    - heroku container:release web --app $HEROKU_USERS_APP
+
+# This is an easy way to deploy a React app using GitLab
+# Pages. Then, you can access your application from
+# gitlab.io.
+pages:
+  stage: deploy
+  rules:
+    # Only run if the commit is on the main branch
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  dependencies:
+    - build-front-end-job
+  needs:
+    - build-front-end-job
+  script:
+    - mv ghi/app/build/ public
+  artifacts:
+    paths:
+      - public
+# https://cuisine-coders.gitlab.io/eatinerary

@@ -22,8 +22,8 @@ function Login(props) {
   }
   var handleUserName = function (e) {
     const value = e.target.value;
-    setUsername(e.target.value)
-    props.setUN(e.target.value)
+    setUsername(value)
+    props.setUN(value)
   }
   return (
     <div className='container mt-5 py-5'>

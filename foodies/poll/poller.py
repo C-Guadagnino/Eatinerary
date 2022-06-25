@@ -74,9 +74,15 @@ def get_eatery_entity_data():
 
         # POLLING EATERYCATEGORY MODEL
         for category in eatery["categories"]:
-            categoryvo_obj, created = EateryCategoryVO.objects.update_or_create(
+            (
+                categoryvo_obj,
+                created,
+            ) = EateryCategoryVO.objects.update_or_create(
                 import_href=category["href"],
-                defaults={"alias": category["alias"], "title": category["title"]},
+                defaults={
+                    "alias": category["alias"],
+                    "title": category["title"],
+                },
             )
             eateryvo_obj.categoriesvo.add(categoryvo_obj)
 

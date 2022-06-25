@@ -1,9 +1,7 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from .models import EateryVO
 from .encoders import EateryVOEncoder
-import json
 
 
 # note: don't forget that the GET all EateryVOs view should also

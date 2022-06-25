@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('eateries_rest', '0011_alter_eatery_price_alter_eatery_website'),
+        ("eateries_rest", "0011_alter_eatery_price_alter_eatery_website"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='yelpcategorysearchterm',
-            name='category_term',
+            model_name="yelpcategorysearchterm",
+            name="category_term",
             field=models.CharField(max_length=100, unique=True),
         ),
         migrations.AlterField(
-            model_name='yelplocationsearchterm',
-            name='location_term',
+            model_name="yelplocationsearchterm",
+            name="location_term",
             field=models.CharField(max_length=100, unique=True),
         ),
     ]

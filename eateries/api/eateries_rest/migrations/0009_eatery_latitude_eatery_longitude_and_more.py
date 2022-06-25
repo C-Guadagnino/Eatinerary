@@ -6,23 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('eateries_rest', '0008_alter_eaterylocation_unique_together'),
+        ("eateries_rest", "0008_alter_eaterylocation_unique_together"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='eatery',
-            name='latitude',
+            model_name="eatery",
+            name="latitude",
             field=models.FloatField(default=0),
         ),
         migrations.AddField(
-            model_name='eatery',
-            name='longitude',
+            model_name="eatery",
+            name="longitude",
             field=models.FloatField(default=0),
         ),
         migrations.AlterField(
-            model_name='eatery',
-            name='review_count',
+            model_name="eatery",
+            name="review_count",
             field=models.PositiveIntegerField(default=0),
         ),
     ]

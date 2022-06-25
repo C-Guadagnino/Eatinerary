@@ -12,18 +12,19 @@ import "./EateryDetailImage.css"
 function EateryDetailPage(props) {
   const [eateryData, setEateryData] = useState({ eatery_name: '', location: {} });
   let { eateryID } = useParams();
-  async function getEateryDetails() {
-    const eateryUrl = `${process.env.REACT_APP_EATERIES_API}/api/eateries/${eateryID}/`;
-    const eateryResponse = await fetch(eateryUrl);
 
-    if (eateryResponse.ok) {
-      const eateryDataResponse = await eateryResponse.json();
-      setEateryData(eateryDataResponse);
-    }
-  }
   useEffect(() => {
+    async function getEateryDetails() {
+      const eateryUrl = `${process.env.REACT_APP_EATERIES_API}/api/eateries/${eateryID}/`;
+      const eateryResponse = await fetch(eateryUrl);
+
+      if (eateryResponse.ok) {
+        const eateryDataResponse = await eateryResponse.json();
+        setEateryData(eateryDataResponse);
+      }
+    }
     getEateryDetails()
-  }, [])
+  }, [eateryID])
 
   let categories_html = ''
   if (eateryData.categories) {
@@ -34,14 +35,14 @@ function EateryDetailPage(props) {
     })
   }
 
-  let tags_html = ''
-  if (eateryData.tags) {
-    tags_html = eateryData.tags.map(tag => {
-      return (
-        <li>{tag.tag_name}</li>
-      )
-    })
-  }
+  // let tags_html = ''
+  // if (eateryData.tags) {
+  //   tags_html = eateryData.tags.map(tag => {
+  //     return (
+  //       <li>{tag.tag_name}</li>
+  //     )
+  //   })
+  // }
 
   let address_line1 = ''
   let address_line2 = ''

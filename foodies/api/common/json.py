@@ -50,27 +50,41 @@ class ModelEncoder(
                 except NoReverseMatch:
                     pass
             for property in self.properties:
-                # value to be added to the d dictionary after being encoded if needed
+                # value to be added to the d dictionary after being encoded if
+                # needed
                 value = getattr(o, property)
-                # birds-eye view motivation: this takes care of serializing a list of EateryCategory objects,
-                # because without 7 lines of code below, we'd get a "TypeError: Object of type ManyRelatedManager is not JSON serializable"
-                # high-level: if value is a ManyRelatedManager/RelatedManager object
-                # detail: if value has .all method and is not a QuerySet (because QuerySet objects also have .all methods)
+                # birds-eye view motivation: this takes care of serializing a
+                # list of EateryCategory objects,
+                # because without 7 lines of code below, we'd get a "TypeError:
+                # Object of type ManyRelatedManager is not JSON serializable"
+                #
+                # high-level: if value is a ManyRelatedManager/RelatedManager
+                # object detail: if value has .all method and is not a QuerySet
+                # (because QuerySet objects also have .all methods)
                 if hasattr(value, "all") and not isinstance(value, QuerySet):
-                    # store value into variable values because in this case value.all() is a list of EateryCategory objects)
-                    # side note: value up to here is still a ManyRelatedManager object
-                    # plus we don't want to overwrite the value variable used above
+                    # store value into variable values because in this case
+                    # value.all() is a list of EateryCategory objects)
+                    #
+                    # side note: value up to here is still a ManyRelatedManager
+                    # object plus we don't want to overwrite the value variable
+                    # used above
                     values = value.all()
-                    # intialize value to be an empty list as a container so that we can append the encoded dictionary
+                    # intialize value to be an empty list as a container so
+                    # that we can append the encoded dictionary
                     value = []
-                    # for each item (aka. EateryCategory object) in values (aka. list of EateryCategory objects)
+                    # for each item (aka. EateryCategory object) in values
+                    # (aka. list of EateryCategory objects)
                     for item in values:
-                        # if the EateryEncoder has an "encoders" dictionary, which has "categories" as a key
+                        # if the EateryEncoder has an "encoders" dictionary,
+                        # which has "categories" as a key
                         if property in self.encoders:
-                            # grab that encoder. In this case, "EateryCategoryEncoder()"
+                            # grab that encoder. In this case,
+                            # "EateryCategoryEncoder()"
                             encoder = self.encoders[property]
-                            # append (*REF A*) to the value list (which is just a container)
-                            # (*REF A*) the encoded item (aka. EateryCategory) using the "EateryCategoryEncoder()"
+                            # append (*REF A*) to the value list (which is just
+                            # a container) (*REF A*) the encoded item (aka.
+                            # EateryCategory) using the
+                            # "EateryCategoryEncoder()"
                             value.append(encoder.default(item))
                 elif property in self.encoders:
                     encoder = self.encoders[property]

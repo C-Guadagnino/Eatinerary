@@ -6,17 +6,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('foodies_rest', '0009_foodievo_remove_skeweredeatery_foodie_and_more'),
+        (
+            "foodies_rest",
+            "0009_foodievo_remove_skeweredeatery_foodie_and_more",
+        ),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='skeweredeatery',
-            name='notes',
+            model_name="skeweredeatery",
+            name="notes",
             field=models.TextField(blank=True, null=True),
         ),
         migrations.AlterUniqueTogether(
-            name='skeweredeatery',
-            unique_together={('eatery_vo', 'foodie_vo')},
+            name="skeweredeatery",
+            unique_together={("eatery_vo", "foodie_vo")},
         ),
     ]

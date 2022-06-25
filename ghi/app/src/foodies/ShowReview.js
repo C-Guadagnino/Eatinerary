@@ -65,7 +65,6 @@ class ShowReview extends React.Component {
                         </ul>
                     </div>
 
-
                     <div className="col-md-3 mt-5" id="reviewsList">
                         <h2> Reviews </h2>
                         <div className="list-group" id="reviewsList2">

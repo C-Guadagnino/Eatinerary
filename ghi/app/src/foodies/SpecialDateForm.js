@@ -48,9 +48,6 @@ class SpecialDateForm extends React.Component {
         delete data.specialDate
         data.has_passed = false
 
-
-
-
         const appointmentUrl = `${process.env.REACT_APP_FOODIES_API}/api/foodies/${this.props.username}/specialdates/`;
         const fetchConfig = {
             method: "post",
@@ -64,7 +61,7 @@ class SpecialDateForm extends React.Component {
         const response = await fetch(appointmentUrl, fetchConfig);
 
         if (response.ok) {
-            const newAppointment = await response.json();
+            await response.json();
 
             const cleared = {
                 specialDate: '',
@@ -105,11 +102,11 @@ class SpecialDateForm extends React.Component {
                                     </select>
                                 </div>
                                 <button className="button-38">Create</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                            </form >
+                        </div >
+                    </div >
+                </div >
+            </div >
         );
     }
 }
