@@ -7,6 +7,21 @@
 3) A reflection on any design conversations that you had
 4) At least one ah-ha! moment that you had during your coding, however small
 
+## June 24, 2022
+* Today I worked with the team to clean up our project and get ready for deployment.
+* The team and I discussed about the design choices for the "Future Development" for the project
+* an AHA moment I had today was deployment takes a LONG time
+
+## June 23, 2022
+* Today I made additions to the YAML. The location state bug on the home page is fixed. Also all the front end environ variables are set up and working. Another bug I found was the stand still for a wrong input into the search bar, which will not populate the page with any eateries. I added an alert that will return if that happens with instructions to the user. I dont think we will end up using it because of the way its returning. The only other bug i found was in the special date form. It wouldnt allow you to submit if you did NOT check the box that said "does this repeat?". I just changed it to a radio button because of the bollean logic and it seems to work fine. Seems to be running pretty smooth minus the yelp constraints, and as of now i cant find anymore bugs 
+* The team talked about the overall state of the project and about the design choices for proeject submission tommorrow. 
+* an AHA moment I had today was 
+
+## June 22, 2022
+* Today I worked on creating the special date form. I tested the current state of the code pretty extensivly to make a list of bugs and prioritize the major ones vs the minor ones. Then I spent the rest of time, making mostly minor adjustments. Although I had to finesse the category state of the home page for certain search cases but wasnt a major code change.
+* the team did not have a design conversation today we mostly split off and started tackling the problem board. 
+* an AHA moment I had today was functional components are much more my favorite than class based components
+
 ## June 21, 2022
 * Today I worked on finally refactored the home page to have dynamic card columns and fit the information nicely on the screen. I started on the EateryDetail page and with the data object that Ariana had already brought to the front end, I began creating cards and headers for this page. David and I worked on google map integration, foodie skewered list view, and tried to access the User object to extract the bollean field that tells us "if foodie" or "if owner"
 * Ariana and I discussed about the design choices for the eateryDetail page after considering a few alternatives based on the remainding timeline. David and I discussed about design choice for the Google Maps integration. We have the pin drop for selected eateries but not for the current locaiton of the user which we decided we are okay with due to time purposes. 
@@ -97,70 +112,70 @@ Today, I worked on:
 Today, I worked on:
 * I worked on Testing the Models, Views, and Poller service
 
-I tested Owner and Eateries Models through the admin panel, I got the Owner and Entity GET requests to go through insomnia, I got the poller service working and container running. 
+* I tested Owner and Eateries Models through the admin panel, I got the Owner and Entity GET requests to go through insomnia, I got the poller service working and container running. 
 
-I had trouble getting the POST request working through insonia, manytomany manager wasnt serializable, need to dive into how to fix this issue.
+* I had trouble getting the POST request working through insonia, manytomany manager wasnt serializable, need to dive into how to fix this issue.
 
-No AH-HA's today
+* No AH-HA's today
 
 ## June 03, 2022
 Today, I worked on:
 * We split up into pairs today, Ariana and myself have started the models implementation for the Owners service.
 
-As a team we got two different yelp api requests to come through with the parameters and output we were looking for.
+* As a team we got two different yelp api requests to come through with the parameters and output we were looking for.
 
-We were able to use the Yelp documentation to guide the acls file design. Ariana, David and I spoke about the change of the eateries microservice handling all the eatery sub models, although now we realize that was logical in the first place.
+* We were able to use the Yelp documentation to guide the acls file design. Ariana, David and I spoke about the change of the eateries microservice handling all the eatery sub models, although now we realize that was logical in the first place.
 
-Our ah-ha moment today was getting the yelp request to go through and talking to curtis on our new method to collect yelp data through user requests, also using a bot to make get requests to users to populate our database.
+* Our ah-ha moment today was getting the yelp request to go through and talking to curtis on our new method to collect yelp data through user requests, also using a bot to make get requests to users to populate our database.
 
 ## June 02, 2022
 Today, I worked on:
 * We split up into pairs today, Ariana and myself have started the models implementation for the Owners service.
 
-Ariana and myself worked on creating the models for the owners microservice. We are waiting to create the EateryVO and OwnerVO for obvious reasons of the Respective microservices are not built yet containing the Entities of those VOs.
+* Ariana and myself worked on creating the models for the owners microservice. We are waiting to create the EateryVO and OwnerVO for obvious reasons of the Respective microservices are not built yet containing the Entities of those VOs.
 
-We had some fun digging around with how to handle the hours of operations set-up. We decided to create a list of unique values tied to the weekdays, use that with the "choices=" argument in the PositveSmallInterger field, then used the Meta class to order that field by a "start_time" field and then we constrained it to be uniquely together based on start and end time fields. We Also had merge issues because we forgot to add the pycache to the gitignore file. 
+* We had some fun digging around with how to handle the hours of operations set-up. We decided to create a list of unique values tied to the weekdays, use that with the "choices=" argument in the PositveSmallInterger field, then used the Meta class to order that field by a "start_time" field and then we constrained it to be uniquely together based on start and end time fields. We Also had merge issues because we forgot to add the pycache to the gitignore file. 
 
-We had an ah-ha moment by finding the solution I described above. This was an issue we worked through and eventually we were able to identify in the admin panel tht we were getting back the information and formatting we were looking for. Chris gave us the command " find . -name "*.pyc" -exec git rm -f "{}" "
+* We had an ah-ha moment by finding the solution I described above. This was an issue we worked through and eventually we were able to identify in the admin panel tht we were getting back the information and formatting we were looking for. Chris gave us the command " find . -name "*.pyc" -exec git rm -f "{}" "
 
 
 ## June 01, 2022
 Today, I worked on:
 * Creating the YML file with my team and creating the virtual environment for the project
 
-We worked on the complete file. We added the 4 services foodies, owners, users, eateries. We also created 3 databases, one to support all the services and one for each Yelp and Google Maps data. We also added the react service to the compose file.
+* We worked on the complete file. We added the 4 services foodies, owners, users, eateries. We also created 3 databases, one to support all the services and one for each Yelp and Google Maps data. We also added the react service to the compose file.
 
-We went through a lot of error handling of moving directories around and changing files to meet the requirements. Because we are not creating the data base we decided to use the postgres:14-2-bullseye image for our database. We still need to understand the environment variables we set for the services and the multiple database file we addded.  
+* We went through a lot of error handling of moving directories around and changing files to meet the requirements. Because we are not creating the data base we decided to use the postgres:14-2-bullseye image for our database. We still need to understand the environment variables we set for the services and the multiple database file we addded.  
 
-We had a great aha moment when we got all our containers to build and compose-up. We figured out how to incorporate the multiple database file
+* We had a great aha moment when we got all our containers to build and compose-up. We figured out how to incorporate the multiple database file
 
 ## May 31, 2022
 Today, I worked on:
 * Updating the data-models.md and ghi.md - bounded context formulation
 
-The team and I worked on identifying the bounded contexts for our project. We wanted to look into whether or not we were going to use microservices or a monolith and if we are using microservices how will we communicate with the data. 
+* The team and I worked on identifying the bounded contexts for our project. We wanted to look into whether or not we were going to use microservices or a monolith and if we are using microservices how will we communicate with the data. 
 
-As a team we struggled to identify the realtionship of the skewered model and our restaurant model. It was hard to determain if it was a many to many or one to many relationship. 
+* As a team we struggled to identify the realtionship of the skewered model and our restaurant model. It was hard to determain if it was a many to many or one to many relationship. 
 
-We later got confirmation from an instructor that it was best to have a one to many relationship between our data for the purposes we needed. We also were able to finish a rough draft of our bounded context after establishing some core functionalities of our project.
+* We later got confirmation from an instructor that it was best to have a one to many relationship between our data for the purposes we needed. We also were able to finish a rough draft of our bounded context after establishing some core functionalities of our project.
 
 ## May 30, 2022
 Today, I worked on:
 * Updating the data-models.md and ghi.md
 
-I began designing the Domain Driven Design in Exaclidraw with my team. We finished almost all of the front end conceptual designs. Working with changes in the data-models and the effects it has on the front end design. 
+* I began designing the Domain Driven Design in Exaclidraw with my team. We finished almost all of the front end conceptual designs. Working with changes in the data-models and the effects it has on the front end design. 
 
-I realized that we had more work to do with the data models and api end points before we could put together a comprehensive collection of designs.
+* I realized that we had more work to do with the data models and api end points before we could put together a comprehensive collection of designs.
 
-One aha moment was reconfiguring our data models to better reflect our core application functionality. We now wont have a yelp account requirement and now offer a create account form for non Yelp users.
+* One aha moment was reconfiguring our data models to better reflect our core application functionality. We now wont have a yelp account requirement and now offer a create account form for non Yelp users.
 
 ## May 27, 2022
 
 Today, I worked on:
 * Updating the apis.md and ghi.md
 
-Ariana, Cameron, David and I all worked as a group to first, identify which API endpoints our app would need, and second, update the api.md file to include details of input/output for each API endpoint.
+* Ariana, Cameron, David and I all worked as a group to first, identify which API endpoints our app would need, and second, update the api.md file to include details of input/output for each API endpoint.
 
-I had a tough time figuring out how we will handle our user microservice's models for the Users. We are unsure if we will use Django base user or change the default. Still unsure on how to connect to the login endpoints if we don't decide to use LoginRequiredMixin from Django.
+* I had a tough time figuring out how we will handle our user microservice's models for the Users. We are unsure if we will use Django base user or change the default. Still unsure on how to connect to the login endpoints if we don't decide to use LoginRequiredMixin from Django.
 
-Thinking about and working through the API endpoints while imagining the GHI was very helpful in visualizing what the process of building the app would look like.
+* Thinking about and working through the API endpoints while imagining the GHI was very helpful in visualizing what the process of building the app would look like.
