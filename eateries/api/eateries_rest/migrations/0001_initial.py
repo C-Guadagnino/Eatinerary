@@ -263,9 +263,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="eatery",
             name="tags",
-            field=models.ManyToManyField(
-                related_name="tags", to="eateries_rest.tag"
-            ),
+            field=models.ManyToManyField(related_name="tags", to="eateries_rest.tag"),
         ),
         migrations.CreateModel(
             name="EateryOpenHours",

@@ -1,2 +1,2 @@
 [flake8]
-exclude=migrations,settings.py,poller.py
+exclude=migrations,settings.py,poller.py,keys.py

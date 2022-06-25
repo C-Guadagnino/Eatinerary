@@ -29,7 +29,9 @@ from .acls import get_eateries_from_yelp, get_details_of_one_eatery
 
 
 @require_http_methods(["GET"])
-def api_eateries_given_category_and_location(request, location, category="food"):
+def api_eateries_given_category_and_location(
+    request, location, category="food"
+):
     if request.method == "GET":
         try:
             EateryCategory.objects.create(alias="food", title="Food")
@@ -42,19 +44,25 @@ def api_eateries_given_category_and_location(request, location, category="food")
             # if the eateries dictionary comes back with error dictionary from
             # yelp with wrong location input
             if "invalid" in eateries_dictionary:
-                return JsonResponse({"Message": eateries_dictionary["invalid"]})
+                return JsonResponse(
+                    {"Message": eateries_dictionary["invalid"]}
+                )
             # if the eateries dictionary is populated with business
             else:
                 # Create location search term object if it doesn't already
                 # exist
                 try:
-                    YelpLocationSearchTerm.objects.create(location_term=location)
+                    YelpLocationSearchTerm.objects.create(
+                        location_term=location
+                    )
                 except IntegrityError:
                     pass
                 # Create category search term object if it doesn't already
                 # exist
                 try:
-                    YelpCategorySearchTerm.objects.create(category_term=category)
+                    YelpCategorySearchTerm.objects.create(
+                        category_term=category
+                    )
                 except IntegrityError:
                     pass
 
@@ -65,7 +73,9 @@ def api_eateries_given_category_and_location(request, location, category="food")
                         del eatery["location"]["display_address"]
 
                     location_dict = eatery["location"]
-                    location_obj = EateryLocation.objects.create(**location_dict)
+                    location_obj = EateryLocation.objects.create(
+                        **location_dict
+                    )
 
                     categories_list = eatery["categories"]
 
@@ -126,7 +136,9 @@ def api_eateries_given_category_and_location(request, location, category="food")
                                 alias=category_dict["alias"]
                             )
                             eatery_obj.categories.add(category_obj)
-                        food_category_obj = EateryCategory.objects.get(alias="food")
+                        food_category_obj = EateryCategory.objects.get(
+                            alias="food"
+                        )
                         eatery_obj.categories.add(food_category_obj)
                         # Create relationship between the image url and the
                         # current eatery
@@ -148,15 +160,21 @@ def api_eateries_given_category_and_location(request, location, category="food")
                         # objects and create a relationship to the current
                         # eatery.
                         try:
-                            open_hours_list = eatery_details_dict["hours"][0]["open"]
+                            open_hours_list = eatery_details_dict["hours"][0][
+                                "open"
+                            ]
                             for open_hours_singular in open_hours_list:
                                 raw_start_time = open_hours_singular["start"]
                                 start_time = (
-                                    raw_start_time[:2:] + ":" + raw_start_time[2::]
+                                    raw_start_time[:2:]
+                                    + ":"
+                                    + raw_start_time[2::]
                                 )
                                 raw_end_time = open_hours_singular["end"]
 
-                                end_time = raw_end_time[:2:] + ":" + raw_end_time[2::]
+                                end_time = (
+                                    raw_end_time[:2:] + ":" + raw_end_time[2::]
+                                )
                                 raw_day = open_hours_singular["day"]
 
                                 weekday = raw_day + 1
@@ -168,7 +186,9 @@ def api_eateries_given_category_and_location(request, location, category="food")
                                     "end_time": end_time,
                                 }
 
-                                EateryOpenHours.objects.create(**open_hours_dict)
+                                EateryOpenHours.objects.create(
+                                    **open_hours_dict
+                                )
 
                         # when eatery from yelp doesn't have open hours
                         except KeyError:
@@ -223,7 +243,9 @@ def api_eateries_given_category_and_location(request, location, category="food")
                     eatery_from_yelp_result = Eatery.objects.get(
                         id=yelp_result.eatery.id
                     )
-                    eateries_from_yelp_results_list.append(eatery_from_yelp_result)
+                    eateries_from_yelp_results_list.append(
+                        eatery_from_yelp_result
+                    )
                 return JsonResponse(
                     {"eateries": eateries_from_yelp_results_list},
                     encoder=EateryEncoder,
@@ -261,7 +283,9 @@ def api_category_search_terms(request):
 def api_yelp_results(request):
     if request.method == "GET":
         yelp_results = YelpResult.objects.all()
-        return JsonResponse({"yelp_results": yelp_results}, encoder=YelpResultEncoder)
+        return JsonResponse(
+            {"yelp_results": yelp_results}, encoder=YelpResultEncoder
+        )
 
 
 @require_http_methods(["GET", "POST"])
@@ -324,13 +348,17 @@ def api_eatery(request, pk):
 def api_locations(request):
     if request.method == "GET":
         locations = EateryLocation.objects.all()
-        return JsonResponse({"locations": locations}, encoder=EateryLocationEncoder)
+        return JsonResponse(
+            {"locations": locations}, encoder=EateryLocationEncoder
+        )
 
     else:
         try:
             content = json.loads(request.body)
             location = EateryLocation.objects.create(**content)
-            return JsonResponse(location, encoder=EateryLocationEncoder, safe=False)
+            return JsonResponse(
+                location, encoder=EateryLocationEncoder, safe=False
+            )
         except IntegrityError:
             msg = "Could not create location; this location already exists."
             response = JsonResponse({"message": msg})
@@ -343,19 +371,25 @@ def api_location(request, pk):
     if request.method == "GET":
         location = EateryLocation.objects.get(id=pk)
         print("location IS:", location)
-        return JsonResponse(location, encoder=EateryLocationEncoder, safe=False)
+        return JsonResponse(
+            location, encoder=EateryLocationEncoder, safe=False
+        )
 
 
 @require_http_methods(["GET", "POST"])
 def api_categories(request):
     if request.method == "GET":
         categories = EateryCategory.objects.all()
-        return JsonResponse({"categories": categories}, encoder=EateryCategoryEncoder)
+        return JsonResponse(
+            {"categories": categories}, encoder=EateryCategoryEncoder
+        )
     else:
         try:
             content = json.loads(request.body)
             category = EateryCategory.objects.create(**content)
-            return JsonResponse(category, encoder=EateryCategoryEncoder, safe=False)
+            return JsonResponse(
+                category, encoder=EateryCategoryEncoder, safe=False
+            )
         except IntegrityError:
             msg = "Could not create category; this category already exists."
             response = JsonResponse({"message": msg})
@@ -367,7 +401,9 @@ def api_categories(request):
 def api_category(request, pk):
     if request.method == "GET":
         category = EateryCategory.objects.get(pk=pk)
-        return JsonResponse(category, encoder=EateryCategoryEncoder, safe=False)
+        return JsonResponse(
+            category, encoder=EateryCategoryEncoder, safe=False
+        )
 
 
 @require_http_methods(["GET", "POST"])
@@ -446,9 +482,13 @@ def api_eatery_images(request):
             content["eatery"] = eatery
             print("THIS IS EATERY!!!", eatery)
             eatery_image = EateryImage.objects.create(**content)
-            return JsonResponse(eatery_image, encoder=EateryImageEncoder, safe=False)
+            return JsonResponse(
+                eatery_image, encoder=EateryImageEncoder, safe=False
+            )
         except IntegrityError:
-            response = JsonResponse({"message": "Could not create eatery image"})
+            response = JsonResponse(
+                {"message": "Could not create eatery image"}
+            )
             response.status_code = 400
             return response
 
@@ -457,7 +497,9 @@ def api_eatery_images(request):
 def api_eatery_image(request, pk):
     if request.method == "GET":
         eatery_image = EateryImage.objects.get(pk=pk)
-        return JsonResponse(eatery_image, encoder=EateryImageEncoder, safe=False)
+        return JsonResponse(
+            eatery_image, encoder=EateryImageEncoder, safe=False
+        )
 
 
 @require_http_methods(["GET"])
