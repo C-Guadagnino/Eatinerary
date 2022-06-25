@@ -15,6 +15,9 @@
 * Brandon Dix
 * David Quinlan
 
+## Requirements:
+* Need your own YELP API key
+* Remove ad blocker for better compatibility with homepage
 
 ## Summary:
 * Detailed collection of eateries that have garnered interest

@@ -22,7 +22,7 @@ const HomePageWithCards = (props) => {
   //creating function to load ip address from the API
   const getData = async () => {
     const res = await axios.get('https://ipapi.co/city/')
-    const data = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/yelp/${res.data}/food/`)
+    await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/yelp/${res.data}/food/`)
     const realEateries = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/city/filter/${res.data}/`)
     let eateries = []
     for (let eatery of realEateries.data) {
