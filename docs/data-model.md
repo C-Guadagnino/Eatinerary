@@ -2,65 +2,85 @@
 
 ![Eatinerary_BoundedContexts_220618](Eatinerary_BoundedContexts_220618.png)
 
-## User (Custom User model based on Django's built-in user model?) ???
+## Users Microservice
+
+### User (Custom User model based on Django's built-in AbstractUser model)
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
-| ???             | ???     | ???    | ???      |
+| phone           | str     | yes    | no       |
+| google_calendar | url     | yes    | no       |
 
-## Foodie
+### Foodie
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
-| username        | str     | yes    | no       |
-| first_name      | str     | no     | no       |
-| last_name       | str     | no     | no       |
-| email           | str     | yes    | no       |
-| phone           | int     | yes    | no       |
-| google_calendar | url?    | yes    | no       |
+| user            | OneToOne (to User)| yes    | no       |
 
 
-## Eatery_owner
+### Owner
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
-| username        | str     | yes    | no       |
-| first_name      | str     | no     | no       |
-| last_name       | str     | no     | no       |
-| email           | str     | yes    | no       |
-| phone           | int     | yes    | no       |
-| google_calendar | url?    | yes    | no       |
-| eatery          | For.Key | yes    | no       |
+| user            | OneToOne (to User)| yes    | no       |
 
-## Eatery
+### EateryVO
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
-| owner           | For.Key | no     | no       |
+| import_href     | str     | yes    | no       |
+| owner           | For.Key (to Owner)     | no    | no       |
+
+
+## Eateries Microservice
+
+### Eatery
+| Name            | Type    | Unique | Optional |
+|-----------------|---------|--------|----------|
 | eatery_name     | str     | no     | no       |
-| email           | str     | yes    | yes      |
-| phone           | str     | no (some owners may use same cell num for multiple eateries they own?)     | yes      |
+| email           | str     | no     | no       |
+| phone           | str     | no (some owners may use same cell num for multiple eateries they own)     | yes      |
 | location        | OneToOne| no     | no       |
-| website         | url     | no (multiple locations may have same website)    | yes      |
+| website         | url     | no (multiple locations may have same website)    | no       |
 | yelp_id         | str     | yes    | yes      |
-| href            | url     | no     | yes      |
-| review_count    | int     | yes    | yes      |
-| average_rating  | int     | yes    | yes      |
-| price           | str     | yes    | yes      |
-| tag             |Many2Many| no     | no       |
-| categories      |Many2Many| yes    | yes      |
+| review_count    | int     | no     | no       |
+| average_rating  | float   | no     | no       |
+| price           | str     | no     | yes      |
+| tags            |Many2Many| no     | yes      |
+| categories      |Many2Many| no     | yes      |
+| from_yelp       | bool    | no     | no       |
+| latitude        | float   | no     | no       |
+| longitude       | float   | no     | no       |
 
-## Eatery_Image (one-to-many relationship between Eatery and EateryImage) (do we need this model to be separate from Image VO model OR can the Image VO model be used for both having Foreign keys in the Review AND Eatery models) ???
+
+### YelpCategorySearchTerm
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
-| eatery          | For.Key | no     | no       |
-| image_url       | media/url? should we require image_url, or allow Foodie to upload image directly? (Need to look into this, and implications of user experience vs resources taken up for loading app when existing number of images in app increase dramatically)     | yes    | no       |
+| category_term   | str     | yes    | no       |
 
-## Eatery_categories???
+### YelpLocationSearchTerm
+| Name            | Type    | Unique | Optional |
+|-----------------|---------|--------|----------|
+| location_term   | str     | yes    | no       |
+
+### YelpResult
+| Name            | Type    | Unique | Optional |
+|-----------------|---------|--------|----------|
+| category_term   | For.Key (to YelpCategorySearchTerm)| no    | no       |
+| location_term   | For.Key (to YelpLocationSearchTerm)| no    | no       |
+| eatery          | For.Key (to Eatery)| no    | no       |
+
+### EateryTag
+| Name            | Type    | Unique | Optional |
+|-----------------|---------|--------|----------|
+| tag_name        | str     | yes    | no       |
+
+
+### EateryCategory
 https://www.yelp.com/developers/documentation/v3/get_started
-
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
-| alias           | str     | no     | no       |
+| alias           | str     | yes    | no       |
 | title           | str     | no     | no       |
 
-## Eatery_location (??? - updates based on Curtis' feedback? Not sure how to update)
+
+### EateryLocation
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
 | address1        | str     | no     | no       |
@@ -68,56 +88,126 @@ https://www.yelp.com/developers/documentation/v3/get_started
 | address3        | str     | no     | yes      |
 | city            | str     | no     | no       |
 | state           | str     | no     | no       |
-| zip             | str     | no     | no       |
+| zip_code        | str     | no     | no       |
 | country         | str     | no     | no       |
 
-## Eatery_open_hours (one-to-many relationship between Eatery and Eatery_open_hours)
+
+### EateryOpenHours (one-to-many relationship between Eatery and EateryOpenHours)
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
-| id              | int     | yes    | no       |
-| start           | str?int?| no     | no       |
-| end             | str?int?| no     | no       |
-| day (mon-fri)   | int(0-7)| no     | no       |
+| eatery          | For.Key (to Eatery)| no    | no       |
+| weekday         | int     | no     | no       |
+| start_time      | time    | no     | no       |
+| end_time        | time    | no     | no       |
 
 
-## Skewered_eatery
+### EateryImage (one-to-many relationship between Eatery and EateryImage)
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
+| image_url       | str     | no     | no       |
 | eatery          | For.Key | no     | no       |
-| foodie          | For.Key | no     | yes      |
+
+## Foodies Microservice
+
+### EateryVO
+| Name            | Type    | Unique | Optional |
+|-----------------|---------|--------|----------|
+| import_href     | str     | no     | no       |
+| eatery_name     | str     | no     | no       |
+| email           | str     | no     | yes      |
+| phone           | str     | no (some owners may use same cell num for multiple eateries they own)     | yes      |
+| website         | url     | no (multiple locations may have same website)    | no       |
+| yelp_id         | str     | yes    | yes      |
+| review_count    | int     | no     | no       |
+| average_rating  | float   | no     | no       |
+| price           | str     | no     | yes      |
+| from_yelp       | bool    | no     | no       |
+| location_address1| str    | no     | yes      |
+| location_address2| str    | no     | yes      |
+| location_address3| str    | no     | yes      |
+| location_city    | str    | no     | yes      |
+| location_state   | str    | no     | yes      |
+| location_zip     | str    | no     | yes      |
+| location_country | str    | no     | yes      |
+| latitude        | float   | no     | yes      |
+| longitude       | float   | no     | yes      |
+
+
+### EateryCategory
+https://www.yelp.com/developers/documentation/v3/get_started
+| Name            | Type    | Unique | Optional |
+|-----------------|---------|--------|----------|
+| import_href     | str     | no     | no       |
+| alias           | str     | yes    | no       |
+| title           | str     | no     | no       |
+| eatery_vo       |Many2Many (with EateryVO) | no     | no       |
+
+
+### EateryTag
+| Name            | Type    | Unique | Optional |
+|-----------------|---------|--------|----------|
+| import_href     | str     | no     | no       |
+| tag_name        | str     | yes    | no       |
+| eatery_vo       |Many2Many (with EateryVO) | no     | no       |
+
+
+### EateryImageVO (one-to-many relationship between Eatery and EateryImage)
+| Name            | Type    | Unique | Optional |
+|-----------------|---------|--------|----------|
+| import_href     | str     | no     | no       |
+| image_url       | str     | no     | no       |
+| eatery_vo       |Many2Many (with EateryVO) | no     | no       |
+
+
+### EateryOpenHours (one-to-many relationship between Eatery and EateryOpenHours)
+| Name            | Type    | Unique | Optional |
+|-----------------|---------|--------|----------|
+| import_href     | str     | no     | no       |
+| weekday         | int     | no     | no       |
+| start_time      | time    | no     | no       |
+| end_time        | time    | no     | no       |
+| eatery_vo       |For.Key (to EateryVO) | no     | no       |
+
+
+### FoodieVO
+| Name            | Type    | Unique | Optional |
+|-----------------|---------|--------|----------|
+| import_href     | str     | no     | no       |
+| username        | str     | yes    | no       |
+| first_name      | str     | no     | no       |
+| last_name       | str     | no     | no       |
+| email           | str     | yes    | no       |
+| phone           | int     | yes    | no       |
+
+
+### Skewered_eatery
+| Name            | Type    | Unique | Optional |
+|-----------------|---------|--------|----------|
+| eatery_vo       | For.Key | no     | no       |
+| foodie_vo       | For.Key | no     | yes      |
 | created_DateTime| date    | no     | no       |
 | updated_DateTime| date    | no     | no       |
 | has_visited     | bool    | no     | no       |
 | is_active       | bool    | no     | no       |
-| notes           | str/ textfield   | no     | no       |
+| notes           | str     | no     | no       |
 
-## EateryTag (many-to-many relationship between EateryTag and Eatery. #datenight #brunch, etc. Tags are created by foodies and are visible and searchable by the entire app user-base, so any user can search for #datenight #brospot.
-* //Discussed// Discuss with Cuisine Coders whether we want the tags to be related to Eateries instead of Skewered Eateries, and for the tags to be visible by everyone instead of just by the foodie that created them. That way the whole RestaurantRepo community can benefit from the tags other people add to Eateries, and can even search/filter by those tags.)
-
-| Name            | Type    | Unique | Optional |
-|-----------------|---------|--------|----------|
-| tag             | str     | yes    | no       |
-
-
-## Review
+### Review
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
 | title           | str     | no     | no       |
 | rating          | int     | no     | no       |
 | created_DateTime| date    | no     | no       |
 | description     | str     | no     | no       |
-| skewered_restaur| OneToOne| no     | no       |
-| image           | For.Key | no     | yes      |
+| eatery_vo       | For.Key | no     | no       |
+| skewered_eatery | OneToOne| no     | no       |
 
-
-## Review_Image (one-to-many relationship between review and image)
+### Review_Image (one-to-many relationship between review and image)
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
+| image_url       | str     | yes    | no       |
 | review          | For.Key | no     | yes      |
-| image_url       | media/url? should we require picture_url, or allow Foodie to upload image directly? (Need to look into this, and implications of user experience vs resources taken up for loading app when existing number of images in app increase dramatically)     | yes    | no       |
 
-
-## SpecialDate (one-to-many relationship between foodie and specialdate)
+### SpecialDate (one-to-many relationship between foodie and specialdate)
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
 | special_date    | date    | no     | no       |
@@ -128,15 +218,24 @@ https://www.yelp.com/developers/documentation/v3/get_started
 | foodie          | For.Key | no     | no       |
 
 
+
+## Owners Microservice
+
+### Eatery_owner
+| Name            | Type    | Unique | Optional |
+|-----------------|---------|--------|----------|
+| username        | str     | yes    | no       |
+| first_name      | str     | no     | no       |
+| last_name       | str     | no     | no       |
+| email           | str     | yes    | no       |
+| phone           | int     | yes    | no       |
+| google_calendar | url?    | yes    | no       |
+| eatery          | For.Key | yes    | no       |
+
+
 ## Ad_slot (for each continuous time slot)
 | Name            | Type    | Unique | Optional |
 |-----------------|---------|--------|----------|
 | eatery          | For.Key | no     | no       |
 | startdatetime   | DateTime| no     | no       |
 | enddatetime     | DateTime| no     | no       |
-
-
-## Payment
-- We believe we should not need a payment model to even temporarily store payment information
-- This will depend on what Stripe API requires - ideally we don't want to handle payment info directly for security/liability reasons (and let alone storing it)
-
