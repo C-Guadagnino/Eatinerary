@@ -11,7 +11,10 @@
 * Today I:
     * Went through the entire project and cleaned up code and comments - All
     * Updated front-end endpoints to not be camel-case - All
-
+    * Updated the document files (apis.md, data-models.md) - All
+    * Worked on deployment with Curtis - All
+* Design conversations on updating the way time displays (in OpenHours for eateries)
+* Ah-ha moment learning about CI/CD -- learned that an app can pass all the pipeline, and the heroku app can still run into issues! (our IP API was using HTTP and it passed the Gitlab CI/CD pipeline, but didn't pass the heroku one!)
 
 ## June 23, 2022
 * Today I:
