@@ -13,7 +13,10 @@ class EateryTagVOEncoder(ModelEncoder):
 
     def get_extra_data(self, o):
         return {
-            "eatery": {"eatery_name": o.eatery.eatery_name, "eatery_import_href": o.eatery.import_href}
+            "eatery": {
+                "eatery_name": o.eatery.eatery_name,
+                "eatery_import_href": o.eatery.import_href,
+            }
         }
 
 
@@ -23,7 +26,10 @@ class EateryCategoryVOEncoder(ModelEncoder):
 
     def get_extra_data(self, o):
         return {
-            "eatery": {"eatery_name": o.eatery.eatery_name, "eatery_import_href": o.eatery.import_href}
+            "eatery": {
+                "eatery_name": o.eatery.eatery_name,
+                "eatery_import_href": o.eatery.import_href,
+            }
         }
 
 
@@ -33,7 +39,10 @@ class EateryImageVOEncoder(ModelEncoder):
 
     def get_extra_data(self, o):
         return {
-            "eatery": {"eatery_name": o.eatery.eatery_name, "eatery_import_href": o.eatery.import_href}
+            "eatery": {
+                "eatery_name": o.eatery.eatery_name,
+                "eatery_import_href": o.eatery.import_href,
+            }
         }
 
 

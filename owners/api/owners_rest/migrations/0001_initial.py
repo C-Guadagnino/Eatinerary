@@ -8,33 +8,55 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='EateryVO',
+            name="EateryVO",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('import_href', models.CharField(max_length=200)),
-                ('eatery_name', models.CharField(max_length=200)),
-                ('email', models.CharField(max_length=200, unique=True)),
-                ('phone', models.CharField(max_length=200)),
-                ('website', models.URLField(unique=True)),
-                ('yelp_id', models.CharField(max_length=200, unique=True)),
-                ('href', models.URLField(unique=True)),
-                ('review_count', models.PositiveSmallIntegerField(default=0)),
-                ('average_rating', models.FloatField()),
-                ('price', models.CharField(max_length=4)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("import_href", models.CharField(max_length=200)),
+                ("eatery_name", models.CharField(max_length=200)),
+                ("email", models.CharField(max_length=200, unique=True)),
+                ("phone", models.CharField(max_length=200)),
+                ("website", models.URLField(unique=True)),
+                ("yelp_id", models.CharField(max_length=200, unique=True)),
+                ("href", models.URLField(unique=True)),
+                ("review_count", models.PositiveSmallIntegerField(default=0)),
+                ("average_rating", models.FloatField()),
+                ("price", models.CharField(max_length=4)),
             ],
         ),
         migrations.CreateModel(
-            name='EateryAdSlot',
+            name="EateryAdSlot",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('start_datetime', models.DateTimeField()),
-                ('end_datetime', models.DateTimeField()),
-                ('eatery', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='adslots', to='owners_rest.eateryvo')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("start_datetime", models.DateTimeField()),
+                ("end_datetime", models.DateTimeField()),
+                (
+                    "eatery",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="adslots",
+                        to="owners_rest.eateryvo",
+                    ),
+                ),
             ],
         ),
     ]

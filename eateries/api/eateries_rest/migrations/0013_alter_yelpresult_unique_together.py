@@ -6,12 +6,15 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('eateries_rest', '0012_alter_yelpcategorysearchterm_category_term_and_more'),
+        (
+            "eateries_rest",
+            "0012_alter_yelpcategorysearchterm_category_term_and_more",
+        ),
     ]
 
     operations = [
         migrations.AlterUniqueTogether(
-            name='yelpresult',
-            unique_together={('category_term', 'location_term', 'eatery')},
+            name="yelpresult",
+            unique_together={("category_term", "location_term", "eatery")},
         ),
     ]

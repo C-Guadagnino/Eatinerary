@@ -28,9 +28,10 @@ function App() {
   // This is so we can track which and if a user is logged in and their sessions is current
   // console.log("userName is:", userName);
   // console.log("user is:", user)
-
+  const domain = /https:\/\/[^/]+/;
+  const basename = process.env.PUBLIC_URL.replace(domain, '');
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Nav token={token} />
       <div className='container-fluid p-0'>
         <Routes>
@@ -52,4 +53,3 @@ function App() {
   );
 }
 export default App;
-

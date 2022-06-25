@@ -15,7 +15,9 @@ class Eatery(models.Model):
     average_rating = models.FloatField()
     price = models.CharField(max_length=4, null=True, blank=True)
     tags = models.ManyToManyField("EateryTag", related_name="tags")
-    categories = models.ManyToManyField("EateryCategory", related_name="categories")
+    categories = models.ManyToManyField(
+        "EateryCategory", related_name="categories"
+    )
     from_yelp = models.BooleanField(default=False)
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
@@ -59,10 +61,14 @@ class YelpLocationSearchTerm(models.Model):
 
 class YelpResult(models.Model):
     category_term = models.ForeignKey(
-        YelpCategorySearchTerm, on_delete=models.CASCADE, related_name="results"
+        YelpCategorySearchTerm,
+        on_delete=models.CASCADE,
+        related_name="results",
     )
     location_term = models.ForeignKey(
-        YelpLocationSearchTerm, on_delete=models.CASCADE, related_name="results"
+        YelpLocationSearchTerm,
+        on_delete=models.CASCADE,
+        related_name="results",
     )
     eatery = models.ForeignKey(
         "Eatery", related_name="eatery_yelpresults", on_delete=models.CASCADE

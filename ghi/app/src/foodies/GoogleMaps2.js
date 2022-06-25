@@ -3,9 +3,6 @@ import Iframe from 'react-iframe';
 
 
 class GoogleMaps extends React.Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         return (
             <div>

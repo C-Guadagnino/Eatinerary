@@ -55,7 +55,12 @@ class EateryImageVO(models.Model):
     )
 
     def __str__(self):
-        return "Image " + self.image_url + " for Eatery: " + self.eatery_vo.eatery_name
+        return (
+            "Image "
+            + self.image_url
+            + " for Eatery: "
+            + self.eatery_vo.eatery_name
+        )
 
 
 class EateryOpenHoursVO(models.Model):

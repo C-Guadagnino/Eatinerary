@@ -7,6 +7,7 @@ import json
 
 from .models import User, Foodie, Owner
 
+
 # Get all users
 @require_http_methods(["GET", "POST"])
 def api_users(request):
@@ -55,7 +56,14 @@ def api_get_specific_user(request, pk):
 
 class UserEncoder(ModelEncoder):
     model = User
-    properties = ["id", "username", "email", "phone", "first_name", "last_name"]
+    properties = [
+        "id",
+        "username",
+        "email",
+        "phone",
+        "first_name",
+        "last_name",
+    ]
 
 
 @require_http_methods(["GET"])

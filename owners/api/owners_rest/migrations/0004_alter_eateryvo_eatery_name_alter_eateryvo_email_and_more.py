@@ -6,33 +6,33 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('owners_rest', '0003_eateryvo_from_yelp_eateryvo_latitude_and_more'),
+        ("owners_rest", "0003_eateryvo_from_yelp_eateryvo_latitude_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='eateryvo',
-            name='eatery_name',
+            model_name="eateryvo",
+            name="eatery_name",
             field=models.CharField(max_length=200),
         ),
         migrations.AlterField(
-            model_name='eateryvo',
-            name='email',
+            model_name="eateryvo",
+            name="email",
             field=models.CharField(blank=True, max_length=200, null=True),
         ),
         migrations.AlterField(
-            model_name='eateryvo',
-            name='review_count',
+            model_name="eateryvo",
+            name="review_count",
             field=models.PositiveIntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='eateryvo',
-            name='website',
+            model_name="eateryvo",
+            name="website",
             field=models.URLField(max_length=500),
         ),
         migrations.AlterField(
-            model_name='eateryvo',
-            name='yelp_id',
+            model_name="eateryvo",
+            name="yelp_id",
             field=models.CharField(max_length=200),
         ),
     ]

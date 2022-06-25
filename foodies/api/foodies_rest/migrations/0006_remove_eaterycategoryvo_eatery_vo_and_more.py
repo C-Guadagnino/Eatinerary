@@ -6,17 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('foodies_rest', '0005_remove_eaterytagvo_eatery_vo_eaterytagvo_eatery_vo'),
+        (
+            "foodies_rest",
+            "0005_remove_eaterytagvo_eatery_vo_eaterytagvo_eatery_vo",
+        ),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='eaterycategoryvo',
-            name='eatery_vo',
+            model_name="eaterycategoryvo",
+            name="eatery_vo",
         ),
         migrations.AddField(
-            model_name='eaterycategoryvo',
-            name='eatery_vo',
-            field=models.ManyToManyField(related_name='categoriesvo', to='foodies_rest.eateryvo'),
+            model_name="eaterycategoryvo",
+            name="eatery_vo",
+            field=models.ManyToManyField(
+                related_name="categoriesvo", to="foodies_rest.eateryvo"
+            ),
         ),
     ]

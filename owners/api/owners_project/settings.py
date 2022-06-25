@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import dj_database_url
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-f4r=0iq=8oen4$l^@q*fdcux1vo%li%k6q#ls6u0r00n8a86=2"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 
 # Application definition
@@ -37,7 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'djwto',
+    "djwto",
 ]
 
 MIDDLEWARE = [
@@ -51,15 +52,17 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ALLOWED_HOSTS = ["localhost"]
-
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000/",
+ALLOWED_HOSTS = [
+    "localhost",
+    os.environ.get("HOST_NAME", "127.0.0.1"),
 ]
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000/"]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:8000",
+    os.environ.get("CORS_HOST", "http://localhost:3001"),
 ]
 CORS_ALLOW_CREDENTIALS = True
 DJWTO_CSRF = False

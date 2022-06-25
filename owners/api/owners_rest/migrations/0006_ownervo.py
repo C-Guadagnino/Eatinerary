@@ -6,20 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('owners_rest', '0005_alter_eateryvo_latitude_and_more'),
+        ("owners_rest", "0005_alter_eateryvo_latitude_and_more"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='OwnerVO',
+            name="OwnerVO",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('import_href', models.CharField(max_length=200)),
-                ('username', models.CharField(max_length=200)),
-                ('first_name', models.CharField(max_length=200)),
-                ('last_name', models.CharField(max_length=200)),
-                ('email', models.CharField(max_length=200)),
-                ('phone', models.CharField(max_length=20)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("import_href", models.CharField(max_length=200)),
+                ("username", models.CharField(max_length=200)),
+                ("first_name", models.CharField(max_length=200)),
+                ("last_name", models.CharField(max_length=200)),
+                ("email", models.CharField(max_length=200)),
+                ("phone", models.CharField(max_length=20)),
             ],
         ),
     ]
