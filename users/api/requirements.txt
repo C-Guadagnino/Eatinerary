@@ -3,5 +3,5 @@ Django==4.0.3
 requests==2.27.1
 psycopg2==2.9.3
 django-cors-headers==3.11.0
-djwto==0.0.3
+djwto @ git+https://github.com/hr-curtissimo/djwto.git
 gunicorn==20.1.0

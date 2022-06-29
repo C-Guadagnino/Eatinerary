@@ -103,7 +103,7 @@ class EateryTag(models.Model):
 
 
 class EateryCategory(models.Model):
-    alias = models.CharField(max_length=200, unique=True)
+    alias = models.CharField(max_length=200, unique=True, db_index=True)
     title = models.CharField(max_length=200)
 
     def __str__(self):

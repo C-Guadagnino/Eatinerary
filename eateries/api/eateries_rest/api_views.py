@@ -480,7 +480,6 @@ def api_eatery_images(request):
             eatery_id = content["eatery"]
             eatery = Eatery.objects.get(pk=eatery_id)
             content["eatery"] = eatery
-            print("THIS IS EATERY!!!", eatery)
             eatery_image = EateryImage.objects.create(**content)
             return JsonResponse(
                 eatery_image, encoder=EateryImageEncoder, safe=False
