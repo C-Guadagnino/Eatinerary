@@ -12,4 +12,4 @@ COPY api/foodies_rest foodies_rest
 COPY api/common common
 
 RUN pip install -r requirements.txt
-CMD python manage.py migrate && gunicorn foodies_project.wsgi --bind 0.0.0.0:$PORT --log-file -
+CMD python poller.py
