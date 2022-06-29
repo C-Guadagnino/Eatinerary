@@ -164,7 +164,7 @@ const HomePageWithCards = (props) => {
         </div>
       </>
     )
-  } else {
+  } else if (error) {
     return (
       <>
         <li></li>
@@ -177,6 +177,17 @@ const HomePageWithCards = (props) => {
         </div>
       </>
     )
+  } else {
+    return (
+      <div className="mt-5 pt-5">
+        <h1 className="text-center">Loading your next culinary desires...</h1>
+        <div className="text-center">
+          <div className="spinner-border text-success" style={{width: '3em', height: '3rem'}} role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 
