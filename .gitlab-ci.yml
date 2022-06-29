@@ -50,6 +50,7 @@ build-front-end-job:
     - cd ghi/app
     - npm install
     - npm run build  # Build the React application
+    - cp build/index.html build/404.html
   variables:
     PUBLIC_URL: https://cuisine-coders.gitlab.io/eatinerary
   artifacts:
@@ -118,8 +119,8 @@ deploy-back-end-job-heroku:
     - docker push registry.heroku.com/$HEROKU_FOODIES_APP/web:latest
 
     - docker pull $CI_REGISTRY_IMAGE/foodies_poller:latest
-    - docker tag ${CI_REGISTRY_IMAGE}/foodies_poller:latest registry.heroku.com/$HEROKU_FOODIES_POLLER/web:latest
-    - docker push registry.heroku.com/$HEROKU_FOODIES_POLLER/web:latest
+    - docker tag ${CI_REGISTRY_IMAGE}/foodies_poller:latest registry.heroku.com/$HEROKU_FOODIES_POLLER/worker:latest
+    - docker push registry.heroku.com/$HEROKU_FOODIES_POLLER/worker:latest
 
     - docker pull $CI_REGISTRY_IMAGE/users_api:latest
     - docker tag ${CI_REGISTRY_IMAGE}/users_api:latest registry.heroku.com/$HEROKU_USERS_APP/web:latest
@@ -140,7 +141,7 @@ heroku-release:
     # Create a different $HEROKU_ variable for each
     - heroku container:release web --app $HEROKU_EATERIES_APP
     - heroku container:release web --app $HEROKU_FOODIES_APP
-    - heroku container:release web --app $HEROKU_FOODIES_POLLER
+    - heroku container:release worker --app $HEROKU_FOODIES_POLLER
     - heroku container:release web --app $HEROKU_USERS_APP
 
 # This is an easy way to deploy a React app using GitLab

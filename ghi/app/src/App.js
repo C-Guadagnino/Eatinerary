@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import { useToken } from './authApi';
 import Nav from "./Nav"
 import Login from "./users/Login"
@@ -47,6 +47,7 @@ function App() {
           <Route path='myskeweredhistory' element={<MySkeweredHistory username={userName} />} />
           <Route path='review' element={<CreateReview username={userName} />} />
           <Route path='showreview' element={<ShowReview username={userName} />} />
+          <Route path='*' element={<Navigate to='/' />} />
         </Routes>
       </div>
     </BrowserRouter>

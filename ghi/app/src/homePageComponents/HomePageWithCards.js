@@ -19,30 +19,46 @@ const HomePageWithCards = (props) => {
   const navigate = useNavigate()
   //creating IP state
   const [eateries, setEateries] = useState([]);
-  //creating function to load ip address from the API
-  const getData = async () => {
-    const res = await axios.get('https://ipapi.co/city/')
-    await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/yelp/${res.data}/food/`)
-    const realEateries = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/city/filter/${res.data}/`)
-    let eateries = []
-    for (let eatery of realEateries.data) {
-      let eatery_dict = {
-        "id": eatery.id,
-        "eatery_name": eatery.eatery_name,
-        "image_url": eatery.eatery_images[0].image_url,
-        "address1": eatery.location.address1,
-        "city": eatery.location.city,
-        "state": eatery.location.state,
-        "zip_code": eatery.location.zip_code
-      }
-      eateries.push(eatery_dict)
-    }
-    setEateries(eateries)
-  }
+  const [error, setError] = useState(null);
+
   useEffect(() => {
+    //creating function to load ip address from the API
+    const getData = async (res, tryNumber) => {
+      if (tryNumber > 6) {
+        setError("Could not find eateries. Please try again soon.")
+        console.error("Could not find eateries");
+        return;
+      }
+      const realEateries = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/city/filter/${res.data}/`)
+      if (!realEateries.data.length) {
+        setTimeout(() => getData(res, tryNumber + 1), 500);
+        return;
+      }
+      let eateries = []
+      for (let eatery of realEateries.data) {
+        let eatery_dict = {
+          "id": eatery.id,
+          "eatery_name": eatery.eatery_name,
+          "image_url": eatery.eatery_images[0].image_url,
+          "address1": eatery.location.address1,
+          "city": eatery.location.city,
+          "state": eatery.location.state,
+          "zip_code": eatery.location.zip_code
+        }
+        eateries.push(eatery_dict)
+      }
+      setEateries(eateries)
+    }
+
     //passing getData method to the lifecycle method
     //if we get IP data send location to Yelp API
-    getData()
+    async function getCityAndData() {
+      const res = await axios.get('https://ipapi.co/city/')
+      axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/yelp/${res.data}/food/`)
+      getData(res, 1);
+    }
+
+    getCityAndData();
   }, [])
 
   function detailOnClick(eatery) {
@@ -148,7 +164,7 @@ const HomePageWithCards = (props) => {
         </div>
       </>
     )
-  } else {
+  } else if (error) {
     return (
       <>
         <li></li>
@@ -156,10 +172,22 @@ const HomePageWithCards = (props) => {
         <li></li>
         <li className="list-nav-item"></li>
         <div className="alert alert-success" role="alert">
-          < MdOutlineDangerous /> < BsArrow90DegUp /> Please refresh the page and try again. The search terms are not valid.
+          < MdOutlineDangerous /> < BsArrow90DegUp />
+          { error || "Please refresh the page and try again. The search terms are not valid." }
         </div>
       </>
     )
+  } else {
+    return (
+      <div className="mt-5 pt-5">
+        <h1 className="text-center">Loading your next culinary desires...</h1>
+        <div className="text-center">
+          <div className="spinner-border text-success" style={{width: '3em', height: '3rem'}} role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 
