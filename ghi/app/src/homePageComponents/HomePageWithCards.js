@@ -20,10 +20,12 @@ const HomePageWithCards = (props) => {
   //creating IP state
   const [eateries, setEateries] = useState([]);
   //creating function to load ip address from the API
-  const getData = async () => {
-    const res = await axios.get('https://ipapi.co/city/')
-    await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/yelp/${res.data}/food/`)
+  const getData = async (res) => {
     const realEateries = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/city/filter/${res.data}/`)
+    if (!realEateries.data.length) {
+      setTimeout(getData, 500);
+      return;
+    }
     let eateries = []
     for (let eatery of realEateries.data) {
       let eatery_dict = {
@@ -42,7 +44,12 @@ const HomePageWithCards = (props) => {
   useEffect(() => {
     //passing getData method to the lifecycle method
     //if we get IP data send location to Yelp API
-    getData()
+    async function getCityAndData() {
+      const res = await axios.get('https://ipapi.co/city/')
+      axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/yelp/${res.data}/food/`)
+      getData(res)
+    }
+    getCityAndData();
   }, [])
 
   function detailOnClick(eatery) {

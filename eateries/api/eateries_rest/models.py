@@ -177,7 +177,7 @@ class EateryLocation(models.Model):
     address1 = models.CharField(max_length=200)
     address2 = models.CharField(max_length=200, null=True, blank=True)
     address3 = models.CharField(max_length=200, null=True, blank=True)
-    city = models.CharField(max_length=200)
+    city = models.CharField(max_length=200, db_index=True)
     state = models.CharField(max_length=200, choices=STATES)
     zip_code = models.CharField(max_length=200)
     country = models.CharField(max_length=200, default="USA")
