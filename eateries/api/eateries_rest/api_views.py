@@ -3,6 +3,7 @@ from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
 from django.db import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator
 from .models import (
     Eatery,
     EateryLocation,
@@ -507,11 +508,24 @@ def api_filtered_eateries(request, city, alias):
         filtered_eateries_by_category_and_location = Eatery.objects.filter(
             location__city__iexact=city, categories__alias__iexact=alias
         )
+        paginator = Paginator(filtered_eateries_by_category_and_location, 15)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+        print("$$$$$$$$$$$$$$", page_obj)
+        print("######", type(page_obj))
+        print("PAGE NUMBER", page_number)
+        print("@@@@@@@@@@@", list(page_obj))
         return JsonResponse(
-            filtered_eateries_by_category_and_location,
+            page_obj,
             encoder=EateryEncoder,
             safe=False,
         )
+        # return render(request, 'list.html', {'page_obj': page_obj})
+        # return JsonResponse(
+        #     filtered_eateries_by_category_and_location,
+        #     encoder=EateryEncoder,
+        #     safe=False,
+        # )
 
 
 @require_http_methods(["GET"])
@@ -520,6 +534,18 @@ def api_filtered_eateries_by_location(request, city):
         filtered_eateries_by_location = Eatery.objects.filter(
             location__city__iexact=city
         )
+        paginator = Paginator(filtered_eateries_by_location, 15)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+        print("$$$$$$$$$$$$$$", page_obj)
+        print("PAGE NUMBER", page_number)
+        print("######", type(page_obj))
+        print("@@@@@@@@@@@", list(page_obj))
         return JsonResponse(
-            filtered_eateries_by_location, encoder=EateryEncoder, safe=False
+            page_obj,
+            encoder=EateryEncoder,
+            safe=False,
         )
+        # return JsonResponse(
+        #     filtered_eateries_by_location, encoder=EateryEncoder, safe=False
+        # )

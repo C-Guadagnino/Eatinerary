@@ -12,6 +12,8 @@ import { GiCupidonArrow } from "react-icons/gi";
 import { GiMagnifyingGlass } from "react-icons/gi";
 import { MdOutlineDangerous } from "react-icons/md";
 import { BsArrow90DegUp } from "react-icons/bs";
+import { GrPrevious } from "react-icons/gr";
+import { GrNext } from "react-icons/gr";
 
 
 
@@ -20,7 +22,8 @@ const HomePageWithCards = (props) => {
   //creating IP state
   const [eateries, setEateries] = useState([]);
   const [error, setError] = useState(null);
-
+  const [page, setPage] = useState(1)
+  console.log("PAGE NUMBER", page)
   useEffect(() => {
     //creating function to load ip address from the API
     const getData = async (res, tryNumber) => {
@@ -29,13 +32,15 @@ const HomePageWithCards = (props) => {
         console.error("Could not find eateries");
         return;
       }
-      const realEateries = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/city/filter/${res.data}/`)
-      if (!realEateries.data.length) {
+      const realEateries = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/city/filter/${res.data}/?page=${page}`)
+      console.log(realEateries)
+      //data.page = page number
+      if (!realEateries.data.eateries.length) {
         setTimeout(() => getData(res, tryNumber + 1), 500);
         return;
       }
       let eateries = []
-      for (let eatery of realEateries.data) {
+      for (let eatery of realEateries.data.eateries) {
         let eatery_dict = {
           "id": eatery.id,
           "eatery_name": eatery.eatery_name,
@@ -59,7 +64,7 @@ const HomePageWithCards = (props) => {
     }
 
     getCityAndData();
-  }, [])
+  }, [page])
 
   function detailOnClick(eatery) {
     const eateryID = eatery.id
@@ -87,10 +92,11 @@ const HomePageWithCards = (props) => {
     // Keeping these consol.logs to keep track of these variables state
     console.log("State of the Location ----", locationState)
     console.log("State of the Category ----", categoryState)
+    setPage(1)
     await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/yelp/${locationState}/${categoryState}/`)
-    const allEateries = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/filtered/${locationState}/${categoryState}/`)
+    const allEateries = await axios.get(`${process.env.REACT_APP_EATERIES_API}/api/eateries/filtered/${locationState}/${categoryState}/?page=${page}`)
     let eateries = []
-    for (let eatery of allEateries.data) {
+    for (let eatery of allEateries.data.eateries) {
       let eatery_dict = {
         "id": eatery.id,
         "eatery_name": eatery.eatery_name,
@@ -116,6 +122,7 @@ const HomePageWithCards = (props) => {
         notes: ""
       })
   }
+
 
 
   const renderCard = (card, index) => {
@@ -157,10 +164,12 @@ const HomePageWithCards = (props) => {
             </div>
           </div>
         </div>
-        <div className="container">
+        <div className="container my-5 py-3">
           <div className="row justify-content-md-center m-5">
             {eateries.map(renderCard)}
           </div>
+          <Button id="button-40" onClick={() => setPage(page - 1)}>< GrPrevious size="1em" /> </Button>
+          <Button id="button-40" onClick={() => setPage(page + 1)}>< GrNext size="1em" /> </Button>
         </div>
       </>
     )
@@ -173,7 +182,7 @@ const HomePageWithCards = (props) => {
         <li className="list-nav-item"></li>
         <div className="alert alert-success" role="alert">
           < MdOutlineDangerous /> < BsArrow90DegUp />
-          { error || "Please refresh the page and try again. The search terms are not valid." }
+          {error || "Please refresh the page and try again. The search terms are not valid."}
         </div>
       </>
     )
@@ -182,7 +191,7 @@ const HomePageWithCards = (props) => {
       <div className="mt-5 pt-5">
         <h1 className="text-center">Loading your next culinary desires...</h1>
         <div className="text-center">
-          <div className="spinner-border text-success" style={{width: '3em', height: '3rem'}} role="status">
+          <div className="spinner-border text-success" style={{ width: '3em', height: '3rem' }} role="status">
             <span className="visually-hidden">Loading...</span>
           </div>
         </div>

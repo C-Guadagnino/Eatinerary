@@ -2,6 +2,15 @@ from json import JSONEncoder
 from django.urls import NoReverseMatch
 from django.db.models import QuerySet
 from datetime import datetime, date, time
+from django.core.paginator import Page
+
+
+class PageEncoder(JSONEncoder):
+    def default(self, o):
+        if isinstance(o, Page):
+            return {"eateries": list(o), "page": o.number}
+        else:
+            return super().default(o)
 
 
 class TimeEncoder(JSONEncoder):
@@ -37,7 +46,12 @@ class QuerySetEncoder(JSONEncoder):
 
 
 class ModelEncoder(
-    TimeEncoder, DateEncoder, DateTimeEncoder, QuerySetEncoder, JSONEncoder
+    TimeEncoder,
+    DateEncoder,
+    DateTimeEncoder,
+    PageEncoder,
+    QuerySetEncoder,
+    JSONEncoder,
 ):
     encoders = {}
 

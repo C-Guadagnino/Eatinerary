@@ -1,3 +1,4 @@
+from typing_extensions import Self
 from .models import (
     Eatery,
     EateryCategory,
